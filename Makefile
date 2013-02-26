@@ -1,19 +1,37 @@
 # Name of your emacs binary
-EMACS=emacs
+EMACS = emacs
 
-BATCH=$(EMACS) --batch -Q --eval '(require (quote org))'			\
-	--eval '(org-babel-do-load-languages (quote org-babel-load-languages)   \
-		(quote((sh . t) (python . t))))'				\
-	--eval '(setq org-confirm-babel-evaluate nil)'
+BATCH = $(EMACS) --batch -Q --eval '(require (quote org))'			\
+		--eval '(org-babel-do-load-languages (quote org-babel-load-languages)   \
+			(quote((sh . t))))'				\
+		--eval '(setq org-confirm-babel-evaluate nil)'
 
-FILES = $(wildcard *.org)
+FILES = simulation_config.org sng4_manager.org
 
 all: org
 
-org: simulation_config.org
-	$(BATCH) --eval '(org-babel-tangle-file "$<")'
+org: $(FILES:.org=.tangle)
+pdf: $(FILES:.org=.pdf)
+html: $(FILES:.org=.html)
 
-#$(BATCH) --eval '(mapc (lambda (x) (org-babel-tangle-file (symbol-name x))) (quote ($(FILES))))'
+%.tangle: %.org
+	@echo "Tangling $< file"
+	@$(BATCH) --eval '(org-babel-tangle-file "$<")'
+	@touch $@
+
+%.tex: %.org
+	$(BATCH) $*.org -f org-export-as-latex
+
+%.pdf: %.org
+	$(BATCH) $*.org -f org-export-as-pdf
+
+%.html: %.org
+	$(BATCH) $*.org -f org-export-as-html
+
+tarball: org
+	@echo "Making tarball configuration"
+	tar czf configuration.tar.gz *.conf
+
 
 doc: doc/index.html
 
@@ -25,5 +43,5 @@ doc/index.html:
 	echo "Documentation published to doc/"
 
 clean:
-	rm -f *.conf *.aux *.tex *.fls *fdb_latexmk *.pdf doc/*html *~
+	rm -f *.tangle *.tar.gz *.conf *.aux *.tex *.fls *fdb_latexmk *.pdf doc/*html *~
 	rm -rf doc
