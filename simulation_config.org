@@ -21,8 +21,11 @@ sections, each of them representing a configuration file. Moreover, using =org=
 folding/unfolding capability, item can be hide and the user can focus on
 relevant parts.
 
-To export the different configuration files, you must run =org-babel-tangle= which will
-tangle each code block into the given file[2].
+To export the different configuration files, you can run =org-babel-tangle= which will
+tangle each code block into the given file[2] or use the associated
+Makefile. The author recommends to use the Makefile since the tangling process
+is asynchronous and thus, does not freeze your emacs (=org-babel-tangle=
+"occupies" emacs during its execution).
 
 [1] At the time of writing this document, emacs version is 24.2.
 [2] Emacs lisp function can be run using =ALT-x= command and typing the function name.
@@ -69,12 +72,12 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
-  modules.configuration_files : string[6] =                \
-      "${SNSW_SIMULATION_DIR}/config/io_modules.conf"      \
-      "${SNSW_SIMULATION_DIR}/config/utl_modules.conf"     \
-      "${SNSW_SIMULATION_DIR}/config/s2c_modules.conf"     \
-      "${SNSW_SIMULATION_DIR}/config/tracker_modules.conf" \
-      "${SNSW_SIMULATION_DIR}/config/ana_modules.conf"     \
+  modules.configuration_files : string[6] =                 \
+      "${SNSW_SIMULATION_DIR}/config/io_modules.conf"       \
+      "${SNSW_SIMULATION_DIR}/config/utl_modules.conf"      \
+      "${SNSW_SIMULATION_DIR}/config/s2c_modules.conf"      \
+      "${SNSW_SIMULATION_DIR}/config/tracker_modules.conf"  \
+      "${SNSW_SIMULATION_DIR}/config/analysis_modules.conf" \
       "${SNSW_SIMULATION_DIR}/config/plot_modules.conf"
 #+END_SRC
 
@@ -118,7 +121,7 @@ class implements a few mandatory methods :
 - reset
 - process
 
-The newt items hold the configuration for several modules used in SN@ilWare
+The next items hold the configuration for several modules used in SN@ilWare
 pipeline processing.
 
 ** Skeleton codes
@@ -165,6 +168,7 @@ module. It also defines the output directory where to store each output steps.
 #+END_SRC
 
 *** Skeleton code for removing data bank
+
 #+NAME: remove_module(mname="", mode="remove_bank", label="", debug=0)
 #+BEGIN_SRC sh :results output :tangle no
   echo '[name="'$mname'" type="snemo::core::io::utils_module"]'
@@ -179,7 +183,47 @@ module. It also defines the output directory where to store each output steps.
   echo 'mode.'$mode'.label : string = "'$label'"'
 #+END_SRC
 
+*** Skeleton code for chain module
+This skeleton code ease the declaration of =chain_module= processor since it
+receives a table list and builds the =chain_module= declaration given its name.
+#+NAME: chain_module(mname="", nmodule=0, list="", debug=0)
+#+BEGIN_SRC sh :results output :tangle no
+  echo '[name="'$mname'" type="snemo::core::processing::chain_module"]'
+  echo
+  echo '#@description Debug flag'
+  echo 'debug : boolean =' $debug
+  echo
+  echo '#@description The list of processing modules to be applied (in this order)'
+  echo -ne 'modules : string['$nmodule'] = '
+  for i in $list
+  do
+      echo -ne '"'${i/=/}'" '
+  done
+#+END_SRC
+*** Skeleton code for =if= module
+This skeleton code is a template to declare =if_module= processor.
+#+NAME: if_module(mname="", cut="", then="", else="", debug=0)
+#+BEGIN_SRC sh :results output :tangle no
+  echo '[name="'$mname'" type="snemo::core::processing::chain_module"]'
+  echo
+  echo '#@description Debug flag'
+  echo 'debug : boolean =' $debug
+  echo
+  echo '#@description The label/name of the cut service'
+  echo 'cut_service.label : string = "Cuts"'
+  echo
+  echo '#@description The name of the condition cut'
+  echo 'condition_cut : string = "'$cut'"'
+  echo
+  echo '#@description The name of the module to be processed when condition is checked'
+  echo 'then_module : string = "'$then'"'
+  echo
+  echo '#@description The name of the module to be processed when condition is NOT checked'
+  echo 'else_module : string = "'$else'"'
+  #+END_SRC
+
 ** Mandatory preamble
+
 This piece of code is not tangled by =org= but inserted into all module
 preamble. This is mandatory in order to load properly and statically the
 modules. Every module declared in this file must include this code block by
@@ -281,12 +325,12 @@ Insert preamble
 
 *** Remove simulated data bank
 #+BEGIN_SRC sh :noweb yes
-  <<remove_module(mname="remove_simulated_data", label="SD", debug=0>>
+  <<remove_module(mname="remove_simulated_data", label="SD", debug=0)>>
 #+END_SRC
 
 *** Remove calibrated data bank
 #+BEGIN_SRC sh :noweb yes
-  <<remove_module(mname="remove_calibrated_data", label="CD", debug=0>>
+  <<remove_module(mname="remove_calibrated_data", label="CD", debug=0)>>
 #+END_SRC
 
 *** Remove tracker clustering data bank
@@ -305,9 +349,9 @@ Insert preamble
 :END:
 
 Insert preamble
-  #+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC sh :noweb yes
     <<module_preamble>>
-  #+END_SRC
+#+END_SRC
 
 *** G4 simulation
 A processor that populate the event record =simulated data= bank with Geant4
@@ -579,7 +623,7 @@ for the quenching of alpha particles.
   calo.resolution  : real = 0.08
   xcalo.resolution : real = 0.12
   gveto.resolution : real = 0.15
-  #+END_SRC
+#+END_SRC
 
 **** Energy thresholds
 #+BEGIN_SRC sh
@@ -1039,6 +1083,117 @@ implemented but the particle tracking module will stay unchanged.
   #@description Use a simpler approach by looking for gieger cells in front of calo (not implemented yet)
   CAD.use_last_geiger_cell : boolean = 0
 #+END_SRC
+** Analysis modules
+:PROPERTIES:
+:CUSTOM_ID: analysis_modules
+:TANGLE: analysis_modules.conf
+:END:
+This section holds most of the chain module so setting "to music" the different
+modules and tasks. It also contains the different paths given the selection
+requirements. One important point is that module order really matters since a
+module, especially =chain_module=, needs to know the declaration of all the
+modules it contains.
+
+*** Process after selecting particle track
+#+BEGIN_SRC sh :noweb yes
+   <<if_module("process_with_particle_track_cuts", cut="particle_track_cut", then="io_output_particle_tracking_selected", else="io_output_particle_tracking_non_selected")>>
+#+END_SRC
+
+*** Particle track chain
+#+TBLNAME: particle_chain :results none
+| basic_particle_tracking |
+
+#+BEGIN_SRC sh :noweb yes
+  <<chain_module("particle_chain", 1, particle_chain)>>
+#+END_SRC
+
+*** Analysis chain
+#+TBLNAME: analysis_chain :results none
+| particle_chain                   |
+| io_output_analysed               |
+| process_with_particle_track_cuts |
+
+#+BEGIN_SRC sh :noweb yes
+  <<chain_module("analysis_chain", 3, analysis_chain)>>
+#+END_SRC
+
+*** Fitting chain
+#+TBLNAME: fitting_chain :results none
+| remove_tracker_trajectory_data |
+| trackfit_tracker_fitting       |
+| io_output_tracker_fitting      |
+| analysis_chain                 |
+
+#+BEGIN_SRC sh :noweb yes
+  <<chain_module("fitting_chain", 4, fitting_chain)>>
+#+END_SRC
+
+*** Process after clustering selection
+#+BEGIN_SRC sh :noweb yes
+  <<if_module("process_with_clustering_cuts", cut="basic_tracker_clustering_cut", then="fitting_chain", else="io_output_tracking_non_selected")>>
+#+END_SRC
+
+*** Clustering chain
+#+TBLNAME: clustering_chain :results none
+| remove_tracker_clustering_data |
+| basic_tracker_clustering       |
+| io_output_tracker_clustering   |
+| process_with_clustering_cuts   |
+
+#+BEGIN_SRC sh :noweb yes
+  <<chain_module("clustering_chain", 4, clustering_chain)>>
+#+END_SRC
+
+*** Process after calibration selection
+#+BEGIN_SRC sh :noweb yes
+  <<if_module("process_with_calibrated_cuts", cut="calibrated_cut", then="clustering_chain", else="io_output_calibrated_non_selected")>>
+#+END_SRC
+
+*** Calibration chain
+#+TBLNAME: calibration_chain :results none
+| add_header           |
+| tracker_s2c          |
+| calorimeter_s2c      |
+| io_output_calibrated |
+
+#+BEGIN_SRC sh :noweb yes
+  <<chain_module("calibration_chain", 4, calibration_chain)>>
+#+END_SRC
+
+*** Simulation chain
+#+TBLNAME: simulation_chain :results none
+| simulation          |
+| io_output_simulated |
+
+#+BEGIN_SRC sh :noweb yes
+  <<chain_module("simulation_chain", 2, simulation_chain)>>
+#+END_SRC
+
+*** Full chain (from simulation -> calibration -> reconstruction)
+#+TBLNAME: full_chain :results none
+| simulation_chain             |
+| calibration_chain            |
+| process_with_calibrated_cuts |
+
+#+BEGIN_SRC sh :noweb yes
+  <<chain_module("full_chain", 3, full_chain)>>
+#+END_SRC
+
+
+*** Miscellaneous
+#+TBLNAME: reformat_data :results none
+| remove_header                  |
+| add_header                     |
+| remove_mc_visu_hits            |
+| remove_simulated_data          |
+| remove_calibrated_data         |
+| remove_tracker_clustering_data |
+| remove_tracker_trajectory_data |
+
+#+BEGIN_SRC sh :noweb yes
+  <<chain_module("reformat_data", 7, reformat_data)>>
+#+END_SRC
+
 * Services
 :PROPERTIES:
 :CUSTOM_ID: services
