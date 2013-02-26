@@ -27,19 +27,19 @@ tangle each code block into the given file[2].
 [1] At the time of writing this document, emacs version is 24.2.
 [2] Emacs lisp function can be run using =ALT-x= command and typing the function name.
 
-* Pipeline configuration
+* Pipeline general configuration
 :PROPERTIES:
 :CUSTOM_ID: pipeline_configuration
 :END:
 SN@ilWare implements the concept of data processing pipeline. An event record
 object is passed through a chain of data processing modules, each of them being
-responsible for a given task. The two following parts describe the configurations
-of the modules as well as the services.
+responsible for a given task. Modules and services are declared in Section
+[[Modules]] and Section [[Services]].
 
 ** Module manager
 :PROPERTIES:
 :CUSTOM_ID: module_manager
-:TANGLE: module_manager_2.conf
+:TANGLE: module_manager.conf
 :END:
 This file is the main and central piece of code for loading all modules/services
 needed by =snemo_processing= binary. It provides links to module files and
@@ -69,15 +69,41 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
-  modules.configuration_files : string[5] =                \
+  modules.configuration_files : string[6] =                \
       "${SNSW_SIMULATION_DIR}/config/io_modules.conf"      \
+      "${SNSW_SIMULATION_DIR}/config/utl_modules.conf"     \
       "${SNSW_SIMULATION_DIR}/config/s2c_modules.conf"     \
       "${SNSW_SIMULATION_DIR}/config/tracker_modules.conf" \
       "${SNSW_SIMULATION_DIR}/config/ana_modules.conf"     \
       "${SNSW_SIMULATION_DIR}/config/plot_modules.conf"
 #+END_SRC
 
-*** Modules
+** Service manager
+:PROPERTIES:
+:CUSTOM_ID: service_manager
+:TANGLE: service_manager.conf
+:END:
+*** Debug
+#+BEGIN_SRC sh
+  #@description Service manager debug flag
+  debug : boolean = 0
+#+END_SRC
+*** Name & description
+#+BEGIN_SRC sh
+  #@description The name of the service manager
+  name : string = "sn_service_manager"
+
+  #@description The description of the service manager
+  description : string = "A SuperNEMO service manager"
+#+END_SRC
+*** List of service files
+#+BEGIN_SRC sh
+  #@description The list of files that describe services
+  services.configuration_files : string[1] = \
+      "${SNSW_SIMULATION_DIR}/config/services.conf"
+#+END_SRC
+
+* Modules
 :PROPERTIES:
 :CUSTOM_ID: modules
 :END:
@@ -95,7 +121,65 @@ class implements a few mandatory methods :
 The newt items hold the configuration for several modules used in SN@ilWare
 pipeline processing.
 
-**** Mandatory preamble
+** Skeleton codes
+:PROPERTIES:
+:CUSTOM_ID: skeleton_code
+:TANGLE: no
+:END:
+This section provides some options to create and declare general modules such as
+I/O modules (see Section [[I/O modules]]) or/and removing data bank. Since these
+tasks are quite generic and depends to few parameters, the following code blocks
+provides easy interface to such modules. The section [[I/O modules]] provides
+example on how to use skeleton codes.
+
+*** Skeleton code for output module
+This skeleton code allows to define output module given the name of the
+module. It also defines the output directory where to store each output steps.
+
+#+NAME: output_module(mname="", debug=0, ofilename="")
+#+BEGIN_SRC sh :results output :tangle no
+  IO_OUTPUT_DIRECTORY="/tmp/${USER}/snemo.d"
+  if [ ! -d ${IO_OUTPUT_DIRECTORY} ]; then
+      mkdir -p ${IO_OUTPUT_DIRECTORY}
+  fi
+  echo '[name="'$mname'" type="snemo::core::io::io_module"]'
+  echo
+  echo '#@description Debug flag'
+  echo 'debug : boolean =' $debug
+  echo
+  echo '#@description Input/output mode'
+  echo 'mode : string = "output"'
+  echo
+  echo '#@description Output file mode'
+  echo 'output.mode : string = "single"'
+  echo
+  echo '#@description Path to output data file'
+  if [ -z ${ofilename} ]; then
+      echo 'output.single.filename : string = "'$IO_OUTPUT_DIRECTORY/$mname'.brio"'
+  else
+      echo 'output.single.filename : string = "'$ofilename'"'
+  fi
+  echo
+  echo '#@description The label of the Context service'
+  echo 'Ctx_label : string  = "Ctx"'
+#+END_SRC
+
+*** Skeleton code for removing data bank
+#+NAME: remove_module(mname="", mode="remove_bank", label="", debug=0)
+#+BEGIN_SRC sh :results output :tangle no
+  echo '[name="'$mname'" type="snemo::core::io::utils_module"]'
+  echo
+  echo '#@description Debug flag'
+  echo 'debug : boolean =' $debug
+  echo
+  echo '#@description The processor mode'
+  echo 'mode : string = "'$mode'"'
+  echo
+  echo '#@description The label to be removed'
+  echo 'mode.'$mode'.label : string = "'$label'"'
+#+END_SRC
+
+** Mandatory preamble
 This piece of code is not tangled by =org= but inserted into all module
 preamble. This is mandatory in order to load properly and statically the
 modules. Every module declared in this file must include this code block by
@@ -110,76 +194,43 @@ expand the =module_preamble= code.
   #@meta_label  "type"
 #+END_SRC
 
-**** I/O modules
+** I/O modules
 :PROPERTIES:
 :CUSTOM_ID: io_modules
-:TANGLE: io_modules_2.conf
+:TANGLE: io_modules.conf
 :END:
 
-- Insert preamble
-  #+BEGIN_SRC sh :noweb yes
-    <<module_preamble>>
-  #+END_SRC
+Insert preamble
+#+BEGIN_SRC sh :noweb yes
+  <<module_preamble>>
+#+END_SRC
 
-- Skeleton code for output module
-
-  This skeleton code allows to define output module given the name of the
-  module. It also defines the output directory where to store each output steps.
-
-  #+NAME: output_module(mname="", debug=0, ofilename="")
-  #+BEGIN_SRC sh :results output :tangle no
-    IO_OUTPUT_DIRECTORY="/tmp/${USER}/snemo.d"
-    if [ ! -d ${IO_OUTPUT_DIRECTORY} ]; then
-        mkdir -p ${IO_OUTPUT_DIRECTORY}
-    fi
-    echo '[name="'$mname'" type="snemo::core::io::io_module"]'
-    echo
-    echo '#@description Debug flag'
-    echo 'debug : boolean =' $debug
-    echo
-    echo '#@description Input/output mode'
-    echo 'mode : string = "output"'
-    echo
-    echo '#@description Output file mode'
-    echo 'output.mode : string = "single"'
-    echo
-    echo '#@description Path to output data file'
-    if [ -z ${ofilename} ]; then
-        echo 'output.single.filename : string = "'$IO_OUTPUT_DIRECTORY/$mname'.brio"'
-    else
-        echo 'output.single.filename : string = "'$ofilename'"'
-    fi
-    echo
-    echo '#@description The label of the Context service'
-    echo 'Ctx_label : string  = "Ctx"'
-  #+END_SRC
-
-***** Simulation output
+*** Simulation output
 #+BEGIN_SRC sh :noweb yes
   <<output_module("io_output_simulated", debug=0)>>
 #+END_SRC
 
-***** Calibration output
+*** Calibration output
 #+BEGIN_SRC sh :noweb yes
   <<output_module("io_output_calibrated", debug=0)>>
 #+END_SRC
 
-***** Tracker clustering output
+*** Tracker clustering output
 #+BEGIN_SRC sh :noweb yes
   <<output_module("io_output_tracker_clustering", debug=0)>>
 #+END_SRC
 
-***** Tracker fitting output
+*** Tracker fitting output
 #+BEGIN_SRC sh :noweb yes
   <<output_module("io_output_tracker_fitting", debug=0)>>
 #+END_SRC
 
-***** Analysis output
+*** Analysis output
 #+BEGIN_SRC sh :noweb yes
   <<output_module("io_output_analysed", debug=0)>>
 #+END_SRC
 
-***** Selection output
+*** Selection output
 
 - Calibration cuts
   #+BEGIN_SRC sh :noweb yes
@@ -205,7 +256,49 @@ expand the =module_preamble= code.
     <<output_module("io_output_particle_tracking_non_selected", debug=0)>>
   #+END_SRC
 
-**** Simulation to calibration modules
+** Utility modules
+:PROPERTIES:
+:CUSTOM_ID: utility_modules
+:TANGLE: utl_modules.conf
+:END:
+
+Here we define some common and useful tasks such as removing data/MC hits.
+
+Insert preamble
+#+BEGIN_SRC sh :noweb yes
+  <<module_preamble>>
+#+END_SRC
+
+*** Remove event header
+#+BEGIN_SRC sh :noweb yes
+  <<remove_module(mname="remove_header", label="EH", debug=0)>>
+#+END_SRC
+
+*** Remove MC visual hits
+#+BEGIN_SRC sh :noweb yes
+  <<remove_module(mname="remove_mc_visu_hits", mode="remove_mc_hits", label="__visu.tracks", debug=0)>>
+#+END_SRC
+
+*** Remove simulated data bank
+#+BEGIN_SRC sh :noweb yes
+  <<remove_module(mname="remove_simulated_data", label="SD", debug=0>>
+#+END_SRC
+
+*** Remove calibrated data bank
+#+BEGIN_SRC sh :noweb yes
+  <<remove_module(mname="remove_calibrated_data", label="CD", debug=0>>
+#+END_SRC
+
+*** Remove tracker clustering data bank
+#+BEGIN_SRC sh :noweb yes
+  <<remove_module(mname="remove_tracker_clustering_data", label="TCD", debug=0)>>
+#+END_SRC
+*** Remove tracker trajectory data bank
+#+BEGIN_SRC sh :noweb yes
+  <<remove_module(mname="remove_tracker_trajectory_data", label="TTD", debug=0)>>
+#+END_SRC
+
+** Simulation to calibration modules
 :PROPERTIES:
 :CUSTOM_ID: s2c_modules
 :TANGLE: s2c_modules.conf
@@ -216,374 +309,740 @@ Insert preamble
     <<module_preamble>>
   #+END_SRC
 
-***** G4 simulation
+*** G4 simulation
 A processor that populate the event record =simulated data= bank with Geant4
 output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carloproduction][SN@ilWare FAQ]]).
 #+BEGIN_SRC sh
   [name="simulation" type="snemo::g4::simulation_module"]
 #+END_SRC
 
-- Debug flag
-  #+BEGIN_SRC sh
-    #@description Debug flag
-    debug : boolean = 0
-
-    #@description The simulation manager debug flag
-    manager.debug   : boolean = 0
-
-    #@description The simulation manager verbose flag
-    manager.verbose : boolean = 0
-
-    #@description The debug flag for tracking thread control
-    ctrl.devel      : boolean = 0
-  #+END_SRC
-- Bank & service labels
-  #+BEGIN_SRC sh
-    #@description The Geometry Service label
-    Geo_label : string = "Geo"
-
-    #@description The 'Simulated data' bank label in the event record
-    SD_label  : string = "SD"
-
-    #@description Flag to allow cleaning of some former simulated data bank if any (default: 0)
-    erase_former_SD_bank : boolean = 0
-  #+END_SRC
-- Seed values
-  #+BEGIN_SRC sh
-    #@description The simulation manager PRNG seed
-    manager.seed    : integer = 2
-
-    #@description The vertex generator PRNG seed
-    manager.vertex_generator_seed : integer = 4
-
-    #@description The event generator PRNG seed
-    manager.event_generator_seed  : integer = 5
-
-    #@description The SHPF PRNG seed
-    manager.shpf_seed             : integer = 6
-
-    #@description The saving of PRNG seeds
-    manager.output_prng_seeds_file  : string = "/tmp/${USER}/snemo.d/prng_seeds.save"
-
-    #@description The saving of PRNG states
-    manager.output_prng_states_file : string = "/tmp/${USER}/snemo.d/prng_states.save"
-
-    #@description The modulo for PRNG states backup
-    manager.prng_states_save_modulo : integer = 10
-  #+END_SRC
-- Vertex generator
-  #+BEGIN_SRC sh
-        #@description The vertex generator PRNG label
-        manager.vertex_generator_name : string  = "source_strips_bulk"
-    #+END_SRC
-- Event generator
-  #+BEGIN_SRC sh
-    #@description The event generator PRNG label
-    manager.event_generator_name  : string  = "bb0nu_Se82.wrapper"
-    #manager.event_generator_name  : string  = "bb2nu_Se82.wrapper"
-    #manager.event_generator_name  : string  = "calib_Bi207.wrapper"
-    #manager.event_generator_name  : string  = "calib_Sr90.wrapper"
-    #manager.event_generator_name  : string  = "bkg_Tl208.wrapper"
-    #manager.event_generator_name  : string  = "bkg_Bi214_Po214.wrapper"
-    #manager.event_generator_name  : string  = "electron_0-3MeV_flat"
-  #+END_SRC
-- SNG4 manager
-  #+BEGIN_SRC sh
-    #@description The simulation manager configuration file
-    manager.configuration_filename : string = "${SNSW_SIMULATION_DIR}/config/sng4_manager.conf"
-  #+END_SRC
-
-  #+BEGIN_SRC sh :tangle sng4_manager_2.conf
-    <<module_preamble>>
-    ######################################
-    # MANAGER (main configuration level) #
-    ######################################
-
-    [name="manager"]
-
-    #@description Debug flag:
-    debug                 : boolean = 0
-
-    #@description Verbosity flag:
-    verbose               : boolean = 0
-
-    #@description Number of events to be simulated (superseded by the pipeline)
-    number_of_events      : integer = 20
-
-    #@description Geant4 tracking verbosity flag:
-    g4_tracking_verbosity : integer = 0
-
-    #@description Geant4 visualization activation flag:
-    g4_visualization      : boolean = 0
-
-
-    #####################
-    # VERTEX GENERATION #
-    #####################
-
-    [name="vertex_generator"]
-
-    #@description the filename with the list of registered vertex generators
-    vg_list : string[3] = \
-      "${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_2.0/scin_vg.lis"    \
-      "${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_2.0/tracker_vg.lis" \
-      "${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_2.0/source_vg.lis"
-
-    #########################
-    # DETECTOR CONSTRUCTION #
-    #########################
-
-    [name="detector_construction"]
-
-    #@config Main configuration file for the detector construction user object:
-
-    #@description Debug flag
-    debug : boolean = 0
-
-    #@description Verbose flag
-    verbose : boolean = 0
-
-    #@description Temporary directory for GDML file generation:
-    gdml.tmp_dir         : string = "/tmp/${USER}/sng4.d"
-
-    #@description Access mode to the GDML schema ("local" or "remote")
-    gdml.schema_location : string = "local" # "remote"
-
-    #@description Flag to skip GDML validation
-    gdml.no_validation   : boolean = 0
-
-    #@description Configuration file for the step hit processor factory:
-    hit_processor_factory.config : string = "${SNSW_SIMULATION_DIR}/config/step_hit_processor_factory.conf"
-
-    #@description Parameters for the generation of 'sensitive hits' through 'sensitive detectors' :
-    sensitive.detectors : string[4] = "calorimeter.SD" "xcalorimeter.SD" "gveto.SD" "tracker.SD"
-
-    sensitive.calorimeter.SD.debug                           : boolean = 0
-    sensitive.calorimeter.SD.hits_buffer_capacity            : integer = 200
-    sensitive.calorimeter.SD.record_alpha_quenching          : boolean = 1
-    sensitive.calorimeter.SD.record_track_id                 : boolean = 1
-    sensitive.calorimeter.SD.record_primary_particle         : boolean = 1
-    sensitive.calorimeter.SD.drop_zero_energy_deposit_steps  : boolean = 0
-    sensitive.calorimeter.SD.track_gamma                     : boolean = 1
-
-    sensitive.xcalorimeter.SD.debug                          : boolean = 1
-    sensitive.xcalorimeter.SD.hits_buffer_capacity           : integer = 200
-    sensitive.xcalorimeter.SD.record_alpha_quenching         : boolean = 1
-    sensitive.xcalorimeter.SD.record_track_id                : boolean = 1
-    sensitive.xcalorimeter.SD.record_primary_particle        : boolean = 1
-    sensitive.xcalorimeter.SD.drop_zero_energy_deposit_steps : boolean = 0
-    sensitive.xcalorimeter.SD.track_gamma                    : boolean = 1
-
-    sensitive.gveto.SD.debug                                 : boolean = 0
-    sensitive.gveto.SD.hits_buffer_capacity                  : integer = 200
-    sensitive.gveto.SD.record_alpha_quenching                : boolean = 1
-    sensitive.gveto.SD.record_track_id                       : boolean = 1
-    sensitive.gveto.SD.record_primary_particle               : boolean = 1
-    sensitive.gveto.SD.drop_zero_energy_deposit_steps        : boolean = 0
-    sensitive.gveto.SD.track_gamma                           : boolean = 1
-
-    sensitive.tracker.SD.debug                               : boolean = 0
-    sensitive.tracker.SD.hits_buffer_capacity                : integer = 1000
-    sensitive.tracker.SD.record_alpha_quenching              : boolean = 1
-    sensitive.tracker.SD.record_track_id                     : boolean = 1
-    sensitive.tracker.SD.record_primary_particle             : boolean = 1
-    sensitive.tracker.SD.drop_zero_energy_deposit_steps      : boolean = 0
-    sensitive.tracker.SD.track_gamma                         : boolean = 1
-
-    #@description Magnetic field value (gauss):
-    magnetic_field.default_field : real = 25.0
-
-    #@description List of module's IDs with non-zero magnetic field:
-    magnetic_field.modules : integer[1] = 0
-
-    #@description SetDeltaChord miss distance (mm):
-    magnetic_field.miss_distance : real = 0.5
-
-    #@description List of geometry models with max steps:
-    limits.list_of_models : string[3] = \
-                           "source_external_strip.model" \
-                           "source_internal_strip.model" \
-                           "drift_cell_core.model"
-
-    #@description Max step length inside source pad (mm):
-    limits.max_step.source_external_strip.model : real = 0.01
-
-    #@description Max step length inside source pad (mm):
-    limits.max_step.source_internal_strip.model : real = 0.01
-
-    #@description Max step length inside drift cell tracking volume (mm):
-    limits.max_step.drift_cell_core.model : real = 5.0
-    #limits.max_step.drift_cell_core : real = 10.0
-
-    #@description List of regions :
-    regions             : string[3] = "calorimeter" "tracker" "source"
-
-    #@description List of attached volumes/models per region :
-    regions.calorimeter : string[4] = \
-                        "calorimeter_scin_block_front.model" \
-                        "calorimeter_scin_block_back.model" \
-                        "gveto_scin_block.model" \
-                        "xwall_scin_block.model"
-    regions.tracker     : string[1] = "drift_cell_core.model"
-    regions.source      : string[2] = \
-                        "source_external_strip.model" \
-                        "source_internal_strip.model"
-
-
-    ################
-    # PHYSICS LIST #
-    ################
-
-    [name="physics_list"]
-
-    #@config Main configuration file for the physics lists:
-
-    #@description Debug flag
-    debug       : boolean = 0
-
-    #@description Verbosity flag
-    verbosity   : integer = 0
-
-    #@description Activate energy loss process for electron/positron
-    electron.energy_loss         : boolean = 1
-
-    #@description Activate multiple scaterring process for electron/positron
-    electron.multiple_scaterring : boolean = 1
-
-    #@description Activate the use of high-energy leptons
-    use_he_leptons               : boolean = 0
-
-    #@description Activate the use of mesons
-    use_mesons                   : boolean = 1
-
-    #@description Activate the use of specific cuts
-    using_cuts : boolean = 1
-
-    #@description List of region with production cut
-    production_cuts.regions     : string [3] = "calorimeter" "tracker" "source"
-
-    #@description lenght unit for production cut values
-    production_cuts.length_unit : string     = "mm"
-
-    #@description Production cut value for region "calorimeter"
-    production_cuts.calorimeter : real       = 5.0
-
-    #@description Production cut value for region "tracker"
-    production_cuts.tracker     : real       = 0.5
-
-    #@description Production cut value for region "source"
-    production_cuts.source      : real       = 0.05
-
-    #######################################
-    # PRIMARY PARTICLES/EVENTS GENERATION #
-    #######################################
-
-    [name="primary_generator"]
-
-    #@config Configuration of the primary event generator
-
-    #@description Debug
-    # debug : boolean = 0
-
-    #@description Configuration file for the embedded 'snemo::genbb::manager'
-    config : string = "${SNSW_SIMULATION_DIR}/config/sngenbb_manager.conf"
-
-
-    ##############
-    # RUN ACTION #
-    ##############
-
-    [name="run_action"]
-
-    #@description Run action debug flag :
-    debug : boolean = 0
-
-    #@description Run action event number print modulo :
-    #number_events_modulo : integer = 100
-
-    #@description If set, this flag forbids the generation of output files :
-    file.no_save : boolean = 1
-
-
-    ################
-    # EVENT ACTION #
-    ################
-
-    [name="event_action"]
-
-    #@description Event action debug flag:
-    debug : boolean = 0
-
-    ###################
-    # TRACKING ACTION #
-    ###################
-
-    [name="tracking_action"]
-
-    #@description Event action debug flag:
-    # debug : boolean = 0
-
-
-    ###################
-    # STEPPING ACTION #
-    ###################
-
-    [name="stepping_action"]
-
-    #@description Stepping action debug flag:
-    # debug : boolean = 0
-
-
-    ###################
-    # STACKING ACTION #
-    ###################
-
-    [name="stacking_action"]
-
-    #@description Stacking action debug flag:
-    # debug : boolean = 0
-
-    #@description Kill secondary particles within some volumes :
-    # kill_particles : boolean = 0
-
-    #@description Kill secondary particles within some volumes :
-    #kill_particles.volumes : string[1] = "drift_cell_core"
-
-    #@description Kill secondary particles within some materials :
-    #kill_particles.materials : string[1] = "tracking_gas"
-
-    # end of configuration file.
-  #+END_SRC
-
-** Service manager
-:PROPERTIES:
-:CUSTOM_ID: service_manager
-:TANGLE: service_manager_2.conf
-:END:
-*** Debug
+**** Debug flag
 #+BEGIN_SRC sh
-  #@description Service manager debug flag
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The simulation manager debug flag
+  manager.debug   : boolean = 0
+
+  #@description The simulation manager verbose flag
+  manager.verbose : boolean = 0
+
+  #@description The debug flag for tracking thread control
+  ctrl.devel      : boolean = 0
+#+END_SRC
+**** Bank & service labels
+#+BEGIN_SRC sh
+  #@description The Geometry Service label
+  Geo_label : string = "Geo"
+
+  #@description The 'Simulated data' bank label in the event record
+  SD_label  : string = "SD"
+
+  #@description Flag to allow cleaning of some former simulated data bank if any (default: 0)
+  erase_former_SD_bank : boolean = 0
+#+END_SRC
+**** Seed values
+#+BEGIN_SRC sh
+  #@description The simulation manager PRNG seed
+  manager.seed    : integer = 2
+
+  #@description The vertex generator PRNG seed
+  manager.vertex_generator_seed : integer = 4
+
+  #@description The event generator PRNG seed
+  manager.event_generator_seed  : integer = 5
+
+  #@description The SHPF PRNG seed
+  manager.shpf_seed             : integer = 6
+
+  #@description The saving of PRNG seeds
+  manager.output_prng_seeds_file  : string = "/tmp/${USER}/snemo.d/prng_seeds.save"
+
+  #@description The saving of PRNG states
+  manager.output_prng_states_file : string = "/tmp/${USER}/snemo.d/prng_states.save"
+
+  #@description The modulo for PRNG states backup
+  manager.prng_states_save_modulo : integer = 10
+#+END_SRC
+**** Vertex generator
+#+BEGIN_SRC sh
+      #@description The vertex generator PRNG label
+      manager.vertex_generator_name : string  = "source_strips_bulk"
+#+END_SRC
+**** Event generator
+#+BEGIN_SRC sh
+  #@description The event generator PRNG label
+  manager.event_generator_name  : string  = "bb0nu_Se82.wrapper"
+  #manager.event_generator_name  : string  = "bb2nu_Se82.wrapper"
+  #manager.event_generator_name  : string  = "calib_Bi207.wrapper"
+  #manager.event_generator_name  : string  = "calib_Sr90.wrapper"
+  #manager.event_generator_name  : string  = "bkg_Tl208.wrapper"
+  #manager.event_generator_name  : string  = "bkg_Bi214_Po214.wrapper"
+  #manager.event_generator_name  : string  = "electron_0-3MeV_flat"
+#+END_SRC
+**** SNG4 manager
+The full =sng4= configuration can be found in the [[file:sng4_manager.org][sng4_manager.org]] file.
+#+BEGIN_SRC sh
+  #@description The simulation manager configuration file
+  manager.configuration_filename : string = "${SNSW_SIMULATION_DIR}/config/sng4_manager.conf"
+#+END_SRC
+
+*** Adding event header
+After Geant4 simulation, no event header is added and available in the event
+record. This module adds some information related either to real data (run
+number) or simulated data like =genbb= weight in case the total energy of primary
+particles has been restricted.
+
+#+BEGIN_SRC sh
+  [name="add_header" type="snemo::core::processing::utils_module"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The processor mode
+  mode : string = "add_header"
+
+  #@description The label of the 'Event Header' bank
+  EH_label : string  = "EH"
+
+  #@description The number of the run number to be set
+  mode.add_header.run_number : integer = 0
+
+  #@description The number of the first event number to be set
+  mode.add_header.event_number : integer = 0
+
+  ##@description The event weight given by GENBB and used for 'energy_range' mode
+  mode.add_header.event_genbb_weight : boolean = 1
+#+END_SRC
+
+Among the options offered by =utils_module=, there is a possibility to give an
+external file (following =datatools::properties= writing conventions) where
+additionnal informations can be added. Typical use case is the definition of
+some properties/descriptions of simulation runs.
+#+BEGIN_SRC sh
+  #@description The external properties files to be exported in event_header properties
+  mode.add_header.external_properties_path : string = "${SNSW_SIMULATION_DIR}/config/header.conf"
+
+  #@description The external properties prefix to export only properties starting with this prefix
+  mode.add_header.external_properties_prefix : string = "analysis"
+#+END_SRC
+*** Tracker simulation to calibration data
+:PROPERTIES:
+:CUSTOM_ID: tracker_s2c
+:END:
+
+This module converts simulated data into calibrated data for SuperNEMO
+tracker. It is a mock digitization/calibration data module of Monte-Carlo
+hits. It applies some anode/cathode efficiencies as well as calibration and
+smearing curves to translate times into longitudinal and transerve
+positions. Main references document for this module can be find in DocDb [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=786][#786]]
+and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=843][#843]].
+
+#+BEGIN_SRC sh
+  [name="tracker_s2c" type="snemo::core::processing::basic_tracker_s2c_module"]
+#+END_SRC
+
+**** Verbosity & debug flags
+#+BEGIN_SRC sh
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description Verbosity flag
+  verbose : boolean = 0
+#+END_SRC
+
+**** Data bank labels and hit category
+#+BEGIN_SRC sh
+  #@description The label of the Geometry service
+  Geo_label : string  = "Geo"
+
+  #@description The label of the 'Event Header' bank
+  EH_label : string  = "EH"
+
+  #@description The label of the 'Simulated Data' bank
+  SD_label : string  = "SD"
+
+  #@description The label of the 'Calibrated Data' bank
+  CD_label : string  = "CD"
+
+  #@description The category of hits to be processed as Geiger hits
+  hit_category  : string  = "gg"
+#+END_SRC
+
+**** Random generator
+#+BEGIN_SRC sh
+  #@description Pseudo-random numbers generator setup
+  random.id   : string  = "mt19937"
+  random.seed : integer = 12345
+#+END_SRC
+
+**** Geiger cells dimensions
+#+BEGIN_SRC sh
+  #@description Drift cell effective/active diameter
+  cell_diameter : real = 44.0   # mm
+
+  #@description Drift cell effective/active length
+  cell_length   : real = 2900.0 # mm
+#+END_SRC
+
+**** Anode/cathode efficiencies
+#+BEGIN_SRC sh
+  #@description anode efficiency
+  base_anode_efficiency   : real = 1.0
+
+  #@description cathode efficiency
+  base_cathode_efficiency : real = 1.0
+#+END_SRC
+**** Plasma longitudinal speed
+#+BEGIN_SRC sh
+  #@description plasma longitudinal speed
+  plasma_longitudinal_speed : real = 5.0 # cm/us
+#+END_SRC
+**** Longitudinal & transerve reconstruction parameters
+#+BEGIN_SRC sh
+  #@description Error on reconstructed longitudinal position (from a plot by Irina)
+  sigma_z                  : real = 1.0     # cm (to be confirmed)
+
+  #@description Error on reconstructed longitudinal position when one cathode signal is missing
+  sigma_z_missing_cathode  : real = 5.0     # cm (to be confirmed)
+
+  #@description Error on reconstructed horizontal position (parameters of a fit of data by Irina)
+  sigma_r_a  : real = 0.425   # mm
+  sigma_r_b  : real = 0.0083  # dimensionless
+  sigma_r_r0 : real = 12.25   # mm
+#+END_SRC
+
+*** Calorimeter simulation to calibration data
+:PROPERTIES:
+:CUSTOM_ID: calorimeter_s2c
+:END:
+
+This module converts Monte-Carlo hits into calorimeter hits. Like the previous
+[[#tracker_s2c][section]], it is a mock digitization/calibration of simulation hits. It basicaly
+aggregates several energy deposits, calculates the total energy deposited and
+the time of the first energy deposit and finally, it smears the energy and time
+by some experimental energy/time resolution. There is also a special treatments
+for the quenching of alpha particles.
+
+#+BEGIN_SRC sh
+  [name="calorimeter_s2c" type="snemo::core::processing::basic_calorimeter_s2c_module"]
+#+END_SRC
+
+**** Verbosity & debug flags
+#+BEGIN_SRC sh
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description Verbosity flag
+  verbose : boolean = 0
+#+END_SRC
+
+**** Data bank labels and hit category
+#+BEGIN_SRC sh
+  #@description The label of the Geometry service
+  Geo_label : string  = "Geo"
+
+  #@description The label of the 'Event Header' bank
+  EH_label : string  = "EH"
+
+  #@description The label of the 'Simulated Data' bank
+  SD_label : string  = "SD"
+
+  #@description The label of the 'Calibrated Data' bank
+  CD_label : string  = "CD"
+
+  #@description The categories of hits to be processed as calorimeter hits
+  hit_categories  : string[3]  = "calo" "xcalo" "gveto"
+#+END_SRC
+**** Random generator
+#+BEGIN_SRC sh
+  #@description Pseudo-random numbers generator setup
+  random.id   : string  = "mt19937"
+  random.seed : integer = 12345
+#+END_SRC
+
+**** Alpha quenching parameters
+#+BEGIN_SRC sh
+  #@description Alpha quenching parameters
+  alpha_quenching_parameters : real[3] = 77.4 0.639 2.34
+#+END_SRC
+
+**** Scintillator relaxation time for time resolution
+#+BEGIN_SRC sh
+  #@description Time resolution parameters
+  scintillator_relaxation_time : real = 6.0 # ns
+#+END_SRC
+
+**** Energy resolutions
+#+BEGIN_SRC sh
+  #@description Optical lines resolutions (FWHM @ 1 MeV)
+  calo.resolution  : real = 0.08
+  xcalo.resolution : real = 0.12
+  gveto.resolution : real = 0.15
+  #+END_SRC
+
+**** Energy thresholds
+#+BEGIN_SRC sh
+  #@description Optical lines trigger thresholds
+  calo.high_threshold  : real = 150 # keV
+  xcalo.high_threshold : real = 150 # keV
+  gveto.high_threshold : real = 150 # keV
+
+  calo.low_threshold   : real = 50  # keV
+  xcalo.low_threshold  : real = 50  # keV
+  gveto.low_threshold  : real = 50  # keV
+#+END_SRC
+
+** Tracker clustering & fitting modules
+:PROPERTIES:
+:CUSTOM_ID: tracker_modules
+:TANGLE: tracker_modules.conf
+:END:
+
+Insert preamble
+#+BEGIN_SRC sh :noweb yes
+    <<module_preamble>>
+#+END_SRC
+
+*** Clustering algorithms
+:PROPERTIES:
+:CUSTOM_ID: clustering_modules
+:END:
+This section holds different modules all related to tracker clustering.
+
+**** Basic tracker clustering
+This algorithm is too much simple but it can serve as a comparison point with
+respect to more elaborated algorithms in terms of time processing. It basically
+associates geiger cells but considering succesive neighbors. It does not use the
+longitudinal information and then can aggregates track belonging to two
+different particles. Due to over-simplicty, it does not need any parameters !
+
+#+BEGIN_SRC sh
+  [name="basic_tracker_clustering" type="snemo::analysis::processing::basic_tracker_clustering_module"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The label of the Geometry service
+  Geo_label : string  = "Geo"
+
+  #@description The label of the 'Calibrated Data' bank
+  CD_label : string  = "CD"
+
+  #@description The label of the 'Tracker Clustering Data' bank
+  TCD_label : string  = "TCD"
+#+END_SRC
+
+**** Cellular Automaton Tracker
+This algorithm provides tons of parameters and is based in F. Nova work. A
+somewhat complete overview of CAT main features can be seen in DocDb [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2120][#2120]].
+
+#+BEGIN_SRC sh
+  [name="cat_tracker_clustering" type="snemo::reconstruction::processing::tracker_clustering_module"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The label of the Geometry service
+  Geo_label : string  = "Geo"
+
+  #@description The label of the 'Event Header' bank
+  EH_label : string  = "EH"
+
+  #@description The label of the 'Calibrated Data' bank
+  CD_label : string  = "CD"
+
+  #@description The label of the 'Tracker Clustering Data' bank
+  TCD_label : string  = "TCD"
+
+  #@description The ID of the tracker hits clustering algorithm
+  algorithm : string  = "CAT"
+
+  #@description The module number
+  module_number : integer = 0
+
+  #@description The geometry category of the Geiger drift volume
+  gg_cell_geom_category : string = "drift_cell_core"
+
+  #@description Activation of the clustering of prompt hits
+  TPC.processing_prompt_hits : boolean = 1
+
+  #@description Activation of the clustering of delayed hits
+  TPC.processing_delayed_hits : boolean = 1
+
+  #@description The time width of the window for collecting candidate clusters of delayed hits (in microsecond)
+  TPC.delayed_hit_cluster_time : real = 10.0 # microsec
+
+  #@description Activation of the clustering of delayed hits
+  TPC.split_chamber : boolean = 0
+
+  #@description CAT param
+  CAT.ratio : real = 10.
+
+  #@description CAT param
+  CAT.nsigma : real = 4.
+
+  #@description CAT param
+  CAT.nofflayers : integer = 1.
+
+  #@description CAT param
+  CAT.level : string = "NORMAL"
+
+  #@description CAT param
+  #CAT.max_time : real = 5000
+
+  #@description CAT driver param
+  #CAT.driver.sigma_z_factor : real = 1.
+#+END_SRC
+
+**** Tracker Cluster Path
+This algorithm has been developped by Warwick group since June 2012 and mainly
+by K. Bhardwaj.
+
+#+BEGIN_SRC sh
+  [name="tcp_tracker_clustering" type="snemo::reconstruction::processing::tracker_clustering_module"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The label of the Geometry service
+  Geo_label : string  = "Geo"
+
+  #@description The label of the 'Event Header' bank
+  EH_label : string  = "EH"
+
+  #@description The label of the 'Calibrated Data' bank
+  CD_label : string  = "CD"
+
+  #@description The label of the 'Tracker Clustering Data' bank
+  TCD_label : string  = "TCD"
+
+  #@description The ID of the tracker hits clustering algorithm
+  algorithm : string  = "TCP"
+
+  #@description The module number
+  module_number : integer = 0
+
+  #@description The geometry category of the Geiger drift volume
+  gg_cell_geom_category : string = "drift_cell_core"
+
+  #@description Activation of the clustering of prompt hits
+  TPC.processing_prompt_hits : boolean = 1
+
+  #@description Activation of the clustering of delayed hits
+  TPC.processing_delayed_hits : boolean = 1
+
+  #@description The time width of the window for collecting candidate clusters of delayed hits (in microsecond)
+  TPC.delayed_hit_cluster_time : real = 10.0 # microsec
+
+  #@description Activation of the clustering of delayed hits
+  TPC.split_chamber : boolean = 1
+
+  #@description TCP param
+  TCP.gamma : integer = 3
+
+  #@description TCP param
+  TCP.lambda : real = 0.1
+
+  #@description TCP param
+  TCP.join_threshold : real = 0.70
+
+  #@description TCP param
+  TCP.opt_threshold : real = 0.00001
+
+  #@description TCP param
+  TCP.lambda_factor : real = 1.05
+
+  #@description TCP param
+  TCP.smooth : integer = 0
+
+  #@description TCP param
+  TCP.max_iterations : integer = 1000
+
+  #@description TCP param
+  TCP.line_search_freq : integer = 2
+
+  #@description TCP param
+  TCP.line_search_points : integer = 10
+
+  #@description TCP param
+  TCP.check_splits : integer = 1
+
+  #@description TCP param
+  TCP.target_cluster : integer = 0
+
+  #@description TCP param
+  TCP.max_number_of_clusters_allowed : integer = 3
+
+  #@description TCP param
+  TCP.verbose : integer = 0
+
+  #@description TCP param
+  TCP.refinement_no : integer = 5
+
+  #@description TCP param
+  TCP.line_tolerance : real = 0.39
+
+  #@description TCP param
+  TCP.point_tolerance : real = 100
+#+END_SRC
+
+*** Fitting algorithm
+:PROPERTIES:
+:CUSTOM_ID: fitting_modules
+:END:
+As the time of writing this document, there is only one algorithm well
+integrated into SN@ilWare pipeline. It is based on [[https://nemo.lpc-caen.in2p3.fr/wiki/trackfit][trackfit]] originally
+developped and tested on NEMO3 data. It is quite an agnostic algorithm in the
+sense that it only asked for cells position and drift radius. Fitting process is
+done by GSL minimizer to find the global solution given the model: either helix
+or line models.
+
+#+BEGIN_SRC sh
+  [name="trackfit_tracker_fitting" type="snemo::reconstruction::processing::tracker_fitting_module"]
+#+END_SRC
+
+**** General debug
+#+BEGIN_SRC sh
+  #@description Debug flag
   debug : boolean = 0
 #+END_SRC
-*** Name & description
-#+BEGIN_SRC sh
-  #@description The name of the service manager
-  name : string = "sn_service_manager"
 
-  #@description The description of the service manager
-  description : string = "A SuperNEMO service manager"
-#+END_SRC
-*** List of service files
+**** Data bank & services labels
 #+BEGIN_SRC sh
-  #@description The list of files that describe services
-  services.configuration_files : string[1] = \
-      "${SNSW_SIMULATION_DIR}/config/services.conf"
+  #@description The label of the Geometry service
+  Geo_label : string  = "Geo"
+
+  #@description The label of the 'Tracker Clustering Data' bank
+  TCD_label : string  = "TCD"
+
+  #@description The label of the 'Tracker Trajectory Data' bank
+  TTD_label : string  = "TTD"
 #+END_SRC
 
-*** Services
+**** General options
+#+BEGIN_SRC sh
+  #@description The module number
+  module_number : integer = 0
+
+  #@description The maximum number of fits to be saved (0 means all will be kept)
+  maximum_number_of_fits : integer = 0
+#+END_SRC
+
+**** Trackfit algorithm
+#+BEGIN_SRC sh
+  #@description The ID of the tracker fitting algorithm
+  algorithm : string  = "trackfit"
+#+END_SRC
+
+***** Verbosities
+#+BEGIN_SRC sh
+  #@description Trackfit verbosity
+  trackfit.verbose : boolean = 0
+
+  #@description Trackfit verbosity
+  trackfit.warning : boolean = 0
+
+  #@description Trackfit verbosity
+  trackfit.devel : boolean = 0
+#+END_SRC
+
+***** Drift time calibration
+For time delayed cluster like alpha particle track, a /a posteriori/ drift time
+calibration has to be done to shift the time origin and then calculates the new
+cell radius. The =drift_time_calibration= can be anything if it respects some
+object interface rules defines in =trackfit::i_drift_time_calibration=
+class. Here we use the same model as in Section [[Tracker simulation to calibration data]].
+#+BEGIN_SRC sh
+  #@description Use drift time (re)calibration
+  trackfit.drift_time_calibration_label : string = "snemo"
+#+END_SRC
+
+***** Fit models
+#+BEGIN_SRC sh
+  #@description Fit models
+  trackfit.models : string[2] = "line" "helix"
+#+END_SRC
+***** Line fit parameters
+****** Guess parameters
+#+BEGIN_SRC sh
+  #@description Activate devel messages for line guess driver
+  trackfit.line.guess.devel  : boolean = 0
+
+  #@description Activate warning messages for line guess driver
+  trackfit.line.guess.warning  : boolean = 0
+
+  #@description Use max radius (cell size) to construct initial guess point (1) or use the effective drift Geiger distance of the hit (0)
+  trackfit.line.guess.use_max_radius    : boolean = 0
+
+  #@description Apply a factor (>0) to the max radius (devel mode)
+  trackfit.line.guess.max_radius_factor : real = 1.0
+
+  #@description Use guess trust (1) or keep all of the guess fits (0) and select later
+  trackfit.line.guess.use_guess_trust   : boolean = 0
+
+  #@description Mode for trusting a fit guess ("counter", "barycenter")
+  trackfit.line.guess.guess_trust_mode  : string = "counter"
+
+  #@description Fit the delayed geiger cluster
+  trackfit.line.guess.fit_delay_cluster  : boolean = 1
+#+END_SRC
+
+****** Fit parameters
+#+BEGIN_SRC sh
+  #@description 'Line' fit only guess ("BB", "BT", "TB", "TT")
+  #trackfit.line.only_guess : string[1] = "TT"
+
+  #@description Store only the N solutions with best line fit
+  #trackfit.line.store_number_of_solutions : integer = 2
+
+  #@description Print the status of the fit stepper at each step (devel only)
+  trackfit.line.fit.step_print_status : boolean = 0
+
+  #@description Plot the 2D view of the fitted data at each step (devel only)
+  trackfit.line.fit.step_draw         : boolean = 0
+
+  #@description Track fit adds start time as an additionnal parameter to the fit (needs a calibration driver)
+  trackfit.line.fit.fit_start_time    : boolean = 0
+
+  #@description Track fit recomputes the drift distance from drift time (needs a calibration driver)
+  trackfit.line.fit.using_drift_time  : boolean = 0
+
+  #@description Allow a fitted track to begin not tangential to the first hit
+  trackfit.line.fit.using_first       : boolean = 0
+
+  #@description Allow a fitted track to end not tangential to the last hit
+  trackfit.line.fit.using_last        : boolean = 0
+#+END_SRC
+***** Helix fit parameters
+****** Guess parameters
+#+BEGIN_SRC sh
+  #@description Activate devel messages for helix guess driver
+  trackfit.helix.guess.devel  : boolean = 0
+
+  #@description Activate warning messages for helix guess driver
+  trackfit.helix.guess.warning  : boolean = 0
+
+  #@description Use max radius (cell size) to construct initial guess point (1) or use the effective drift Geiger distance of the hit (0)
+  trackfit.helix.guess.use_max_radius    : boolean = 0
+
+  #@description Apply a factor (>0) to the max radius (devel mode)
+  trackfit.helix.guess.max_radius_factor : real = 1.0
+
+  #@description Use guess trust (1) or keep all of the guess fits (0) and select later
+  trackfit.helix.guess.use_guess_trust   : boolean = 0
+
+  #@description Mode for trusting a fit guess ("counter", "barycenter")
+  trackfit.helix.guess.guess_trust_mode  : string = "counter"
+
+  #@description Fit the delayed geiger cluster (by default, false since this mode is devoted to line fit)
+  trackfit.helix.guess.fit_delay_cluster  : boolean = 0
+#+END_SRC
+****** Fit parameters
+#+BEGIN_SRC sh
+  #@description 'Helix' fit only guess ("BBB", "BBT", "BTB", "BTT", "TBB", "TBT", "TTB", "TTT")
+  #trackfit.helix.only_guess : string[1] = "TTT"
+
+  #@description Store only the N solutions with best helix fit
+  #trackfit.helix.store_number_of_solutions : integer = 2
+
+  #@description Print the status of the fit stepper at each step (devel only)
+  trackfit.helix.fit.step_print_status : boolean = 0
+
+  #@description Plot the 2D view of the fitted data at each step (devel only)
+  trackfit.helix.fit.step_draw         : boolean = 0
+
+  #@description Track fit recomputes the drift distance from drift time (needs a calibration driver)
+  trackfit.helix.fit.using_drift_time  : boolean = 0
+
+  #@description Allow a fitted track to begin not tangential to the first hit
+  trackfit.helix.fit.using_first       : boolean = 0
+
+  #@description Allow a fitted track to end not tangential to the last hit
+  trackfit.helix.fit.using_last        : boolean = 0
+#+END_SRC
+
+*** Basic particle tracking
+Given results of the two previous steps i.e. clustering and fitting, the
+trajectories must be interpreted within SuperNEMO detector geometry. The
+particle tracking translates trajectory into particle tracks and then determines
+the track charge (assuming particle comes from the source foil), it extrapolates
+track intersection with calorimeter walls and finally it associates particle
+track with calorimeter blocks.
+
+#+BEGIN_SRC sh
+  [name="basic_particle_tracking" type="snemo::analysis::processing::basic_particle_tracking_module"]
+#+END_SRC
+
+**** Debug flag
+#+BEGIN_SRC sh
+  #@description Debug flag
+  debug : boolean = 1
+#+END_SRC
+**** Data banks and services labels
+#+BEGIN_SRC sh
+  #@description The label of the Geometry service
+  Geo_label : string  = "Geo"
+
+  #@description The label of the 'Calibrated Data' bank
+  CD_label : string  = "CD"
+
+  #@description The label of the 'Tracker Trajectory Data' bank
+  TTD_label : string  = "TTD"
+
+  #@description The label of the 'Particle Track Data' bank
+  PTD_label : string  = "PTD"
+#+END_SRC
+**** Module number
+#+BEGIN_SRC sh
+  #@description The module number
+  module_number : integer = 0
+#+END_SRC
+
+**** Drivers
+The particle track reconstruction is done within several drivers, each one
+having a dedicated tasks such as to compute track charge or to associate
+particle track with calorimeter block. The way to perform these "actions" is
+then decorelated with the pipeline execution. Other algorithms can be
+implemented but the particle tracking module will stay unchanged.
+#+BEGIN_SRC sh
+  #@description List of drivers to be used (see description below)
+  drivers : string[3] = "VED" "CCD" "CAD"
+#+END_SRC
+
+***** Vertex Extrapolation Driver
+#+BEGIN_SRC sh
+  #@description Vertex Extrapolation Driver options
+  VED.debug : boolean = 1
+
+  #@description Use linear extrapolation (not implemented yet)
+  VED.use_linear_extrapolation : boolean = 0
+#+END_SRC
+
+***** Charge Computation Driver
+#+BEGIN_SRC sh
+  #@description Charge Computation Driver options
+  CCD.debug : boolean = 1
+
+  #@description Charge sign convention
+  CCD.charge_from_source : boolean = 1
+#+END_SRC
+
+***** Calorimeter Association Driver
+#+BEGIN_SRC sh
+  #@description Calorimeter Association Driver options
+  CAD.debug : boolean = 1
+
+  #@description Maximum matching distance for track/calo association
+  CAD.matching_tolerance : string = "300 mm"
+
+  #@description Use a simpler approach by looking for gieger cells in front of calo (not implemented yet)
+  CAD.use_last_geiger_cell : boolean = 0
+#+END_SRC
+* Services
 :PROPERTIES:
 :CUSTOM_ID: services
-:TANGLE: services_2.conf
+:TANGLE: services.conf
 :END:
 A service generally hosts a specific resource that can be shared by many other
 software components, including other services or data processing modules (see
@@ -599,7 +1058,6 @@ software components, including other services or data processing modules (see
 #+BEGIN_SRC sh :noweb yes
   <<service_preamble>>
 #+END_SRC
-
 
 * Running SN@ilWare processing chain
 :PROPERTIES:
