@@ -1,0 +1,607 @@
+#+TITLE:  SN@ilWare Simulation Configuration
+#+AUTHOR: Xavier Garrido
+#+DATE:   2013-02-22
+#+OPTIONS: toc:nil
+
+* Introduction
+:PROPERTIES:
+:CUSTOM_ID: introduction
+:TANGLE: no
+:END:
+This file contains a SN@ilWare configuration to run SuperNEMO simulations. For
+more details on running SuperNEMO simulations and the concept behind
+modules/services see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=1889][these mandatory presentations]] given by
+F. Mauger.
+
+The following file is organised using [[http://orgmode.org/worg/org-contrib/babel/index.html][org-babel]] and its ability to execute
+source code. It requires then a recent installation of emacs[1] which bundles
+=org=. Without entering into too much details regarding =org-babel= abilities, the
+basic idea is to give a "literate" way to navigate through the different
+sections, each of them representing a configuration file. Moreover, using =org=
+folding/unfolding capability, item can be hide and the user can focus on
+relevant parts.
+
+To export the different configuration files, you must run =org-babel-tangle= which will
+tangle each code block into the given file[2].
+
+[1] At the time of writing this document, emacs version is 24.2.
+[2] Emacs lisp function can be run using =ALT-x= command and typing the function name.
+
+* Pipeline configuration
+:PROPERTIES:
+:CUSTOM_ID: pipeline_configuration
+:END:
+SN@ilWare implements the concept of data processing pipeline. An event record
+object is passed through a chain of data processing modules, each of them being
+responsible for a given task. The two following parts describe the configurations
+of the modules as well as the services.
+
+** Module manager
+:PROPERTIES:
+:CUSTOM_ID: module_manager
+:TANGLE: module_manager_2.conf
+:END:
+This file is the main and central piece of code for loading all modules/services
+needed by =snemo_processing= binary. It provides links to module files and
+service files.
+*** Debug & verbosity
+#+BEGIN_SRC sh
+  #@description Module manager debug flag
+  debug : boolean = 0
+
+  #@description Module manager verbose flag
+  verbose : boolean = 0
+
+  #@description Embedded module factory debug flag
+  factory.debug : boolean = 0
+
+  #@description Embedded module factory 'no preload' flag
+  factory.no_preload : boolean = 0
+#+END_SRC
+
+*** Service manager configuration
+#+BEGIN_SRC sh
+  #@description The configuration file of the embedded service manager
+  service_manager.configuration : string[1] = \
+      "${SNSW_SIMULATION_DIR}/config/service_manager.conf"
+#+END_SRC
+
+*** Configuration files for modules
+#+BEGIN_SRC sh
+  #@description The configuration files for modules
+  modules.configuration_files : string[5] =                \
+      "${SNSW_SIMULATION_DIR}/config/io_modules.conf"      \
+      "${SNSW_SIMULATION_DIR}/config/s2c_modules.conf"     \
+      "${SNSW_SIMULATION_DIR}/config/tracker_modules.conf" \
+      "${SNSW_SIMULATION_DIR}/config/ana_modules.conf"     \
+      "${SNSW_SIMULATION_DIR}/config/plot_modules.conf"
+#+END_SRC
+
+*** Modules
+:PROPERTIES:
+:CUSTOM_ID: modules
+:END:
+A data processing module is an object that performs some specific action (apply
+an algorithm) on event records (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Dataprocessingmodules][SN@ilWare FAQ]] for more details). It inherits
+the =snemo::core::processing::base_module= mother/interface class. A module
+class implements a few mandatory methods :
+
+- constructor
+- destructor
+- initialize
+- reset
+- process
+
+The newt items hold the configuration for several modules used in SN@ilWare
+pipeline processing.
+
+**** Mandatory preamble
+This piece of code is not tangled by =org= but inserted into all module
+preamble. This is mandatory in order to load properly and statically the
+modules. Every module declared in this file must include this code block by
+putting =<<module_preamble>>= in their module header declaration (before
+anything else). The module code block should then use the =:noweb yes= option to
+expand the =module_preamble= code.
+
+#+NAME: module_preamble
+#+BEGIN_SRC sh :results none :tangle no
+  #@description A sample list of setups
+  #@key_label   "name"
+  #@meta_label  "type"
+#+END_SRC
+
+**** I/O modules
+:PROPERTIES:
+:CUSTOM_ID: io_modules
+:TANGLE: io_modules_2.conf
+:END:
+
+- Insert preamble
+  #+BEGIN_SRC sh :noweb yes
+    <<module_preamble>>
+  #+END_SRC
+
+- Skeleton code for output module
+
+  This skeleton code allows to define output module given the name of the
+  module. It also defines the output directory where to store each output steps.
+
+  #+NAME: output_module(mname="", debug=0, ofilename="")
+  #+BEGIN_SRC sh :results output :tangle no
+    IO_OUTPUT_DIRECTORY="/tmp/${USER}/snemo.d"
+    if [ ! -d ${IO_OUTPUT_DIRECTORY} ]; then
+        mkdir -p ${IO_OUTPUT_DIRECTORY}
+    fi
+    echo '[name="'$mname'" type="snemo::core::io::io_module"]'
+    echo
+    echo '#@description Debug flag'
+    echo 'debug : boolean =' $debug
+    echo
+    echo '#@description Input/output mode'
+    echo 'mode : string = "output"'
+    echo
+    echo '#@description Output file mode'
+    echo 'output.mode : string = "single"'
+    echo
+    echo '#@description Path to output data file'
+    if [ -z ${ofilename} ]; then
+        echo 'output.single.filename : string = "'$IO_OUTPUT_DIRECTORY/$mname'.brio"'
+    else
+        echo 'output.single.filename : string = "'$ofilename'"'
+    fi
+    echo
+    echo '#@description The label of the Context service'
+    echo 'Ctx_label : string  = "Ctx"'
+  #+END_SRC
+
+***** Simulation output
+#+BEGIN_SRC sh :noweb yes
+  <<output_module("io_output_simulated", debug=0)>>
+#+END_SRC
+
+***** Calibration output
+#+BEGIN_SRC sh :noweb yes
+  <<output_module("io_output_calibrated", debug=0)>>
+#+END_SRC
+
+***** Tracker clustering output
+#+BEGIN_SRC sh :noweb yes
+  <<output_module("io_output_tracker_clustering", debug=0)>>
+#+END_SRC
+
+***** Tracker fitting output
+#+BEGIN_SRC sh :noweb yes
+  <<output_module("io_output_tracker_fitting", debug=0)>>
+#+END_SRC
+
+***** Analysis output
+#+BEGIN_SRC sh :noweb yes
+  <<output_module("io_output_analysed", debug=0)>>
+#+END_SRC
+
+***** Selection output
+
+- Calibration cuts
+  #+BEGIN_SRC sh :noweb yes
+    <<output_module("io_output_calibrated_selected",     debug=0)>>
+    <<output_module("io_output_calibrated_non_selected", debug=0)>>
+  #+END_SRC
+
+- Tracking cuts
+  #+BEGIN_SRC sh :noweb yes
+    <<output_module("io_output_tracking_selected",     debug=0)>>
+    <<output_module("io_output_tracking_non_selected", debug=0)>>
+  #+END_SRC
+
+- Fitting cuts
+  #+BEGIN_SRC sh :noweb yes
+    <<output_module("io_output_fitting_selected",     debug=0)>>
+    <<output_module("io_output_fitting_non_selected", debug=0)>>
+  #+END_SRC
+
+- Particle track cuts
+  #+BEGIN_SRC sh :noweb yes
+    <<output_module("io_output_particle_tracking_selected",     debug=0)>>
+    <<output_module("io_output_particle_tracking_non_selected", debug=0)>>
+  #+END_SRC
+
+**** Simulation to calibration modules
+:PROPERTIES:
+:CUSTOM_ID: s2c_modules
+:TANGLE: s2c_modules.conf
+:END:
+
+Insert preamble
+  #+BEGIN_SRC sh :noweb yes
+    <<module_preamble>>
+  #+END_SRC
+
+***** G4 simulation
+A processor that populate the event record =simulated data= bank with Geant4
+output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carloproduction][SN@ilWare FAQ]]).
+#+BEGIN_SRC sh
+  [name="simulation" type="snemo::g4::simulation_module"]
+#+END_SRC
+
+- Debug flag
+  #+BEGIN_SRC sh
+    #@description Debug flag
+    debug : boolean = 0
+
+    #@description The simulation manager debug flag
+    manager.debug   : boolean = 0
+
+    #@description The simulation manager verbose flag
+    manager.verbose : boolean = 0
+
+    #@description The debug flag for tracking thread control
+    ctrl.devel      : boolean = 0
+  #+END_SRC
+- Bank & service labels
+  #+BEGIN_SRC sh
+    #@description The Geometry Service label
+    Geo_label : string = "Geo"
+
+    #@description The 'Simulated data' bank label in the event record
+    SD_label  : string = "SD"
+
+    #@description Flag to allow cleaning of some former simulated data bank if any (default: 0)
+    erase_former_SD_bank : boolean = 0
+  #+END_SRC
+- Seed values
+  #+BEGIN_SRC sh
+    #@description The simulation manager PRNG seed
+    manager.seed    : integer = 2
+
+    #@description The vertex generator PRNG seed
+    manager.vertex_generator_seed : integer = 4
+
+    #@description The event generator PRNG seed
+    manager.event_generator_seed  : integer = 5
+
+    #@description The SHPF PRNG seed
+    manager.shpf_seed             : integer = 6
+
+    #@description The saving of PRNG seeds
+    manager.output_prng_seeds_file  : string = "/tmp/${USER}/snemo.d/prng_seeds.save"
+
+    #@description The saving of PRNG states
+    manager.output_prng_states_file : string = "/tmp/${USER}/snemo.d/prng_states.save"
+
+    #@description The modulo for PRNG states backup
+    manager.prng_states_save_modulo : integer = 10
+  #+END_SRC
+- Vertex generator
+  #+BEGIN_SRC sh
+        #@description The vertex generator PRNG label
+        manager.vertex_generator_name : string  = "source_strips_bulk"
+    #+END_SRC
+- Event generator
+  #+BEGIN_SRC sh
+    #@description The event generator PRNG label
+    manager.event_generator_name  : string  = "bb0nu_Se82.wrapper"
+    #manager.event_generator_name  : string  = "bb2nu_Se82.wrapper"
+    #manager.event_generator_name  : string  = "calib_Bi207.wrapper"
+    #manager.event_generator_name  : string  = "calib_Sr90.wrapper"
+    #manager.event_generator_name  : string  = "bkg_Tl208.wrapper"
+    #manager.event_generator_name  : string  = "bkg_Bi214_Po214.wrapper"
+    #manager.event_generator_name  : string  = "electron_0-3MeV_flat"
+  #+END_SRC
+- SNG4 manager
+  #+BEGIN_SRC sh
+    #@description The simulation manager configuration file
+    manager.configuration_filename : string = "${SNSW_SIMULATION_DIR}/config/sng4_manager.conf"
+  #+END_SRC
+
+  #+BEGIN_SRC sh :tangle sng4_manager_2.conf
+    <<module_preamble>>
+    ######################################
+    # MANAGER (main configuration level) #
+    ######################################
+
+    [name="manager"]
+
+    #@description Debug flag:
+    debug                 : boolean = 0
+
+    #@description Verbosity flag:
+    verbose               : boolean = 0
+
+    #@description Number of events to be simulated (superseded by the pipeline)
+    number_of_events      : integer = 20
+
+    #@description Geant4 tracking verbosity flag:
+    g4_tracking_verbosity : integer = 0
+
+    #@description Geant4 visualization activation flag:
+    g4_visualization      : boolean = 0
+
+
+    #####################
+    # VERTEX GENERATION #
+    #####################
+
+    [name="vertex_generator"]
+
+    #@description the filename with the list of registered vertex generators
+    vg_list : string[3] = \
+      "${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_2.0/scin_vg.lis"    \
+      "${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_2.0/tracker_vg.lis" \
+      "${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_2.0/source_vg.lis"
+
+    #########################
+    # DETECTOR CONSTRUCTION #
+    #########################
+
+    [name="detector_construction"]
+
+    #@config Main configuration file for the detector construction user object:
+
+    #@description Debug flag
+    debug : boolean = 0
+
+    #@description Verbose flag
+    verbose : boolean = 0
+
+    #@description Temporary directory for GDML file generation:
+    gdml.tmp_dir         : string = "/tmp/${USER}/sng4.d"
+
+    #@description Access mode to the GDML schema ("local" or "remote")
+    gdml.schema_location : string = "local" # "remote"
+
+    #@description Flag to skip GDML validation
+    gdml.no_validation   : boolean = 0
+
+    #@description Configuration file for the step hit processor factory:
+    hit_processor_factory.config : string = "${SNSW_SIMULATION_DIR}/config/step_hit_processor_factory.conf"
+
+    #@description Parameters for the generation of 'sensitive hits' through 'sensitive detectors' :
+    sensitive.detectors : string[4] = "calorimeter.SD" "xcalorimeter.SD" "gveto.SD" "tracker.SD"
+
+    sensitive.calorimeter.SD.debug                           : boolean = 0
+    sensitive.calorimeter.SD.hits_buffer_capacity            : integer = 200
+    sensitive.calorimeter.SD.record_alpha_quenching          : boolean = 1
+    sensitive.calorimeter.SD.record_track_id                 : boolean = 1
+    sensitive.calorimeter.SD.record_primary_particle         : boolean = 1
+    sensitive.calorimeter.SD.drop_zero_energy_deposit_steps  : boolean = 0
+    sensitive.calorimeter.SD.track_gamma                     : boolean = 1
+
+    sensitive.xcalorimeter.SD.debug                          : boolean = 1
+    sensitive.xcalorimeter.SD.hits_buffer_capacity           : integer = 200
+    sensitive.xcalorimeter.SD.record_alpha_quenching         : boolean = 1
+    sensitive.xcalorimeter.SD.record_track_id                : boolean = 1
+    sensitive.xcalorimeter.SD.record_primary_particle        : boolean = 1
+    sensitive.xcalorimeter.SD.drop_zero_energy_deposit_steps : boolean = 0
+    sensitive.xcalorimeter.SD.track_gamma                    : boolean = 1
+
+    sensitive.gveto.SD.debug                                 : boolean = 0
+    sensitive.gveto.SD.hits_buffer_capacity                  : integer = 200
+    sensitive.gveto.SD.record_alpha_quenching                : boolean = 1
+    sensitive.gveto.SD.record_track_id                       : boolean = 1
+    sensitive.gveto.SD.record_primary_particle               : boolean = 1
+    sensitive.gveto.SD.drop_zero_energy_deposit_steps        : boolean = 0
+    sensitive.gveto.SD.track_gamma                           : boolean = 1
+
+    sensitive.tracker.SD.debug                               : boolean = 0
+    sensitive.tracker.SD.hits_buffer_capacity                : integer = 1000
+    sensitive.tracker.SD.record_alpha_quenching              : boolean = 1
+    sensitive.tracker.SD.record_track_id                     : boolean = 1
+    sensitive.tracker.SD.record_primary_particle             : boolean = 1
+    sensitive.tracker.SD.drop_zero_energy_deposit_steps      : boolean = 0
+    sensitive.tracker.SD.track_gamma                         : boolean = 1
+
+    #@description Magnetic field value (gauss):
+    magnetic_field.default_field : real = 25.0
+
+    #@description List of module's IDs with non-zero magnetic field:
+    magnetic_field.modules : integer[1] = 0
+
+    #@description SetDeltaChord miss distance (mm):
+    magnetic_field.miss_distance : real = 0.5
+
+    #@description List of geometry models with max steps:
+    limits.list_of_models : string[3] = \
+                           "source_external_strip.model" \
+                           "source_internal_strip.model" \
+                           "drift_cell_core.model"
+
+    #@description Max step length inside source pad (mm):
+    limits.max_step.source_external_strip.model : real = 0.01
+
+    #@description Max step length inside source pad (mm):
+    limits.max_step.source_internal_strip.model : real = 0.01
+
+    #@description Max step length inside drift cell tracking volume (mm):
+    limits.max_step.drift_cell_core.model : real = 5.0
+    #limits.max_step.drift_cell_core : real = 10.0
+
+    #@description List of regions :
+    regions             : string[3] = "calorimeter" "tracker" "source"
+
+    #@description List of attached volumes/models per region :
+    regions.calorimeter : string[4] = \
+                        "calorimeter_scin_block_front.model" \
+                        "calorimeter_scin_block_back.model" \
+                        "gveto_scin_block.model" \
+                        "xwall_scin_block.model"
+    regions.tracker     : string[1] = "drift_cell_core.model"
+    regions.source      : string[2] = \
+                        "source_external_strip.model" \
+                        "source_internal_strip.model"
+
+
+    ################
+    # PHYSICS LIST #
+    ################
+
+    [name="physics_list"]
+
+    #@config Main configuration file for the physics lists:
+
+    #@description Debug flag
+    debug       : boolean = 0
+
+    #@description Verbosity flag
+    verbosity   : integer = 0
+
+    #@description Activate energy loss process for electron/positron
+    electron.energy_loss         : boolean = 1
+
+    #@description Activate multiple scaterring process for electron/positron
+    electron.multiple_scaterring : boolean = 1
+
+    #@description Activate the use of high-energy leptons
+    use_he_leptons               : boolean = 0
+
+    #@description Activate the use of mesons
+    use_mesons                   : boolean = 1
+
+    #@description Activate the use of specific cuts
+    using_cuts : boolean = 1
+
+    #@description List of region with production cut
+    production_cuts.regions     : string [3] = "calorimeter" "tracker" "source"
+
+    #@description lenght unit for production cut values
+    production_cuts.length_unit : string     = "mm"
+
+    #@description Production cut value for region "calorimeter"
+    production_cuts.calorimeter : real       = 5.0
+
+    #@description Production cut value for region "tracker"
+    production_cuts.tracker     : real       = 0.5
+
+    #@description Production cut value for region "source"
+    production_cuts.source      : real       = 0.05
+
+    #######################################
+    # PRIMARY PARTICLES/EVENTS GENERATION #
+    #######################################
+
+    [name="primary_generator"]
+
+    #@config Configuration of the primary event generator
+
+    #@description Debug
+    # debug : boolean = 0
+
+    #@description Configuration file for the embedded 'snemo::genbb::manager'
+    config : string = "${SNSW_SIMULATION_DIR}/config/sngenbb_manager.conf"
+
+
+    ##############
+    # RUN ACTION #
+    ##############
+
+    [name="run_action"]
+
+    #@description Run action debug flag :
+    debug : boolean = 0
+
+    #@description Run action event number print modulo :
+    #number_events_modulo : integer = 100
+
+    #@description If set, this flag forbids the generation of output files :
+    file.no_save : boolean = 1
+
+
+    ################
+    # EVENT ACTION #
+    ################
+
+    [name="event_action"]
+
+    #@description Event action debug flag:
+    debug : boolean = 0
+
+    ###################
+    # TRACKING ACTION #
+    ###################
+
+    [name="tracking_action"]
+
+    #@description Event action debug flag:
+    # debug : boolean = 0
+
+
+    ###################
+    # STEPPING ACTION #
+    ###################
+
+    [name="stepping_action"]
+
+    #@description Stepping action debug flag:
+    # debug : boolean = 0
+
+
+    ###################
+    # STACKING ACTION #
+    ###################
+
+    [name="stacking_action"]
+
+    #@description Stacking action debug flag:
+    # debug : boolean = 0
+
+    #@description Kill secondary particles within some volumes :
+    # kill_particles : boolean = 0
+
+    #@description Kill secondary particles within some volumes :
+    #kill_particles.volumes : string[1] = "drift_cell_core"
+
+    #@description Kill secondary particles within some materials :
+    #kill_particles.materials : string[1] = "tracking_gas"
+
+    # end of configuration file.
+  #+END_SRC
+
+** Service manager
+:PROPERTIES:
+:CUSTOM_ID: service_manager
+:TANGLE: service_manager_2.conf
+:END:
+*** Debug
+#+BEGIN_SRC sh
+  #@description Service manager debug flag
+  debug : boolean = 0
+#+END_SRC
+*** Name & description
+#+BEGIN_SRC sh
+  #@description The name of the service manager
+  name : string = "sn_service_manager"
+
+  #@description The description of the service manager
+  description : string = "A SuperNEMO service manager"
+#+END_SRC
+*** List of service files
+#+BEGIN_SRC sh
+  #@description The list of files that describe services
+  services.configuration_files : string[1] = \
+      "${SNSW_SIMULATION_DIR}/config/services.conf"
+#+END_SRC
+
+*** Services
+:PROPERTIES:
+:CUSTOM_ID: services
+:TANGLE: services_2.conf
+:END:
+A service generally hosts a specific resource that can be shared by many other
+software components, including other services or data processing modules (see
+[[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Whatisaservice][SN@ilWare FAQ]]).
+
+#+NAME: service_preamble
+#+BEGIN_SRC sh :results none :tangle no
+  #@description A sample list of setups
+  #@key_label   "name"
+  #@meta_label  "type"
+#+END_SRC
+
+#+BEGIN_SRC sh :noweb yes
+  <<service_preamble>>
+#+END_SRC
+
+
+* Running SN@ilWare processing chain
+:PROPERTIES:
+:CUSTOM_ID: running_pipeline
+:END:
