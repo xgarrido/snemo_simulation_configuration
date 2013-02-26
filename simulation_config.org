@@ -72,13 +72,13 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
-  modules.configuration_files : string[6] =                 \
-      "${SNSW_SIMULATION_DIR}/config/io_modules.conf"       \
-      "${SNSW_SIMULATION_DIR}/config/utl_modules.conf"      \
-      "${SNSW_SIMULATION_DIR}/config/s2c_modules.conf"      \
-      "${SNSW_SIMULATION_DIR}/config/tracker_modules.conf"  \
-      "${SNSW_SIMULATION_DIR}/config/analysis_modules.conf" \
-      "${SNSW_SIMULATION_DIR}/config/plot_modules.conf"
+  modules.configuration_files : string[6] =                        \
+      "${SNSW_SIMULATION_DIR}/configuration/io_modules.conf"       \
+      "${SNSW_SIMULATION_DIR}/configuration/utl_modules.conf"      \
+      "${SNSW_SIMULATION_DIR}/configuration/s2c_modules.conf"      \
+      "${SNSW_SIMULATION_DIR}/configuration/tracker_modules.conf"  \
+      "${SNSW_SIMULATION_DIR}/configuration/analysis_modules.conf" \
+      "${SNSW_SIMULATION_DIR}/configuration/plot_modules.conf"
 #+END_SRC
 
 ** Service manager
@@ -643,7 +643,6 @@ for the quenching of alpha particles.
 :TANGLE: tracker_modules.conf
 :END:
 
-Insert preamble
 #+BEGIN_SRC sh :noweb yes
     <<module_preamble>>
 #+END_SRC
@@ -1094,6 +1093,10 @@ requirements. One important point is that module order really matters since a
 module, especially =chain_module=, needs to know the declaration of all the
 modules it contains.
 
+#+BEGIN_SRC sh :noweb yes
+    <<module_preamble>>
+#+END_SRC
+
 *** Process after selecting particle track
 #+BEGIN_SRC sh :noweb yes
    <<if_module("process_with_particle_track_cuts", cut="particle_track_cut", then="io_output_particle_tracking_selected", else="io_output_particle_tracking_non_selected")>>
@@ -1179,7 +1182,6 @@ modules it contains.
   <<chain_module("full_chain", 3, full_chain)>>
 #+END_SRC
 
-
 *** Miscellaneous
 #+TBLNAME: reformat_data :results none
 | remove_header                  |
@@ -1192,6 +1194,219 @@ modules it contains.
 
 #+BEGIN_SRC sh :noweb yes
   <<chain_module("reformat_data", 7, reformat_data)>>
+#+END_SRC
+
+** Plot modules
+:PROPERTIES:
+:CUSTOM_ID: plot_modules
+:TANGLE: plot_modules.conf
+:END:
+
+This last section holds all the module related to histogram
+plotting. Historically, most of them are pretty simple modules. Recently, an
+=histogram_service= has been provided so latest plot modules make use of it (see
+=basic_plot= module for example). This module can not be as generic as processing
+module. Basically, for one study purpose, there is one or two plot modules.
+
+#+BEGIN_SRC sh :noweb yes
+    <<module_preamble>>
+#+END_SRC
+
+*** Basic plot module
+#+BEGIN_SRC sh
+  [name="basic_plot" type="snemo::analysis::processing::basic_plot_module"]
+
+  #@config 'snemo::analysis::processing::basic_plot_module' configuration parameters
+
+  #@description Debug flag
+  debug     : boolean = 1
+
+  #@description The Histogram Service label
+  Histo_label : string = "Histo"
+
+  #@description The label of the 'Event Header' bank
+  EH_label : string  = "EH"
+
+  #@description The label of the 'Simulated Data' bank
+  SD_label : string  = "SD"
+#+END_SRC
+
+*** Study calorimeter block size for SuperNEMO (deprecated)
+#+BEGIN_SRC sh :tangle no
+  [name="snemo_block_size" type="snemo::analysis::processing::snemo_block_size_module"]
+
+  #@config 'snemo::analysis::processing::snemo_block_size' configuration parameters
+
+  #@description Debug flag
+  debug     : boolean = 0
+
+  #@description Interactive flag (ROOT window popup)
+  interactive : boolean = 1
+
+  #@description The label of the 'Analysed Data' bank
+  AD_label : string  = "ANA"
+#+END_SRC
+
+*** Study calorimeter energy resolution for SuperNEMO (deprecated)
+#+BEGIN_SRC sh :tangle no
+  [name="snemo_energy_resolution" type="snemo::analysis::processing::snemo_energy_resolution_module"]
+
+  #@config 'snemo::analysis::processing::snemo_energy_resolution' configuration parameters
+
+  #@description Debug flag
+  debug     : boolean = 0
+
+  #@description Interactive flag (ROOT window popup)
+  interactive : boolean = 1
+
+  #@description The label of the 'Analysed Data' bank
+  AD_label : string  = "ANA"
+#+END_SRC
+*** Study particle track result
+**** Particle charge
+#+BEGIN_SRC sh
+  [name="snemo_particle_charge" type="snemo::analysis::processing::snemo_particle_charge_module"]
+
+  #@description Debug flag
+  debug     : boolean = 0
+
+  #@description Interactive flag (ROOT window popup)
+  interactive : boolean = 1
+
+  #@description The label of the 'Event Header' bank
+  EH_label : string  = "EH"
+
+  #@description The label of the 'Simulated Data' bank
+  SD_label : string  = "SD"
+
+  #@description The label of the 'Particle Track Data' bank
+  PTD_label : string  = "PTD"
+#+END_SRC
+**** Vertex resolution
+#+BEGIN_SRC sh
+  [name="snemo_vertex_resolution" type="snemo::analysis::processing::snemo_vertex_resolution_module"]
+
+  #@description Debug flag
+  debug       : boolean = 1
+
+  #@description Vertex reconstruction either on 'foil', 'calo' or 'xcalo'
+  parameter   : string = "calo"
+
+  #@description Interactive flag (ROOT window popup)
+  interactive : boolean = 1
+
+  #@description The label of the 'Event Header' bank
+  EH_label    : string  = "EH"
+
+  #@description The label of the 'Simulated Data' bank
+  SD_label    : string  = "SD"
+
+  #@description The label of the 'Particle Track Data' bank
+  PTD_label   : string  = "PTD"
+#+END_SRC
+**** Study track fit quality
+#+BEGIN_SRC sh
+  [name="snemo_particle_reduced_chi2" type="snemo::analysis::processing::snemo_particle_track_parameters_module"]
+
+  #@description Debug flag
+  debug       : boolean = 0
+
+  #@description Interactive flag (ROOT window popup)
+  interactive : boolean = 1
+
+  #@description The label of the 'Event Header' bank
+  EH_label    : string  = "EH"
+
+  #@description The label of the 'Simulated Data' bank
+  SD_label    : string  = "SD"
+
+  #@description The label of the 'Particle Track Data' bank
+  PTD_label   : string  = "PTD"
+#+END_SRC
+
+**** Study fit curvature
+#+BEGIN_SRC sh
+  [name="snemo_particle_curvature" type="snemo::analysis::processing::snemo_particle_track_parameters_module"]
+
+  #@description Debug flag
+  debug       : boolean = 0
+
+  #@description Parameter to be plot (either 'reduced_chi2' or 'curvature')
+  parameter   : string = "curvature"
+
+  #@description Interactive flag (ROOT window popup)
+  interactive : boolean = 1
+
+  #@description The label of the 'Event Header' bank
+  EH_label    : string  = "EH"
+
+  #@description The label of the 'Simulated Data' bank
+  SD_label    : string  = "SD"
+
+  #@description The label of the 'Particle Track Data' bank
+  PTD_label   : string  = "PTD"
+#+END_SRC
+*** \beta\beta\nu\nu analysis
+**** Discrimination
+#+BEGIN_SRC sh
+  [name="snemo_bb0nu_discrimination" type="snemo::analysis::processing::snemo_bb0nu_discrimination_module"]
+
+  #@description Debug flag
+  debug       : boolean = 0
+
+  #@description Interactive flag (ROOT window popup)
+  interactive : boolean = 1
+
+  #@description The label of the 'Event Header' bank
+  EH_label    : string  = "EH"
+
+  #@description The label of the 'Particle Track Data' bank
+  PTD_label   : string  = "PTD"
+#+END_SRC
+
+**** Caclculation of halflife limit
+#+BEGIN_SRC sh
+  [name="snemo_bb0nu_halflife_limit" type="snemo::analysis::processing::snemo_bb0nu_halflife_limit_module"]
+
+  #@description Debug flag
+  debug       : boolean = 0
+
+  #@description Interactive flag (ROOT window popup)
+  interactive : boolean = 1
+
+  #@description The label of the 'Event Header' bank
+  EH_label    : string  = "EH"
+
+  #@description The label of the 'Particle Track Data' bank
+  PTD_label   : string  = "PTD"
+
+  #@description The Histogram Service label
+  Histo_label : string = "Histo"
+#+END_SRC
+
+The key fields are used to build different key for histogram dictionnary. The
+basic idea is to have this information inside =event_header= and use it to build
+a =string= key. The program is then quite dynamic in the sense that 0\nu
+halflife calculation can be done for different study purpose (just change the =key_fields=).
+#+BEGIN_SRC sh
+  #@description The key fields from 'Event Header' bank to build a unique key for histogram
+  key_fields : string [2] = "analysis.decay_process" \
+                            "analysis.magnetic_field"
+#+END_SRC
+
+Experimental conditions:
+#+BEGIN_SRC sh
+  #@description The atomic mass number of the isotope
+  experiment.isotope_mass_number : integer = 82
+
+  #@description The total mass of the isotope
+  experiment.isotope_mass : string = "5 kg"
+
+  #@description The bb2nu halflife of the isotope
+  experiment.isotope_bb2nu_halflife : real = 9.0e19 #year
+
+  #@description The exposure time of the experiment
+  experiment.exposure_time : real = 2.0 #year
 #+END_SRC
 
 * Services
@@ -1214,6 +1429,557 @@ software components, including other services or data processing modules (see
   <<service_preamble>>
 #+END_SRC
 
+** Context service
+#+BEGIN_SRC sh
+  [name="Ctx" type="snemo::core::service::context_service"]
+
+  #@description Debug flag
+  debug : boolean = 1
+
+  #@description Verbosity flag
+  verbose : boolean = 1
+
+  #@description File from which the context is to be loaded at program start
+  load.file : string = "/tmp/${USER}/snemo_context.conf"
+
+  #@description File to store the context at program termination
+  store.file : string = "/tmp/${USER}/snemo_context_end.conf"
+
+  #@description Flag to backup the former context load file
+  backup.file : string = "/tmp/${USER}/snemo_context_bak.conf"
+#+END_SRC
+
+** Geometry service
+:PROPERTIES:
+:CUSTOM_ID: geometry_service
+:END:
+The following code block declares the geometry service to properly load all the
+geometry and material construction of the detector. This service, only declared
+here, can be used by several operations like calibration, particle track
+reconstruction ... but all of them will use the same geometry.
+
+#+BEGIN_SRC sh
+  [name="Geo" type="snemo::core::service::geometry_service"]
+
+  #@description Debug flag
+  debug : boolean = 1
+
+  #@description Embedded SuperNEMO geometry manager main configuration file
+  manager.configuration_file : string = "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/manager.conf"
+
+  #@description Embedded SuperNEMO geometry manager must build its mapping lookup table
+  manager.build_mapping : boolean = 1
+
+  #@description Embedded geometry manager's mapping lookup table does not exclude any geometry category
+  manager.no_excluded_categories : boolean = 1
+#+END_SRC
+
+** Cuts services
+:PROPERTIES:
+:CUSTOM_ID: cuts_service
+:END:
+
+The [[https://nemo.lpc-caen.in2p3.fr/wiki/cuts][cuts]] package provides some basic classes and utilities to design, create and
+apply selection cuts on arbitrary data models.
+
+#+BEGIN_SRC sh
+  [name="Cuts" type="cuts::cut_service"]
+
+  #@description A debug flag
+  debug : boolean = 0
+
+  #@description The main configuration file for the embedded cut manager
+  cut_manager.config : string = "${SNSW_SIMULATION_DIR}/configuration/cut_manager.conf"
+#+END_SRC
+
+*** Manager
+#+BEGIN_SRC sh
+  #@description A debug flag
+  debug : boolean = 0
+
+  #@description A verbose flag
+  verbose : boolean = 0
+
+  #@description Flag to skip the preloading of pre-registered cuts
+  factory.no_preload : boolean = 0
+
+  #@description Debug flag of the cuts' factory
+  factory.debug : boolean = 0
+
+  #@description A list of files that contains definition of cuts
+  cuts.configuration_files : string[4] =                                     \
+    "${SNSW_SIMULATION_DIR}/configuration/simulated_data_cuts.conf"          \
+    "${SNSW_SIMULATION_DIR}/configuration/calibrated_data_cuts.conf"         \
+    "${SNSW_SIMULATION_DIR}/configuration/tracker_clustering_data_cuts.conf" \
+    "${SNSW_SIMULATION_DIR}/configuration/particle_track_data_cuts.conf"
+#+END_SRC
+
+*** Skeleton codes
+:PROPERTIES:
+:CUSTOM_ID: skeleton_cut_code
+:TANGLE: no
+:END:
+This section provides some options to create and declare general cuts such as
+checking bank availability. Since these tasks are quite generic and depends to
+few parameters, the following code blocks provides easy interface to such cuts.
+
+**** Skeleton code for ensuring data bank presence
+This skeleton code allows to check the availability of a data bank.
+
+#+NAME: has_bank(cname="", mode="has_bank", bname="", btype="", debug=0)
+#+BEGIN_SRC sh :results output :tangle no
+  echo '[name="'$cname'" type="snemo::core::cut::utils_cut"]'
+  echo
+  echo '#@description Debug flag'
+  echo 'debug : boolean =' $debug
+  echo
+  echo '#@description The running mode of this utils_cut instance'
+  echo 'mode : string = "'$mode'"'
+  echo
+  echo '#@description The name of the bank to be checked (mandatory)'
+  echo $mode'.name : string = "'$bname'"'
+  if [ ! -z $btype ]; then
+      echo
+      echo '#@description The type (as a registered user string) of the bank to be checked (optional)'
+      echo $mode'.type : string = "'$btype'"'
+  fi
+#+END_SRC
+
+**** Skeleton code for =multi= cuts
+#+NAME: multi(cname="", mode="and", ncut=0, list="", debug=0)
+#+BEGIN_SRC sh :results output :tangle no
+  echo '[name="'$cname'" type="cuts::multi_'$mode'_cut"]'
+  echo
+  echo '#@description Debug flag'
+  echo 'debug : boolean =' $debug
+  echo
+  echo '#@description The cuts to be combined'
+  echo -ne 'cuts : string['$ncut'] = '
+  for i in $list
+  do
+      echo -ne '"'${i}'" '
+  done
+#+END_SRC
+
+*** Simulated data selection
+:PROPERTIES:
+:CUSTOM_ID: simulated_data_cuts
+:TANGLE: simulated_data_cuts.conf
+:END:
+
+#+BEGIN_SRC sh :noweb yes
+  <<service_preamble>>
+  <<has_bank("has_event_header",   bname="EH")>>
+  <<has_bank("has_simulated_data", bname="SD")>>
+#+END_SRC
+
+*** Calibrated data selection
+:PROPERTIES:
+:CUSTOM_ID: calibrated_data_cuts
+:TANGLE: calibrated_data_cuts.conf
+:END:
+
+#+BEGIN_SRC sh :noweb yes
+  <<service_preamble>>
+#+END_SRC
+
+**** Check bank availability
+#+BEGIN_SRC sh :noweb yes
+  <<has_bank("has_calibrated_data", bname="CD")>>
+#+END_SRC
+
+**** Check calibrated calorimeter availability
+#+BEGIN_SRC sh
+  [name="has_cd_calorimeter" type="snemo::core::cut::calibrated_data_cut"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The label/name of the 'calibrated data' bank (mandatory)
+  CD_label : string = "CD"
+
+  #@description Activate the check for a special boolean (flag) property
+  mode.has_hit_category : boolean = 1
+
+  #@description Name of the MC hit category to be checked
+  has_hit_category.category : string = "calorimeter"
+#+END_SRC
+
+#+BEGIN_SRC sh
+  [name="!has_cd_calorimeter" type="cuts::not_cut"]
+
+  #@description The cut to be negated (mandatory)
+  cut : string = "has_cd_calorimeter"
+#+END_SRC
+
+**** Select number of calibrated calorimeter hits
+#+BEGIN_SRC sh
+  [name="cd_calorimeter_cut" type="snemo::core::cut::calibrated_data_cut"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The label/name of the 'calibrated data' bank (mandatory)
+  CD_label : string = "CD"
+
+  #@description Activate the check for multiplicity of calibrated hits
+  mode.range_hit_category : boolean = 1
+
+  #@description Name of the hit category to be checked
+  range_hit_category.category : string = "calorimeter"
+
+  #@description Minimal number of calibrated hits in the choosen category
+  range_hit_category.min : integer = 0
+
+  #@description Maximal number of calibrated hits in the choosen category
+  #range_hit_category.max : integer = 2
+#+END_SRC
+
+**** Check calibrated tracker availability
+#+BEGIN_SRC sh
+  [name="has_cd_tracker" type="snemo::core::cut::calibrated_data_cut"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The label/name of the 'calibrated data' bank (mandatory)
+  CD_label : string = "CD"
+
+  #@description Activate the check for a special boolean (flag) property
+  mode.has_hit_category : boolean = 1
+
+  #@description Name of the hit category to be checked
+  has_hit_category.category : string = "tracker"
+#+END_SRC
+
+#+BEGIN_SRC sh
+  [name="!has_cd_tracker" type="cuts::not_cut"]
+
+  #@description The cut to be negated (mandatory)
+  cut : string = "has_cd_tracker"
+#+END_SRC
+
+**** Select number of calibrated tracker hits
+#+BEGIN_SRC sh
+  [name="cd_tracker_cut" type="snemo::core::cut::calibrated_data_cut"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The label/name of the 'calibrated data' bank (mandatory)
+  CD_label : string = "CD"
+
+  #@description Activate the check for multiplicity of calibrated hits
+  mode.range_hit_category : boolean = 1
+
+  #@description Name of the hit category to be checked
+  range_hit_category.category : string = "tracker"
+
+  #@description Minimal number of calibrated hits in the choosen category
+  range_hit_category.min : integer = 3
+
+  #@description Maximal number of calibrated hits in the choosen category
+  #range_hit_category.max : integer = 1
+#+END_SRC
+
+**** Multiple cuts
+This cuts puts together all the previous declared cuts.
+#+TBLNAME: calibrated_cuts :results none
+| has_calibrated_data |
+| has_cd_calorimeter  |
+| has_cd_tracker      |
+| cd_calorimeter_cut  |
+| cd_tracker_cut      |
+
+#+BEGIN_SRC sh :noweb yes
+  <<multi(cname="calibrated_cut", "and", 5, calibrated_cuts)>>
+#+END_SRC
+
+*** Tracker clustering data selection
+:PROPERTIES:
+:CUSTOM_ID: tracker_clustering_data_cuts
+:TANGLE: tracker_clustering_data_cuts.conf
+:END:
+
+#+BEGIN_SRC sh :noweb yes
+  <<service_preamble>>
+#+END_SRC
+
+**** Check bank availability
+#+BEGIN_SRC sh :noweb yes
+  <<has_bank("has_tracker_clustering_data", bname="TCD")>>
+#+END_SRC
+
+**** Select number of cluster
+#+BEGIN_SRC sh
+  [name="tcd1_cut" type="snemo::analysis::cut::basic_tracker_clustering_data_cut"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The label/name of the 'tracker clustering data' bank (mandatory)
+  TCD_label : string = "TCD"
+
+  #@description Activate the check for multiplicity of clusters
+  mode.range_cluster : boolean = 1
+
+  #@description Minimal number of clusters
+  range_cluster.min : integer = 1
+
+  #@description Maximal number of clusters
+  range_cluster.max : integer = 1
+#+END_SRC
+
+**** Select number of hit within a cluster
+#+BEGIN_SRC sh
+   [name="tcd2_cut" type="snemo::analysis::cut::basic_tracker_clustering_data_cut"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The label/name of the 'tracker clustering data' bank (mandatory)
+  TCD_label : string = "TCD"
+
+  #@description Activate the check for multiplicity of clusters
+  mode.range_tracker_hit : boolean = 1
+
+  #@description Minimal number of clusters
+  range_tracker_hit.min : integer = 4
+
+  # #@description Maximal number of clusters
+  # range_tracker_hit.max : integer = 100000
+#+END_SRC
+
+**** Multiple cuts
+#+TBLNAME: tracker_clustering_cuts :results none
+| has_tracker_clustering_data |
+| tcd1_cut                    |
+| tcd2_cut                    |
+
+#+BEGIN_SRC sh :noweb yes
+  <<multi(cname="basic_tracker_clustering_cut", "and", 3, tracker_clustering_cuts)>>
+#+END_SRC
+
+*** Particle track selection
+:PROPERTIES:
+:CUSTOM_ID: particle_track_data_cuts
+:TANGLE: particle_track_data_cuts.conf
+:END:
+
+#+BEGIN_SRC sh :noweb yes
+  <<service_preamble>>
+#+END_SRC
+
+**** Check bank availability
+#+BEGIN_SRC sh
+  [name="has_particle_track_data" type="snemo::core::cut::utils_cut"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The running mode of this 'utils_cut' instance
+  mode          : string = "has_bank"
+
+  #@description The name of the bank to be checked (mandatory)
+  has_bank.descriptions : string[1] = "PTD@snemo::analysis::model::particle_track_data"
+#+END_SRC
+
+**** Check if particles have been reconstructed
+#+BEGIN_SRC sh
+  [name="has_particle" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The label/name of the 'calibrated data' bank (mandatory)
+  PTD_label : string = "PTD"
+
+  #@description Activate the check for a special boolean (flag) propertyX
+  mode.has_particles : boolean = 1
+#+END_SRC
+**** Select number of particles
+#+BEGIN_SRC sh
+  [name="range_particle" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+
+  #@description Debug flag
+  debug : boolean = 1
+
+  #@description The label/name of the 'calibrated data' bank (mandatory)
+  PTD_label : string = "PTD"
+
+  #@description Activate the check for multiplicity of particles trajectories
+  mode.range_particles : boolean = 1
+
+  #@description Minimal number of particle trajectories in the choosen category
+  range_particles.min : integer = 1
+
+  #@description Maximal number of particle trajectories in the choosen category
+  range_particles.max : integer = 1
+#+END_SRC
+
+**** Check association with calorimeter block
+#+BEGIN_SRC sh
+  [name="has_associated_calorimeter" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+
+  #@description Debug flag
+  debug : boolean = 1
+
+  #@description The label/name of the 'calibrated data' bank (mandatory)
+  PTD_label : string = "PTD"
+
+  #@description Activate the check for association between track and calorimeter
+  mode.has_associated_calorimeters : boolean = 1
+#+END_SRC
+
+**** Select number of associated calorimeter blocks
+#+BEGIN_SRC sh
+  [name="range_associated_calorimeters" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The label/name of the 'calibrated data' bank (mandatory)
+  PTD_label : string = "PTD"
+
+  #@description Activate the check for multiplicity of associated calorimeters
+  mode.range_associated_calorimeters : boolean = 1
+
+  #@description Minimal number of associated calorimeters in the choosen category
+  range_associated_calorimeters.min : integer = 1
+
+  #@description Maximal number of associated calorimeters in the choosen category
+  range_associated_calorimeters.max : integer = 1
+#+END_SRC
+
+**** Check if track has foil vertex
+#+BEGIN_SRC sh
+  [name="has_vertex_on_foil" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+
+  #@description Debug flag
+  debug : boolean = 1
+
+  #@description The label/name of the 'calibrated data' bank (mandatory)
+  PTD_label : string = "PTD"
+
+  #@description Activate the check for vertex extrapolation on source foil
+  mode.has_vertex_on_foil : boolean = 1
+#+END_SRC
+
+**** Select particle charge
+#+BEGIN_SRC sh
+[name="has_negative_charge" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+
+#@description Debug flag
+debug : boolean = 0
+
+#@description The label/name of the 'particle track data' bank (mandatory)
+PTD_label : string = "PTD"
+
+#@description Activate the check for a special boolean (flag) property
+mode.has_charge : boolean = 1
+
+#@description Name of the MC hit category to be checked
+has_charge.type : string = "negative"
+#+END_SRC
+
+#+BEGIN_SRC sh
+[name="has_positive_charge" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+
+#@description Debug flag
+debug : boolean = 0
+
+#@description The label/name of the 'particle track data' bank (mandatory)
+PTD_label : string = "PTD"
+
+#@description Activate the check for a special boolean (flag) property
+mode.has_charge : boolean = 1
+
+#@description Name of the MC hit category to be checked
+has_charge.type : string = "positive"
+#+END_SRC
+
+#+BEGIN_SRC sh
+[name="has_undefined_charge" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+
+#@description Debug flag
+debug : boolean = 0
+
+#@description The label/name of the 'particle track data' bank (mandatory)
+PTD_label : string = "PTD"
+
+#@description Activate the check for a special boolean (flag) property
+mode.has_charge : boolean = 1
+
+#@description Name of the MC hit category to be checked
+has_charge.type : string = "undefined"
+#+END_SRC
+
+**** Reconstruction parameters selection
+#+BEGIN_SRC sh
+  [name="chi2_cut" type="snemo::analysis::cut::basic_particle_track_parameter_cut"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The label/name of the 'particle track data' bank (mandatory)
+  PTD_label : string = "PTD"
+
+  #@description Activate the parameter mode
+  mode.parameter : boolean = 1
+
+  #@description Parameter label (parameter can be either 'chi2',
+  #'reduced_chi2', 'radius')
+  parameter.label : string = "reduced_chi2"
+
+  ##@description Parameter minimal value
+  parameter.min : real = 0.0
+
+  #@description Parameter minimal value
+  parameter.max : real = 100.0
+#+END_SRC
+
+#+BEGIN_SRC sh
+  [name="deltay_calo_cut" type="snemo::analysis::cut::basic_particle_track_parameter_cut"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The label/name of the 'particle track data' bank (mandatory)
+  PTD_label : string = "PTD"
+
+  #@description The label/name of the 'particle track data' bank
+  SD_label : string = "SD"
+
+  #@description Activate the parameter mode
+  mode.parameter : boolean = 1
+
+  #@description Parameter label (parameter can be either 'vertex_on_foil',
+  #'vertex_on_calorimeter')
+  parameter.label : string = "vertex_on_calorimeter"
+
+  #@description Parameter coordinate (either x, y or z)
+  parameter.coordinate : string = "y"
+
+  #@description Parameter minimal value
+  parameter.min : real = 50.0 # mm
+
+  # #@description Parameter minimal value
+  # parameter.max : real = 10.0 # mm
+#+END_SRC
+
+**** Multiple cuts
+#+TBLNAME: particle_track_cuts :results none
+| has_particle_track_data       |
+| has_particle                  |
+| range_particle                |
+| has_associated_calorimeter    |
+| range_associated_calorimeters |
+| has_vertex_on_foil            |
+| chi2_cut                      |
+
+#+BEGIN_SRC sh :noweb yes
+  <<multi("particle_track_cut", "and", 7, particle_track_cuts)>>
+#+END_SRC
 * Running SN@ilWare processing chain
 :PROPERTIES:
 :CUSTOM_ID: running_pipeline
