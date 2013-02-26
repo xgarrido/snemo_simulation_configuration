@@ -1,0 +1,328 @@
+#+TITLE:  SNG4 Manager Configuration
+#+AUTHOR: Xavier Garrido
+#+DATE:   2013-02-24
+#+OPTIONS: toc:nil
+
+* Introduction
+:PROPERTIES:
+:CUSTOM_ID: introduction
+:END:
+
+The sng4 library provides a Geant4 standard interface to generate simulated
+data. A dedicated manager class addresses all the resources needed to :
+
+- describe the geometry (through a geometry manager from the [[https://nemo.lpc-caen.in2p3.fr/wiki/sngeometry][sngeometry]]
+  library, a geometry service is also usable)
+- randomize the primary events to be tracked by Geant4 in the virtual geometry
+  model (using the [[https://nemo.lpc-caen.in2p3.fr/wiki/sngenbb][sngenbb]] library)
+- randomize the primary vertex from which the primary events originate (using
+  the [[https://nemo.lpc-caen.in2p3.fr/wiki/sngenvertex][sngenvertex]] library)
+- setup Geant4 embeded utilities to handle the production of true hits
+
+More details concerning the use of =sng4= binaries and Monte-Carlo production
+can be found in [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carloproduction][SN@ilWare wiki]].
+
+* Manager configuration
+:PROPERTIES:
+:CUSTOM_ID: manager_configuration
+:TANGLE: sng4_manager.conf
+:END:
+
+This section describe almost entirely the whole set of options to setup =sng4=
+manager. Each relevant part is split into a unique item which ease the
+navigation as well as the configuration. The most *important* code block is the
+next one which allows the reading of this file by =datatools::properties= object.
+
+#+BEGIN_SRC sh
+  #@description A sample list of setups
+  #@key_label   "name"
+  #@meta_label  "type"
+#+END_SRC
+
+** Main configuration level
+Here, general options such as verbosity, debug flags are passed to sng4
+manager. By the way, some of these options can be overloaded by the
+=sng4_module= which configuration can be changed in [[file:simulation_config.org][simulation_config.org]].
+#+BEGIN_SRC sh
+  [name="manager"]
+
+  #@description Debug flag:
+  debug                 : boolean = 0
+
+  #@description Verbosity flag:
+  verbose               : boolean = 0
+
+  #@description Number of events to be simulated (superseded by the pipeline)
+  number_of_events      : integer = 20
+
+  #@description Geant4 tracking verbosity flag:
+  g4_tracking_verbosity : integer = 0
+
+  #@description Geant4 visualization activation flag:
+  g4_visualization      : boolean = 0
+#+END_SRC
+
+** Vertex generation
+This part basically provides the location of vertex generator implemented by
+[[https://nemo.lpc-caen.in2p3.fr/wiki/sngenvertex][sngenvertex.]]
+#+BEGIN_SRC sh
+  [name="vertex_generator"]
+
+  #@description the filename with the list of registered vertex generators
+  vg_list : string[3] = \
+    "${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_2.0/scin_vg.lis"    \
+    "${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_2.0/tracker_vg.lis" \
+    "${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_2.0/source_vg.lis"
+#+END_SRC
+
+** Detector construction
+Main configuration file for the detector construction user object.
+#+BEGIN_SRC sh
+  [name="detector_construction"]
+#+END_SRC
+*** Debug & verbosity flags
+#+BEGIN_SRC sh
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description Verbose flag
+  verbose : boolean = 0
+#+END_SRC
+
+*** GDML scheme and options
+The Geometry Description Markup Language is an application-indepedent geometry
+description format based on XML[1]. It is used as Geant4 toolkit bindings
+through =gemotools= converters.
+
+#+BEGIN_SRC sh
+  #@description Temporary directory for GDML file generation:
+  gdml.tmp_dir         : string = "/tmp/${USER}/sng4.d"
+
+  #@description Access mode to the GDML schema ("local" or "remote")
+  gdml.schema_location : string = "local" # "remote"
+
+  #@description Flag to skip GDML validation
+  gdml.no_validation   : boolean = 0
+#+END_SRC
+
+[1] http://gdml.web.cern.ch/GDML
+
+*** Step hit processors
+Step hit processors are used to convert Geant4 steps into detector hits for
+SuperNEMO physics.
+#+BEGIN_SRC sh
+  #@description Configuration file for the step hit processor factory:
+  hit_processor_factory.config : string = "${SNSW_SIMULATION_DIR}/config/step_hit_processor_factory.conf"
+#+END_SRC
+
+*** Sensitive detectors
+This category defines sensitive detectors where special treatments of Geant4 steps
+must be applied. This can be in direct relation with step hit processors defined above.
+#+BEGIN_SRC sh
+  #@description Parameters for the generation of 'sensitive hits' through 'sensitive detectors' :
+  sensitive.detectors : string[4] = "calorimeter.SD" "xcalorimeter.SD" "gveto.SD" "tracker.SD"
+
+  sensitive.calorimeter.SD.debug                           : boolean = 0
+  sensitive.calorimeter.SD.hits_buffer_capacity            : integer = 200
+  sensitive.calorimeter.SD.record_alpha_quenching          : boolean = 1
+  sensitive.calorimeter.SD.record_track_id                 : boolean = 1
+  sensitive.calorimeter.SD.record_primary_particle         : boolean = 1
+  sensitive.calorimeter.SD.drop_zero_energy_deposit_steps  : boolean = 0
+  sensitive.calorimeter.SD.track_gamma                     : boolean = 1
+
+  sensitive.xcalorimeter.SD.debug                          : boolean = 1
+  sensitive.xcalorimeter.SD.hits_buffer_capacity           : integer = 200
+  sensitive.xcalorimeter.SD.record_alpha_quenching         : boolean = 1
+  sensitive.xcalorimeter.SD.record_track_id                : boolean = 1
+  sensitive.xcalorimeter.SD.record_primary_particle        : boolean = 1
+  sensitive.xcalorimeter.SD.drop_zero_energy_deposit_steps : boolean = 0
+  sensitive.xcalorimeter.SD.track_gamma                    : boolean = 1
+
+  sensitive.gveto.SD.debug                                 : boolean = 0
+  sensitive.gveto.SD.hits_buffer_capacity                  : integer = 200
+  sensitive.gveto.SD.record_alpha_quenching                : boolean = 1
+  sensitive.gveto.SD.record_track_id                       : boolean = 1
+  sensitive.gveto.SD.record_primary_particle               : boolean = 1
+  sensitive.gveto.SD.drop_zero_energy_deposit_steps        : boolean = 0
+  sensitive.gveto.SD.track_gamma                           : boolean = 1
+
+  sensitive.tracker.SD.debug                               : boolean = 0
+  sensitive.tracker.SD.hits_buffer_capacity                : integer = 1000
+  sensitive.tracker.SD.record_alpha_quenching              : boolean = 1
+  sensitive.tracker.SD.record_track_id                     : boolean = 1
+  sensitive.tracker.SD.record_primary_particle             : boolean = 1
+  sensitive.tracker.SD.drop_zero_energy_deposit_steps      : boolean = 0
+  sensitive.tracker.SD.track_gamma                         : boolean = 1
+#+END_SRC
+
+*** Magnetic field
+#+BEGIN_SRC sh
+  #@description Magnetic field value (gauss):
+  magnetic_field.default_field : real = 25.0
+
+  #@description List of module's IDs with non-zero magnetic field:
+  magnetic_field.modules : integer[1] = 0
+
+  #@description SetDeltaChord miss distance (mm):
+  magnetic_field.miss_distance : real = 0.5
+#+END_SRC
+
+*** Geant4 step hit limits
+The following code defines geometry models where Geant4 steps are size limited.
+#+BEGIN_SRC sh
+  #@description List of geometry models with max steps:
+  limits.list_of_models : string[3] = \
+                         "source_external_strip.model" \
+                         "source_internal_strip.model" \
+                         "drift_cell_core.model"
+
+  #@description Max step length inside source pad (mm):
+  limits.max_step.source_external_strip.model : real = 0.01
+
+  #@description Max step length inside source pad (mm):
+  limits.max_step.source_internal_strip.model : real = 0.01
+
+  #@description Max step length inside drift cell tracking volume (mm):
+  limits.max_step.drift_cell_core.model : real = 5.0
+  #limits.max_step.drift_cell_core : real = 10.0
+#+END_SRC
+
+*** Geant4 regions
+Definition of Geant4 regions.
+#+BEGIN_SRC sh
+  #@description List of regions :
+  regions             : string[3] = "calorimeter" "tracker" "source"
+
+  #@description List of attached volumes/models per region :
+  regions.calorimeter : string[4] = \
+                      "calorimeter_scin_block_front.model" \
+                      "calorimeter_scin_block_back.model" \
+                      "gveto_scin_block.model" \
+                      "xwall_scin_block.model"
+  regions.tracker     : string[1] = "drift_cell_core.model"
+  regions.source      : string[2] = \
+                      "source_external_strip.model" \
+                      "source_internal_strip.model"
+
+#+END_SRC
+
+** Physics list
+In the development of a Geant4-based application, it is the user's
+responsibility to decide which physics processes are required, and then to
+include them in the physics list. The next lines are just aliases to relevant
+phycical processes for SuperNEMO.
+#+BEGIN_SRC sh
+  [name="physics_list"]
+#+END_SRC
+
+*** Debug & verbosity flags
+#+BEGIN_SRC sh
+  #@description Debug flag
+  debug       : boolean = 0
+
+  #@description Verbosity flag
+  verbosity   : integer = 0
+#+END_SRC
+
+*** TODO SuperNEMO phycical processes activation
+A more complete list of processes available for SuperNEMO should be written.
+#+BEGIN_SRC sh
+  #@description Activate energy loss process for electron/positron
+  electron.energy_loss         : boolean = 1
+
+  #@description Activate multiple scaterring process for electron/positron
+  electron.multiple_scaterring : boolean = 1
+
+  #@description Activate the use of high-energy leptons
+  use_he_leptons               : boolean = 0
+
+  #@description Activate the use of mesons
+  use_mesons                   : boolean = 1
+#+END_SRC
+
+*** Using Geant4 region cuts
+These cuts are related to some production processes and then, define some
+minimal step hit size given the detector region.
+#+BEGIN_SRC sh
+  #@description Activate the use of specific cuts
+  using_cuts : boolean = 1
+
+  #@description List of region with production cut
+  production_cuts.regions     : string [3] = "calorimeter" "tracker" "source"
+
+  #@description lenght unit for production cut values
+  production_cuts.length_unit : string     = "mm"
+
+  #@description Production cut value for region "calorimeter"
+  production_cuts.calorimeter : real       = 5.0
+
+  #@description Production cut value for region "tracker"
+  production_cuts.tracker     : real       = 0.5
+
+  #@description Production cut value for region "source"
+  production_cuts.source      : real       = 0.05
+#+END_SRC
+
+** Primary generator
+The following code holds the =sngenbb= manager to give access to several primary
+generators from neutrinoless double beta decay, to ^{214}Bi / ^{208}Tl
+contamination or cosmic muon generator.
+#+BEGIN_SRC sh
+  [name="primary_generator"]
+
+  #@description Configuration file for the embedded 'snemo::genbb::manager'
+  config : string = "${SNSW_SIMULATION_DIR}/config/sngenbb_manager.conf"
+#+END_SRC
+
+** Geant4 related action
+The last part of the configuration concerned Geant4 actions but do not hold a
+lot of options.
+
+*** Run action
+#+BEGIN_SRC sh
+  [name="run_action"]
+
+  #@description Run action debug flag :
+  debug : boolean = 0
+
+  #@description Run action event number print modulo :
+  #number_events_modulo : integer = 100
+
+  #@description If set, this flag forbids the generation of output files :
+  file.no_save : boolean = 1
+#+END_SRC
+
+*** Event action
+#+BEGIN_SRC sh
+  [name="event_action"]
+
+  #@description Event action debug flag:
+  debug : boolean = 0
+#+END_SRC
+
+*** Tracking action
+#+BEGIN_SRC sh
+  [name="tracking_action"]
+#+END_SRC
+
+*** Stepping action
+#+BEGIN_SRC sh
+  [name="stepping_action"]
+#+END_SRC
+
+*** Stacking action
+#+BEGIN_SRC sh
+  [name="stacking_action"]
+
+  #@description Stacking action debug flag:
+  # debug : boolean = 0
+
+  #@description Kill secondary particles within some volumes :
+  # kill_particles : boolean = 0
+
+  #@description Kill secondary particles within some volumes :
+  #kill_particles.volumes : string[1] = "drift_cell_core"
+
+  #@description Kill secondary particles within some materials :
+  #kill_particles.materials : string[1] = "tracking_gas"
+#+END_SRC
