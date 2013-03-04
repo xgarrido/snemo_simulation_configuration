@@ -21,6 +21,7 @@ html: $(FILES:.org=.html)
 	@$(BATCH) --eval '(org-babel-tangle-file "$<")'
 	@mkdir -p $(GIT_BRANCH)
 	@mv *.conf $(GIT_BRANCH)/.
+	@if [ -L current ]; then rm current;fi && ln -sf $(GIT_BRANCH) current
 	@touch $@
 
 %.tex: %.org
@@ -34,11 +35,11 @@ html: $(FILES:.org=.html)
 
 tarball: org
 	@echo "Making tarball configuration"
-	tar czf configuration.tar.gz *.conf
+	@tar czf $(GIT_BRANCH).tar.gz $(GIT_BRANCH)
 
 push: org
 	@echo "Pushing current configuration to Lyon"
-	ssh garrido@ccage.in2p3.fr mkdir -p $(CCAGE_DIRECTORY)/$(GIT_BRANCH)
+	ssh garrido@ccage.in2p3.fr "cd $(CCAGE_DIRECTORY) && mkdir -p $(GIT_BRANCH); if [ -L current ]; then rm current; fi; ln -sf $(GIT_BRANCH) current"
 	rsync --recursive -e ssh -avP $(GIT_BRANCH)/*.conf garrido@ccage.in2p3.fr:$(CCAGE_DIRECTORY)/$(GIT_BRANCH)/.
 
 doc: doc/index.html
