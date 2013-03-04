@@ -46,5 +46,5 @@ doc/index.html:
 	echo "Documentation published to doc/"
 
 clean:
-	rm -f *.tangle *.tar.gz *.conf *.aux *.tex *.fls *fdb_latexmk *.pdf doc/*html *~
+	rm -f *.tangle *.tar.gz *.conf *.aux *.tex *.fls *fdb_latexmk *.log *.pdf doc/*html *~
 	rm -rf doc
