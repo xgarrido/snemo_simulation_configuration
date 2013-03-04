@@ -128,6 +128,8 @@ pipeline processing.
 :PROPERTIES:
 :CUSTOM_ID: skeleton_code
 :TANGLE: no
+:EXPORTS: code
+:EVAL: never
 :END:
 This section provides some options to create and declare general modules such as
 I/O modules (see Section [[I/O modules]]) or/and removing data bank. Since these
@@ -140,7 +142,7 @@ This skeleton code allows to define output module given the name of the
 module. It also defines the output directory where to store each output steps.
 
 #+NAME: output_module(mname="", debug=0, ofilename="")
-#+BEGIN_SRC sh :results output :tangle no
+#+BEGIN_SRC sh
   IO_OUTPUT_DIRECTORY="/tmp/${USER}/snemo.d"
   if [ ! -d ${IO_OUTPUT_DIRECTORY} ]; then
       mkdir -p ${IO_OUTPUT_DIRECTORY}
@@ -170,7 +172,7 @@ module. It also defines the output directory where to store each output steps.
 *** Skeleton code for removing data bank
 
 #+NAME: remove_module(mname="", mode="remove_bank", label="", debug=0)
-#+BEGIN_SRC sh :results output :tangle no
+#+BEGIN_SRC sh
   echo '[name="'$mname'" type="snemo::core::io::utils_module"]'
   echo
   echo '#@description Debug flag'
@@ -187,7 +189,7 @@ module. It also defines the output directory where to store each output steps.
 This skeleton code ease the declaration of =chain_module= processor since it
 receives a table list and builds the =chain_module= declaration given its name.
 #+NAME: chain_module(mname="", nmodule=0, list="", debug=0)
-#+BEGIN_SRC sh :results output :tangle no
+#+BEGIN_SRC sh
   echo '[name="'$mname'" type="snemo::core::processing::chain_module"]'
   echo
   echo '#@description Debug flag'
@@ -203,7 +205,7 @@ receives a table list and builds the =chain_module= declaration given its name.
 *** Skeleton code for =if= module
 This skeleton code is a template to declare =if_module= processor.
 #+NAME: if_module(mname="", cut="", then="", else="", debug=0)
-#+BEGIN_SRC sh :results output :tangle no
+#+BEGIN_SRC sh
   echo '[name="'$mname'" type="snemo::core::processing::chain_module"]'
   echo
   echo '#@description Debug flag'
@@ -1539,6 +1541,8 @@ apply selection cuts on arbitrary data models.
 :PROPERTIES:
 :CUSTOM_ID: skeleton_cut_code
 :TANGLE: no
+:EXPORTS: code
+:EVAL: never
 :END:
 This section provides some options to create and declare general cuts such as
 checking bank availability. Since these tasks are quite generic and depends to
@@ -1548,7 +1552,7 @@ few parameters, the following code blocks provides easy interface to such cuts.
 This skeleton code allows to check the availability of a data bank.
 
 #+NAME: has_bank(cname="", mode="has_bank", bname="", btype="", debug=0)
-#+BEGIN_SRC sh :results output :tangle no
+#+BEGIN_SRC sh
   echo '[name="'$cname'" type="snemo::core::cut::utils_cut"]'
   echo
   echo '#@description Debug flag'
@@ -1568,7 +1572,7 @@ This skeleton code allows to check the availability of a data bank.
 
 **** Skeleton code for =multi= cuts
 #+NAME: multi(cname="", mode="and", ncut=0, list="", debug=0)
-#+BEGIN_SRC sh :results output :tangle no
+#+BEGIN_SRC sh
   echo '[name="'$cname'" type="cuts::multi_'$mode'_cut"]'
   echo
   echo '#@description Debug flag'
