@@ -127,8 +127,7 @@ pipeline processing.
 :PROPERTIES:
 :CUSTOM_ID: skeleton_code
 :TANGLE: no
-:EXPORTS: code
-:EVAL: never
+:RESULTS: output
 :END:
 This section provides some options to create and declare general modules such as
 I/O modules (see Section [[I/O modules]]) or/and removing data bank. Since these
@@ -1540,8 +1539,7 @@ apply selection cuts on arbitrary data models.
 :PROPERTIES:
 :CUSTOM_ID: skeleton_cut_code
 :TANGLE: no
-:EXPORTS: code
-:EVAL: never
+:RESULTS: output
 :END:
 This section provides some options to create and declare general cuts such as
 checking bank availability. Since these tasks are quite generic and depends to
