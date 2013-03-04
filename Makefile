@@ -32,6 +32,10 @@ tarball: org
 	@echo "Making tarball configuration"
 	tar czf configuration.tar.gz *.conf
 
+push: org
+	@echo "Pushing current configuration to Lyon"
+	rsync -e ssh -avP *.conf garrido@ccage.in2p3.fr:/sps/nemo/scratch/garrido/simulations/configuration/.
+
 doc: doc/index.html
 
 doc/index.html:
