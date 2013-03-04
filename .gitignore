@@ -4,6 +4,10 @@
 *.tex
 *.pdf
 *.tex~
+*.aux
+*.log
+*.fls
+*.fdb*
 
 ## misc
 .svn

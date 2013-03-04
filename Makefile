@@ -2,9 +2,9 @@
 EMACS = emacs
 
 BATCH = $(EMACS) --batch -Q --eval '(require (quote org))'			\
-		--eval '(org-babel-do-load-languages (quote org-babel-load-languages)   \
-			(quote((sh . t))))'				\
-		--eval '(setq org-confirm-babel-evaluate nil)'
+	--eval '(org-babel-do-load-languages (quote org-babel-load-languages)   \
+		(quote((sh . t))))'						\
+	--eval '(setq org-confirm-babel-evaluate nil)'
 
 FILES = simulation_config.org sng4_manager.org
 
@@ -31,7 +31,6 @@ html: $(FILES:.org=.html)
 tarball: org
 	@echo "Making tarball configuration"
 	tar czf configuration.tar.gz *.conf
-
 
 doc: doc/index.html
 
