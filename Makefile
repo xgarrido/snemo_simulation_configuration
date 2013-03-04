@@ -8,6 +8,8 @@ BATCH = $(EMACS) --batch -Q --eval '(require (quote org))'			\
 
 FILES = $(wildcard *.org)
 
+GIT_BRANCH = `git branch | grep \* | cut -d' ' -f2`
+CCAGE_DIRECTORY = /sps/nemo/scratch/garrido/simulations/configuration
 all: org
 
 org: $(FILES:.org=.tangle)
@@ -17,6 +19,8 @@ html: $(FILES:.org=.html)
 %.tangle: %.org
 	@echo "Tangling $< file"
 	@$(BATCH) --eval '(org-babel-tangle-file "$<")'
+	@mkdir -p $(GIT_BRANCH)
+	@mv *.conf $(GIT_BRANCH)/.
 	@touch $@
 
 %.tex: %.org
@@ -34,7 +38,8 @@ tarball: org
 
 push: org
 	@echo "Pushing current configuration to Lyon"
-	rsync -e ssh -avP *.conf garrido@ccage.in2p3.fr:/sps/nemo/scratch/garrido/simulations/configuration/.
+	ssh garrido@ccage.in2p3.fr mkdir -p $(CCAGE_DIRECTORY)/$(GIT_BRANCH)
+	rsync --recursive -e ssh -avP $(GIT_BRANCH)/*.conf garrido@ccage.in2p3.fr:$(CCAGE_DIRECTORY)/$(GIT_BRANCH)/.
 
 doc: doc/index.html
 
