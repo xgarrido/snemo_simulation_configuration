@@ -6,7 +6,6 @@
 * Introduction
 :PROPERTIES:
 :CUSTOM_ID: introduction
-:TANGLE: no
 :END:
 This file contains a SN@ilWare configuration to run SuperNEMO simulations. For
 more details on running SuperNEMO simulations and the concept behind
@@ -66,19 +65,19 @@ service files.
 #+BEGIN_SRC sh
   #@description The configuration file of the embedded service manager
   service_manager.configuration : string[1] = \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/service_manager.conf"
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/service_manager.conf"
 #+END_SRC
 
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
-  modules.configuration_files : string[6] =                             \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/io_modules.conf"       \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/utl_modules.conf"      \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/s2c_modules.conf"      \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/tracker_modules.conf"  \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/analysis_modules.conf" \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/plot_modules.conf"
+  modules.configuration_files : string[6] =                                     \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/io_modules.conf"       \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/utl_modules.conf"      \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/s2c_modules.conf"      \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/tracker_modules.conf"  \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/analysis_modules.conf" \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/plot_modules.conf"
 #+END_SRC
 
 ** Service manager
@@ -103,7 +102,7 @@ service files.
 #+BEGIN_SRC sh
   #@description The list of files that describe services
   services.configuration_files : string[1] = \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/services.conf"
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/services.conf"
 #+END_SRC
 
 * Modules
@@ -430,7 +429,7 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 The full =sng4= configuration can be found in the [[file:sng4_manager.org][sng4_manager.org]] file.
 #+BEGIN_SRC sh
   #@description The simulation manager configuration file
-  manager.configuration_filename : string = "${SNAILWARE_SIMULATION_DIR}/configuration/sng4_manager.conf"
+  manager.configuration_filename : string = "${SNAILWARE_SIMULATION_DIR}/configuration/current/sng4_manager.conf"
 #+END_SRC
 
 *** Adding event header
@@ -468,7 +467,7 @@ some properties/descriptions of simulation runs (see below).
 #+BEGIN_SRC sh
   #@description The external properties files to be exported in event_header properties
   mode.add_header.external_properties_path : \
-      string = "${SNAILWARE_SIMULATION_DIR}/configuration/simulation_header.conf"
+      string = "${SNAILWARE_SIMULATION_DIR}/configuration/current/simulation_header.conf"
 
   #@description The external properties prefix to export only properties starting with this prefix
   mode.add_header.external_properties_prefix : string = "analysis"
@@ -1507,7 +1506,7 @@ apply selection cuts on arbitrary data models.
   debug : boolean = 0
 
   #@description The main configuration file for the embedded cut manager
-  cut_manager.config : string = "${SNAILWARE_SIMULATION_DIR}/configuration/cut_manager.conf"
+  cut_manager.config : string = "${SNAILWARE_SIMULATION_DIR}/configuration/current/cut_manager.conf"
 #+END_SRC
 
 *** Manager
@@ -1531,10 +1530,10 @@ apply selection cuts on arbitrary data models.
 
   #@description A list of files that contains definition of cuts
   cuts.configuration_files : string[4] =                                          \
-    "${SNAILWARE_SIMULATION_DIR}/configuration/simulated_data_cuts.conf"          \
-    "${SNAILWARE_SIMULATION_DIR}/configuration/calibrated_data_cuts.conf"         \
-    "${SNAILWARE_SIMULATION_DIR}/configuration/tracker_clustering_data_cuts.conf" \
-    "${SNAILWARE_SIMULATION_DIR}/configuration/particle_track_data_cuts.conf"
+    "${SNAILWARE_SIMULATION_DIR}/configuration/current/simulated_data_cuts.conf"          \
+    "${SNAILWARE_SIMULATION_DIR}/configuration/current/calibrated_data_cuts.conf"         \
+    "${SNAILWARE_SIMULATION_DIR}/configuration/current/tracker_clustering_data_cuts.conf" \
+    "${SNAILWARE_SIMULATION_DIR}/configuration/current/particle_track_data_cuts.conf"
 #+END_SRC
 
 *** Skeleton codes
@@ -2029,7 +2028,7 @@ Embedded histograms are declared into a dedicated file defines in Section
 #+BEGIN_SRC sh
   #@description The main configuration file for the embedded histogram manager
   pool.histo.setups : string[1] = \
-     "${SNSW_SIMULATION_DIR}/configuration/histogram_template.conf"
+     "${SNSW_SIMULATION_DIR}/configuration/current/histogram_template.conf"
 #+END_SRC
 
 Finally, all histograms created can be stored inside ROOT files or XML archives.
