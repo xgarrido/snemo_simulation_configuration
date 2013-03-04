@@ -1,15 +1,7 @@
 #+TITLE:  SN@ilWare Simulation Configuration
 #+AUTHOR: Xavier Garrido
 #+DATE:   2013-02-22
-#+OPTIONS: toc:nil num:nil
-#+LATEX_CMD: xelatex
-#+LATEX_CLASS: memarticle
-#+LATEX_HEADER: \setsansfont[Mapping=tex-text]{Myriad Pro}
-#+LATEX_HEADER: \setmonofont[Mapping=tex-text,Scale=MatchLowercase]{Inconsolata}
-#+LATEX_HEADER: \setromanfont[Mapping=tex-text, Numbers=OldStyle]{Minion Pro}
-#+LATEX_HEADER: \chapterstyle{article-4-sans}
-#+LATEX_HEADER: \usepackage{minted}
-#+LATEX_HEADER: \usemintedstyle{upsud}
+#+OPTIONS: toc:nil
 
 * Introduction
 :PROPERTIES:
@@ -74,19 +66,19 @@ service files.
 #+BEGIN_SRC sh
   #@description The configuration file of the embedded service manager
   service_manager.configuration : string[1] = \
-      "${SNSW_SIMULATION_DIR}/config/service_manager.conf"
+      "${SNAILWARE_SIMULATION_DIR}/configuration/service_manager.conf"
 #+END_SRC
 
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
-  modules.configuration_files : string[6] =                        \
-      "${SNSW_SIMULATION_DIR}/configuration/io_modules.conf"       \
-      "${SNSW_SIMULATION_DIR}/configuration/utl_modules.conf"      \
-      "${SNSW_SIMULATION_DIR}/configuration/s2c_modules.conf"      \
-      "${SNSW_SIMULATION_DIR}/configuration/tracker_modules.conf"  \
-      "${SNSW_SIMULATION_DIR}/configuration/analysis_modules.conf" \
-      "${SNSW_SIMULATION_DIR}/configuration/plot_modules.conf"
+  modules.configuration_files : string[6] =                             \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/io_modules.conf"       \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/utl_modules.conf"      \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/s2c_modules.conf"      \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/tracker_modules.conf"  \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/analysis_modules.conf" \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/plot_modules.conf"
 #+END_SRC
 
 ** Service manager
@@ -111,7 +103,7 @@ service files.
 #+BEGIN_SRC sh
   #@description The list of files that describe services
   services.configuration_files : string[1] = \
-      "${SNSW_SIMULATION_DIR}/config/services.conf"
+      "${SNAILWARE_SIMULATION_DIR}/configuration/services.conf"
 #+END_SRC
 
 * Modules
@@ -424,19 +416,19 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 **** Event generator
 #+BEGIN_SRC sh
   #@description The event generator PRNG label
-  manager.event_generator_name  : string  = "bb0nu_Se82.wrapper"
+  #manager.event_generator_name  : string  = "bb0nu_Se82.wrapper"
   #manager.event_generator_name  : string  = "bb2nu_Se82.wrapper"
   #manager.event_generator_name  : string  = "calib_Bi207.wrapper"
   #manager.event_generator_name  : string  = "calib_Sr90.wrapper"
   #manager.event_generator_name  : string  = "bkg_Tl208.wrapper"
   #manager.event_generator_name  : string  = "bkg_Bi214_Po214.wrapper"
-  #manager.event_generator_name  : string  = "electron_0-3MeV_flat"
+  manager.event_generator_name  : string  = "electron_0-3MeV_flat"
 #+END_SRC
 **** SNG4 manager
 The full =sng4= configuration can be found in the [[file:sng4_manager.org][sng4_manager.org]] file.
 #+BEGIN_SRC sh
   #@description The simulation manager configuration file
-  manager.configuration_filename : string = "${SNSW_SIMULATION_DIR}/config/sng4_manager.conf"
+  manager.configuration_filename : string = "${SNAILWARE_SIMULATION_DIR}/configuration/sng4_manager.conf"
 #+END_SRC
 
 *** Adding event header
@@ -470,13 +462,28 @@ particles has been restricted.
 Among the options offered by =utils_module=, there is a possibility to give an
 external file (following =datatools::properties= writing conventions) where
 additionnal informations can be added. Typical use case is the definition of
-some properties/descriptions of simulation runs.
+some properties/descriptions of simulation runs (see below).
 #+BEGIN_SRC sh
   #@description The external properties files to be exported in event_header properties
-  mode.add_header.external_properties_path : string = "${SNSW_SIMULATION_DIR}/config/header.conf"
+  mode.add_header.external_properties_path : \
+      string = "${SNAILWARE_SIMULATION_DIR}/configuration/simulation_header.conf"
 
   #@description The external properties prefix to export only properties starting with this prefix
   mode.add_header.external_properties_prefix : string = "analysis"
+#+END_SRC
+
+#+BEGIN_SRC sh :tangle simulation_header.conf
+  #@description The analysis description
+  analysis.description : string = "Study the efficiency of e-/e+ discrimination wrt magnetic field"
+
+  #@description The SuperNEMO magnetic field
+  analysis.magnetic_field : real = 25.0 #Gauss
+
+  #@description The total number of event simulated
+  analysis.total_number_of_event : integer = 100000
+
+  #@description The double beta decay process
+  analysis.decay_process : string = "2b2n"
 #+END_SRC
 *** Tracker simulation to calibration data
 :PROPERTIES:
@@ -1473,7 +1480,8 @@ reconstruction ... but all of them will use the same geometry.
   debug : boolean = 1
 
   #@description Embedded SuperNEMO geometry manager main configuration file
-  manager.configuration_file : string = "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/manager.conf"
+  manager.configuration_file : string = \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/manager.conf"
 
   #@description Embedded SuperNEMO geometry manager must build its mapping lookup table
   manager.build_mapping : boolean = 1
@@ -1497,10 +1505,15 @@ apply selection cuts on arbitrary data models.
   debug : boolean = 0
 
   #@description The main configuration file for the embedded cut manager
-  cut_manager.config : string = "${SNSW_SIMULATION_DIR}/configuration/cut_manager.conf"
+  cut_manager.config : string = "${SNAILWARE_SIMULATION_DIR}/configuration/cut_manager.conf"
 #+END_SRC
 
 *** Manager
+:PROPERTIES:
+:CUSTOM_ID: cut_manager
+:TANGLE: cut_manager.conf
+:END:
+
 #+BEGIN_SRC sh
   #@description A debug flag
   debug : boolean = 0
@@ -1515,11 +1528,11 @@ apply selection cuts on arbitrary data models.
   factory.debug : boolean = 0
 
   #@description A list of files that contains definition of cuts
-  cuts.configuration_files : string[4] =                                     \
-    "${SNSW_SIMULATION_DIR}/configuration/simulated_data_cuts.conf"          \
-    "${SNSW_SIMULATION_DIR}/configuration/calibrated_data_cuts.conf"         \
-    "${SNSW_SIMULATION_DIR}/configuration/tracker_clustering_data_cuts.conf" \
-    "${SNSW_SIMULATION_DIR}/configuration/particle_track_data_cuts.conf"
+  cuts.configuration_files : string[4] =                                          \
+    "${SNAILWARE_SIMULATION_DIR}/configuration/simulated_data_cuts.conf"          \
+    "${SNAILWARE_SIMULATION_DIR}/configuration/calibrated_data_cuts.conf"         \
+    "${SNAILWARE_SIMULATION_DIR}/configuration/tracker_clustering_data_cuts.conf" \
+    "${SNAILWARE_SIMULATION_DIR}/configuration/particle_track_data_cuts.conf"
 #+END_SRC
 
 *** Skeleton codes
@@ -1637,10 +1650,10 @@ This skeleton code allows to check the availability of a data bank.
   range_hit_category.category : string = "calorimeter"
 
   #@description Minimal number of calibrated hits in the choosen category
-  range_hit_category.min : integer = 0
+  range_hit_category.min : integer = 1
 
   #@description Maximal number of calibrated hits in the choosen category
-  #range_hit_category.max : integer = 2
+  range_hit_category.max : integer = 1
 #+END_SRC
 
 **** Check calibrated tracker availability

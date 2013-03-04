@@ -1,0 +1,167 @@
+#+TITLE:  Step Hit Processor Configuration
+#+AUTHOR: Xavier Garrido
+#+DATE:   2013-03-04
+#+OPTIONS: toc:nil
+
+* Introduction
+:PROPERTIES:
+:CUSTOM_ID: introduction
+:END:
+
+This file holds the configuration for the different Step Hit Processors (SHP) used
+with SuperNEMO simulations. The basic idea behind SHP is to treat Geant4 step
+hits given the sensitive categories in where they occurs. Each Geant4 step is
+"digitized" and if the step is within a sensitive category with attached SHP
+then the step is processed. For SuperNEMO simulations there are mainly two kind
+of physics processors:  Geiger cells and calorimeter processors.
+
+There is also a third kind of processors which handles /visual/ hits to make
+them visible given a list of sensitive categories.
+
+* Processors
+:PROPERTIES:
+:CUSTOM_ID: processors
+:TANGLE: step_hit_processor_manager.conf
+:END:
+
+#+BEGIN_SRC sh
+  #@description A sample list of setups
+  #@key_label   "name"
+  #@meta_label  "type"
+#+END_SRC
+
+** Calorimeter processors
+There are few options for calorimeter processors :
+- a =hit.category= is attached to each Geant4 step hits,
+- the corresponding =sensitive.category= must be set,
+- =cluster.time_range= and =cluster.time_space= are related to the clustering of
+  Geant4 step hits.
+
+The basic idea is to aggregate Geant4 step hits given the =cluster.time_range=
+and the =cluster.time_space= into a unique calorimeter hit.
+
+*** Main wall
+#+BEGIN_SRC sh
+  [name="calorimeter.hit_processor" type="snemo::core::processing::calorimeter_step_hit_processor"]
+
+  #@config The step hit processor for the calorimeter simulated hits
+
+  debug                          : boolean   = 0
+  hit.category                   : string    = "calo"
+  sensitive.category             : string    = "calorimeter.SD"
+  use_private_pool               : boolean   = 1
+  private_pool_capacity          : integer   = 10
+
+  mapping.category               : string    = "calorimeter_block"
+  mapping.category.any_addresses : string[1] = "part"
+  cluster.time_range             : real      = 1.0  # ns
+  cluster.space_range            : real      = 10.0 # mm
+#+END_SRC
+
+*** X-wall
+#+BEGIN_SRC sh
+  [name="xcalo.hit_processor" type="snemo::core::processing::calorimeter_step_hit_processor"]
+
+  #@config The step hit processor for the auxiliary calorimeter simulated hits
+
+  debug               : boolean = 0
+  hit.category        : string  = "xcalo"
+  sensitive.category  : string  = "xcalorimeter.SD"
+  mapping.category    : string  = "xcalo_block"
+  cluster.time_range  : real    = 1.0  # ns
+  cluster.space_range : real    = 10.0 # mm
+#+END_SRC
+*** \gamma veto
+#+BEGIN_SRC sh
+  [name="gveto.hit_processor" type="snemo::core::processing::calorimeter_step_hit_processor"]
+
+  #@config The step hit processor for the gamma veto simulated hits
+
+  debug               : boolean = 0
+  hit.category        : string  = "gveto"
+  sensitive.category  : string  = "gveto.SD"
+  mapping.category    : string  = "gveto_block"
+  cluster.time_range  : real    = 1.0  # ns
+  cluster.space_range : real    = 10.0 # mm
+#+END_SRC
+
+
+** TODO Geiger cells processors
+#+BEGIN_SRC sh
+  [name="gg.hit_processor" type="snemo::core::processing::gg_step_hit_processor"]
+
+  #@config The step hit processor for the Geiger simulated hits
+  debug                  : boolean = 0
+  hit.category           : string  = "gg"
+  sensitive.category     : string  = "tracker.SD"
+  mapping.category       : string  = "drift_cell_core"
+  rng.seed               : integer = 314159
+  rng.id                 : string  = "mt19937"
+  #fiducial_drift_radius : real    =   22.0  # mm
+  #fiducial_drift_length : real    = 2800.0  # mm
+  mean_ionization_energy : real    =   50.0 # eV
+
+  #@description For each cell traversed by a track, compute the position of maximal approach to the anode wire (debug purpose only so default is 0)
+  compute_maximal_approach_position : boolean = 0
+#+END_SRC
+
+** Visualization processors
+#+BEGIN_SRC sh
+  [name="calorimeter.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  #@config The step hit processor for collecting the calorimeter simulated hits
+  debug              : boolean = 0
+  hit.category       : string  = "__visu.tracks"
+  sensitive.category : string  = "calorimeter.SD"
+
+  [name="xcalorimeter.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  #@config The step hit processor for collecting the calorimeter simulated hits
+  debug              : boolean = 0
+  hit.category       : string  = "__visu.tracks"
+  sensitive.category : string  = "xcalorimeter.SD"
+
+  [name="gveto.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  #@config The step hit processor for collecting the calorimeter simulated hits
+  debug              : boolean = 0
+  hit.category       : string  = "__visu.tracks"
+  sensitive.category : string  = "gveto.SD"
+
+
+  [name="tracker.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  #@config The step hit processor for collecting the tracker simulated hits
+  debug              : boolean = 1
+  hit.category       : string  = "__visu.tracks"
+  sensitive.category : string  = "tracker.SD"
+
+  [name="source.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  #@config The step hit processor for collecting simulated hits within source strip
+  debug              : boolean   = 0
+  hit.category       : string    = "__visu.tracks"
+  sensitive.category : string    = "__source.SD"
+  geometry.models    : string[2] = \
+                     "source_external_strip.model" \
+                     "source_internal_strip.model"
+
+  [name="wires.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  #@config The step hit processor for collecting simulated hits within tracker's wires
+  debug                 : boolean   = 0
+  hit.category          : string    = "__visu.tracks"
+  sensitive.category    : string    = "__wires.SD"
+  geometry.models       : string[2] = "field_wire.model" "anode_wire.model"
+  visu.highlighted_hits : boolean   = 1
+
+  [name="films.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  #@config The step hit processor for collecting simulated hits within tracker's wires
+  debug              : boolean = 0
+  hit.category       : string  = "__visu.tracks"
+  sensitive.category : string  = "__films.SD"
+  geometry.models.with_materials : string[3] = "std::mylar" "std::nylon" "std::pfte"
+  visu.highlighted_hits : boolean   = 0
+
+  [name="tracking_gas.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  #@config The step hit processor for collecting simulated hits within tracking gas
+  debug              : boolean = 0
+  hit.category       : string  = "__visu.tracks"
+  sensitive.category : string  = "__tracking_gas.SD"
+  geometry.models.with_materials : string[1] = "tracking_gas"
+  geometry.models.excluded       : string[1] = "drift_cell_core.model"
+#+END_SRC

@@ -1,0 +1,210 @@
+#+TITLE:  SNGenbb Manager Configuration
+#+AUTHOR: Xavier Garrido
+#+DATE:   2013-03-04
+#+OPTIONS: toc:nil
+#+LATEX_CMD: xelatex
+
+* Introduction
+:PROPERTIES:
+:CUSTOM_ID: introduction
+:END:
+
+The sngenbb package is dedicated to the generation of double beta decay and/or
+radioactive background primary events as input for a simulation program.
+
+More details concerning the use of =sngenbb= can be found in [[https://nemo.lpc-caen.in2p3.fr/wiki/sngenbb][LPC wiki]].
+
+* Manager configuration
+:PROPERTIES:
+:CUSTOM_ID: manager_configuration
+:TANGLE: sngenbb_manager.conf
+:END:
+
+This section holds the configuration of several genbb wrappers to be used within =sngenbb=.
+
+#+BEGIN_SRC sh
+  #@description A sample list of setups
+  #@key_label   "name"
+  #@meta_label  "type"
+#+END_SRC
+
+** Main configuration level
+Here, general options such as verbosity, debug flags are passed to =sngenbb=
+manager. By the way, some of these options can be overloaded by the
+=sng4_module= which configuration can be changed in [[file:simulation_config.org][simulation_config.org]].
+#+BEGIN_SRC sh
+  [name="sngenbb::manager" type="sngenbb::manager"]
+
+  #@description Debug flag:
+  debug                 : boolean = 0
+
+  #@description Compute and register the 'classification' attribute in the generated primary event
+  compute_classification : boolean = 1
+
+  #@description This seed value supersedes the one eventually set in the generators' setups below
+  seed            : integer = 314159
+#+END_SRC
+
+** Genbb wrappers
+This part basically provides all the available event generator wrapper for
+SuperNEMO. All these objects are singletons by construction due to the use of
+wrapped fortran code. Efforts to have a C++ version of =genbb= are undergoing.
+
+*** ^{82}Se \beta\beta0\nu
+#+BEGIN_SRC sh
+  [name="bb0nu_Se82.wrapper" type="genbb_wrapper"]
+  seed            : integer = 314159
+  decay_type      : string  = "DBD"
+  decay_isotope   : string  = "Se82"
+  decay_dbd_level : integer = 0
+  decay_dbd_mode  : integer = 1
+#+END_SRC
+
+*** ^{82}Se \beta\beta2\nu
+#+BEGIN_SRC sh
+  [name="bb2nu_Se82.wrapper" type="genbb_wrapper"]
+  debug           : boolean = 0
+  seed            : integer = 314159
+  decay_type      : string  = "DBD"
+  decay_isotope   : string  = "Se82"
+  decay_dbd_level : integer = 0
+  decay_dbd_mode  : integer = 4
+  energy_min      : real = 2.0
+  #energy_max      : real = 5.0
+  energy_unit     : string  = "MeV"
+#+END_SRC
+
+*** ^{208}Tl background
+#+BEGIN_SRC sh
+  [name="bkg_Tl208.wrapper" type="genbb_wrapper"]
+  seed            : integer = 314159
+  decay_type      : string  = "background"
+  decay_isotope   : string  = "Tl208"
+  #energy_min      : real = 0.0
+  #energy_max      : real = 5.0
+  #energy_unit     : string  = "MeV"
+#+END_SRC
+
+*** ^{214}Bi to ^{214}Po decay
+#+BEGIN_SRC sh
+  [name="bkg_Bi214_Po214.wrapper" type="genbb_wrapper"]
+  seed            : integer = 314159
+  decay_type      : string  = "background"
+  decay_isotope   : string  = "Bi214+Po214"
+  #energy_min      : real = 0.0
+  #energy_max      : real = 5.0
+  #energy_unit     : string  = "MeV"
+#+END_SRC
+
+*** ^{212}Bi to ^{212}Po decay
+#+BEGIN_SRC sh
+  [name="bkg_Bi212_Po212.wrapper" type="genbb_wrapper"]
+  seed            : integer = 314159
+  decay_type      : string  = "background"
+  decay_isotope   : string  = "Bi212+Po212"
+  #energy_min      : real = 0.0
+  #energy_max      : real = 5.0
+  #energy_unit     : string  = "MeV"
+#+END_SRC
+
+*** ^{207}Bi calibration source
+#+BEGIN_SRC sh
+  [name="calib_Bi207.wrapper" type="genbb_wrapper"]
+  seed            : integer = 314159
+  decay_type      : string  = "background"
+  decay_isotope   : string  = "Bi207"
+  #energy_min      : real = 0.0
+  #energy_max      : real = 5.0
+  #energy_unit     : string  = "MeV"
+#+END_SRC
+
+** Genbb process
+This define a standalone =genbb= process to produce an ascii output file.
+
+#+BEGIN_SRC sh :tangle no
+  [name="bb0nu_Se82.process" type="genbb_process"]
+
+  #@config The configuration of the GENBB event generator (class genbb::genbb):
+
+  debug           : boolean = 1
+  seed            : integer = 314159
+  buffer_size     : integer = 100
+  tmp_base_dir    : string  = "/tmp/${USER}"
+  preserve_data_files : boolean = 1
+
+  # Available choices: "background" or "DBD"
+  decay_type      : string  = "DBD"
+  decay_isotope   : string  = "Se82"
+  decay_dbd_level : integer = 0
+  decay_dbd_mode  : integer = 1
+#+END_SRC
+
+** Genbb files
+This code can generate =genbb= events given previous results of =genbb=
+simulation processes.
+
+#+BEGIN_SRC sh :tangle no
+  [name="BiPo212.files" type="genbb_files"]
+
+  #@config The configuration of the GENBB event generator (class genbb::genbb_mgr):
+
+  debug : boolean = 0
+
+  #@description The format of the "genbb" input files ("genbb" or "boost"):
+  format : string = "genbb"
+
+  #@description List of the "genbb" mode input files:
+  input_files : string[2] = \
+    "${GENBB_HELP_DATA_DIR}/testing/data/bipo212_1.genbb" \
+    "${GENBB_HELP_DATA_DIR}/testing/data/bipo212_2.genbb"
+
+  # Alternative: using a pattern for input file names:
+  #@description The format of the "genbb" input files
+  ###format : string = "boost"
+
+  #@description The directory where GENBB input files must be searched for:
+  ###input_files.directory : string = "${GENBB_HELP_DATA_DIR}/testing/data"
+
+  #@description The pattern of GENBB input files to be searched for:
+  ###input_files.pattern   : string = "bipo212_?.boost.txt*"
+#+END_SRC
+
+** Single particle generator
+Here, single particle can be generated using different energy distribution : fix
+energy, flat energy distribution given energy limits, gaussian energy
+distribution or following a tabulated energy spectrum.
+
+*** Single electron with flat energy distribution
+#+BEGIN_SRC sh
+  [name="electron_0-3MeV_flat" type="single_particle"]
+
+  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+
+  #@description Seed for the embedded random number generator:
+  seed                  : integer = 314159
+
+  #@description Generated particle ("electron", "positron", "gamma", "alpha"):
+  particle_name         : string = "electron"
+
+  #@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):
+  mode                  : string = "energy_range"
+
+  ### Only for "energy_range" mode:
+  min_energy            : real   = 0000.
+  max_energy            : real   = 3000.
+  energy_unit           : string = "keV"
+
+  ### Only for "gaussian_energy" mode:
+  #mean_energy           : real   = 1000.
+  #sigma_energy          : real   =  100.
+  #energy_unit           : string = "keV"
+
+  ### Only for "monokinetic" mode:
+  #energy                : real   = 5500.
+  #energy_unit           : string = "keV"
+
+  ### Only for "spectrum" mode:
+  #spectrum.data_file    : string = "${SNGENBB_DATA_DIR}/testing/data/sample_tabulated_energy_spectrum.data"
+
+  randomized_direction   : boolean = 1
+#+END_SRC

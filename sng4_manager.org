@@ -36,7 +36,7 @@ next one which allows the reading of this file by =datatools::properties= object
 #+BEGIN_SRC sh
   #@description A sample list of setups
   #@key_label   "name"
-  #@meta_label  "type"
+  #@meta_label  ""
 #+END_SRC
 
 ** Main configuration level
@@ -112,7 +112,8 @@ Step hit processors are used to convert Geant4 steps into detector hits for
 SuperNEMO physics.
 #+BEGIN_SRC sh
   #@description Configuration file for the step hit processor factory:
-  hit_processor_factory.config : string = "${SNSW_SIMULATION_DIR}/config/step_hit_processor_factory.conf"
+  hit_processor_factory.config : string = \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/step_hit_processor_manager.conf"
 #+END_SRC
 
 *** Sensitive detectors
@@ -224,7 +225,7 @@ phycical processes for SuperNEMO.
   verbosity   : integer = 0
 #+END_SRC
 
-*** TODO SuperNEMO phycical processes activation
+*** TODO SuperNEMO physical processes activation
 A more complete list of processes available for SuperNEMO should be written.
 #+BEGIN_SRC sh
   #@description Activate energy loss process for electron/positron
@@ -266,12 +267,12 @@ minimal step hit size given the detector region.
 ** Primary generator
 The following code holds the =sngenbb= manager to give access to several primary
 generators from neutrinoless double beta decay, to ^{214}Bi / ^{208}Tl
-contamination or cosmic muon generator.
+contamination or cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb_manager.org]] file.
 #+BEGIN_SRC sh
   [name="primary_generator"]
 
   #@description Configuration file for the embedded 'snemo::genbb::manager'
-  config : string = "${SNSW_SIMULATION_DIR}/config/sngenbb_manager.conf"
+  config : string = "${SNAILWARE_SIMULATION_DIR}/configuration/sngenbb_manager.conf"
 #+END_SRC
 
 ** Geant4 related action

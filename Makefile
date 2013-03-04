@@ -6,7 +6,7 @@ BATCH = $(EMACS) --batch -Q --eval '(require (quote org))'			\
 		(quote((sh . t))))'						\
 	--eval '(setq org-confirm-babel-evaluate nil)'
 
-FILES = simulation_config.org sng4_manager.org
+FILES = $(wildcard *.org)
 
 all: org
 
