@@ -12,8 +12,6 @@ CCAGE_DIRECTORY = /sps/nemo/scratch/garrido/simulations/configuration
 FILES  = $(notdir $(shell ls *.org 2> /dev/null))
 FILESO = $(FILES:%.org=$(GIT_BRANCH)/.%.tangle)
 
-GIT_BRANCH = `git branch | grep \* | cut -d' ' -f2`
-CCAGE_DIRECTORY = /sps/nemo/scratch/garrido/simulations/configuration
 all: org
 
 org: $(FILESO)
