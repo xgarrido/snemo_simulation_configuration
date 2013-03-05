@@ -6,17 +6,19 @@ BATCH = $(EMACS) --batch -Q --eval '(require (quote org))'			\
 		(quote((sh . t))))'						\
 	--eval '(setq org-confirm-babel-evaluate nil)'
 
-FILES = $(wildcard *.org)
+GIT_BRANCH = $(shell git branch | grep \* | cut -d' ' -f2)
+CCAGE_DIRECTORY = /sps/nemo/scratch/garrido/simulations/configuration
+
+FILES  = $(notdir $(shell ls *.org 2> /dev/null))
+FILESO = $(FILES:%.org=$(GIT_BRANCH)/.%.tangle)
 
 GIT_BRANCH = `git branch | grep \* | cut -d' ' -f2`
 CCAGE_DIRECTORY = /sps/nemo/scratch/garrido/simulations/configuration
 all: org
 
-org: $(FILES:.org=.tangle)
-pdf: $(FILES:.org=.pdf)
-html: $(FILES:.org=.html)
+org: $(FILESO)
 
-%.tangle: %.org
+$(GIT_BRANCH)/.%.tangle: %.org
 	@echo "Tangling $< file"
 	@$(BATCH) --eval '(org-babel-tangle-file "$<")'
 	@mkdir -p $(GIT_BRANCH)
@@ -24,23 +26,14 @@ html: $(FILES:.org=.html)
 	@if [ -L current ]; then rm current;fi && ln -sf $(GIT_BRANCH) current
 	@touch $@
 
-%.tex: %.org
-	$(BATCH) $*.org -f org-export-as-latex
-
-%.pdf: %.org
-	$(BATCH) $*.org -f org-export-as-pdf
-
-%.html: %.org
-	$(BATCH) $*.org -f org-export-as-html
-
 tarball: org
 	@echo "Making tarball configuration"
 	@tar czf $(GIT_BRANCH).tar.gz $(GIT_BRANCH)
 
 push: org
 	@echo "Pushing current configuration to Lyon"
-	ssh garrido@ccage.in2p3.fr "cd $(CCAGE_DIRECTORY) && mkdir -p $(GIT_BRANCH); if [ -L current ]; then rm current; fi; ln -sf $(GIT_BRANCH) current"
-	rsync --recursive -e ssh -avP $(GIT_BRANCH)/*.conf garrido@ccage.in2p3.fr:$(CCAGE_DIRECTORY)/$(GIT_BRANCH)/.
+	@ssh garrido@ccage.in2p3.fr "cd $(CCAGE_DIRECTORY) && mkdir -p $(GIT_BRANCH); if [ -L current ]; then rm current; fi; ln -sf $(GIT_BRANCH) current"
+	@rsync --recursive -e ssh -avP $(GIT_BRANCH)/*.conf garrido@ccage.in2p3.fr:$(CCAGE_DIRECTORY)/$(GIT_BRANCH)/.
 
 doc: doc/index.html
 
@@ -53,4 +46,4 @@ doc/index.html:
 
 clean:
 	rm -f *.tangle *.tar.gz *.conf *.aux *.tex *.fls *fdb_latexmk *.log *.pdf doc/*html *~
-	rm -rf doc
+	rm -rf doc current $(GIT_BRANCH)
