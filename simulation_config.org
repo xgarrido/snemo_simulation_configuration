@@ -171,7 +171,7 @@ module. It also defines the output directory where to store each output steps.
 
 #+NAME: remove_module(mname="", mode="remove_bank", label="", debug=0)
 #+BEGIN_SRC sh
-  echo '[name="'$mname'" type="snemo::core::io::utils_module"]'
+  echo '[name="'$mname'" type="snemo::core::processing::utils_module"]'
   echo
   echo '#@description Debug flag'
   echo 'debug : boolean =' $debug
@@ -204,7 +204,7 @@ receives a table list and builds the =chain_module= declaration given its name.
 This skeleton code is a template to declare =if_module= processor.
 #+NAME: if_module(mname="", cut="", then="", else="", debug=0)
 #+BEGIN_SRC sh
-  echo '[name="'$mname'" type="snemo::core::processing::chain_module"]'
+  echo '[name="'$mname'" type="snemo::core::processing::if_module"]'
   echo
   echo '#@description Debug flag'
   echo 'debug : boolean =' $debug
@@ -416,13 +416,13 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 **** Event generator
 #+BEGIN_SRC sh
   #@description The event generator PRNG label
-  #manager.event_generator_name  : string  = "bb0nu_Se82.wrapper"
+  manager.event_generator_name  : string  = "bb0nu_Se82.wrapper"
   #manager.event_generator_name  : string  = "bb2nu_Se82.wrapper"
   #manager.event_generator_name  : string  = "calib_Bi207.wrapper"
   #manager.event_generator_name  : string  = "calib_Sr90.wrapper"
   #manager.event_generator_name  : string  = "bkg_Tl208.wrapper"
   #manager.event_generator_name  : string  = "bkg_Bi214_Po214.wrapper"
-  manager.event_generator_name  : string  = "electron_0-3MeV_flat"
+  #manager.event_generator_name  : string  = "electron_0-3MeV_flat"
 #+END_SRC
 **** SNG4 manager
 The full =sng4= configuration can be found in the [[file:sng4_manager.org][sng4_manager.org]] file.
@@ -1035,7 +1035,7 @@ track with calorimeter blocks.
 **** Debug flag
 #+BEGIN_SRC sh
   #@description Debug flag
-  debug : boolean = 1
+  debug : boolean = 0
 #+END_SRC
 **** Data banks and services labels
 #+BEGIN_SRC sh
@@ -1071,7 +1071,7 @@ implemented but the particle tracking module will stay unchanged.
 ***** Vertex Extrapolation Driver
 #+BEGIN_SRC sh
   #@description Vertex Extrapolation Driver options
-  VED.debug : boolean = 1
+  VED.debug : boolean = 0
 
   #@description Use linear extrapolation (not implemented yet)
   VED.use_linear_extrapolation : boolean = 0
@@ -1080,7 +1080,7 @@ implemented but the particle tracking module will stay unchanged.
 ***** Charge Computation Driver
 #+BEGIN_SRC sh
   #@description Charge Computation Driver options
-  CCD.debug : boolean = 1
+  CCD.debug : boolean = 0
 
   #@description Charge sign convention
   CCD.charge_from_source : boolean = 1
@@ -1089,7 +1089,7 @@ implemented but the particle tracking module will stay unchanged.
 ***** Calorimeter Association Driver
 #+BEGIN_SRC sh
   #@description Calorimeter Association Driver options
-  CAD.debug : boolean = 1
+  CAD.debug : boolean = 0
 
   #@description Maximum matching distance for track/calo association
   CAD.matching_tolerance : string = "300 mm"
@@ -1234,7 +1234,7 @@ module. Basically, for one study purpose, there is one or two plot modules.
   #@config 'snemo::analysis::processing::basic_plot_module' configuration parameters
 
   #@description Debug flag
-  debug     : boolean = 1
+  debug     : boolean = 0
 
   #@description The Histogram Service label
   Histo_label : string = "Histo"
@@ -1302,7 +1302,7 @@ module. Basically, for one study purpose, there is one or two plot modules.
   [name="snemo_vertex_resolution" type="snemo::analysis::processing::snemo_vertex_resolution_module"]
 
   #@description Debug flag
-  debug       : boolean = 1
+  debug       : boolean = 0
 
   #@description Vertex reconstruction either on 'foil', 'calo' or 'xcalo'
   parameter   : string = "calo"
@@ -1449,7 +1449,7 @@ software components, including other services or data processing modules (see
   [name="Ctx" type="snemo::core::service::context_service"]
 
   #@description Debug flag
-  debug : boolean = 1
+  debug : boolean = 0
 
   #@description Verbosity flag
   verbose : boolean = 1
@@ -1477,7 +1477,7 @@ reconstruction ... but all of them will use the same geometry.
   [name="Geo" type="snemo::core::service::geometry_service"]
 
   #@description Debug flag
-  debug : boolean = 1
+  debug : boolean = 0
 
   #@description Embedded SuperNEMO geometry manager main configuration file
   manager.configuration_file : string = \
@@ -1651,10 +1651,10 @@ This skeleton code allows to check the availability of a data bank.
   range_hit_category.category : string = "calorimeter"
 
   #@description Minimal number of calibrated hits in the choosen category
-  range_hit_category.min : integer = 1
+  range_hit_category.min : integer = 2
 
   #@description Maximal number of calibrated hits in the choosen category
-  range_hit_category.max : integer = 1
+  range_hit_category.max : integer = 2
 #+END_SRC
 
 **** Check calibrated tracker availability
@@ -1746,10 +1746,10 @@ This cuts puts together all the previous declared cuts.
   mode.range_cluster : boolean = 1
 
   #@description Minimal number of clusters
-  range_cluster.min : integer = 1
+  range_cluster.min : integer = 2
 
   #@description Maximal number of clusters
-  range_cluster.max : integer = 1
+  range_cluster.max : integer = 2
 #+END_SRC
 
 **** Select number of hit within a cluster
@@ -1824,7 +1824,7 @@ This cuts puts together all the previous declared cuts.
   [name="range_particle" type="snemo::analysis::cut::basic_particle_track_data_cut"]
 
   #@description Debug flag
-  debug : boolean = 1
+  debug : boolean = 0
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   PTD_label : string = "PTD"
@@ -1833,10 +1833,10 @@ This cuts puts together all the previous declared cuts.
   mode.range_particles : boolean = 1
 
   #@description Minimal number of particle trajectories in the choosen category
-  range_particles.min : integer = 1
+  range_particles.min : integer = 2
 
   #@description Maximal number of particle trajectories in the choosen category
-  range_particles.max : integer = 1
+  range_particles.max : integer = 2
 #+END_SRC
 
 **** Check association with calorimeter block
@@ -1844,7 +1844,7 @@ This cuts puts together all the previous declared cuts.
   [name="has_associated_calorimeter" type="snemo::analysis::cut::basic_particle_track_data_cut"]
 
   #@description Debug flag
-  debug : boolean = 1
+  debug : boolean = 0
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   PTD_label : string = "PTD"
@@ -1878,7 +1878,7 @@ This cuts puts together all the previous declared cuts.
   [name="has_vertex_on_foil" type="snemo::analysis::cut::basic_particle_track_data_cut"]
 
   #@description Debug flag
-  debug : boolean = 1
+  debug : boolean = 0
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   PTD_label : string = "PTD"

@@ -8,6 +8,7 @@
 *.log
 *.fls
 *.fdb*
+current
 
 ## misc
 .svn
