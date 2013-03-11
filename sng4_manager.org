@@ -1,7 +1,12 @@
 #+TITLE:  SNG4 Manager Configuration
 #+AUTHOR: Xavier Garrido
 #+DATE:   2013-02-24
-#+OPTIONS: toc:nil
+#+OPTIONS: toc:nil ^:{}
+#+LATEX_CLASS: memarticle
+#+LATEX_HEADER: \setsansfont[Mapping=tex-text]{Myriad Pro}
+#+LATEX_HEADER: \setmonofont[Mapping=tex-text,Scale=MatchLowercase]{Inconsolata}
+#+LATEX_HEADER: \setromanfont[Mapping=tex-text, Numbers=OldStyle]{Minion Pro}
+#+LATEX_HEADER: \chapterstyle{article-4-sans}
 
 * Introduction
 :PROPERTIES:

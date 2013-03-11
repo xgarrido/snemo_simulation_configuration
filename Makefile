@@ -10,11 +10,11 @@ GIT_BRANCH = $(shell git branch | grep \* | cut -d' ' -f2)
 CCAGE_DIRECTORY = /sps/nemo/scratch/garrido/simulations/configuration
 
 FILES  = $(notdir $(shell ls *.org 2> /dev/null))
-FILESO = $(FILES:%.org=$(GIT_BRANCH)/.%.tangle)
+FILEST = $(FILES:%.org=$(GIT_BRANCH)/.%.tangle)
 
 all: org
 
-org: $(FILESO)
+org: $(FILEST)
 
 $(GIT_BRANCH)/.%.tangle: %.org
 	@echo "Tangling $< file"

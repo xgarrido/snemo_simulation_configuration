@@ -2,6 +2,11 @@
 #+AUTHOR: Xavier Garrido
 #+DATE:   2013-02-22
 #+OPTIONS: toc:nil ^:{}
+#+LATEX_CLASS: memarticle
+#+LATEX_HEADER: \setsansfont[Mapping=tex-text]{Myriad Pro}
+#+LATEX_HEADER: \setmonofont[Mapping=tex-text,Scale=MatchLowercase]{Inconsolata}
+#+LATEX_HEADER: \setromanfont[Mapping=tex-text, Numbers=OldStyle]{Minion Pro}
+#+LATEX_HEADER: \chapterstyle{article-4-sans}
 
 * Introduction
 :PROPERTIES:
@@ -1120,7 +1125,7 @@ module, especially =chain_module=, needs to know the declaration of all the
 modules it contains.
 
 #+BEGIN_SRC sh :noweb yes
-    <<module_preamble>>
+  <<module_preamble>>
 #+END_SRC
 
 *** Process after selecting particle track
@@ -1129,10 +1134,13 @@ modules it contains.
 #+END_SRC
 
 *** Particle tracking chain
+#+CAPTION: Modules used by the particle tracking process
 #+TBLNAME: particle_tracking_chain :results none
+|--------------------------------|
 | remove_particle_track_data       |
-| basic_particle_tracking          |
+| basic_particle_tracking         |
 | process_with_particle_track_cuts |
+|--------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
   <<chain_module("particle_tracking_chain", 3, particle_tracking_chain)>>
@@ -1144,11 +1152,14 @@ modules it contains.
 #+END_SRC
 
 *** Fitting chain
+#+CAPTION: Modules used by the fitting process
 #+TBLNAME: fitting_chain :results none
+|--------------------------------|
 | remove_tracker_trajectory_data |
 | trackfit_tracker_fitting       |
 | io_output_tracker_trajectory   |
 | process_with_fitting_cuts      |
+|--------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
   <<chain_module("fitting_chain", 4, fitting_chain)>>
@@ -1160,11 +1171,14 @@ modules it contains.
 #+END_SRC
 
 *** Clustering chain
+#+CAPTION: Modules used by the clustering process
 #+TBLNAME: clustering_chain :results none
+|--------------------------------|
 | remove_tracker_clustering_data |
 | basic_tracker_clustering       |
 | io_output_tracker_clustering   |
 | process_with_clustering_cuts   |
+|--------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
   <<chain_module("clustering_chain", 4, clustering_chain)>>
@@ -1176,37 +1190,48 @@ modules it contains.
 #+END_SRC
 
 *** Calibration chain
+#+CAPTION: Modules used by the calibration process
 #+TBLNAME: calibration_chain :results none
+|----------------------|
 | add_header           |
 | tracker_s2c          |
 | calorimeter_s2c      |
 | io_output_calibrated |
+|----------------------|
 
 #+BEGIN_SRC sh :noweb yes
   <<chain_module("calibration_chain", 4, calibration_chain)>>
 #+END_SRC
 
 *** Simulation chain
+#+CAPTION: Modules used by the simulation process
 #+TBLNAME: simulation_chain :results none
+|---------------------|
 | simulation          |
 | io_output_simulated |
+|---------------------|
 
 #+BEGIN_SRC sh :noweb yes
   <<chain_module("simulation_chain", 2, simulation_chain)>>
 #+END_SRC
 
-*** Full chain (from simulation -> calibration -> reconstruction)
+*** Full chain (from simulation \to  calibration \to reconstruction)
+#+CAPTION: Full chain processing
 #+TBLNAME: full_chain :results none
+|------------------------------|
 | simulation_chain             |
 | calibration_chain            |
 | process_with_calibrated_cuts |
+|------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
   <<chain_module("full_chain", 3, full_chain)>>
 #+END_SRC
 
 *** Miscellaneous
+#+CAPTION: Reformating data
 #+TBLNAME: reformat_data :results none
+|--------------------------------|
 | remove_header                  |
 | add_header                     |
 | remove_mc_visu_hits            |
@@ -1214,6 +1239,7 @@ modules it contains.
 | remove_calibrated_data         |
 | remove_tracker_clustering_data |
 | remove_tracker_trajectory_data |
+|--------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
   <<chain_module("reformat_data", 7, reformat_data)>>
@@ -1588,7 +1614,10 @@ This skeleton code allows to check the availability of a data bank.
   echo -ne 'cuts : string['$ncut'] = '
   for i in $list
   do
-      echo -ne '"'${i}'" '
+      test $i = hline && continue
+      echo -ne '"'
+      echo -ne $i | sed '/(/ s/("\|")//g'
+      echo -ne '" '
   done
 #+END_SRC
 
@@ -1715,12 +1744,15 @@ This skeleton code allows to check the availability of a data bank.
 
 **** Multiple cuts
 This cuts puts together all the previous declared cuts.
+#+CAPTION: Multi selection for validating calibration process
 #+TBLNAME: calibrated_cuts :results none
+|---------------------|
 | has_calibrated_data |
 | has_cd_calorimeter  |
 | has_cd_tracker      |
 | cd_calorimeter_cut  |
 | cd_tracker_cut      |
+|---------------------|
 
 #+BEGIN_SRC sh :noweb yes
   <<multi(cname="calibrated_cut", "and", 5, calibrated_cuts)>>
@@ -1782,10 +1814,13 @@ This cuts puts together all the previous declared cuts.
 #+END_SRC
 
 **** Multiple cuts
+#+CAPTION: Multi-selection for validating tracker clustering process
 #+TBLNAME: tracker_clustering_cuts :results none
+|-----------------------------|
 | has_tracker_clustering_data |
 | tcd1_cut                    |
 | tcd2_cut                    |
+|-----------------------------|
 
 #+BEGIN_SRC sh :noweb yes
   <<multi(cname="basic_tracker_clustering_cut", "and", 3, tracker_clustering_cuts)>>
@@ -1807,8 +1842,11 @@ This cuts puts together all the previous declared cuts.
 #+END_SRC
 
 **** Multiple cuts
+#+CAPTION: Multi-selection for validating tracker trajectory process
 #+TBLNAME: tracker_trajectory_cuts :results none
+|-----------------------------|
 | has_tracker_trajectory_data |
+|-----------------------------|
 
 #+BEGIN_SRC sh :noweb yes
   <<multi(cname="basic_tracker_trajectory_cut", "and", 1, tracker_trajectory_cuts, debug=1)>>
@@ -2022,7 +2060,9 @@ has_charge.type : string = "undefined"
 #+END_SRC
 
 **** Multiple cuts
+#+CAPTION: Multi-selection for validating particle tracking process
 #+TBLNAME: particle_track_cuts :results none
+|-------------------------------|
 | has_particle_track_data       |
 | has_particle                  |
 | range_particle                |
@@ -2030,6 +2070,7 @@ has_charge.type : string = "undefined"
 | range_associated_calorimeters |
 | chi2_cut                      |
 | has_vertex_on_foil            |
+|-------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
   <<multi("particle_track_cut", "and", 6, particle_track_cuts)>>
