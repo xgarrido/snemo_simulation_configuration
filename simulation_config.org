@@ -1,7 +1,7 @@
 #+TITLE:  SN@ilWare Simulation Configuration
 #+AUTHOR: Xavier Garrido
 #+DATE:   2013-02-22
-#+OPTIONS: toc:nil
+#+OPTIONS: toc:nil ^:{}
 
 * Introduction
 :PROPERTIES:
@@ -197,7 +197,7 @@ receives a table list and builds the =chain_module= declaration given its name.
   echo -ne 'modules : string['$nmodule'] = '
   for i in $list
   do
-      echo -ne '"'${i/=/}'" '
+      echo -ne '"'$i'" '
   done
 #+END_SRC
 *** Skeleton code for =if= module
