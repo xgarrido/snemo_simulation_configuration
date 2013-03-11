@@ -660,7 +660,7 @@ for the quenching of alpha particles.
   gveto.low_threshold  : real = 50  # keV
 #+END_SRC
 
-** Tracker clustering & fitting modules
+** Tracker clustering, tracker fitting & particle tracking modules
 :PROPERTIES:
 :CUSTOM_ID: tracker_modules
 :TANGLE: tracker_modules.conf
@@ -1028,7 +1028,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   trackfit.helix.fit.using_last        : boolean = 0
 #+END_SRC
 
-** Basic particle tracking
+*** Basic particle tracking
 Given results of the two previous steps i.e. clustering and fitting, the
 trajectories must be interpreted within SuperNEMO detector geometry. The
 particle tracking translates trajectory into particle tracks and then determines
@@ -1040,12 +1040,12 @@ track with calorimeter blocks.
   [name="basic_particle_tracking" type="snemo::analysis::processing::basic_particle_tracking_module"]
 #+END_SRC
 
-*** Debug flag
+**** Debug flag
 #+BEGIN_SRC sh
   #@description Debug flag
   debug : boolean = 0
 #+END_SRC
-*** Data banks and services labels
+**** Data banks and services labels
 #+BEGIN_SRC sh
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
@@ -1059,13 +1059,13 @@ track with calorimeter blocks.
   #@description The label of the 'Particle Track Data' bank
   PTD_label : string  = "PTD"
 #+END_SRC
-*** Module number
+**** Module number
 #+BEGIN_SRC sh
   #@description The module number
   module_number : integer = 0
 #+END_SRC
 
-*** Drivers
+**** Drivers
 The particle track reconstruction is done within several drivers, each one
 having a dedicated tasks such as to compute track charge or to associate
 particle track with calorimeter block. The way to perform these "actions" is
@@ -1076,7 +1076,7 @@ implemented but the particle tracking module will stay unchanged.
   drivers : string[3] = "VED" "CCD" "CAD"
 #+END_SRC
 
-**** Vertex Extrapolation Driver
+***** Vertex Extrapolation Driver
 #+BEGIN_SRC sh
   #@description Vertex Extrapolation Driver options
   VED.debug : boolean = 0
@@ -1085,7 +1085,7 @@ implemented but the particle tracking module will stay unchanged.
   VED.use_linear_extrapolation : boolean = 0
 #+END_SRC
 
-**** Charge Computation Driver
+***** Charge Computation Driver
 #+BEGIN_SRC sh
   #@description Charge Computation Driver options
   CCD.debug : boolean = 0
@@ -1094,7 +1094,7 @@ implemented but the particle tracking module will stay unchanged.
   CCD.charge_from_source : boolean = 1
 #+END_SRC
 
-**** Calorimeter Association Driver
+***** Calorimeter Association Driver
 #+BEGIN_SRC sh
   #@description Calorimeter Association Driver options
   CAD.debug : boolean = 0
