@@ -463,6 +463,10 @@ Among the options offered by =utils_module=, there is a possibility to give an
 external file (following =datatools::properties= writing conventions) where
 additionnal informations can be added. Typical use case is the definition of
 some properties/descriptions of simulation runs (see below).
+
+The =external_properties_prefix= allows to filter which properties should be
+stored. If no =external_properties_prefix= field is defined then all the
+properties are used and serialized.
 #+BEGIN_SRC sh
   #@description The external properties files to be exported in event_header properties
   mode.add_header.external_properties_path : \
