@@ -197,7 +197,10 @@ receives a table list and builds the =chain_module= declaration given its name.
   echo -ne 'modules : string['$nmodule'] = '
   for i in $list
   do
-      echo -ne '"'$i'" '
+      test $i = hline && continue
+      echo -ne '"'
+      echo -ne $i | sed '/(/ s/("\|")//g'
+      echo -ne '" '
   done
 #+END_SRC
 *** Skeleton code for =if= module
@@ -667,7 +670,7 @@ for the quenching of alpha particles.
 :END:
 
 #+BEGIN_SRC sh :noweb yes
-    <<module_preamble>>
+  <<module_preamble>>
 #+END_SRC
 
 *** Clustering algorithms
