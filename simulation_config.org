@@ -264,9 +264,9 @@ Insert preamble
   <<output_module("io_output_tracker_clustering", debug=0)>>
 #+END_SRC
 
-*** Tracker fitting output
+*** Tracker trajectory output
 #+BEGIN_SRC sh :noweb yes
-  <<output_module("io_output_tracker_fitting", debug=0)>>
+  <<output_module("io_output_tracker_trajectory", debug=0)>>
 #+END_SRC
 
 *** Analysis output
@@ -284,20 +284,20 @@ Insert preamble
 
 - Tracking cuts
   #+BEGIN_SRC sh :noweb yes
-    <<output_module("io_output_tracking_selected",     debug=0)>>
-    <<output_module("io_output_tracking_non_selected", debug=0)>>
+    <<output_module("io_output_tracker_clustering_selected",     debug=0)>>
+    <<output_module("io_output_tracker_clustering_non_selected", debug=0)>>
   #+END_SRC
 
 - Fitting cuts
   #+BEGIN_SRC sh :noweb yes
-    <<output_module("io_output_fitting_selected",     debug=0)>>
-    <<output_module("io_output_fitting_non_selected", debug=0)>>
+    <<output_module("io_output_tracker_trajectory_selected",     debug=0)>>
+    <<output_module("io_output_tracker_trajectory_non_selected", debug=0)>>
   #+END_SRC
 
 - Particle track cuts
   #+BEGIN_SRC sh :noweb yes
-    <<output_module("io_output_particle_tracking_selected",     debug=0)>>
-    <<output_module("io_output_particle_tracking_non_selected", debug=0)>>
+    <<output_module("io_output_particle_track_selected",     debug=0)>>
+    <<output_module("io_output_particle_track_non_selected", debug=0)>>
   #+END_SRC
 
 ** Utility modules
@@ -340,6 +340,10 @@ Insert preamble
 *** Remove tracker trajectory data bank
 #+BEGIN_SRC sh :noweb yes
   <<remove_module(mname="remove_tracker_trajectory_data", label="TTD", debug=0)>>
+#+END_SRC
+*** Remove particle track data bank
+#+BEGIN_SRC sh :noweb yes
+  <<remove_module(mname="remove_particle_track_data", label="PTD", debug=0)>>
 #+END_SRC
 
 ** Simulation to calibration modules
@@ -1024,7 +1028,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   trackfit.helix.fit.using_last        : boolean = 0
 #+END_SRC
 
-*** Basic particle tracking
+** Basic particle tracking
 Given results of the two previous steps i.e. clustering and fitting, the
 trajectories must be interpreted within SuperNEMO detector geometry. The
 particle tracking translates trajectory into particle tracks and then determines
@@ -1036,12 +1040,12 @@ track with calorimeter blocks.
   [name="basic_particle_tracking" type="snemo::analysis::processing::basic_particle_tracking_module"]
 #+END_SRC
 
-**** Debug flag
+*** Debug flag
 #+BEGIN_SRC sh
   #@description Debug flag
   debug : boolean = 0
 #+END_SRC
-**** Data banks and services labels
+*** Data banks and services labels
 #+BEGIN_SRC sh
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
@@ -1055,13 +1059,13 @@ track with calorimeter blocks.
   #@description The label of the 'Particle Track Data' bank
   PTD_label : string  = "PTD"
 #+END_SRC
-**** Module number
+*** Module number
 #+BEGIN_SRC sh
   #@description The module number
   module_number : integer = 0
 #+END_SRC
 
-**** Drivers
+*** Drivers
 The particle track reconstruction is done within several drivers, each one
 having a dedicated tasks such as to compute track charge or to associate
 particle track with calorimeter block. The way to perform these "actions" is
@@ -1072,7 +1076,7 @@ implemented but the particle tracking module will stay unchanged.
   drivers : string[3] = "VED" "CCD" "CAD"
 #+END_SRC
 
-***** Vertex Extrapolation Driver
+**** Vertex Extrapolation Driver
 #+BEGIN_SRC sh
   #@description Vertex Extrapolation Driver options
   VED.debug : boolean = 0
@@ -1081,7 +1085,7 @@ implemented but the particle tracking module will stay unchanged.
   VED.use_linear_extrapolation : boolean = 0
 #+END_SRC
 
-***** Charge Computation Driver
+**** Charge Computation Driver
 #+BEGIN_SRC sh
   #@description Charge Computation Driver options
   CCD.debug : boolean = 0
@@ -1090,13 +1094,13 @@ implemented but the particle tracking module will stay unchanged.
   CCD.charge_from_source : boolean = 1
 #+END_SRC
 
-***** Calorimeter Association Driver
+**** Calorimeter Association Driver
 #+BEGIN_SRC sh
   #@description Calorimeter Association Driver options
   CAD.debug : boolean = 0
 
   #@description Maximum matching distance for track/calo association
-  CAD.matching_tolerance : string = "300 mm"
+  CAD.matching_tolerance : string = "100 mm"
 
   #@description Use a simpler approach by looking for gieger cells in front of calo (not implemented yet)
   CAD.use_last_geiger_cell : boolean = 0
@@ -1118,33 +1122,30 @@ modules it contains.
 
 *** Process after selecting particle track
 #+BEGIN_SRC sh :noweb yes
-   <<if_module("process_with_particle_track_cuts", cut="particle_track_cut", then="io_output_particle_tracking_selected", else="io_output_particle_tracking_non_selected")>>
+   <<if_module("process_with_particle_track_cuts", cut="particle_track_cut", then="io_output_particle_track_selected", else="io_output_particle_track_non_selected")>>
 #+END_SRC
 
-*** Particle track chain
-#+TBLNAME: particle_chain :results none
-| basic_particle_tracking |
-
-#+BEGIN_SRC sh :noweb yes
-  <<chain_module("particle_chain", 1, particle_chain)>>
-#+END_SRC
-
-*** Analysis chain
-#+TBLNAME: analysis_chain :results none
-| particle_chain                   |
-| io_output_analysed               |
+*** Particle tracking chain
+#+TBLNAME: particle_tracking_chain :results none
+| remove_particle_track_data       |
+| basic_particle_tracking          |
 | process_with_particle_track_cuts |
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("analysis_chain", 3, analysis_chain)>>
+  <<chain_module("particle_tracking_chain", 3, particle_tracking_chain)>>
+#+END_SRC
+
+*** Process after fitting selection
+#+BEGIN_SRC sh :noweb yes
+   <<if_module("process_with_fitting_cuts", cut="basic_tracker_trajectory_cut", then="particle_tracking_chain", else="io_output_tracker_trajectory_non_selected")>>
 #+END_SRC
 
 *** Fitting chain
 #+TBLNAME: fitting_chain :results none
 | remove_tracker_trajectory_data |
 | trackfit_tracker_fitting       |
-| io_output_tracker_fitting      |
-| analysis_chain                 |
+| io_output_tracker_trajectory   |
+| process_with_fitting_cuts      |
 
 #+BEGIN_SRC sh :noweb yes
   <<chain_module("fitting_chain", 4, fitting_chain)>>
@@ -1152,7 +1153,7 @@ modules it contains.
 
 *** Process after clustering selection
 #+BEGIN_SRC sh :noweb yes
-  <<if_module("process_with_clustering_cuts", cut="basic_tracker_clustering_cut", then="fitting_chain", else="io_output_tracking_non_selected")>>
+  <<if_module("process_with_clustering_cuts", cut="basic_tracker_clustering_cut", then="fitting_chain", else="io_output_tracker_clustering_non_selected")>>
 #+END_SRC
 
 *** Clustering chain
@@ -1532,10 +1533,11 @@ apply selection cuts on arbitrary data models.
   factory.debug : boolean = 0
 
   #@description A list of files that contains definition of cuts
-  cuts.configuration_files : string[4] =                                          \
+  cuts.configuration_files : string[5] =                                                  \
     "${SNAILWARE_SIMULATION_DIR}/configuration/current/simulated_data_cuts.conf"          \
     "${SNAILWARE_SIMULATION_DIR}/configuration/current/calibrated_data_cuts.conf"         \
     "${SNAILWARE_SIMULATION_DIR}/configuration/current/tracker_clustering_data_cuts.conf" \
+    "${SNAILWARE_SIMULATION_DIR}/configuration/current/tracker_trajectory_data_cuts.conf" \
     "${SNAILWARE_SIMULATION_DIR}/configuration/current/particle_track_data_cuts.conf"
 #+END_SRC
 
@@ -1786,6 +1788,29 @@ This cuts puts together all the previous declared cuts.
   <<multi(cname="basic_tracker_clustering_cut", "and", 3, tracker_clustering_cuts)>>
 #+END_SRC
 
+*** Tracker trajectory data selection
+:PROPERTIES:
+:CUSTOM_ID: tracker_trajectory_data_cuts
+:TANGLE: tracker_trajectory_data_cuts.conf
+:END:
+
+#+BEGIN_SRC sh :noweb yes
+  <<service_preamble>>
+#+END_SRC
+
+**** Check bank availability
+#+BEGIN_SRC sh :noweb yes
+  <<has_bank("has_tracker_trajectory_data", bname="TTD")>>
+#+END_SRC
+
+**** Multiple cuts
+#+TBLNAME: tracker_trajectory_cuts :results none
+| has_tracker_trajectory_data |
+
+#+BEGIN_SRC sh :noweb yes
+  <<multi(cname="basic_tracker_trajectory_cut", "and", 1, tracker_trajectory_cuts, debug=1)>>
+#+END_SRC
+
 *** Particle track selection
 :PROPERTIES:
 :CUSTOM_ID: particle_track_data_cuts
@@ -1874,7 +1899,7 @@ This cuts puts together all the previous declared cuts.
   range_associated_calorimeters.min : integer = 1
 
   #@description Maximal number of associated calorimeters in the choosen category
-  range_associated_calorimeters.max : integer = 1
+  #range_associated_calorimeters.max : integer = 1
 #+END_SRC
 
 **** Check if track has foil vertex
@@ -1961,7 +1986,7 @@ has_charge.type : string = "undefined"
   parameter.min : real = 0.0
 
   #@description Parameter minimal value
-  parameter.max : real = 100.0
+  parameter.max : real = 1000.0
 #+END_SRC
 
 #+BEGIN_SRC sh
@@ -2000,11 +2025,11 @@ has_charge.type : string = "undefined"
 | range_particle                |
 | has_associated_calorimeter    |
 | range_associated_calorimeters |
-| has_vertex_on_foil            |
 | chi2_cut                      |
+| has_vertex_on_foil            |
 
 #+BEGIN_SRC sh :noweb yes
-  <<multi("particle_track_cut", "and", 7, particle_track_cuts)>>
+  <<multi("particle_track_cut", "and", 6, particle_track_cuts)>>
 #+END_SRC
 ** Histogram service
 :PROPERTIES:
