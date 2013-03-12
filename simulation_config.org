@@ -492,8 +492,8 @@ properties are used and serialized.
   #@description The analysis description
   analysis.description : string = "Study the efficiency of e-/e+ discrimination wrt magnetic field"
 
-  #@description The SuperNEMO magnetic field
-  analysis.magnetic_field : real = 25.0 #Gauss
+  #@description The main wall calorimeter resolution
+  analysis.calo_resolution : real = 0.08 #%
 
   #@description The total number of event simulated
   analysis.total_number_of_event : integer = 100000
