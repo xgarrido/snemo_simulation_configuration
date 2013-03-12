@@ -74,6 +74,54 @@ wrapped fortran code. Efforts to have a C++ version of =genbb= are undergoing.
   energy_unit     : string  = "MeV"
 #+END_SRC
 
+*** ^{48}Ca \beta\beta0\nu
+#+BEGIN_SRC sh
+  [name="bb0nu_Ca48.wrapper" type="genbb_wrapper"]
+  seed            : integer = 314159
+  decay_type      : string  = "DBD"
+  decay_isotope   : string  = "Ca48"
+  decay_dbd_level : integer = 0
+  decay_dbd_mode  : integer = 1
+#+END_SRC
+
+*** ^{48}Ca \beta\beta2\nu
+#+BEGIN_SRC sh
+  [name="bb2nu_Ca48.wrapper" type="genbb_wrapper"]
+  debug           : boolean = 0
+  seed            : integer = 314159
+  decay_type      : string  = "DBD"
+  decay_isotope   : string  = "Ca48"
+  decay_dbd_level : integer = 0
+  decay_dbd_mode  : integer = 4
+  energy_min      : real = 3.2
+  #energy_max      : real = 5.0
+  energy_unit     : string  = "MeV"
+#+END_SRC
+
+*** ^{150}Nd \beta\beta0\nu
+#+BEGIN_SRC sh
+  [name="bb0nu_Nd150.wrapper" type="genbb_wrapper"]
+  seed            : integer = 314159
+  decay_type      : string  = "DBD"
+  decay_isotope   : string  = "Nd150"
+  decay_dbd_level : integer = 0
+  decay_dbd_mode  : integer = 1
+#+END_SRC
+
+*** ^{150}Nd \beta\beta2\nu
+#+BEGIN_SRC sh
+  [name="bb2nu_Nd150.wrapper" type="genbb_wrapper"]
+  debug           : boolean = 0
+  seed            : integer = 314159
+  decay_type      : string  = "DBD"
+  decay_isotope   : string  = "Nd150"
+  decay_dbd_level : integer = 0
+  decay_dbd_mode  : integer = 4
+  energy_min      : real = 2.3
+  #energy_max      : real = 5.0
+  energy_unit     : string  = "MeV"
+#+END_SRC
+
 *** ^{208}Tl background
 #+BEGIN_SRC sh
   [name="bkg_Tl208.wrapper" type="genbb_wrapper"]

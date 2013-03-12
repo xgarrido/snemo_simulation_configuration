@@ -13,7 +13,7 @@
 :CUSTOM_ID: introduction
 :END:
 
-The sng4 library provides a Geant4 standard interface to generate simulated
+The =sng4= library provides a Geant4 standard interface to generate simulated
 data. A dedicated manager class addresses all the resources needed to :
 
 - describe the geometry (through a geometry manager from the [[https://nemo.lpc-caen.in2p3.fr/wiki/sngeometry][sngeometry]]

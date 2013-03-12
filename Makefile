@@ -20,7 +20,8 @@ $(GIT_BRANCH)/.%.tangle: %.org
 	@echo "Tangling $< file"
 	@$(BATCH) --eval '(org-babel-tangle-file "$<")'
 	@mkdir -p $(GIT_BRANCH)
-	@mv *.conf $(GIT_BRANCH)/.
+	@if ls | grep -q .def; then mv *.def $(GIT_BRANCH)/.;fi
+	@if ls | grep -q .conf; then mv *.conf $(GIT_BRANCH)/.;fi
 	@if [ -L current ]; then rm current;fi && ln -sf $(GIT_BRANCH) current
 	@touch $@
 
@@ -31,7 +32,7 @@ tarball: org
 push: org
 	@echo "Pushing current configuration to Lyon"
 	@ssh garrido@ccage.in2p3.fr "cd $(CCAGE_DIRECTORY) && mkdir -p $(GIT_BRANCH); if [ -L current ]; then rm current; fi; ln -sf $(GIT_BRANCH) current"
-	@rsync --recursive -e ssh -avP $(GIT_BRANCH)/*.conf garrido@ccage.in2p3.fr:$(CCAGE_DIRECTORY)/$(GIT_BRANCH)/.
+	@rsync -e ssh -avP --delete --recursive --force $(GIT_BRANCH)/*.{conf,def} garrido@ccage.in2p3.fr:$(CCAGE_DIRECTORY)/$(GIT_BRANCH)/.
 
 doc: doc/index.html
 
@@ -43,5 +44,5 @@ doc/index.html:
 	echo "Documentation published to doc/"
 
 clean:
-	rm -f *.tangle *.tar.gz *.conf *.aux *.tex *.fls *fdb_latexmk *.log *.pdf doc/*html *~
+	rm -f *.tangle *.tar.gz *.conf *.def *.aux *.tex *.fls *fdb_latexmk *.log *.pdf doc/*html *~
 	rm -rf doc current $(GIT_BRANCH)

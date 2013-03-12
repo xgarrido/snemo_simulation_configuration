@@ -146,9 +146,9 @@ module. It also defines the output directory where to store each output steps.
 
 #+NAME: output_module(mname="", debug=0, ofilename="")
 #+BEGIN_SRC sh
-  IO_OUTPUT_DIRECTORY="/tmp/${USER}/snemo.d"
+  IO_OUTPUT_DIRECTORY="/tmp/\${USER}/snemo.d"
   if [ ! -d ${IO_OUTPUT_DIRECTORY} ]; then
-      mkdir -p ${IO_OUTPUT_DIRECTORY}
+      mkdir -p $(eval "echo ${IO_OUTPUT_DIRECTORY}")
   fi
   echo '[name="'$mname'" type="snemo::core::io::io_module"]'
   echo
@@ -499,7 +499,10 @@ properties are used and serialized.
   analysis.total_number_of_event : integer = 100000
 
   #@description The double beta decay process
-  analysis.decay_process : string = "2b2n"
+  analysis.decay_process : string = "bb2nu"
+
+  #@description The source isotope
+  analysis.source_isotope : string = "Se82"
 #+END_SRC
 *** Tracker simulation to calibration data
 :PROPERTIES:
@@ -1128,7 +1131,19 @@ modules it contains.
   <<module_preamble>>
 #+END_SRC
 
-*** Process after selecting particle track
+*** Analysis chain
+#+CAPTION: Modules used by the analysis process
+#+TBLNAME: analysis_chain :results none
+|-----------------------------------|
+| io_output_particle_track_selected |
+| remove_mc_visu_hits               |
+| remove_simulated_data             |
+| remove_calibrated_data            |
+| remove_tracker_clustering_data    |
+| remove_tracker_trajectory_data    |
+| io_output_analysed                |
+|-----------------------------------|
+
 #+BEGIN_SRC sh :noweb yes
    <<if_module("process_with_particle_track_cuts", cut="particle_track_cut", then="io_output_particle_track_selected", else="io_output_particle_track_non_selected")>>
 #+END_SRC
@@ -1148,6 +1163,31 @@ modules it contains.
 
 *** Process after fitting selection
 #+BEGIN_SRC sh :noweb yes
+=======
+  <<chain_module("analysis_chain", 7, analysis_chain)>>
+#+END_SRC
+
+*** Process after selecting particle track
+#+BEGIN_SRC sh :noweb yes
+   <<if_module("process_with_particle_track_cuts", cut="particle_track_cut", then="analysis_chain", else="io_output_particle_track_non_selected")>>
+#+END_SRC
+
+*** Particle tracking chain
+#+CAPTION: Modules used by the particle tracking process
+#+TBLNAME: particle_tracking_chain :results none
+|----------------------------------|
+| remove_particle_track_data       |
+| basic_particle_tracking          |
+| process_with_particle_track_cuts |
+|----------------------------------|
+
+#+BEGIN_SRC sh :noweb yes
+  <<chain_module("particle_tracking_chain", 3, particle_tracking_chain)>>
+#+END_SRC
+
+*** Process after fitting selection
+#+BEGIN_SRC sh :noweb yes
+>>>>>>> bb_decay
    <<if_module("process_with_fitting_cuts", cut="basic_tracker_trajectory_cut", then="particle_tracking_chain", else="io_output_tracker_trajectory_non_selected")>>
 #+END_SRC
 
@@ -1515,7 +1555,7 @@ reconstruction ... but all of them will use the same geometry.
 
   #@description Embedded SuperNEMO geometry manager main configuration file
   manager.configuration_file : string = \
-      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/manager.conf"
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/sngeometry_manager.conf"
 
   #@description Embedded SuperNEMO geometry manager must build its mapping lookup table
   manager.build_mapping : boolean = 1

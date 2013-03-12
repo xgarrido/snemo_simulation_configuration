@@ -1,0 +1,201 @@
+#+TITLE:  SNGeometry Manager Configuration
+#+AUTHOR: Xavier Garrido
+#+DATE:   2013-03-12
+#+OPTIONS: toc:nil ^:{}
+#+LATEX_CLASS: memarticle
+#+LATEX_HEADER: \setsansfont[Mapping=tex-text]{Myriad Pro}
+#+LATEX_HEADER: \setmonofont[Mapping=tex-text,Scale=MatchLowercase]{Inconsolata}
+#+LATEX_HEADER: \setromanfont[Mapping=tex-text, Numbers=OldStyle]{Minion Pro}
+#+LATEX_HEADER: \chapterstyle{article-4-sans}
+
+* Introduction
+:PROPERTIES:
+:CUSTOM_ID: Introduction
+:END:
+
+The =sngeometry= library provides some geometry wrappers arround =geomtools=
+library and dedicated to SuperNEMO detector description.
+
+This file holds mainly the paths to geometry files most of them are placed in
+=$SNGEOMETRY_DATA_DIR= directory.
+
+* Manager configuration
+:PROPERTIES:
+:CUSTOM_ID: manager_configuration
+:TANGLE: sngeometry_manager.conf
+:END:
+
+** Setup label, description and version
+#+BEGIN_SRC sh
+  #@description Setup label
+  setup_label : string = "snemo"
+
+  #@description Setup description
+  setup_description : string = "SuperNEMO demonstrator module"
+
+  #@description Setup version
+  setup_version : string = "2.0"
+#+END_SRC
+
+** Debug & verbosities
+#+BEGIN_SRC sh
+  #@description General debug flag
+  debug : boolean = 0
+
+  #@description General verbose flag
+  verbose : boolean = 0
+#+END_SRC
+
+** Geometry factory
+The geometry factory holds all the files needed for the geometry construction.
+
+*** Debug & verbosities
+#+BEGIN_SRC sh
+  #@description Debug flag of the embedded geometry model factory
+  factory.debug : boolean = 0
+
+  #@description Devel flag of the embedded geometry model factory
+  factory.devel : boolean = 0
+#+END_SRC
+
+*** Category list
+Categories are used to assign a unique id number (integer) to a geometrical
+volume.
+#+BEGIN_SRC sh
+  #@description Source file of the geometry categories used by the ID manager
+  factory.categories_list : string = "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/categories.lis"
+#+END_SRC
+
+*** Geometry files
+#+BEGIN_SRC sh
+  #@description List of files describing the geometry models
+  factory.geom_files : string[22] =                                                                               \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/source_module/source_calibration.geom"            \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/source_module/source_frame_horizontal_beams.geom" \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/source_module/source_frame_vertical_beams.geom"   \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/source_module/source_strips.geom"                 \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/source_module/source_foil_support.geom"           \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/source_module/source_module.geom"                 \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/tracker_modules/pmt_5inch.geom"                   \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/tracker_modules/xwall_module.geom"                \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/tracker_modules/xwall.geom"                       \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/tracker_modules/gveto_module.geom"                \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/tracker_modules/gveto.geom"                       \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/tracker_modules/tracker_drift_cell_base.geom"     \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/tracker_modules/tracker_drift_cell_nodes.geom"    \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/tracker_modules/tracker_layers.geom"              \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/tracker_modules/tracker_volumes.geom"             \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/tracker_modules/tracker_submodules.geom"          \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/calorimeter_modules/pmt_8inch.geom"               \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/calorimeter_modules/calorimeter_module.geom"      \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/calorimeter_modules/calorimeter_walls.geom"       \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/calorimeter_modules/calorimeter_submodules.geom"  \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/module_0.geom"                                    \
+      "${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_2.0/setup.geom"
+#+END_SRC
+
+** Material files
+Material of volumes are set and defined independently. Here the
+=materials_aliases= definition are locally defined to change the source foil isotope.
+#+BEGIN_SRC sh
+  #@description List of files describing the materials
+  materials.files : string[6] =                                          \
+      "${MATERIALS_DATA_DIR}/resources/data/std_isotopes.def"            \
+      "${MATERIALS_DATA_DIR}/resources/data/std_elements.def"            \
+      "${MATERIALS_DATA_DIR}/resources/data/std_materials.def"           \
+      "${SNGEOMETRY_DATA_DIR}/resources/materials/elements.def"          \
+      "${SNGEOMETRY_DATA_DIR}/resources/materials/materials.def"         \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/materials_aliases.def"
+#+END_SRC
+
+** Miscellaneous
+#+BEGIN_SRC sh
+  #@description Debug flag of the embedded ID manager
+  id_mgr.debug : boolean = 0
+
+  #@description Build the embedded mapping dictionnary
+  build_mapping : boolean = 0
+
+  #@description Max depth of the mapping: no items to be mapped
+  mapping.max_depth : integer = 0
+
+  #@description Categories not to be registered in the mapping dictionnary
+  mapping.excluded_categories : string [5] =               \
+                              "drift_cell_field_wires_set" \
+                              "drift_cell_field_wire"      \
+                              "drift_cell_base"            \
+                              "drift_cell_cathodic_ring"   \
+                              "drift_cell_anodic_wire"
+#+END_SRC
+
+* Material aliases for SuperNEMO detector
+:PROPERTIES:
+:CUSTOM_ID: materials_aliases
+:TANGLE: materials_aliases.def
+:END:
+
+#+BEGIN_SRC sh
+  #@description A sample list of elements
+  #@key_label   "name"
+  #@meta_label  "type"
+
+  [name="tracking_gas" type="alias"]
+  #@description The alias for tracking gas
+  material : string = "snemo::nemo3_tracking_gas"
+
+  [name="copper" type="alias"]
+  #@description The alias for metal
+  material : string = "std::copper"
+
+  [name="iron" type="alias"]
+  #@description The alias for metal
+  material : string = "std::iron"
+
+  [name="ENVINET_PS_scintillator" type="alias"]
+  #@description The alias for X-walls plastic scintillator
+  material : string = "std::NE110"
+
+  [name="Dubna_PS_scintillator" type="alias"]
+  #@description The alias for gamma veto plastic scintillator
+  material : string = "std::NE110"
+
+  [name="PVT_scintillator" type="alias"]
+  #@description The alias for PVT plastic scintillator
+  material : string = "std::PVT"
+
+  [name="scin_wrapper" type="alias"]
+  #@description The alias for plastic scintillator wrapping material
+  material : string = "std::mylar"
+
+  [name="frame_metal" type="alias"]
+  #@description The alias for the frames material
+  material : string = "std::iron"
+
+  [name="wire_metal" type="alias"]
+  #@description The alias for the wire material
+  material : string = "std::inox"
+
+  [name="lab_air" type="alias"]
+  #@description The alias for the air gas in the lab
+  material : string = "snemo::lab_air"
+
+  [name="nitrogen" type="alias"]
+  #@description The alias for the nitrogen gas
+  material : string = "snemo::nitrogen"
+
+  [name="bb_source_material" type="alias"]
+  #@description The alias for the source
+  material : string = "snemo::se82_source_material"
+
+  [name="RTV" type="alias"]
+  #@description The alias for the RTV material
+  material : string = "std::water"
+
+  [name="SBR" type="alias"]
+  #@description The alias for the SBR material
+  material : string = "std::water"
+
+  [name="PFTE" type="alias"]
+  #@description The alias for the PFTE material
+  material : string = "std::mylar"
+#+END_SRC
