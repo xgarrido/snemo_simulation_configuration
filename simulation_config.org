@@ -228,7 +228,7 @@ This skeleton code is a template to declare =if_module= processor.
   echo
   echo '#@description The name of the module to be processed when condition is NOT checked'
   echo 'else_module : string = "'$else'"'
-  #+END_SRC
+#+END_SRC
 
 ** Mandatory preamble
 
@@ -1145,25 +1145,6 @@ modules it contains.
 |-----------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-   <<if_module("process_with_particle_track_cuts", cut="particle_track_cut", then="io_output_particle_track_selected", else="io_output_particle_track_non_selected")>>
-#+END_SRC
-
-*** Particle tracking chain
-#+CAPTION: Modules used by the particle tracking process
-#+TBLNAME: particle_tracking_chain :results none
-|--------------------------------|
-| remove_particle_track_data       |
-| basic_particle_tracking         |
-| process_with_particle_track_cuts |
-|--------------------------------|
-
-#+BEGIN_SRC sh :noweb yes
-  <<chain_module("particle_tracking_chain", 3, particle_tracking_chain)>>
-#+END_SRC
-
-*** Process after fitting selection
-#+BEGIN_SRC sh :noweb yes
-=======
   <<chain_module("analysis_chain", 7, analysis_chain)>>
 #+END_SRC
 
@@ -1187,7 +1168,6 @@ modules it contains.
 
 *** Process after fitting selection
 #+BEGIN_SRC sh :noweb yes
->>>>>>> bb_decay
    <<if_module("process_with_fitting_cuts", cut="basic_tracker_trajectory_cut", then="particle_tracking_chain", else="io_output_tracker_trajectory_non_selected")>>
 #+END_SRC
 
