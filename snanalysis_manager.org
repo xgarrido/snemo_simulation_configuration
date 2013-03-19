@@ -28,7 +28,7 @@ been provided so latest plot modules make use of it (see =basic_plot= module for
 example). This module can not be as generic as processing module. Basically, for
 one study purpose, there is one or two plot modules.
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC sh
   #@description A sample list of setups
   #@key_label   "name"
   #@meta_label  "type"
@@ -233,7 +233,7 @@ Experimental conditions:
 #+END_SRC
 
 *** \beta\beta spectrum (not existing anymore)
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :tangle no
   [name="snemo_bb_energy_spectra" type="snemo::analysis::processing::snemo_bb_energy_spectra_module"]
 
   #@config 'snemo::analysis::processing::snemo_bb_energy_spectra' configuration parameters
@@ -281,4 +281,20 @@ Experimental conditions:
 
   #@description The exposure time of the experiment
   exposure_time : real = 2.0 #year
+#+END_SRC
+
+** Detector efficiency
+This module computes the efficiency for \beta\beta0\nu per calorimeter
+blocks.
+#+BEGIN_SRC sh
+  [name="snemo_detector_efficiency" type="snemo::analysis::processing::snemo_detector_efficiency_module"]
+
+  #@description Debug flag
+  debug       : boolean = 0
+
+  #@description The label of the Geometry service
+  Geo_label : string  = "Geo"
+
+  #@description The label of the bank
+  bank_label : string  = "PTD"
 #+END_SRC
