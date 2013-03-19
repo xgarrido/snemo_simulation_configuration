@@ -169,7 +169,7 @@ one study purpose, there is one or two plot modules.
   PTD_label   : string  = "PTD"
 #+END_SRC
 ** \beta\beta\nu\nu analysis
-**** Discrimination
+*** Discrimination
 #+BEGIN_SRC sh
   [name="snemo_bb0nu_discrimination" type="snemo::analysis::processing::snemo_bb0nu_discrimination_module"]
 
@@ -186,7 +186,7 @@ one study purpose, there is one or two plot modules.
   PTD_label   : string  = "PTD"
 #+END_SRC
 
-**** Calculation of halflife limit
+*** Calculation of halflife limit
 #+BEGIN_SRC sh
   [name="snemo_bb0nu_halflife_limit" type="snemo::analysis::processing::snemo_bb0nu_halflife_limit_module"]
 
@@ -212,8 +212,9 @@ a =string= key. The program is then quite dynamic in the sense that 0\nu
 halflife calculation can be done for different study purpose (just change the =key_fields=).
 #+BEGIN_SRC sh
   #@description The key fields from 'Event Header' bank to build a unique key for histogram
-  key_fields : string [2] = "analysis.decay_process" \
-                            "analysis.magnetic_field"
+  key_fields : string[2] =       \
+      "analysis.decay_process"   \
+      "analysis.calo_resolution"
 #+END_SRC
 
 Experimental conditions:
@@ -231,7 +232,7 @@ Experimental conditions:
   experiment.exposure_time : real = 2.0 #year
 #+END_SRC
 
-**** \beta\beta spectrum
+*** \beta\beta spectrum (not existing anymore)
 #+BEGIN_SRC sh
   [name="snemo_bb_energy_spectra" type="snemo::analysis::processing::snemo_bb_energy_spectra_module"]
 
@@ -252,7 +253,7 @@ Experimental conditions:
   #@description The key fields from 'Event Header' bank to build a unique key for histogram
   key_fields : string [3] = "analysis.source_isotope" \
                             "analysis.decay_process"  \
-                            "analysis.magnetic_field"
+                            "analysis.calo_resolution"
 
   #@description The number of energy bins for two electrons energy distribution
   nbr_of_energy_bins : integer = 25
