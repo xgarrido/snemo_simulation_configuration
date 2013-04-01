@@ -362,7 +362,7 @@ Insert preamble
 
 Insert preamble
 #+BEGIN_SRC sh :noweb yes
-    <<module_preamble>>
+  <<module_preamble>>
 #+END_SRC
 
 *** G4 simulation
@@ -428,12 +428,12 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 **** Event generator
 #+BEGIN_SRC sh
   #@description The event generator PRNG label
-  manager.event_generator_name  : string  = "bb0nu_Se82.wrapper"
+  #manager.event_generator_name  : string  = "bb0nu_Se82.wrapper"
   #manager.event_generator_name  : string  = "bb2nu_Se82.wrapper"
   #manager.event_generator_name  : string  = "calib_Bi207.wrapper"
   #manager.event_generator_name  : string  = "calib_Sr90.wrapper"
   #manager.event_generator_name  : string  = "bkg_Tl208.wrapper"
-  #manager.event_generator_name  : string  = "bkg_Bi214_Po214.wrapper"
+  manager.event_generator_name  : string  = "bkg_Bi214_Po214.wrapper"
   #manager.event_generator_name  : string  = "electron_0-3MeV_flat"
 #+END_SRC
 **** SNG4 manager
@@ -1249,6 +1249,7 @@ modules it contains.
 #+END_SRC
 
 *** Miscellaneous
+**** Formating event record
 #+CAPTION: Reformating data
 #+TBLNAME: reformat_data :results none
 |--------------------------------|
@@ -1263,6 +1264,11 @@ modules it contains.
 
 #+BEGIN_SRC sh :noweb yes
   <<chain_module("reformat_data", 7, reformat_data)>>
+#+END_SRC
+
+**** BiPo visualization
+#+BEGIN_SRC sh :noweb yes
+  <<if_module("search_bipo_events", cut="bkg_Bi214_Po214_cut", then="io_output_tracker_trajectory_selected", else="io_output_tracker_trajectory_non_selected")>>
 #+END_SRC
 
 ** Plot modules
@@ -1633,12 +1639,13 @@ apply selection cuts on arbitrary data models.
   factory.debug : boolean = 0
 
   #@description A list of files that contains definition of cuts
-  cuts.configuration_files : string[5] =                                                  \
+  cuts.configuration_files : string[6] =                                                  \
     "${SNAILWARE_SIMULATION_DIR}/configuration/current/simulated_data_cuts.conf"          \
     "${SNAILWARE_SIMULATION_DIR}/configuration/current/calibrated_data_cuts.conf"         \
     "${SNAILWARE_SIMULATION_DIR}/configuration/current/tracker_clustering_data_cuts.conf" \
     "${SNAILWARE_SIMULATION_DIR}/configuration/current/tracker_trajectory_data_cuts.conf" \
-    "${SNAILWARE_SIMULATION_DIR}/configuration/current/particle_track_data_cuts.conf"
+    "${SNAILWARE_SIMULATION_DIR}/configuration/current/particle_track_data_cuts.conf"     \
+    "${SNAILWARE_SIMULATION_DIR}/configuration/current/event_topology_cuts.conf"
 #+END_SRC
 
 *** Skeleton codes
@@ -1760,10 +1767,10 @@ This skeleton code allows to check the availability of a data bank.
   range_hit_category.category : string = "calorimeter"
 
   #@description Minimal number of calibrated hits in the choosen category
-  range_hit_category.min : integer = 2
+  range_hit_category.min : integer = 1
 
   #@description Maximal number of calibrated hits in the choosen category
-  range_hit_category.max : integer = 2
+  range_hit_category.max : integer = 1
 #+END_SRC
 
 **** Check calibrated tracker availability
@@ -2146,6 +2153,53 @@ has_charge.type : string = "undefined"
 #+BEGIN_SRC sh :noweb yes
   <<multi("particle_track_cut", "and", 6, particle_track_cuts)>>
 #+END_SRC
+*** Event topology selection
+:PROPERTIES:
+:CUSTOM_ID: event_topology_cuts
+:TANGLE: event_topology_cuts.conf
+:END:
+
+All these cuts are based on a very specific cuts working on dedicated event
+topology.
+
+#+BEGIN_SRC sh :noweb yes
+  <<service_preamble>>
+#+END_SRC
+
+**** BiPo selection
+#+BEGIN_SRC sh
+  [name="bipo_selection" type="snemo::analysis::cut::special_topology_cut"]
+
+  #@description Debug flag
+  debug : boolean = 1
+
+  #@description The running mode
+  mode : string = "bipo"
+#+END_SRC
+
+**** Bremsthralhung selection
+#+BEGIN_SRC sh
+  [name="bremsthralhung_selection" type="snemo::analysis::cut::special_topology_cut"]
+
+  #@description Debug flag
+  debug : boolean = 0
+
+  #@description The running mode
+  mode : string = "bremsstrahlung"
+#+END_SRC
+
+**** Looking for ^214Bi events
+#+CAPTION: Multi-selection for selecting ^214Bi events
+#+TBLNAME: bkg_Bi214_Po214_cuts :results none
+|-----------------------------|
+| has_tracker_trajectory_data |
+| bipo_selection              |
+|-----------------------------|
+
+#+BEGIN_SRC sh :noweb yes
+  <<multi("bkg_Bi214_Po214_cut", "and", 2, bkg_Bi214_Po214_cuts)>>
+#+END_SRC
+
 ** Histogram service
 :PROPERTIES:
 :CUSTOM_ID: histogram_service
@@ -2312,6 +2366,46 @@ group histograms will share the same binning, axis labels ...
   #@description The upper bound of the histogram
   max : real = 3200.0
 #+END_SRC
+**** BiPo alpha track template
+#+BEGIN_SRC sh
+  [name="BiPo::time_delay" type="mygsl::histogram_1d"]
+  #@config The histogram of the alpha time delay
+
+  #@description The title of the histogram (optional)
+  title : string = ""
+
+  # #@description The group of the histogram (optional)
+  # group : string = "bipo::time_delay"
+
+  #@description The build mode (default : "regular", "table", "mimic");
+  mode : string = "regular"
+
+  #@description The linear mode (default)
+  linear : boolean = 1
+
+  #@description The X axis label
+  display.xaxis.label : string = "time delay"
+
+  #@description The X axis unit for display (a standard unit, typically SI or CLHEP)
+  display.xaxis.unit : string = "us"
+
+  #@description The Y axis label
+  display.yaxis.label : string = "dN/dt [A.U.]"
+
+  #@description The number of bins
+  number_of_bins : integer = 25
+
+  #@description The unit of the bins' bounds (a standard unit, typically SI or CLHEP)
+  unit : string = "us"
+
+  #@description The lower bound of the histogram
+  min : real = 0.0
+
+  #@description The upper bound of the histogram
+  max : real = 1600.0
+#+END_SRC
+
+
 * Running SN@ilWare processing chain
 :PROPERTIES:
 :CUSTOM_ID: running_pipeline

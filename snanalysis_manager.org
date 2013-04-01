@@ -298,3 +298,25 @@ blocks.
   #@description The label of the bank
   bank_label : string  = "PTD"
 #+END_SRC
+
+** BiPo plot module
+This module plots BiPo alpha track fit and then compares start time
+determination.
+
+#+BEGIN_SRC sh
+  [name="BiPo_alpha_track" type="snemo::analysis::processing::snemo_Bi214_Po214_alpha_track_module"]
+
+  #@config 'snemo::analysis::processing::basic_plot_module' configuration parameters
+
+  #@description Debug flag
+  debug     : boolean = 1
+
+  #@description The Histogram Service label
+  Histo_label : string = "Histo"
+
+  #@description The label of the 'Simulated Data' bank
+  SD_label : string  = "SD"
+
+  #@description The label of the 'Particle Track Data' bank
+  PTD_label : string  = "PTD"
+#+END_SRC
