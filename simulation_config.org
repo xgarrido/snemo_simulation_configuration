@@ -144,7 +144,8 @@ example on how to use skeleton codes.
 This skeleton code allows to define output module given the name of the
 module. It also defines the output directory where to store each output steps.
 
-#+NAME: output_module(mname="", debug=0, ofilename="")
+#+NAME: output_module
+#+HEADERS: :var mname="" :var debug=0 :var ofilename=""
 #+BEGIN_SRC sh
   IO_OUTPUT_DIRECTORY="/tmp/\${USER}/snemo.d"
   if [ ! -d ${IO_OUTPUT_DIRECTORY} ]; then
@@ -174,7 +175,8 @@ module. It also defines the output directory where to store each output steps.
 
 *** Skeleton code for removing data bank
 
-#+NAME: remove_module(mname="", mode="remove_bank", label="", debug=0)
+#+NAME: remove_module
+#+HEADERS: :var mname="" :var mode="remove_bank" :var label="" :var debug=0
 #+BEGIN_SRC sh
   echo '[name="'$mname'" type="snemo::core::processing::utils_module"]'
   echo
@@ -191,7 +193,8 @@ module. It also defines the output directory where to store each output steps.
 *** Skeleton code for chain module
 This skeleton code ease the declaration of =chain_module= processor since it
 receives a table list and builds the =chain_module= declaration given its name.
-#+NAME: chain_module(mname="", nmodule=0, list="", debug=0)
+#+NAME: chain_module
+#+HEADERS: :var mname="" :var nmodule=0 :var list="" :var debug=0
 #+BEGIN_SRC sh
   echo '[name="'$mname'" type="snemo::core::processing::chain_module"]'
   echo
@@ -210,7 +213,8 @@ receives a table list and builds the =chain_module= declaration given its name.
 #+END_SRC
 *** Skeleton code for =if= module
 This skeleton code is a template to declare =if_module= processor.
-#+NAME: if_module(mname="", cut="", then="", else="", debug=0)
+#+NAME: if_module
+#+HEADERS: :var mname="" :var cut="" :var then="" :var else="" :var debug=0
 #+BEGIN_SRC sh
   echo '[name="'$mname'" type="snemo::core::processing::if_module"]'
   echo
@@ -1603,7 +1607,8 @@ few parameters, the following code blocks provides easy interface to such cuts.
 **** Skeleton code for ensuring data bank presence
 This skeleton code allows to check the availability of a data bank.
 
-#+NAME: has_bank(cname="", mode="has_bank", bname="", btype="", debug=0)
+#+NAME: has_bank
+#+HEADERS: :var cname="" :var mode="has_bank" :var bname="" :var btype="" :var debug=0
 #+BEGIN_SRC sh
   echo '[name="'$cname'" type="snemo::core::cut::utils_cut"]'
   echo
@@ -1623,7 +1628,8 @@ This skeleton code allows to check the availability of a data bank.
 #+END_SRC
 
 **** Skeleton code for =multi= cuts
-#+NAME: multi(cname="", mode="and", ncut=0, list="", debug=0)
+#+NAME: multi
+#+HEADERS: :var cname="" :var mode="and" :var ncut=0 :var list="" :var debug=0
 #+BEGIN_SRC sh
   echo '[name="'$cname'" type="cuts::multi_'$mode'_cut"]'
   echo
