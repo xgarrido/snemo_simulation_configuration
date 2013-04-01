@@ -2256,6 +2256,62 @@ group histograms will share the same binning, axis labels ...
   max : real = 3200.0
 #+END_SRC
 
+**** Source foil vertices distribution
+#+BEGIN_SRC sh
+  [name="vertex_distribution_template" type="mygsl::histogram_2d"]
+  #@description The title of the histogram (optional)
+  title : string = ""
+
+  #@description The group of the histogram (optional)
+  group : string = "__template"
+
+  #@description The build mode (default : "regular", "table", "mimic");
+  mode : string = "regular"
+
+  #@description The linear mode (default)
+  x.linear : boolean = 1
+
+  #@description The X bin unit
+  x.unit : string = "mm"
+
+  #@description The lower bound of the histogram
+  x.min : real = -2500.0
+
+  #@description The upper bound of the histogram
+  x.max : real = +2500.0
+
+  #@description The upper bound of the histogram
+  x.number_of_bins : integer = 100
+
+  #@description The linear mode (default)
+  y.linear : boolean = 1
+
+  #@description The X bin unit
+  y.unit : string = "mm"
+
+  #@description The lower bound of the histogram
+  y.min : real = -1500.0
+
+  #@description The upper bound of the histogram
+  y.max : real = +1500.0
+
+  #@description The upper bound of the histogram
+  y.number_of_bins : integer = 100
+
+  #@description The X axis label
+  display.xaxis.label : string = "y"
+
+  #@description The X axis unit for display (a standard unit, typically SI or CLHEP)
+  display.xaxis.unit : string = "mm"
+
+  #@description The Y axis label
+  display.yaxis.label : string = "z"
+
+  #@description The Y axis unit for display (a standard unit, typically SI or CLHEP)
+  display.yaxis.unit : string = "mm"
+
+#+END_SRC
+
 * Running SN@ilWare processing chain
 :PROPERTIES:
 :CUSTOM_ID: running_pipeline
