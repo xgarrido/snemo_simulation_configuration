@@ -132,7 +132,7 @@ one study purpose, there is one or two plot modules.
   [name="snemo_vertex_distribution" type="snemo::analysis::processing::snemo_vertex_distribution_module"]
 
   #@description Debug flag
-  debug     : boolean = 1
+  debug : boolean = 0
 
   #@description The Histogram Service label
   Histo_label : string = "Histo"
@@ -347,7 +347,6 @@ passed to the histogram service. There is also a possibility to declare
 "template" histogram from which several histograms can refered to. These
 group histograms will share the same binning, axis labels ...
 
-** Preamble
 #+BEGIN_SRC sh
   #@description A sample list of setups
   #@key_label   "name"
