@@ -2125,7 +2125,7 @@ Embedded histograms are declared into a dedicated file defines in file
 #+BEGIN_SRC sh
   #@description The main configuration file for the embedded histogram manager
   pool.histo.setups : string[1] = \
-      "${SNAILWAIRE_SIMULATION_DIR}/configuration/current/histogram_templates.conf"
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/histogram_templates.conf"
 #+END_SRC
 
 Finally, all histograms created can be stored inside ROOT files or XML archives.
