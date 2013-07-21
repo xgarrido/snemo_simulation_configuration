@@ -126,6 +126,7 @@ one study purpose, there is one or two plot modules.
   #@description The label of the 'Particle Track Data' bank
   PTD_label   : string  = "PTD"
 #+END_SRC
+
 *** Vertex distribution
 #+BEGIN_SRC sh
   [name="snemo_vertex_distribution" type="snemo::analysis::processing::snemo_vertex_distribution_module"]
