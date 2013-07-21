@@ -50,7 +50,7 @@ This part basically provides all the available event generator wrapper for
 SuperNEMO. All these objects are singletons by construction due to the use of
 wrapped fortran code. Efforts to have a C++ version of =genbb= are undergoing.
 
-*** ^{82}Se \beta\beta0\nu
+*** ^{82}Se \beta\beta 0\nu
 #+BEGIN_SRC sh
   [name="bb0nu_Se82.wrapper" type="genbb_wrapper"]
   seed            : integer = 314159
@@ -60,7 +60,7 @@ wrapped fortran code. Efforts to have a C++ version of =genbb= are undergoing.
   decay_dbd_mode  : integer = 1
 #+END_SRC
 
-*** ^{82}Se \beta\beta2\nu
+*** ^{82}Se \beta\beta 2\nu
 #+BEGIN_SRC sh
   [name="bb2nu_Se82.wrapper" type="genbb_wrapper"]
   debug           : boolean = 0
@@ -74,7 +74,7 @@ wrapped fortran code. Efforts to have a C++ version of =genbb= are undergoing.
   energy_unit     : string  = "MeV"
 #+END_SRC
 
-*** ^{48}Ca \beta\beta0\nu
+*** ^{48}Ca \beta\beta 0\nu
 #+BEGIN_SRC sh
   [name="bb0nu_Ca48.wrapper" type="genbb_wrapper"]
   seed            : integer = 314159
@@ -84,7 +84,7 @@ wrapped fortran code. Efforts to have a C++ version of =genbb= are undergoing.
   decay_dbd_mode  : integer = 1
 #+END_SRC
 
-*** ^{48}Ca \beta\beta2\nu
+*** ^{48}Ca \beta\beta 2\nu
 #+BEGIN_SRC sh
   [name="bb2nu_Ca48.wrapper" type="genbb_wrapper"]
   debug           : boolean = 0
@@ -98,7 +98,7 @@ wrapped fortran code. Efforts to have a C++ version of =genbb= are undergoing.
   energy_unit     : string  = "MeV"
 #+END_SRC
 
-*** ^{150}Nd \beta\beta0\nu
+*** ^{150}Nd \beta\beta 0\nu
 #+BEGIN_SRC sh
   [name="bb0nu_Nd150.wrapper" type="genbb_wrapper"]
   seed            : integer = 314159
@@ -108,7 +108,7 @@ wrapped fortran code. Efforts to have a C++ version of =genbb= are undergoing.
   decay_dbd_mode  : integer = 1
 #+END_SRC
 
-*** ^{150}Nd \beta\beta2\nu
+*** ^{150}Nd \beta\beta 2\nu
 #+BEGIN_SRC sh
   [name="bb2nu_Nd150.wrapper" type="genbb_wrapper"]
   debug           : boolean = 0

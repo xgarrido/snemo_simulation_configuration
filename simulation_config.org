@@ -1,12 +1,8 @@
 #+TITLE:  SN@ilWare Simulation Configuration
 #+AUTHOR: Xavier Garrido
 #+DATE:   2013-02-22
-#+OPTIONS: toc:nil ^:{}
-#+LATEX_CLASS: memarticle
-#+LATEX_HEADER: \setsansfont[Mapping=tex-text]{Myriad Pro}
-#+LATEX_HEADER: \setmonofont[Mapping=tex-text,Scale=MatchLowercase]{Inconsolata}
-#+LATEX_HEADER: \setromanfont[Mapping=tex-text, Numbers=OldStyle]{Minion Pro}
-#+LATEX_HEADER: \chapterstyle{article-4-sans}
+#+OPTIONS: toc:2 ^:{}
+#+LATEX_CLASS: memoir-article
 
 * Introduction
 :PROPERTIES:
@@ -426,8 +422,8 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 #+END_SRC
 **** Vertex generator
 #+BEGIN_SRC sh
-      #@description The vertex generator PRNG label
-      manager.vertex_generator_name : string  = "source_strips_bulk"
+  #@description The vertex generator PRNG label
+  manager.vertex_generator_name : string  = "source_strips_bulk"
 #+END_SRC
 **** Event generator
 #+BEGIN_SRC sh

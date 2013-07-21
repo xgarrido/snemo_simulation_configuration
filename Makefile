@@ -37,10 +37,10 @@ push: org
 doc: doc/index.html
 
 doc/index.html:
-	mkdir -p doc
-	$(EMACS) --batch -Q --eval '(org-babel-load-file "starter-kit-publish.org")'
-	rm starter-kit-publish.el
-	cp doc/starter-kit.html doc/index.html
+	mkdir -p doc/stylesheets
+	$(BATCH) --batch -Q --eval '(org-babel-tangle-file "simulation_publish.org")'
+	$(BATCH) --batch -Q --eval '(org-babel-load-file "simulation_publish.org")'
+	rm simulation_publish.el
 	echo "Documentation published to doc/"
 
 clean:
