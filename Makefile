@@ -9,7 +9,7 @@ BATCH = $(EMACS) --batch -Q --eval '(require (quote org))'			\
 GIT_BRANCH = $(shell git branch | grep \* | cut -d' ' -f2)
 CCAGE_DIRECTORY = /sps/nemo/scratch/garrido/simulations/configuration
 
-FILES  = $(notdir $(shell ls *.org 2> /dev/null))
+FILES  = $(notdir $(shell ls *.org 2> /dev/null | sed -e "s@simulation_publish.org@@g"))
 FILEST = $(FILES:%.org=$(GIT_BRANCH)/.%.tangle)
 
 all: org
