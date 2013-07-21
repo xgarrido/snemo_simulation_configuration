@@ -6,7 +6,7 @@
 
 * Introduction
 :PROPERTIES:
-:CUSTOM_ID: Introduction
+:CUSTOM_ID: introduction
 :END:
 
 This file holds mainly modules in relation with "plotting" results. Since its
@@ -85,7 +85,7 @@ one study purpose, there is one or two plot modules.
   AD_label : string  = "ANA"
 #+END_SRC
 ** Study particle track result
-**** Particle charge
+*** Particle charge
 #+BEGIN_SRC sh
   [name="snemo_particle_charge" type="snemo::analysis::processing::snemo_particle_charge_module"]
 
@@ -104,7 +104,7 @@ one study purpose, there is one or two plot modules.
   #@description The label of the 'Particle Track Data' bank
   PTD_label : string  = "PTD"
 #+END_SRC
-**** Vertex resolution
+*** Vertex resolution
 #+BEGIN_SRC sh
   [name="snemo_vertex_resolution" type="snemo::analysis::processing::snemo_vertex_resolution_module"]
 
@@ -126,7 +126,21 @@ one study purpose, there is one or two plot modules.
   #@description The label of the 'Particle Track Data' bank
   PTD_label   : string  = "PTD"
 #+END_SRC
-**** Study track fit quality
+*** Vertex distribution
+#+BEGIN_SRC sh
+  [name="snemo_vertex_distribution" type="snemo::analysis::processing::snemo_vertex_distribution_module"]
+
+  #@description Debug flag
+  debug     : boolean = 1
+
+  #@description The Histogram Service label
+  Histo_label : string = "Histo"
+
+  #@description The label of the 'Particle Track Data' bank
+  PTD_label : string  = "PTD"
+#+END_SRC
+
+*** Study track fit quality
 #+BEGIN_SRC sh
   [name="snemo_particle_reduced_chi2" type="snemo::analysis::processing::snemo_particle_track_parameters_module"]
 
@@ -146,7 +160,7 @@ one study purpose, there is one or two plot modules.
   PTD_label   : string  = "PTD"
 #+END_SRC
 
-**** Study fit curvature
+*** Study fit curvature
 #+BEGIN_SRC sh
   [name="snemo_particle_curvature" type="snemo::analysis::processing::snemo_particle_track_parameters_module"]
 
@@ -319,4 +333,186 @@ determination.
 
   #@description The label of the 'Particle Track Data' bank
   PTD_label : string  = "PTD"
+#+END_SRC
+
+* Histogram templates
+:PROPERTIES:
+:CUSTOM_ID: histogram_templates
+:TANGLE:   histogram_templates.conf
+:END:
+
+Histogram declarations are done in this file where several informations can be
+passed to the histogram service. There is also a possibility to declare
+"template" histogram from which several histograms can refered to. These
+group histograms will share the same binning, axis labels ...
+
+** Energy template
+#+BEGIN_SRC sh
+  [name="energy_template" type="mygsl::histogram_1d"]
+  #@description The title of the histogram (optional)
+  title : string = ""
+
+  #@description The group of the histogram (optional)
+  group : string = "__template"
+
+  #@description The build mode (default : "regular", "table", "mimic");
+  mode : string = "regular"
+
+  #@description The linear mode (default)
+  linear : boolean = 1
+
+  #@description The X axis label
+  display.xaxis.label : string = "$\Upsigma_\text{\tiny 1,2}$E$_\text{calibrated}$"
+
+  #@description The X axis unit for display (a standard unit, typically SI or CLHEP)
+  display.xaxis.unit : string = "keV"
+
+  #@description The Y axis label
+  display.yaxis.label : string = "dN/dE [A.U.]"
+
+  #@description The number of bins
+  number_of_bins : integer = 25
+
+  #@description The unit of the bins' bounds (a standard unit, typically SI or CLHEP)
+  unit : string = "keV"
+
+  #@description The lower bound of the histogram
+  min : real = 2000.0
+
+  #@description The upper bound of the histogram
+  max : real = 3200.0
+#+END_SRC
+
+** Efficiency template
+#+BEGIN_SRC sh
+  [name="efficiency_template" type="mygsl::histogram_1d"]
+  #@config The histogram of the energy selection efficiency
+
+  #@description The title of the histogram (optional)
+  title : string = ""
+
+  #@description The group of the histogram (optional)
+  group : string = "__template"
+
+  #@description The build mode (default : "regular", "table", "mimic");
+  mode : string = "regular"
+
+  #@description The linear mode (default)
+  linear : boolean = 1
+
+  #@description The X axis label
+  display.xaxis.label : string = "$\Upsigma_\text{\tiny 1,2}\text{E}_\text{calibrated}\geq\text{E}_\text{cut}$"
+
+  #@description The X axis unit for display (a standard unit, typically SI or CLHEP)
+  display.xaxis.unit : string = "keV"
+
+  #@description The Y axis label
+  display.yaxis.label : string = "efficiency"
+
+  #@description The number of bins
+  number_of_bins : integer = 25
+
+  #@description The unit of the bins' bounds (a standard unit, typically SI or CLHEP)
+  unit : string = "keV"
+
+  #@description The lower bound of the histogram
+  min : real = 2000.0
+
+  #@description The upper bound of the histogram
+  max : real = 3200.0
+#+END_SRC
+
+** Halflife limit template
+#+BEGIN_SRC sh
+  [name="halflife_template" type="mygsl::histogram_1d"]
+  #@config The histogram of the energy selection efficiency
+
+  #@description The title of the histogram (optional)
+  title : string = ""
+
+  #@description The group of the histogram (optional)
+  group : string = "__template"
+
+  #@description The build mode (default : "regular", "table", "mimic");
+  mode : string = "regular"
+
+  #@description The linear mode (default)
+  linear : boolean = 1
+
+  #@description The X axis label
+  display.xaxis.label : string = "$\Upsigma_\text{\tiny 1,2}\text{E}_\text{calibrated}\geq\text{E}_\text{cut}$"
+
+  #@description The X axis unit for display (a standard unit, typically SI or CLHEP)
+  display.xaxis.unit : string = "keV"
+
+  #@description The Y axis label
+  display.yaxis.label : string = "halflife limit"
+
+  #@description The number of bins
+  number_of_bins : integer = 25
+
+  #@description The unit of the bins' bounds (a standard unit, typically SI or CLHEP)
+  unit : string = "keV"
+
+  #@description The lower bound of the histogram
+  min : real = 2000.0
+
+  #@description The upper bound of the histogram
+  max : real = 3200.0
+#+END_SRC
+
+** Source foil vertices distribution
+#+BEGIN_SRC sh
+  [name="vertex_distribution_template" type="mygsl::histogram_2d"]
+  #@description The title of the histogram (optional)
+  title : string = ""
+
+  #@description The group of the histogram (optional)
+  group : string = "__template"
+
+  #@description The build mode (default : "regular", "table", "mimic");
+  mode : string = "regular"
+
+  #@description The linear mode (default)
+  x.linear : boolean = 1
+
+  #@description The X bin unit
+  x.unit : string = "mm"
+
+  #@description The lower bound of the histogram
+  x.min : real = -2500.0
+
+  #@description The upper bound of the histogram
+  x.max : real = +2500.0
+
+  #@description The upper bound of the histogram
+  x.number_of_bins : integer = 100
+
+  #@description The linear mode (default)
+  y.linear : boolean = 1
+
+  #@description The X bin unit
+  y.unit : string = "mm"
+
+  #@description The lower bound of the histogram
+  y.min : real = -1500.0
+
+  #@description The upper bound of the histogram
+  y.max : real = +1500.0
+
+  #@description The upper bound of the histogram
+  y.number_of_bins : integer = 100
+
+  #@description The X axis label
+  display.xaxis.label : string = "y"
+
+  #@description The X axis unit for display (a standard unit, typically SI or CLHEP)
+  display.xaxis.unit : string = "mm"
+
+  #@description The Y axis label
+  display.yaxis.label : string = "z"
+
+  #@description The Y axis unit for display (a standard unit, typically SI or CLHEP)
+  display.yaxis.unit : string = "mm"
+
 #+END_SRC

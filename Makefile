@@ -15,14 +15,14 @@ FILEST = $(FILES:%.org=$(GIT_BRANCH)/.%.tangle)
 all: org
 
 org: $(FILEST)
-
-$(GIT_BRANCH)/.%.tangle: %.org
-	@echo "Tangling $< file"
-	@$(BATCH) --eval '(org-babel-tangle-file "$<")'
 	@mkdir -p $(GIT_BRANCH)
 	@if ls | grep -q .def; then mv *.def $(GIT_BRANCH)/.;fi
 	@if ls | grep -q .conf; then mv *.conf $(GIT_BRANCH)/.;fi
 	@if [ -L current ]; then rm current;fi && ln -sf $(GIT_BRANCH) current
+
+$(GIT_BRANCH)/.%.tangle: %.org
+	@echo "Tangling $< file"
+	@$(BATCH) --eval '(org-babel-tangle-file "$<")'
 	@touch $@
 
 tarball: org
