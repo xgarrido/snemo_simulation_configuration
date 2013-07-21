@@ -347,6 +347,13 @@ passed to the histogram service. There is also a possibility to declare
 "template" histogram from which several histograms can refered to. These
 group histograms will share the same binning, axis labels ...
 
+** Preamble
+#+BEGIN_SRC sh
+  #@description A sample list of setups
+  #@key_label   "name"
+  #@meta_label  "type"
+#+END_SRC
+
 ** Energy template
 #+BEGIN_SRC sh
   [name="energy_template" type="mygsl::histogram_1d"]
