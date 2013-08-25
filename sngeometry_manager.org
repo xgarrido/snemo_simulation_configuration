@@ -118,7 +118,7 @@ volume.
   plugins.force_initialization_at_load : boolean = 0
 
   #@description Configuration files for geometry manager's plugins
-  plugins.configuration_files : string[1] as path = \
+  plugins.configuration_files : string[2] as path = \
       "${SNAILWARE_SIMULATION_DIR}/configuration/current/materials_plugin.conf" \
       "${SNAILWARE_SIMULATION_DIR}/configuration/current/magnetic_field_plugin.conf"
 #+END_SRC
@@ -135,21 +135,18 @@ materials library. Here the =materials_aliases= definition are locally defined
 to change the source foil isotope.
 *** Plugin declaration
 #+BEGIN_SRC sh
-  # -*- mode: conf-unix; -*-
-  # List of multi-properties (datatools::multi_properties):
-
   #@description The geometry manager plugin for materials
 
   #@key_label  "name"
   #@meta_label "type"
 
-  #################################################################
   [name="materials_driver" type="geomtools::materials_plugin"]
 #+END_SRC
+
 *** Logging priority
 #+BEGIN_SRC sh
   #@description Logging priority
-  materials.logging.priority : string = "notice"
+  logging.priority : string = "notice"
 #+END_SRC
 
 *** Files
@@ -164,7 +161,7 @@ to change the source foil isotope.
       "${SNAILWARE_SIMULATION_DIR}/configuration/current/materials_aliases.def"
 #+END_SRC
 
-** Material alises
+** Material aliases
 :PROPERTIES:
 :CUSTOM_ID: materials_aliases
 :TANGLE: materials_aliases.def
@@ -174,6 +171,14 @@ to change the source foil isotope.
   #@description A sample list of elements
   #@key_label   "name"
   #@meta_label  "type"
+
+  [name="vacuum" type="alias"]
+  #@description The alias for vacuum
+  material : string = "std::vacuum"
+
+  [name="glass" type="alias"]
+  #@description The alias for glass
+  material : string = "std::pyrex"
 
   [name="tracking_gas" type="alias"]
   #@description The alias for tracking gas
@@ -234,4 +239,87 @@ to change the source foil isotope.
   [name="PFTE" type="alias"]
   #@description The alias for the PFTE material
   material : string = "std::mylar"
+#+END_SRC
+
+
+* Magnetic field for SuperNEMO detector
+** Magnetic field plugin
+:PROPERTIES:
+:CUSTOM_ID: magnetic_field_plugin
+:TANGLE:    magnetic_field_plugin.conf
+:END:
+
+*** Plugin declaration
+#+BEGIN_SRC sh
+  #@description The geometry manager plugin for emfield
+
+  #@key_label  "name"
+  #@meta_label "type"
+
+  [name="fields_driver" type="emfield::emfield_geom_plugin"]
+#+END_SRC
+
+*** Logging priority
+#+BEGIN_SRC sh
+  #@description Logging priority
+  logging.priority : string = "notice"
+#+END_SRC
+
+*** EM field manager configuration
+#+BEGIN_SRC sh
+  #@description Manager logging priority
+  manager.logging.priority : string = "notice"
+
+  #@description The name of the geometry service
+  manager.services.geometry : string = "Geo"
+
+  #@description List of EM fields definitions files
+  manager.field_definitions_filenames : string[1] as path = \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/magnetic_field_drivers.conf"
+#+END_SRC
+
+EM field defined within =manager.field_definitions_filenames= file can be set
+independently and at the same time for different G4 volumes. This association
+between volumes and field is done by the =geom_map= object of =emfield=
+component. For SuperNEMO, constant magnetic field is defined inside demonstrator
+module.
+#+BEGIN_SRC sh
+  #@description Flag to activate the geometry volume/field associations map
+  manager.build_geom_map                           : boolean = 1
+
+  #@description The list of EM fields associated to some logical volumes
+  manager.geom_map.associations.labels             : string[1] = "sn_module"
+
+  #@description The logical model associated for the label 'tracker'
+  manager.geom_map.associations.sn_module.volume     : string = "module_basic.model.log"
+
+  #@description The EM field associated for the label "tracker"
+  manager.geom_map.associations.sn_module.field_name : string = "B_module"
+#+END_SRC
+
+** Magnetic field drivers
+:PROPERTIES:
+:CUSTOM_ID: magnetic_field_drivers
+:TANGLE:    magnetic_field_drivers.conf
+:END:
+
+*** Driver preamble
+#+BEGIN_SRC sh
+  #@description Definition parameters for some electro-magnetic fields
+
+  #@key_label   "name"
+  #@meta_label  "type"
+#+END_SRC
+
+*** Constant magnetic field
+#+BEGIN_SRC sh
+  [name="B_module" type="emfield::uniform_magnetic_field"]
+
+  #@config Configuration parameters for the magnetic field of SuperNEMO
+
+  #@description Default implicit magnetic field unit
+  magnetic_field.unit        : string  = "gauss"
+
+  #@description Coordinates of the static magnetic field (Bx, By, Bz)
+  magnetic_field.coordinates : real[3] = 0.0 0.0 25.0
 #+END_SRC

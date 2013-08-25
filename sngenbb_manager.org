@@ -1,26 +1,46 @@
 #+TITLE:  SNGenbb Manager Configuration
 #+AUTHOR: Xavier Garrido
 #+DATE:   2013-03-04
-#+OPTIONS: toc:nil
-#+LATEX_CMD: xelatex
+#+OPTIONS: toc:nil ^:{}
+#+LATEX_CLASS: memoir-article
 
 * Introduction
 :PROPERTIES:
 :CUSTOM_ID: introduction
 :END:
 
-The sngenbb package is dedicated to the generation of double beta decay and/or
+The =genbb= package is dedicated to the generation of double beta decay and/or
 radioactive background primary events as input for a simulation program.
 
-More details concerning the use of =sngenbb= can be found in [[https://nemo.lpc-caen.in2p3.fr/wiki/sngenbb][LPC wiki]].
+More details concerning the use of =genbb= can be found in [[https://nemo.lpc-caen.in2p3.fr/wiki/genbb_help][LPC wiki]].
 
 * Manager configuration
 :PROPERTIES:
 :CUSTOM_ID: manager_configuration
-:TANGLE: sngenbb_manager.conf
+:TANGLE:    sngenbb_manager.conf
 :END:
 
-This section holds the configuration of several genbb wrappers to be used within =sngenbb=.
+** Genbb manager configuration
+Here, general options such as verbosity, debug flags are passed to =genbb=
+manager.
+#+BEGIN_SRC sh
+  #@config Main configuration parameters for the genbb manager
+
+  #@description Logging priority
+  logging.priority : string = "notice"
+
+  #@description List of files containing particle generator definition rules
+  generators.configuration_files : string[1] as path = \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/sngenbb_wrappers.conf"
+#+END_SRC
+
+* Genbb wrappers
+:PROPERTIES:
+:CUSTOM_ID: wrapper_configuration
+:TANGLE:    sngenbb_wrappers.conf
+:END:
+
+This section holds the configuration of several =genbb= wrappers.
 
 #+BEGIN_SRC sh
   #@description A sample list of setups
@@ -28,193 +48,114 @@ This section holds the configuration of several genbb wrappers to be used within
   #@meta_label  "type"
 #+END_SRC
 
-** Main configuration level
-Here, general options such as verbosity, debug flags are passed to =sngenbb=
-manager. By the way, some of these options can be overloaded by the
-=sng4_module= which configuration can be changed in [[file:simulation_config.org][simulation_config.org]].
-#+BEGIN_SRC sh
-  [name="sngenbb::manager" type="sngenbb::manager"]
-
-  #@description Debug flag:
-  debug                 : boolean = 0
-
-  #@description Compute and register the 'classification' attribute in the generated primary event
-  compute_classification : boolean = 1
-
-  #@description This seed value supersedes the one eventually set in the generators' setups below
-  seed            : integer = 314159
-#+END_SRC
-
-** Genbb wrappers
+** Radioelement wrappers
 This part basically provides all the available event generator wrapper for
-SuperNEMO. All these objects are singletons by construction due to the use of
-wrapped fortran code. Efforts to have a C++ version of =genbb= are undergoing.
+SuperNEMO.
 
-*** ^{82}Se \beta\beta 0\nu
+*** \nbsp^{82}Se \beta\beta0\nu
 #+BEGIN_SRC sh
-  [name="bb0nu_Se82.wrapper" type="genbb_wrapper"]
-  seed            : integer = 314159
+  [name="bb0nu_Se82" type="genbb::wdecay0"]
+  #@config Neutrinoless double beta decay of Se-82 [DBD]
   decay_type      : string  = "DBD"
   decay_isotope   : string  = "Se82"
   decay_dbd_level : integer = 0
   decay_dbd_mode  : integer = 1
 #+END_SRC
 
-*** ^{82}Se \beta\beta 2\nu
+*** \nbsp^{82}Se \beta\beta2\nu
 #+BEGIN_SRC sh
-  [name="bb2nu_Se82.wrapper" type="genbb_wrapper"]
-  debug           : boolean = 0
-  seed            : integer = 314159
+  [name="bb2nu_Se82" type="genbb::wdecay0"]
+  #@config Two neutrino double beta decay of Se-82 [DBD]
   decay_type      : string  = "DBD"
   decay_isotope   : string  = "Se82"
   decay_dbd_level : integer = 0
   decay_dbd_mode  : integer = 4
-  energy_min      : real = 2.0
-  #energy_max      : real = 5.0
-  energy_unit     : string  = "MeV"
+  energy_min      : real as energy = 2.0 MeV
+  #energy_max      : real as energy = 5.0 MeV
 #+END_SRC
 
-*** ^{48}Ca \beta\beta 0\nu
+*** \nbsp^{48}Ca \beta\beta0\nu
 #+BEGIN_SRC sh
-  [name="bb0nu_Ca48.wrapper" type="genbb_wrapper"]
-  seed            : integer = 314159
+  [name="bb0nu_Ca48" type="genbb::wdecay0"]
+  #@config Neutrinoless double beta decay of Ca-48 [DBD]
   decay_type      : string  = "DBD"
   decay_isotope   : string  = "Ca48"
   decay_dbd_level : integer = 0
   decay_dbd_mode  : integer = 1
 #+END_SRC
 
-*** ^{48}Ca \beta\beta 2\nu
+*** \nbsp^{48}Ca \beta\beta2\nu
 #+BEGIN_SRC sh
-  [name="bb2nu_Ca48.wrapper" type="genbb_wrapper"]
-  debug           : boolean = 0
-  seed            : integer = 314159
+  [name="bb2nu_Ca48" type="genbb::wdecay0"]
+  #@config Two neutrino double beta decay of Ca-48 [DBD]
   decay_type      : string  = "DBD"
   decay_isotope   : string  = "Ca48"
   decay_dbd_level : integer = 0
   decay_dbd_mode  : integer = 4
-  energy_min      : real = 3.2
-  #energy_max      : real = 5.0
-  energy_unit     : string  = "MeV"
+  energy_min      : real as energy = 3.2 MeV
+  #energy_max      : real as energy = 5.0 MeV
 #+END_SRC
 
-*** ^{150}Nd \beta\beta 0\nu
+*** \nbsp^{150}Nd \beta\beta0\nu
 #+BEGIN_SRC sh
-  [name="bb0nu_Nd150.wrapper" type="genbb_wrapper"]
-  seed            : integer = 314159
+  [name="bb0nu_Nd150" type="genbb::wdecay0"]
+  #@config Neutrinoless double beta decay of Nd-150 [DBD]
   decay_type      : string  = "DBD"
   decay_isotope   : string  = "Nd150"
   decay_dbd_level : integer = 0
   decay_dbd_mode  : integer = 1
 #+END_SRC
 
-*** ^{150}Nd \beta\beta 2\nu
+*** \nbsp^{150}Nd \beta\beta2\nu
 #+BEGIN_SRC sh
-  [name="bb2nu_Nd150.wrapper" type="genbb_wrapper"]
-  debug           : boolean = 0
-  seed            : integer = 314159
+  [name="bb2nu_Nd150" type="genbb::wdecay0"]
+  #@config Two neutrino double beta decay of Nd-150 [DBD]
   decay_type      : string  = "DBD"
   decay_isotope   : string  = "Nd150"
   decay_dbd_level : integer = 0
   decay_dbd_mode  : integer = 4
-  energy_min      : real = 2.3
-  #energy_max      : real = 5.0
-  energy_unit     : string  = "MeV"
+  energy_min      : real as energy = 2.3 MeV
+  #energy_max      : real as energy = 5.0 MeV
 #+END_SRC
 
-*** ^{208}Tl background
+*** \nbsp^{208}Tl background
 #+BEGIN_SRC sh
-  [name="bkg_Tl208.wrapper" type="genbb_wrapper"]
-  seed            : integer = 314159
+  [name="bkg_Tl208" type="genbb::wdecay0"]
+  #@config Tl-208 decay [background]
   decay_type      : string  = "background"
   decay_isotope   : string  = "Tl208"
-  #energy_min      : real = 0.0
-  #energy_max      : real = 5.0
-  #energy_unit     : string  = "MeV"
+  #energy_min      : real as energy = 0.0 MeV
+  #energy_max      : real as energy = 5.0 MeV
 #+END_SRC
 
-*** ^{214}Bi to ^{214}Po decay
+*** \nbsp^{214}Bi \to\nbsp^{214}Po decay
 #+BEGIN_SRC sh
-  [name="bkg_Bi214_Po214.wrapper" type="genbb_wrapper"]
-  seed            : integer = 314159
+  [name="bkg_Bi214_Po214" type="genbb::wdecay0"]
+  #@config Bi-214/Po-214 decay [background]
   decay_type      : string  = "background"
   decay_isotope   : string  = "Bi214+Po214"
-  #energy_min      : real = 0.0
-  #energy_max      : real = 5.0
-  #energy_unit     : string  = "MeV"
+  #energy_min      : real as energy = 0.0 MeV
+  #energy_max      : real as energy = 5.0 MeV
 #+END_SRC
 
-*** ^{212}Bi to ^{212}Po decay
+*** \nbsp^{212}Bi \to\nbsp^{212}Po decay
 #+BEGIN_SRC sh
-  [name="bkg_Bi212_Po212.wrapper" type="genbb_wrapper"]
-  seed            : integer = 314159
+  [name="bkg_Bi212_Po212" type="genbb::wdecay0"]
+  #@config Bi-212/Po-212 decay [background]
   decay_type      : string  = "background"
   decay_isotope   : string  = "Bi212+Po212"
-  #energy_min      : real = 0.0
-  #energy_max      : real = 5.0
-  #energy_unit     : string  = "MeV"
+  #energy_min      : real as energy = 0.0 MeV
+  #energy_max      : real as energy = 5.0 MeV
 #+END_SRC
 
-*** ^{207}Bi calibration source
+*** \nbsp^{207}Bi calibration source
 #+BEGIN_SRC sh
-  [name="calib_Bi207.wrapper" type="genbb_wrapper"]
-  seed            : integer = 314159
+  [name="calib_Bi207" type="genbb::wdecay0"]
+  #@config Bi-207 decay [calibration]
   decay_type      : string  = "background"
-  decay_isotope   : string  = "Bi207"
-  #energy_min      : real = 0.0
-  #energy_max      : real = 5.0
-  #energy_unit     : string  = "MeV"
-#+END_SRC
-
-** Genbb process
-This define a standalone =genbb= process to produce an ascii output file.
-
-#+BEGIN_SRC sh :tangle no
-  [name="bb0nu_Se82.process" type="genbb_process"]
-
-  #@config The configuration of the GENBB event generator (class genbb::genbb):
-
-  debug           : boolean = 1
-  seed            : integer = 314159
-  buffer_size     : integer = 100
-  tmp_base_dir    : string  = "/tmp/${USER}"
-  preserve_data_files : boolean = 1
-
-  # Available choices: "background" or "DBD"
-  decay_type      : string  = "DBD"
-  decay_isotope   : string  = "Se82"
-  decay_dbd_level : integer = 0
-  decay_dbd_mode  : integer = 1
-#+END_SRC
-
-** Genbb files
-This code can generate =genbb= events given previous results of =genbb=
-simulation processes.
-
-#+BEGIN_SRC sh :tangle no
-  [name="BiPo212.files" type="genbb_files"]
-
-  #@config The configuration of the GENBB event generator (class genbb::genbb_mgr):
-
-  debug : boolean = 0
-
-  #@description The format of the "genbb" input files ("genbb" or "boost"):
-  format : string = "genbb"
-
-  #@description List of the "genbb" mode input files:
-  input_files : string[2] = \
-    "${GENBB_HELP_DATA_DIR}/testing/data/bipo212_1.genbb" \
-    "${GENBB_HELP_DATA_DIR}/testing/data/bipo212_2.genbb"
-
-  # Alternative: using a pattern for input file names:
-  #@description The format of the "genbb" input files
-  ###format : string = "boost"
-
-  #@description The directory where GENBB input files must be searched for:
-  ###input_files.directory : string = "${GENBB_HELP_DATA_DIR}/testing/data"
-
-  #@description The pattern of GENBB input files to be searched for:
-  ###input_files.pattern   : string = "bipo212_?.boost.txt*"
+  decay_isotope   : string  = "Bi207+Pb207m"
+  #energy_min      : real as energy = 0.0 MeV
+  #energy_max      : real as energy = 5.0 MeV
 #+END_SRC
 
 ** Single particle generator
@@ -256,3 +197,8 @@ distribution or following a tabulated energy spectrum.
 
   randomized_direction   : boolean = 1
 #+END_SRC
+
+
+** TODO Combined generators
+Combination of several =genbb= generators can be done using
+=genbb::combined_particle_generator= object...

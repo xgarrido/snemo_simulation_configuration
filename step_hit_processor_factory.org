@@ -42,64 +42,64 @@ and the =cluster.time_space= into a unique calorimeter hit.
 
 *** Main wall
 #+BEGIN_SRC sh
-  [name="calorimeter.hit_processor" type="snemo::core::processing::calorimeter_step_hit_processor"]
+  [name="calorimeter.hit_processor" type="mctools::calorimeter_step_hit_processor"]
 
   #@config The step hit processor for the calorimeter simulated hits
 
-  debug                          : boolean   = 0
-  hit.category                   : string    = "calo"
-  sensitive.category             : string    = "calorimeter.SD"
-  use_private_pool               : boolean   = 1
-  private_pool_capacity          : integer   = 10
+  logging.priority               : string  = "notice"
+  hit.category                   : string  = "calo"
+  sensitive.category             : string  = "calorimeter.SD"
+  use_private_pool               : boolean = 1
+  private_pool_capacity          : integer = 10
 
   mapping.category               : string    = "calorimeter_block"
   mapping.category.any_addresses : string[1] = "part"
-  cluster.time_range             : real      = 1.0  # ns
-  cluster.space_range            : real      = 10.0 # mm
+  cluster.time_range             : real as time   =  1.0 ns
+  cluster.space_range            : real as length = 10.0 mm
 #+END_SRC
 
 *** X-wall
 #+BEGIN_SRC sh
-  [name="xcalo.hit_processor" type="snemo::core::processing::calorimeter_step_hit_processor"]
+  [name="xcalo.hit_processor" type="mctools::calorimeter_step_hit_processor"]
 
   #@config The step hit processor for the auxiliary calorimeter simulated hits
 
-  debug               : boolean = 0
+  logging.priority    : string = "notice"
   hit.category        : string  = "xcalo"
   sensitive.category  : string  = "xcalorimeter.SD"
   mapping.category    : string  = "xcalo_block"
-  cluster.time_range  : real    = 1.0  # ns
-  cluster.space_range : real    = 10.0 # mm
+  cluster.time_range  : real as time   =  1.0 ns
+  cluster.space_range : real as length = 10.0 mm
 #+END_SRC
 *** \gamma veto
 #+BEGIN_SRC sh
-  [name="gveto.hit_processor" type="snemo::core::processing::calorimeter_step_hit_processor"]
+  [name="gveto.hit_processor" type="mctools::calorimeter_step_hit_processor"]
 
   #@config The step hit processor for the gamma veto simulated hits
 
-  debug               : boolean = 0
+  logging.priority    : string = "notice"
   hit.category        : string  = "gveto"
   sensitive.category  : string  = "gveto.SD"
   mapping.category    : string  = "gveto_block"
-  cluster.time_range  : real    = 1.0  # ns
-  cluster.space_range : real    = 10.0 # mm
+  cluster.time_range  : real as time   =  1.0 ns
+  cluster.space_range : real as length = 10.0 mm
 #+END_SRC
 
 
-** TODO Geiger cells processors
-#+BEGIN_SRC sh
+** Geiger cells processors
+#+BEGIN_SRC sh :tangle no
   [name="gg.hit_processor" type="snemo::core::processing::gg_step_hit_processor"]
 
   #@config The step hit processor for the Geiger simulated hits
-  debug                  : boolean = 0
+  logging.priority       : string = "notice"
   hit.category           : string  = "gg"
   sensitive.category     : string  = "tracker.SD"
   mapping.category       : string  = "drift_cell_core"
   rng.seed               : integer = 314159
   rng.id                 : string  = "mt19937"
-  #fiducial_drift_radius : real    =   22.0  # mm
-  #fiducial_drift_length : real    = 2800.0  # mm
-  mean_ionization_energy : real    =   50.0 # eV
+  #fiducial_drift_radius : real as length =   22.0 mm
+  #fiducial_drift_length : real as length = 2800.0 mm
+  mean_ionization_energy : real as energy = 50.0 eV
 
   #@description For each cell traversed by a track, compute the position of maximal approach to the anode wire (debug purpose only so default is 0)
   compute_maximal_approach_position : boolean = 0
@@ -107,59 +107,58 @@ and the =cluster.time_space= into a unique calorimeter hit.
 
 ** Visualization processors
 #+BEGIN_SRC sh
-  [name="calorimeter.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  [name="calorimeter.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
   #@config The step hit processor for collecting the calorimeter simulated hits
-  debug              : boolean = 0
-  hit.category       : string  = "__visu.tracks"
-  sensitive.category : string  = "calorimeter.SD"
+  logging.priority   : string = "notice"
+  hit.category       : string = "__visu.tracks"
+  sensitive.category : string = "calorimeter.SD"
 
-  [name="xcalorimeter.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  [name="xcalorimeter.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
   #@config The step hit processor for collecting the calorimeter simulated hits
-  debug              : boolean = 0
-  hit.category       : string  = "__visu.tracks"
-  sensitive.category : string  = "xcalorimeter.SD"
+  logging.priority   : string = "notice"
+  hit.category       : string = "__visu.tracks"
+  sensitive.category : string = "xcalorimeter.SD"
 
-  [name="gveto.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  [name="gveto.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
   #@config The step hit processor for collecting the calorimeter simulated hits
-  debug              : boolean = 0
-  hit.category       : string  = "__visu.tracks"
-  sensitive.category : string  = "gveto.SD"
+  logging.priority   : string = "notice"
+  hit.category       : string = "__visu.tracks"
+  sensitive.category : string = "gveto.SD"
 
-
-  [name="tracker.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  [name="tracker.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
   #@config The step hit processor for collecting the tracker simulated hits
-  debug              : boolean = 1
-  hit.category       : string  = "__visu.tracks"
-  sensitive.category : string  = "tracker.SD"
+  logging.priority   : string = "debug"
+  hit.category       : string = "__visu.tracks"
+  sensitive.category : string = "tracker.SD"
 
-  [name="source.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  [name="source.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
   #@config The step hit processor for collecting simulated hits within source strip
-  debug              : boolean   = 0
+  logging.priority   : string    = "notice"
   hit.category       : string    = "__visu.tracks"
   sensitive.category : string    = "__source.SD"
   geometry.models    : string[2] = \
                      "source_external_strip.model" \
                      "source_internal_strip.model"
 
-  [name="wires.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  [name="wires.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
   #@config The step hit processor for collecting simulated hits within tracker's wires
-  debug                 : boolean   = 0
+  logging.priority      : string    = "notice"
   hit.category          : string    = "__visu.tracks"
   sensitive.category    : string    = "__wires.SD"
   geometry.models       : string[2] = "field_wire.model" "anode_wire.model"
   visu.highlighted_hits : boolean   = 1
 
-  [name="films.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  [name="films.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
   #@config The step hit processor for collecting simulated hits within tracker's wires
-  debug              : boolean = 0
+  logging.priority   : string  = "notice"
   hit.category       : string  = "__visu.tracks"
   sensitive.category : string  = "__films.SD"
   geometry.models.with_materials : string[3] = "std::mylar" "std::nylon" "std::pfte"
   visu.highlighted_hits : boolean   = 0
 
-  [name="tracking_gas.visu.hit_processor" type="snemo::core::processing::push_all_step_hit_processor"]
+  [name="tracking_gas.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
   #@config The step hit processor for collecting simulated hits within tracking gas
-  debug              : boolean = 0
+  logging.priority   : string  = "notice"
   hit.category       : string  = "__visu.tracks"
   sensitive.category : string  = "__tracking_gas.SD"
   geometry.models.with_materials : string[1] = "tracking_gas"

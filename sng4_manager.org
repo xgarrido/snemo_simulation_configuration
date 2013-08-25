@@ -9,7 +9,7 @@
 :CUSTOM_ID: introduction
 :END:
 
-The =sng4= library provides a Geant4 standard interface to generate simulated
+The =mctools/g4= library provides a Geant4 standard interface to generate simulated
 data. A dedicated manager class addresses all the resources needed to :
 
 - describe the geometry (through a geometry manager from the [[https://nemo.lpc-caen.in2p3.fr/wiki/sngeometry][sngeometry]]
@@ -35,7 +35,7 @@ navigation as well as the configuration. The most *important* code block is the
 next one which allows the reading of this file by =datatools::properties= object.
 
 #+BEGIN_SRC sh
-  #@description A sample list of setups
+  #@description A sample list of setups for Geant4
   #@key_label   "name"
   #@meta_label  ""
 #+END_SRC
@@ -58,6 +58,20 @@ manager. By the way, some of these options can be overloaded by the
 
   #@description Geant4 visualization activation flag:
   g4_visualization      : boolean = 0
+#+END_SRC
+
+** Event generator
+The following code holds the =genbb= manager to give access to several primary
+generators from neutrinoless double beta decay, to ^{214}Bi / ^{208}Tl
+contamination or cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb_manager.org]] file.
+#+BEGIN_SRC sh
+  [name="event_generator"]
+  #@description Primary generator logging priority
+  logging.priority : string = "notice"
+
+  #@description Configuration file for the embedded 'snemo::genbb::manager'
+  manager.config : string as path = \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/sngenbb_manager.conf"
 #+END_SRC
 
 ** Vertex generation
@@ -153,51 +167,59 @@ must be applied. This can be in direct relation with step hit processors defined
 The following code defines geometry models where Geant4 steps are size limited.
 #+BEGIN_SRC sh
   #@description List of geometry models with max steps:
-  limits.list_of_models : string[3] = \
-                         "source_external_strip.model" \
-                         "source_internal_strip.model" \
-                         "drift_cell_core.model"
+  limits.list_of_volumes : string[3] =  \
+      "source_external_strip.model.log" \
+      "source_internal_strip.model.log" \
+      "drift_cell_core.model.log"
 
-  #@description Max step length inside source pad (mm):
-  limits.max_step.source_external_strip.model : real = 0.01
+  #@description Max step length inside source pad:
+  limits.max_step.source_external_strip.model.log : real as length = 0.01 mm
 
-  #@description Max step length inside source pad (mm):
-  limits.max_step.source_internal_strip.model : real = 0.01
+  #@description Max step length inside source pad:
+  limits.max_step.source_internal_strip.model.log : real as length = 0.01 mm
 
-  #@description Max step length inside drift cell tracking volume (mm):
-  limits.max_step.drift_cell_core.model : real = 5.0
-  #limits.max_step.drift_cell_core : real = 10.0
+  #@description Max step length inside drift cell tracking volume:
+  limits.max_step.drift_cell_core.model.log : real as length = 5.0 mm
 #+END_SRC
 
 *** Geant4 regions
 Definition of Geant4 regions.
 #+BEGIN_SRC sh
-  #@description List of regions :
+  #@description Flag to use G4 regions
+  using_regions       : boolean = 1
+
+  #@description List of regions
   regions             : string[3] = "calorimeter" "tracker" "source"
 
-  #@description List of attached volumes/models per region :
-  regions.calorimeter : string[4] =                        \
-                      "calorimeter_scin_block_front.model" \
-                      "calorimeter_scin_block_back.model"  \
-                      "gveto_scin_block.model"             \
-                      "xwall_scin_block.model"
-  regions.tracker     : string[1] = "drift_cell_core.model"
-  regions.source      : string[2] =                        \
-                      "source_external_strip.model"        \
-                      "source_internal_strip.model"
+  #@description List of attached volumes/models for 'calorimeter' region
+  regions.calorimeter.volumes : string[4] =    \
+      "calorimeter_scin_block_front.model.log" \
+      "calorimeter_scin_block_back.model.log"  \
+      "gveto_scin_block.model.log"             \
+      "xwall_scin_block.model.log"
 
+  #@description List of attached volumes/models for 'tracker' region
+  regions.tracker.volumes     : string[1] = "drift_cell_core.model.log"
+
+  #@description List of attached volumes/models for 'source' region
+  regions.source.volumes      : string[2] =    \
+      "source_external_strip.model.log"        \
+      "source_internal_strip.model.log"
 #+END_SRC
 
 *** Magnetic field
 #+BEGIN_SRC sh
-  #@description Magnetic field value (gauss):
-  magnetic_field.default_field : real = 25.0
+  #@description Flag to use magnetic field
+  using_magnetic_field              : boolean = 1
 
-  #@description List of module's IDs with non-zero magnetic field:
-  magnetic_field.modules : integer[1] = 0
+  #@description Logging priority threshold of the embedded Geant4 magnetic fields
+  magnetic_field.logging.priority   : string = "trace"
+
+  #@description Name of the magnetic field geometry plugin
+  magnetic_field.plugin_name        : string = "fields_driver"
 
   #@description SetDeltaChord miss distance (mm):
-  magnetic_field.miss_distance : real = 0.5
+  magnetic_field.miss_distance : real as length = 0.5 mm
 #+END_SRC
 
 ** Physics list
@@ -215,53 +237,173 @@ phycical processes for SuperNEMO.
   logging.priority : string = "notice"
 #+END_SRC
 
-*** TODO SuperNEMO physical processes activation
-A more complete list of processes available for SuperNEMO should be written.
+*** SuperNEMO physics plugins
 #+BEGIN_SRC sh
-  #@description Activate energy loss process for electron/positron
-  electron.energy_loss         : boolean = 1
+  #@description List of physics constructors
+  physics_constructors.names : string[2] = "particles" "em"
 
-  #@description Activate multiple scaterring process for electron/positron
-  electron.multiple_scaterring : boolean = 1
+  #@description Class ID of the physics constructors named 'particles'
+  physics_constructors.particles.id     : string = "mctools::g4::particles_physics_constructor"
 
-  #@description Activate the use of high-energy leptons
-  use_he_leptons               : boolean = 0
+  #@description Configuration file of the physics constructors named 'particles'
+  physics_constructors.particles.config : string as path = \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/snparticles.conf"
 
-  #@description Activate the use of mesons
-  use_mesons                   : boolean = 1
+  #@description Class ID of the physics constructors named 'em'
+  physics_constructors.em.id            : string = "mctools::g4::em_physics_constructor"
+
+  #@description Configuration file of the physics constructors named 'em'
+  physics_constructors.em.config        : string as path = \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/snem_processes.conf"
 #+END_SRC
 
+**** Particle physics constructor
+:PROPERTIES:
+:TANGLE: snparticles.conf
+:END:
+Quite experimental try to set particles used within SuperNEMO "framework".
+#+BEGIN_SRC sh
+  #@config Configuration parameters for the particles Geant4 physics constructor
+
+  #@description The activation flag for geantinos (neutral and charged, default: 0)
+  #use_geantinos               : boolean = 0
+
+  #@description The activation flag for optical photons (default: 0)
+  #use_optical_photons         : boolean = 0
+
+  #@description The activation flag for muon leptons (default: 0)
+  #use_muon_leptons         : boolean = 0
+
+  #@description The activation flag for tau leptons (default: 0)
+  #use_tau_leptons          : boolean = 0
+
+  #@description The activation flag for light mesons (default: 0)
+  #use_light_mesons         : boolean = 0
+
+  #@description The activation flag for charm mesons (default: 0)
+  #use_charm_mesons         : boolean = 0
+
+  #@description The activation flag for bottom mesons (default: 0)
+  #use_bottom_mesons        : boolean = 0
+
+  #@description The activation flag for nucleons (default: 1)
+  #use_nucleons             : boolean = 1
+
+  #@description The activation flag for strange baryons (default: 0)
+  #use_strange_baryons      : boolean = 0
+
+  #@description The activation flag for charm baryons (default: 0)
+  #use_charm_baryons        : boolean = 0
+
+  #@description The activation flag for bottom baryons (default: 0)
+  #use_bottom_baryons       : boolean = 0
+
+  #@description The activation flag for light nuclei (default: 1)
+  #use_light_nuclei         : boolean = 1
+
+  #@description The activation flag for light anti-nuclei (default: 0)
+  #use_light_anti_nuclei    : boolean = 0
+
+  #@description The activation flag for generic ion (default: 0)
+  use_generic_ion          : boolean = 1
+#+END_SRC
+
+**** EM physics process
+:PROPERTIES:
+:TANGLE: snem_processes.conf
+:END:
+#+BEGIN_SRC sh
+  #@config Configuration parameters for the electro-magnetic Geant4 physics constructor
+
+  #@description Electro-magntox interaction model (value in: "standard", "low_energy", "penelope")
+  #em.model : string = "standard"
+
+  #@description The activation flag for electron/positron energy loss process
+  #em.electron.energy_loss         : boolean = 1
+
+  #@description The activation flag for electron/positron multiple scaterring process
+  #em.electron.multiple_scaterring : boolean = 1
+
+  #@description The activation flag for electron/positron bremsstrahlung process
+  #em.electron.bremsstrahlung      : boolean = 1
+
+  #@description The activation flag for positron pannihilation
+  #em.positron.annihilation        : boolean = 1
+
+  ################
+  # Deexcitation #
+  ################
+
+  #@description The activation flag for deexcitation fluorescence process
+  #em.deexcitation.fluo         : boolean = 0
+
+  #@description The activation flag for Auger process
+  #em.deexcitation.auger        : boolean = 0
+
+  #@description The activation flag for PIXE
+  #em.deexcitation.pixe         : boolean = 0
+
+  #@description The activation model for PIXE cross-sections
+  #em.deexcitation.pixe.model   : string = "Empirical"
+
+  ###########################
+  # Deexcitation per region #
+  ###########################
+
+  #@description The regions where to apply some deexcitation process
+  #em.deexcitation.regions    : string[2] = "A" "B"
+
+  #@description The activation flag for deexcitation fluorescence process in region "A"
+  #em.deexcitation.regions.A.fluo : boolean = 1
+
+  #@description The activation flag for Auger process in region "A"
+  #em.deexcitation.regions.A.auger : boolean = 1
+
+  #@description The activation flag for PIXE in region "A"
+  #em.deexcitation.regions.A.pixe : boolean = 1
+
+  #@description The activation flag for deexcitation fluorescence process in region "B"
+  #em.deexcitation.regions.B.fluo : boolean = 1
+
+  #@description The activation flag for Auger process in region "B"
+  #em.deexcitation.regions.B.auger : boolean = 1
+
+  #@description The activation flag for PIXE in region "B"
+  #em.deexcitation.regions.B.pixe : boolean = 1
+#+END_SRC
 *** Using Geant4 region cuts
 These cuts are related to some production processes and then, define some
 minimal step hit size given the detector region.
 #+BEGIN_SRC sh
   #@description Activate the use of specific cuts
-  using_cuts : boolean = 1
+  using_production_cuts : boolean = 1
+
+  #@description The production cut default value
+  production_cuts.default_value : real as length = 1.0 mm
+
+  #@description The production cut for gamma
+  production_cuts.gamma : real as length = 1.0 mm
+
+  #@description The production cut for electron
+  production_cuts.electron : real as length = 1.0 mm
+
+  #@description The production cut for positron
+  production_cuts.positron : real as length = 1.0 mm
+
+  #@description The production cut for proton
+  production_cuts.proton : real as length = 1.0 mm
 
   #@description List of region with production cut
-  production_cuts.regions     : string[3] = "calorimeter" "tracker" "source"
+  production_cuts.regions : string[3] = "calorimeter" "tracker" "source"
 
   #@description Production cut value for region "calorimeter"
-  production_cuts.calorimeter : real as length = 5.0 mm
+  production_cuts.regions.calorimeter.gamma : real as length = 5.0 mm
 
   #@description Production cut value for region "tracker"
-  production_cuts.tracker     : real as length = 0.5 mm
+  production_cuts.regions.tracker.electron : real as length = 0.5 mm
 
   #@description Production cut value for region "source"
-  production_cuts.source      : real as length = 0.05 mm
-#+END_SRC
-
-** Primary generator
-The following code holds the =sngenbb= manager to give access to several primary
-generators from neutrinoless double beta decay, to ^{214}Bi / ^{208}Tl
-contamination or cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb_manager.org]] file.
-#+BEGIN_SRC sh
-  [name="primary_generator"]
-  #@description Primary generator logging priority
-  logging.priority : string = "warning"
-
-  #@description Configuration file for the embedded 'snemo::genbb::manager'
-  config : string = "${SNAILWARE_SIMULATION_DIR}/configuration/current/sngenbb_manager.conf"
+  production_cuts.regions.source.electron : real as length = 0.05 mm
 #+END_SRC
 
 ** Geant4 related action
@@ -290,6 +432,15 @@ lot of options.
   logging.priority : string = "warning"
 #+END_SRC
 
+*** Primary generator action
+#+BEGIN_SRC sh
+  [name="primary_generator_action"]
+
+  #@config Configuration of the primary generator action
+
+  #@description Primary generator action logging priority
+  logging.priority : string = "notice"
+#+END_SRC
 *** Tracking action
 #+BEGIN_SRC sh
   [name="tracking_action"]
