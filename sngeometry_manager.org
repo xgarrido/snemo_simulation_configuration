@@ -118,16 +118,17 @@ volume.
   plugins.force_initialization_at_load : boolean = 0
 
   #@description Configuration files for geometry manager's plugins
-  plugins.configuration_files : string[2] as path = \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/materials_plugin.conf" \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/magnetic_field_plugin.conf"
+  plugins.configuration_files : string[3] as path =                                  \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/materials_plugin.conf"      \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/magnetic_field_plugin.conf" \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/locator_plugin.conf"
 #+END_SRC
 
 * Material for SuperNEMO detector
 ** Material driver
 :PROPERTIES:
 :CUSTOM_ID: materials_plugin
-:TANGLE:   materials_plugin.conf
+:TANGLE:    materials_plugin.conf
 :END:
 
 We use the definitions of isotopes, elements and materials from the installed
@@ -241,7 +242,6 @@ to change the source foil isotope.
   material : string = "std::mylar"
 #+END_SRC
 
-
 * Magnetic field for SuperNEMO detector
 ** Magnetic field plugin
 :PROPERTIES:
@@ -322,4 +322,32 @@ module.
 
   #@description Coordinates of the static magnetic field (Bx, By, Bz)
   magnetic_field.coordinates : real[3] = 0.0 0.0 25.0
+#+END_SRC
+* Locators for SuperNEMO detector
+** Locator driver
+:PROPERTIES:
+:CUSTOM_ID: locator_plugin
+:TANGLE:    locator_plugin.conf
+:END:
+
+*** Plugin declaration
+#+BEGIN_SRC sh
+  #@description The geometry manager plugin for locators
+
+  #@key_label  "name"
+  #@meta_label "type"
+
+  [name="locator_driver" type="snemo::geometry::locator_plugin"]
+#+END_SRC
+
+*** Logging priority
+#+BEGIN_SRC sh
+  #@description Logging priority
+  logging.priority : string = "warning"
+#+END_SRC
+
+*** Module number
+#+BEGIN_SRC sh
+  #@description SuperNEMO module number
+  locators.module_number : integer = 0
 #+END_SRC

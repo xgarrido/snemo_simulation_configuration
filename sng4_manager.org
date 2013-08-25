@@ -3,6 +3,7 @@
 #+DATE:   2013-02-24
 #+OPTIONS: toc:nil ^:{}
 #+LATEX_CLASS: memoir-article
+#+STARTUP: entitiespretty
 
 * Introduction
 :PROPERTIES:
@@ -48,7 +49,7 @@ manager. By the way, some of these options can be overloaded by the
   [name="manager"]
 
   #@description Logging priority
-  logging.priority      : string = "notice"
+  logging.priority      : string = "warning"
 
   #@description Number of events to be simulated (superseded by the pipeline)
   number_of_events      : integer = 20
@@ -62,12 +63,10 @@ manager. By the way, some of these options can be overloaded by the
 
 ** Event generator
 The following code holds the =genbb= manager to give access to several primary
-generators from neutrinoless double beta decay, to ^{214}Bi / ^{208}Tl
-contamination or cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb_manager.org]] file.
+generators from neutrinoless double beta decay, to\nbsp^{214}Bi/^{208}Tl contamination or
+cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb_manager.org]] file.
 #+BEGIN_SRC sh
   [name="event_generator"]
-  #@description Primary generator logging priority
-  logging.priority : string = "notice"
 
   #@description Configuration file for the embedded 'snemo::genbb::manager'
   manager.config : string as path = \
@@ -93,7 +92,7 @@ Main configuration file for the detector construction user object.
 *** Logging priority
 #+BEGIN_SRC sh
   #@description Logging priority
-  logging.priority : string = "debug"
+  logging.priority : string = "warning"
 #+END_SRC
 
 *** GDML scheme and options
@@ -118,6 +117,9 @@ through =gemotools= converters.
 Step hit processors are used to convert Geant4 steps into detector hits for
 SuperNEMO physics.
 #+BEGIN_SRC sh
+  #@description Logging support for step hit processor factory
+  hit_processor_factory.logging.priority : string = "warning"
+
   #@description Configuration file for the step hit processor factory:
   hit_processor_factory.config : string as path = \
       "${SNAILWARE_SIMULATION_DIR}/configuration/current/step_hit_processor_manager.conf"
@@ -130,7 +132,7 @@ must be applied. This can be in direct relation with step hit processors defined
   #@description Parameters for the generation of 'sensitive hits' through 'sensitive detectors' :
   sensitive.detectors : string[4] = "calorimeter.SD" "xcalorimeter.SD" "gveto.SD" "tracker.SD"
 
-  sensitive.calorimeter.SD.debug                           : boolean = 0
+  sensitive.calorimeter.SD.logging.support                 : string  = "warning"
   sensitive.calorimeter.SD.hits_buffer_capacity            : integer = 200
   sensitive.calorimeter.SD.record_alpha_quenching          : boolean = 1
   sensitive.calorimeter.SD.record_track_id                 : boolean = 1
@@ -138,7 +140,7 @@ must be applied. This can be in direct relation with step hit processors defined
   sensitive.calorimeter.SD.drop_zero_energy_deposit_steps  : boolean = 0
   sensitive.calorimeter.SD.track_gamma                     : boolean = 1
 
-  sensitive.xcalorimeter.SD.debug                          : boolean = 1
+  sensitive.xcalorimeter.SD.logging.support                : string  = "warning"
   sensitive.xcalorimeter.SD.hits_buffer_capacity           : integer = 200
   sensitive.xcalorimeter.SD.record_alpha_quenching         : boolean = 1
   sensitive.xcalorimeter.SD.record_track_id                : boolean = 1
@@ -146,7 +148,7 @@ must be applied. This can be in direct relation with step hit processors defined
   sensitive.xcalorimeter.SD.drop_zero_energy_deposit_steps : boolean = 0
   sensitive.xcalorimeter.SD.track_gamma                    : boolean = 1
 
-  sensitive.gveto.SD.debug                                 : boolean = 0
+  sensitive.gveto.SD.logging.support                       : string  = "warning"
   sensitive.gveto.SD.hits_buffer_capacity                  : integer = 200
   sensitive.gveto.SD.record_alpha_quenching                : boolean = 1
   sensitive.gveto.SD.record_track_id                       : boolean = 1
@@ -154,7 +156,7 @@ must be applied. This can be in direct relation with step hit processors defined
   sensitive.gveto.SD.drop_zero_energy_deposit_steps        : boolean = 0
   sensitive.gveto.SD.track_gamma                           : boolean = 1
 
-  sensitive.tracker.SD.debug                               : boolean = 0
+  sensitive.tracker.SD.logging.support                     : string  = "warning"
   sensitive.tracker.SD.hits_buffer_capacity                : integer = 1000
   sensitive.tracker.SD.record_alpha_quenching              : boolean = 1
   sensitive.tracker.SD.record_track_id                     : boolean = 1
@@ -213,7 +215,7 @@ Definition of Geant4 regions.
   using_magnetic_field              : boolean = 1
 
   #@description Logging priority threshold of the embedded Geant4 magnetic fields
-  magnetic_field.logging.priority   : string = "trace"
+  magnetic_field.logging.priority   : string = "warning"
 
   #@description Name of the magnetic field geometry plugin
   magnetic_field.plugin_name        : string = "fields_driver"
@@ -234,7 +236,7 @@ phycical processes for SuperNEMO.
 *** Logging priority
 #+BEGIN_SRC sh
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 #+END_SRC
 
 *** SuperNEMO physics plugins
@@ -439,7 +441,7 @@ lot of options.
   #@config Configuration of the primary generator action
 
   #@description Primary generator action logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 #+END_SRC
 *** Tracking action
 #+BEGIN_SRC sh
@@ -463,9 +465,6 @@ lot of options.
 
   #@description Logging priority :
   logging.priority : string = "warning"
-
-  #@description Stacking action debug flag:
-  # debug : boolean = 0
 
   #@description Kill secondary particles within some volumes :
   # kill_particles : boolean = 0

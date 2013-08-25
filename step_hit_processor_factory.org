@@ -87,11 +87,12 @@ and the =cluster.time_space= into a unique calorimeter hit.
 
 
 ** Geiger cells processors
-#+BEGIN_SRC sh :tangle no
+#+BEGIN_SRC sh
   [name="gg.hit_processor" type="snemo::core::processing::gg_step_hit_processor"]
 
   #@config The step hit processor for the Geiger simulated hits
-  logging.priority       : string = "notice"
+
+  logging.priority       : string  = "notice"
   hit.category           : string  = "gg"
   sensitive.category     : string  = "tracker.SD"
   mapping.category       : string  = "drift_cell_core"
@@ -106,6 +107,18 @@ and the =cluster.time_space= into a unique calorimeter hit.
 #+END_SRC
 
 ** Visualization processors
+
+*** Enabling all volumes
+#+BEGIN_SRC sh
+  [name="all.volumes.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
+  #@config The step hit processor for collecting all the visu hits
+  logging.priority     : string  = "notice"
+  hit.category         : string  = "__visu.tracks"
+  sensitive.category   : string  = "__all.volumes.SD"
+  geometry.volumes.all : boolean = 1
+#+END_SRC
+
+*** Dedicated step hit processors
 #+BEGIN_SRC sh
   [name="calorimeter.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
   #@config The step hit processor for collecting the calorimeter simulated hits
@@ -130,7 +143,9 @@ and the =cluster.time_space= into a unique calorimeter hit.
   logging.priority   : string = "debug"
   hit.category       : string = "__visu.tracks"
   sensitive.category : string = "tracker.SD"
-
+#+END_SRC
+*** TODO Special visual step hit processors
+#+BEGIN_SRC sh :tangle no
   [name="source.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
   #@config The step hit processor for collecting simulated hits within source strip
   logging.priority   : string    = "notice"

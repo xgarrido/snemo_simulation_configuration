@@ -147,7 +147,7 @@ module. It also defines the output directory where to store each output steps.
   echo '[name="'$mname'" type="dpp::io_module"]'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string =' $logging
+  echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description Input/output mode'
   echo 'mode : string = "output"'
@@ -169,18 +169,18 @@ module. It also defines the output directory where to store each output steps.
 *** Skeleton code for removing data bank
 
 #+NAME: remove_module
-#+HEADERS: :var mname="" :var mode="remove_bank" :var label="" :var logging="notice"
+#+HEADERS: :var mname="" :var mode="remove_banks" :var label="" :var logging="notice"
 #+BEGIN_SRC sh
   echo '[name="'$mname'" type="dpp::utils_module"]'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string =' $logging
+  echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description The processor mode'
   echo 'mode : string = "'$mode'"'
   echo
   echo '#@description The label to be removed'
-  echo 'mode.'$mode'.label : string = "'$label'"'
+  echo 'mode.'$mode'.labels : string[1] = "'$label'"'
 #+END_SRC
 
 *** Skeleton code for chain module
@@ -193,7 +193,7 @@ receives a table list and builds the =chain_module= declaration given its name.
   echo '[name="'$mname'" type="dpp::chain_module"]'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string =' $logging
+  echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description The list of processing modules to be applied (in this order)'
   echo -ne 'modules : string['$nmodule'] = '
@@ -215,7 +215,7 @@ This skeleton code is a template to declare =if_module= processor.
   echo '[name="'$mname'" type="dpp::if_module"]'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string =' $logging
+  echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description The label/name of the cut service'
   echo 'cut_service.label : string = "Cuts"'
@@ -259,53 +259,58 @@ expand the =module_preamble= code.
 
 *** Simulation output
 #+BEGIN_SRC sh :noweb yes
-  <<output_module("io_output_simulated", logging="notice")>>
+  <<output_module("io_output_simulated")>>
 #+END_SRC
 
 *** Calibration output
 #+BEGIN_SRC sh :noweb yes
-  <<output_module("io_output_calibrated", logging="notice")>>
+  <<output_module("io_output_calibrated")>>
 #+END_SRC
 
 *** Tracker clustering output
 #+BEGIN_SRC sh :noweb yes
-  <<output_module("io_output_tracker_clustering", logging="notice")>>
+  <<output_module("io_output_tracker_clustering")>>
 #+END_SRC
 
 *** Tracker trajectory output
 #+BEGIN_SRC sh :noweb yes
-  <<output_module("io_output_tracker_trajectory", logging="notice")>>
+  <<output_module("io_output_tracker_trajectory")>>
+#+END_SRC
+
+*** Particle track output
+#+BEGIN_SRC sh :noweb yes
+  <<output_module("io_output_particle_track")>>
 #+END_SRC
 
 *** Analysis output
 #+BEGIN_SRC sh :noweb yes
-  <<output_module("io_output_analysed", logging="notice")>>
+  <<output_module("io_output_analysed")>>
 #+END_SRC
 
 *** Selection output
 
 - Calibration cuts
   #+BEGIN_SRC sh :noweb yes
-    <<output_module("io_output_calibrated_selected",     logging="notice")>>
-    <<output_module("io_output_calibrated_non_selected", logging="notice")>>
+    <<output_module("io_output_calibrated_selected")>>
+    <<output_module("io_output_calibrated_non_selected")>>
   #+END_SRC
 
 - Tracking cuts
   #+BEGIN_SRC sh :noweb yes
-    <<output_module("io_output_tracker_clustering_selected",     logging="notice")>>
-    <<output_module("io_output_tracker_clustering_non_selected", logging="notice")>>
+    <<output_module("io_output_tracker_clustering_selected")>>
+    <<output_module("io_output_tracker_clustering_non_selected")>>
   #+END_SRC
 
 - Fitting cuts
   #+BEGIN_SRC sh :noweb yes
-    <<output_module("io_output_tracker_trajectory_selected",     logging="notice")>>
-    <<output_module("io_output_tracker_trajectory_non_selected", logging="notice")>>
+    <<output_module("io_output_tracker_trajectory_selected")>>
+    <<output_module("io_output_tracker_trajectory_non_selected")>>
   #+END_SRC
 
 - Particle track cuts
   #+BEGIN_SRC sh :noweb yes
-    <<output_module("io_output_particle_track_selected",     logging="notice")>>
-    <<output_module("io_output_particle_track_non_selected", logging="notice")>>
+    <<output_module("io_output_particle_track_selected")>>
+    <<output_module("io_output_particle_track_non_selected")>>
   #+END_SRC
 
 ** Utility modules
@@ -324,11 +329,6 @@ Here we define some common and useful tasks such as removing data/MC hits.
 *** Remove event header
 #+BEGIN_SRC sh :noweb yes
   <<remove_module(mname="remove_header", label="EH", logging="notice")>>
-#+END_SRC
-
-*** Remove MC visual hits
-#+BEGIN_SRC sh :noweb yes
-  <<remove_module(mname="remove_mc_visu_hits", mode="remove_mc_hits", label="__visu.tracks", logging="notice")>>
 #+END_SRC
 
 *** Remove simulated data bank
@@ -359,7 +359,6 @@ Here we define some common and useful tasks such as removing data/MC hits.
 :CUSTOM_ID: s2c_modules
 :TANGLE: s2c_modules.conf
 :END:
-
 *** Insert preamble
 #+BEGIN_SRC sh :noweb yes
   <<module_preamble>>
@@ -439,45 +438,45 @@ number) or simulated data like =genbb= weight in case the total energy of primar
 particles has been restricted.
 
 #+BEGIN_SRC sh
-  [name="add_header" type="dpp::utils_module"]
+  [name="add_header" type="snemo::analysis::processing::event_header_utils_module"]
 
   #@description Debug flag
-  debug : boolean = 0
+  logging.priority : string = "notice"
 
   #@description The processor mode
   mode : string = "add_header"
 
   #@description The label of the 'Event Header' bank
-  EH_label : string  = "EH"
+  mode.add_header.bank_label : string = "EH"
 
-  #@description The number of the run number to be set
+  #@description The run number
   mode.add_header.run_number : integer = 0
 
   #@description The number of the first event number to be set
   mode.add_header.event_number : integer = 0
 
-  ##@description The event weight given by GENBB and used for 'energy_range' mode
-  mode.add_header.event_genbb_weight : boolean = 1
+  #@description The event weight given by GENBB and used for 'energy_range' mode
+  mode.add_header.use_genbb_weight : boolean = 1
 #+END_SRC
 
-Among the options offered by =utils_module=, there is a possibility to give an
-external file (following =datatools::properties= writing conventions) where
-additionnal informations can be added. Typical use case is the definition of
-some properties/descriptions of simulation runs (see below).
+Among the options offered by =event_header_utils_module=, there is a possibility
+to give an external file (following =datatools::properties= writing conventions)
+where additionnal informations can be added. Typical use case is the definition
+of some properties/descriptions of simulation runs (see below).
 
 The =external_properties_prefix= allows to filter which properties should be
 stored. If no =external_properties_prefix= field is defined then all the
 properties are used and serialized.
 #+BEGIN_SRC sh
   #@description The external properties files to be exported in event_header properties
-  mode.add_header.external_properties_path : \
-      string as path = "${SNAILWARE_SIMULATION_DIR}/configuration/current/simulation_header.conf"
+  mode.add_header.external_properties_path : string as path = \
+      "${SNAILWARE_SIMULATION_DIR}/configuration/current/snsimulation_header.conf"
 
   #@description The external properties prefix to export only properties starting with this prefix
   mode.add_header.external_properties_prefix : string = "analysis"
 #+END_SRC
 
-#+BEGIN_SRC sh :tangle simulation_header.conf
+#+BEGIN_SRC sh :tangle snsimulation_header.conf
   #@description The analysis description
   analysis.description : string = "Study the efficiency of e-/e+ discrimination wrt magnetic field"
 
@@ -659,7 +658,6 @@ for the quenching of alpha particles.
 :CUSTOM_ID: tracker_modules
 :TANGLE: tracker_modules.conf
 :END:
-
 *** Insert preamble
 #+BEGIN_SRC sh :noweb yes
   <<module_preamble>>
@@ -679,10 +677,10 @@ longitudinal information and then can aggregates track belonging to two
 different particles. Due to over-simplicty, it does not need any parameters !
 
 #+BEGIN_SRC sh
-  [name="basic_tracker_clustering" type="snemo::analysis::processing::basic_tracker_clustering_module"]
+  [name="btc_tracker_clustering" type="snemo::analysis::processing::basic_tracker_clustering_module"]
 
-  #@description Debug flag
-  debug : boolean = 0
+  #@description Logging priority
+  logging.priority : string = "warning"
 
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
@@ -692,6 +690,9 @@ different particles. Due to over-simplicty, it does not need any parameters !
 
   #@description The label of the 'Tracker Clustering Data' bank
   TCD_label : string  = "TCD"
+
+  #@description The ID of the tracker hits clustering algorithm
+  algorithm : string  = "BTC"
 #+END_SRC
 
 **** Cellular Automaton Tracker
@@ -701,8 +702,8 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
 #+BEGIN_SRC sh
   [name="cat_tracker_clustering" type="snemo::reconstruction::processing::tracker_clustering_module"]
 
-  #@description Debug flag
-  debug : boolean = 0
+  #@description Logging support
+  logging.priority : string = "warning"
 
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
@@ -863,10 +864,10 @@ or line models.
   [name="trackfit_tracker_fitting" type="snemo::reconstruction::processing::tracker_fitting_module"]
 #+END_SRC
 
-**** General debug
+**** General logging
 #+BEGIN_SRC sh
-  #@description Debug flag
-  debug : boolean = 0
+  #@description Logging priority
+  logging.priority : string = "warning"
 #+END_SRC
 
 **** Data bank & services labels
@@ -1035,10 +1036,10 @@ track with calorimeter blocks.
   [name="basic_particle_tracking" type="snemo::analysis::processing::basic_particle_tracking_module"]
 #+END_SRC
 
-**** Debug flag
+**** Logging priority
 #+BEGIN_SRC sh
-  #@description Debug flag
-  debug : boolean = 0
+  #@description Logging flag
+  logging.priority : string = "warning"
 #+END_SRC
 **** Data banks and services labels
 #+BEGIN_SRC sh
@@ -1054,12 +1055,6 @@ track with calorimeter blocks.
   #@description The label of the 'Particle Track Data' bank
   PTD_label : string  = "PTD"
 #+END_SRC
-**** Module number
-#+BEGIN_SRC sh
-  #@description The module number
-  module_number : integer = 0
-#+END_SRC
-
 **** Drivers
 The particle track reconstruction is done within several drivers, each one
 having a dedicated tasks such as to compute track charge or to associate
@@ -1073,8 +1068,8 @@ implemented but the particle tracking module will stay unchanged.
 
 ***** Vertex Extrapolation Driver
 #+BEGIN_SRC sh
-  #@description Vertex Extrapolation Driver options
-  VED.debug : boolean = 0
+  #@description Vertex Extrapolation Driver logging priority
+  VED.logging.priority : string = "warning"
 
   #@description Use linear extrapolation (not implemented yet)
   VED.use_linear_extrapolation : boolean = 0
@@ -1082,8 +1077,8 @@ implemented but the particle tracking module will stay unchanged.
 
 ***** Charge Computation Driver
 #+BEGIN_SRC sh
-  #@description Charge Computation Driver options
-  CCD.debug : boolean = 0
+  #@description Charge Computation Driver logging priority
+  CCD.logging.priority : string = "warning"
 
   #@description Charge sign convention
   CCD.charge_from_source : boolean = 1
@@ -1091,8 +1086,8 @@ implemented but the particle tracking module will stay unchanged.
 
 ***** Calorimeter Association Driver
 #+BEGIN_SRC sh
-  #@description Calorimeter Association Driver options
-  CAD.debug : boolean = 0
+  #@description Calorimeter Association Driver logging priority
+  CAD.logging.priority : string = "warning"
 
   #@description Maximum matching distance for track/calo association
   CAD.matching_tolerance : string = "100 mm"
@@ -1100,7 +1095,7 @@ implemented but the particle tracking module will stay unchanged.
   #@description Use a simpler approach by looking for gieger cells in front of calo (not implemented yet)
   CAD.use_last_geiger_cell : boolean = 0
 #+END_SRC
-** Analysis modules
+** Analysis chain modules
 :PROPERTIES:
 :CUSTOM_ID: analysis_modules
 :TANGLE: analysis_modules.conf
@@ -1121,7 +1116,6 @@ modules it contains.
 #+TBLNAME: analysis_chain :results none
 |-----------------------------------|
 | io_output_particle_track_selected |
-| remove_mc_visu_hits               |
 | remove_simulated_data             |
 | remove_calibrated_data            |
 | remove_tracker_clustering_data    |
@@ -1130,7 +1124,7 @@ modules it contains.
 |-----------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("analysis_chain", 7, analysis_chain)>>
+  <<chain_module("analysis_chain", 6, analysis_chain)>>
 #+END_SRC
 
 *** Process after selecting particle track
@@ -1144,11 +1138,12 @@ modules it contains.
 |----------------------------------|
 | remove_particle_track_data       |
 | basic_particle_tracking          |
+| io_output_particle_track         |
 | process_with_particle_track_cuts |
 |----------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("particle_tracking_chain", 3, particle_tracking_chain)>>
+  <<chain_module("particle_tracking_chain", 4, particle_tracking_chain)>>
 #+END_SRC
 
 *** Process after fitting selection
@@ -1180,7 +1175,7 @@ modules it contains.
 #+TBLNAME: clustering_chain :results none
 |--------------------------------|
 | remove_tracker_clustering_data |
-| basic_tracker_clustering       |
+| btc_tracker_clustering         |
 | io_output_tracker_clustering   |
 | process_with_clustering_cuts   |
 |--------------------------------|
@@ -1485,20 +1480,20 @@ software components, including other services or data processing modules (see
 #+END_SRC
 
 ** Context service
-#+BEGIN_SRC sh :tangle no
-  [name="Ctx" type="snemo::core::service::context_service"]
+#+BEGIN_SRC sh
+  [name="Ctx" type="dpp::context_service"]
 
   #@description Logging priority
-  logging.priority : string = "verbose"
+  logging.priority : string = "notice"
 
   #@description File from which the context is to be loaded at program start
-  load.file : string as path  = "/tmp/${USER}/snemo_context.conf"
+  load.file : string as path  = "/tmp/${USER}/snemo.d/snemo_context.conf"
 
   #@description File to store the context at program termination
-  store.file : string as path = "/tmp/${USER}/snemo_context_end.conf"
+  store.file : string as path = "/tmp/${USER}/snemo.d/snemo_context_end.conf"
 
   #@description Flag to backup the former context load file
-  backup.file : string as path = "/tmp/${USER}/snemo_context_bak.conf"
+  backup.file : string as path = "/tmp/${USER}/snemo.d/snemo_context_bak.conf"
 #+END_SRC
 
 ** Geometry service
@@ -1590,7 +1585,7 @@ This skeleton code allows to check the availability of a data bank.
   echo '[name="'$cname'" type="dpp::utils_cut"]'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string =' $logging
+  echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description The running mode of this utils_cut instance'
   echo 'mode : string = "'$mode'"'
@@ -1611,7 +1606,7 @@ This skeleton code allows to check the availability of a data bank.
   echo '[name="'$cname'" type="cuts::multi_'$mode'_cut"]'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string =' $logging
+  echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description The cuts to be combined'
   echo -ne 'cuts : string['$ncut'] = '
@@ -1656,7 +1651,7 @@ This skeleton code allows to check the availability of a data bank.
   [name="has_cd_calorimeter" type="snemo::core::cut::calibrated_data_cut"]
 
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   CD_label : string = "CD"
@@ -1680,7 +1675,7 @@ This skeleton code allows to check the availability of a data bank.
   [name="cd_calorimeter_cut" type="snemo::core::cut::calibrated_data_cut"]
 
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   CD_label : string = "CD"
@@ -1703,7 +1698,7 @@ This skeleton code allows to check the availability of a data bank.
   [name="has_cd_tracker" type="snemo::core::cut::calibrated_data_cut"]
 
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   CD_label : string = "CD"
@@ -1727,7 +1722,7 @@ This skeleton code allows to check the availability of a data bank.
   [name="cd_tracker_cut" type="snemo::core::cut::calibrated_data_cut"]
 
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   CD_label : string = "CD"
@@ -2071,9 +2066,9 @@ has_charge.type : string = "undefined"
 | range_particle                |
 | has_associated_calorimeter    |
 | range_associated_calorimeters |
-| chi2_cut                      |
 | has_vertex_on_foil            |
 |-------------------------------|
+# | chi2_cut                      |
 
 #+BEGIN_SRC sh :noweb yes
   <<multi("particle_track_cut", "and", 6, particle_track_cuts)>>
@@ -2088,7 +2083,7 @@ different modules (mainly plot modules). It provides a service where 1D or 2D
 histograms can be added to a histogram dictionnary.
 
 #+BEGIN_SRC sh
-  [name="Histo" type="mygsl::histogram_service"]
+  [name="Histo" type="dpp::histogram_service"]
 
   #@description Logging priority
   logging.priority : string = "notice"

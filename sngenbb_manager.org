@@ -3,6 +3,7 @@
 #+DATE:   2013-03-04
 #+OPTIONS: toc:nil ^:{}
 #+LATEX_CLASS: memoir-article
+#+STARTUP: entitiespretty
 
 * Introduction
 :PROPERTIES:
@@ -27,7 +28,7 @@ manager.
   #@config Main configuration parameters for the genbb manager
 
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description List of files containing particle generator definition rules
   generators.configuration_files : string[1] as path = \
