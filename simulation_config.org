@@ -50,7 +50,7 @@ service files.
 *** Logging priority
 #+BEGIN_SRC sh
   #@description Module manager logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description Embedded module factory debug flag
   factory.debug : boolean = 0
@@ -86,7 +86,7 @@ service files.
 *** Logging priority
 #+BEGIN_SRC sh
   #@description Service manager logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 #+END_SRC
 *** Name & description
 #+BEGIN_SRC sh
@@ -138,28 +138,25 @@ This skeleton code allows to define output module given the name of the
 module. It also defines the output directory where to store each output steps.
 
 #+NAME: output_module
-#+HEADERS: :var mname="" :var logging="notice" :var ofilename=""
+#+HEADERS: :var mname="" :var logging="warning" :var ofilename=""
 #+BEGIN_SRC sh
   IO_OUTPUT_DIRECTORY="/tmp/\${USER}/snemo.d"
   if [ ! -d ${IO_OUTPUT_DIRECTORY} ]; then
       mkdir -p $(eval "echo ${IO_OUTPUT_DIRECTORY}")
   fi
-  echo '[name="'$mname'" type="dpp::io_module"]'
+  echo '[name="'$mname'" type="dpp::output_module"]'
   echo
   echo '#@description Logging priority'
   echo 'logging.priority : string = "'$logging'"'
   echo
-  echo '#@description Input/output mode'
-  echo 'mode : string = "output"'
-  echo
   echo '#@description Output file mode'
-  echo 'output.mode : string = "single"'
+  echo 'files.mode : string = "single"'
   echo
   echo '#@description Path to output data file'
   if [ -z ${ofilename} ]; then
-      echo 'output.single.filename : string as path = "'$IO_OUTPUT_DIRECTORY/$mname'.brio"'
+      echo 'files.single.filename : string as path = "'$IO_OUTPUT_DIRECTORY/$mname'.brio"'
   else
-      echo 'output.single.filename : string as path = "'$ofilename'"'
+      echo 'files.single.filename : string as path = "'$ofilename'"'
   fi
   echo
   echo '#@description The label of the Context service'
@@ -169,7 +166,7 @@ module. It also defines the output directory where to store each output steps.
 *** Skeleton code for removing data bank
 
 #+NAME: remove_module
-#+HEADERS: :var mname="" :var mode="remove_banks" :var label="" :var logging="notice"
+#+HEADERS: :var mname="" :var mode="remove_banks" :var label="" :var logging="warning"
 #+BEGIN_SRC sh
   echo '[name="'$mname'" type="dpp::utils_module"]'
   echo
@@ -188,7 +185,7 @@ This skeleton code ease the declaration of =chain_module= processor since it
 receives a table list and builds the =chain_module= declaration given its name.
 
 #+NAME: chain_module
-#+HEADERS: :var mname="" :var nmodule=0 :var list="" :var logging="notice"
+#+HEADERS: :var mname="" :var nmodule=0 :var list="" :var logging="warning"
 #+BEGIN_SRC sh
   echo '[name="'$mname'" type="dpp::chain_module"]'
   echo
@@ -210,7 +207,7 @@ receives a table list and builds the =chain_module= declaration given its name.
 This skeleton code is a template to declare =if_module= processor.
 
 #+NAME: if_module
-#+HEADERS: :var mname="" :var cut="" :var then="" :var else="" :var logging="notice"
+#+HEADERS: :var mname="" :var cut="" :var then="" :var else="" :var logging="warning"
 #+BEGIN_SRC sh
   echo '[name="'$mname'" type="dpp::if_module"]'
   echo
@@ -328,30 +325,30 @@ Here we define some common and useful tasks such as removing data/MC hits.
 
 *** Remove event header
 #+BEGIN_SRC sh :noweb yes
-  <<remove_module(mname="remove_header", label="EH", logging="notice")>>
+  <<remove_module(mname="remove_header", label="EH", logging="warning")>>
 #+END_SRC
 
 *** Remove simulated data bank
 #+BEGIN_SRC sh :noweb yes
-  <<remove_module(mname="remove_simulated_data", label="SD", logging="notice")>>
+  <<remove_module(mname="remove_simulated_data", label="SD", logging="warning")>>
 #+END_SRC
 
 *** Remove calibrated data bank
 #+BEGIN_SRC sh :noweb yes
-  <<remove_module(mname="remove_calibrated_data", label="CD", logging="notice")>>
+  <<remove_module(mname="remove_calibrated_data", label="CD", logging="warning")>>
 #+END_SRC
 
 *** Remove tracker clustering data bank
 #+BEGIN_SRC sh :noweb yes
-  <<remove_module(mname="remove_tracker_clustering_data", label="TCD", logging="notice")>>
+  <<remove_module(mname="remove_tracker_clustering_data", label="TCD", logging="warning")>>
 #+END_SRC
 *** Remove tracker trajectory data bank
 #+BEGIN_SRC sh :noweb yes
-  <<remove_module(mname="remove_tracker_trajectory_data", label="TTD", logging="notice")>>
+  <<remove_module(mname="remove_tracker_trajectory_data", label="TTD", logging="warning")>>
 #+END_SRC
 *** Remove particle track data bank
 #+BEGIN_SRC sh :noweb yes
-  <<remove_module(mname="remove_particle_track_data", label="PTD", logging="notice")>>
+  <<remove_module(mname="remove_particle_track_data", label="PTD", logging="warning")>>
 #+END_SRC
 
 ** Simulation to calibration modules
@@ -374,10 +371,10 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 **** Logging flag
 #+BEGIN_SRC sh
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description The simulation manager logging priority
-  manager.logging   : string = "notice"
+  manager.logging   : string = "warning"
 #+END_SRC
 **** Bank & service labels
 #+BEGIN_SRC sh
@@ -441,7 +438,7 @@ particles has been restricted.
   [name="add_header" type="snemo::analysis::processing::event_header_utils_module"]
 
   #@description Debug flag
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description The processor mode
   mode : string = "add_header"
@@ -511,7 +508,7 @@ and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?doci
 **** Logging priority
 #+BEGIN_SRC sh
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 #+END_SRC
 
 **** Data bank labels and hit category
@@ -594,7 +591,7 @@ for the quenching of alpha particles.
 **** Logging priority
 #+BEGIN_SRC sh
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 #+END_SRC
 
 **** Data bank labels and hit category
@@ -1484,7 +1481,7 @@ software components, including other services or data processing modules (see
   [name="Ctx" type="dpp::context_service"]
 
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description File from which the context is to be loaded at program start
   load.file : string as path  = "/tmp/${USER}/snemo.d/snemo_context.conf"
@@ -1509,7 +1506,7 @@ reconstruction ... but all of them will use the same geometry.
   [name="Geo" type="geomtools::geometry_service"]
 
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description Embedded SuperNEMO geometry manager main configuration file
   manager.configuration_file : string as path = \
@@ -1534,7 +1531,7 @@ apply selection cuts on arbitrary data models.
   [name="Cuts" type="cuts::cut_service"]
 
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description The main configuration file for the embedded cut manager
   cut_manager.config : string as path = \
@@ -1549,7 +1546,7 @@ apply selection cuts on arbitrary data models.
 
 #+BEGIN_SRC sh
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description Flag to skip the preloading of pre-registered cuts
   factory.no_preload : boolean = 0
@@ -1580,7 +1577,7 @@ few parameters, the following code blocks provides easy interface to such cuts.
 This skeleton code allows to check the availability of a data bank.
 
 #+NAME: has_bank
-#+HEADERS: :var cname="" :var mode="has_bank" :var bname="" :var btype="" :var logging="notice"
+#+HEADERS: :var cname="" :var mode="has_bank" :var bname="" :var btype="" :var logging="warning"
 #+BEGIN_SRC sh
   echo '[name="'$cname'" type="dpp::utils_cut"]'
   echo
@@ -1601,7 +1598,7 @@ This skeleton code allows to check the availability of a data bank.
 
 **** Skeleton code for =multi= cuts
 #+NAME: multi
-#+HEADERS: :var cname="" :var mode="and" :var ncut=0 :var list="" :var logging="notice"
+#+HEADERS: :var cname="" :var mode="and" :var ncut=0 :var list="" :var logging="warning"
 #+BEGIN_SRC sh
   echo '[name="'$cname'" type="cuts::multi_'$mode'_cut"]'
   echo
@@ -1776,7 +1773,7 @@ This cuts puts together all the previous declared cuts.
   [name="tcd1_cut" type="snemo::analysis::cut::basic_tracker_clustering_data_cut"]
 
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description The label/name of the 'tracker clustering data' bank (mandatory)
   TCD_label : string = "TCD"
@@ -1796,7 +1793,7 @@ This cuts puts together all the previous declared cuts.
   [name="tcd2_cut" type="snemo::analysis::cut::basic_tracker_clustering_data_cut"]
 
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description The label/name of the 'tracker clustering data' bank (mandatory)
   TCD_label : string = "TCD"
@@ -1865,7 +1862,7 @@ This cuts puts together all the previous declared cuts.
   [name="has_particle_track_data" type="dpp::utils_cut"]
 
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description The running mode of this 'utils_cut' instance
   mode          : string = "has_bank"
@@ -2086,7 +2083,7 @@ histograms can be added to a histogram dictionnary.
   [name="Histo" type="dpp::histogram_service"]
 
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 
   #@description The description string of the embedded pool of histograms
   pool.description : string = "SuperNEMO histograms"
@@ -2112,3 +2109,6 @@ Finally, all histograms created can be stored inside ROOT files or XML archives.
 :PROPERTIES:
 :CUSTOM_ID: running_pipeline
 :END:
+Running processing pipeline is done by the =dpp_processing= program provided by
+=dpp= library. Its call is pretty simple and only implies to have a module
+manager file. Depending on the module you want to run, several libraries must be loaded

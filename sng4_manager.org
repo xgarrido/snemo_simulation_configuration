@@ -54,7 +54,7 @@ manager. By the way, some of these options can be overloaded by the
   #@description Number of events to be simulated (superseded by the pipeline)
   number_of_events      : integer = 20
 
-  #@description Geant4 tracking verbosity flag:
+  #@description Geant4 tracking verbosity flag (from 0 to 10):
   g4_tracking_verbosity : integer = 0
 
   #@description Geant4 visualization activation flag:

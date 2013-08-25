@@ -36,7 +36,7 @@ This file holds mainly the paths to geometry files most of them are placed in
 ** Logging priority
 #+BEGIN_SRC sh
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 #+END_SRC
 
 ** Geometry factory
@@ -45,7 +45,7 @@ The geometry factory holds all the files needed for the geometry construction.
 *** Logging priority
 #+BEGIN_SRC sh
   #@description Logging priority of the embedded geometry model factory
-  factory.logging.priority : string = "notice"
+  factory.logging.priority : string = "warning"
 #+END_SRC
 
 *** Geometry files
@@ -80,7 +80,7 @@ The geometry factory holds all the files needed for the geometry construction.
 *** Logging priority
 #+BEGIN_SRC sh
   #@description Logging flag of the embedded ID manager
-  id_mgr.logging.priority : string = "notice"
+  id_mgr.logging.priority : string = "warning"
 #+END_SRC
 
 *** Category list
@@ -147,7 +147,7 @@ to change the source foil isotope.
 *** Logging priority
 #+BEGIN_SRC sh
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 #+END_SRC
 
 *** Files
@@ -262,13 +262,13 @@ to change the source foil isotope.
 *** Logging priority
 #+BEGIN_SRC sh
   #@description Logging priority
-  logging.priority : string = "notice"
+  logging.priority : string = "warning"
 #+END_SRC
 
 *** EM field manager configuration
 #+BEGIN_SRC sh
   #@description Manager logging priority
-  manager.logging.priority : string = "notice"
+  manager.logging.priority : string = "warning"
 
   #@description The name of the geometry service
   manager.services.geometry : string = "Geo"
