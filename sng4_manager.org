@@ -47,11 +47,8 @@ manager. By the way, some of these options can be overloaded by the
 #+BEGIN_SRC sh
   [name="manager"]
 
-  #@description Debug flag:
-  debug                 : boolean = 0
-
-  #@description Verbosity flag:
-  verbose               : boolean = 0
+  #@description Logging priority
+  logging.priority      : string = "notice"
 
   #@description Number of events to be simulated (superseded by the pipeline)
   number_of_events      : integer = 20
@@ -69,11 +66,9 @@ This part basically provides the location of vertex generator implemented by
 #+BEGIN_SRC sh
   [name="vertex_generator"]
 
-  #@description the filename with the list of registered vertex generators
-  vg_list : string[3] = \
-    "${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_2.0/scin_vg.lis"    \
-    "${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_2.0/tracker_vg.lis" \
-    "${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_2.0/source_vg.lis"
+  #@description Main configuration file for the vertex generator manager
+  manager.config : string as path = \
+      "${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_3.0/manager.conf"
 #+END_SRC
 
 ** Detector construction
@@ -81,13 +76,10 @@ Main configuration file for the detector construction user object.
 #+BEGIN_SRC sh
   [name="detector_construction"]
 #+END_SRC
-*** Debug & verbosity flags
+*** Logging priority
 #+BEGIN_SRC sh
-  #@description Debug flag
-  debug : boolean = 0
-
-  #@description Verbose flag
-  verbose : boolean = 0
+  #@description Logging priority
+  logging.priority : string = "debug"
 #+END_SRC
 
 *** GDML scheme and options
@@ -97,7 +89,7 @@ through =gemotools= converters.
 
 #+BEGIN_SRC sh
   #@description Temporary directory for GDML file generation:
-  gdml.tmp_dir         : string = "/tmp/${USER}/sng4.d"
+  gdml.tmp_dir         : string as path = "/tmp/${USER}/sng4.d"
 
   #@description Access mode to the GDML schema ("local" or "remote")
   gdml.schema_location : string = "local" # "remote"
@@ -113,7 +105,7 @@ Step hit processors are used to convert Geant4 steps into detector hits for
 SuperNEMO physics.
 #+BEGIN_SRC sh
   #@description Configuration file for the step hit processor factory:
-  hit_processor_factory.config : string = \
+  hit_processor_factory.config : string as path = \
       "${SNAILWARE_SIMULATION_DIR}/configuration/current/step_hit_processor_manager.conf"
 #+END_SRC
 
@@ -157,18 +149,6 @@ must be applied. This can be in direct relation with step hit processors defined
   sensitive.tracker.SD.track_gamma                         : boolean = 1
 #+END_SRC
 
-*** Magnetic field
-#+BEGIN_SRC sh
-  #@description Magnetic field value (gauss):
-  magnetic_field.default_field : real = 25.0
-
-  #@description List of module's IDs with non-zero magnetic field:
-  magnetic_field.modules : integer[1] = 0
-
-  #@description SetDeltaChord miss distance (mm):
-  magnetic_field.miss_distance : real = 0.5
-#+END_SRC
-
 *** Geant4 step hit limits
 The following code defines geometry models where Geant4 steps are size limited.
 #+BEGIN_SRC sh
@@ -196,16 +176,28 @@ Definition of Geant4 regions.
   regions             : string[3] = "calorimeter" "tracker" "source"
 
   #@description List of attached volumes/models per region :
-  regions.calorimeter : string[4] = \
+  regions.calorimeter : string[4] =                        \
                       "calorimeter_scin_block_front.model" \
-                      "calorimeter_scin_block_back.model" \
-                      "gveto_scin_block.model" \
+                      "calorimeter_scin_block_back.model"  \
+                      "gveto_scin_block.model"             \
                       "xwall_scin_block.model"
   regions.tracker     : string[1] = "drift_cell_core.model"
-  regions.source      : string[2] = \
-                      "source_external_strip.model" \
+  regions.source      : string[2] =                        \
+                      "source_external_strip.model"        \
                       "source_internal_strip.model"
 
+#+END_SRC
+
+*** Magnetic field
+#+BEGIN_SRC sh
+  #@description Magnetic field value (gauss):
+  magnetic_field.default_field : real = 25.0
+
+  #@description List of module's IDs with non-zero magnetic field:
+  magnetic_field.modules : integer[1] = 0
+
+  #@description SetDeltaChord miss distance (mm):
+  magnetic_field.miss_distance : real = 0.5
 #+END_SRC
 
 ** Physics list
@@ -217,13 +209,10 @@ phycical processes for SuperNEMO.
   [name="physics_list"]
 #+END_SRC
 
-*** Debug & verbosity flags
+*** Logging priority
 #+BEGIN_SRC sh
-  #@description Debug flag
-  debug       : boolean = 0
-
-  #@description Verbosity flag
-  verbosity   : integer = 0
+  #@description Logging priority
+  logging.priority : string = "notice"
 #+END_SRC
 
 *** TODO SuperNEMO physical processes activation
@@ -250,19 +239,16 @@ minimal step hit size given the detector region.
   using_cuts : boolean = 1
 
   #@description List of region with production cut
-  production_cuts.regions     : string [3] = "calorimeter" "tracker" "source"
-
-  #@description lenght unit for production cut values
-  production_cuts.length_unit : string     = "mm"
+  production_cuts.regions     : string[3] = "calorimeter" "tracker" "source"
 
   #@description Production cut value for region "calorimeter"
-  production_cuts.calorimeter : real       = 5.0
+  production_cuts.calorimeter : real as length = 5.0 mm
 
   #@description Production cut value for region "tracker"
-  production_cuts.tracker     : real       = 0.5
+  production_cuts.tracker     : real as length = 0.5 mm
 
   #@description Production cut value for region "source"
-  production_cuts.source      : real       = 0.05
+  production_cuts.source      : real as length = 0.05 mm
 #+END_SRC
 
 ** Primary generator
@@ -271,6 +257,8 @@ generators from neutrinoless double beta decay, to ^{214}Bi / ^{208}Tl
 contamination or cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb_manager.org]] file.
 #+BEGIN_SRC sh
   [name="primary_generator"]
+  #@description Primary generator logging priority
+  logging.priority : string = "warning"
 
   #@description Configuration file for the embedded 'snemo::genbb::manager'
   config : string = "${SNAILWARE_SIMULATION_DIR}/configuration/current/sngenbb_manager.conf"
@@ -284,8 +272,8 @@ lot of options.
 #+BEGIN_SRC sh
   [name="run_action"]
 
-  #@description Run action debug flag :
-  debug : boolean = 0
+  #@description Logging priority :
+  logging.priority : string = "warning"
 
   #@description Run action event number print modulo :
   #number_events_modulo : integer = 100
@@ -298,23 +286,32 @@ lot of options.
 #+BEGIN_SRC sh
   [name="event_action"]
 
-  #@description Event action debug flag:
-  debug : boolean = 0
+  #@description Logging priority :
+  logging.priority : string = "warning"
 #+END_SRC
 
 *** Tracking action
 #+BEGIN_SRC sh
   [name="tracking_action"]
+
+  #@description Logging priority :
+  logging.priority : string = "warning"
 #+END_SRC
 
 *** Stepping action
 #+BEGIN_SRC sh
   [name="stepping_action"]
+
+  #@description Logging priority :
+  logging.priority : string = "warning"
 #+END_SRC
 
 *** Stacking action
 #+BEGIN_SRC sh
   [name="stacking_action"]
+
+  #@description Logging priority :
+  logging.priority : string = "warning"
 
   #@description Stacking action debug flag:
   # debug : boolean = 0
