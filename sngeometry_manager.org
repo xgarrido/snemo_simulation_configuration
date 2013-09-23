@@ -153,12 +153,12 @@ to change the source foil isotope.
 *** Files
 #+BEGIN_SRC sh
   #@description List of files describing the materials
-  materials.files : string[6] =                                          \
-      "${MATERIALS_DATA_DIR}/resources/data/std_isotopes.def"            \
-      "${MATERIALS_DATA_DIR}/resources/data/std_elements.def"            \
-      "${MATERIALS_DATA_DIR}/resources/data/std_materials.def"           \
-      "${SNGEOMETRY_DATA_DIR}/resources/materials/elements.def"          \
-      "${SNGEOMETRY_DATA_DIR}/resources/materials/materials.def"         \
+  materials.files : string[6] as path =                          \
+      "${MATERIALS_DATA_DIR}/resources/data/std_isotopes.def"    \
+      "${MATERIALS_DATA_DIR}/resources/data/std_elements.def"    \
+      "${MATERIALS_DATA_DIR}/resources/data/std_materials.def"   \
+      "${SNGEOMETRY_DATA_DIR}/resources/materials/elements.def"  \
+      "${SNGEOMETRY_DATA_DIR}/resources/materials/materials.def" \
       "${SNAILWARE_SIMULATION_DIR}/configuration/current/materials_aliases.def"
 #+END_SRC
 

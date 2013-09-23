@@ -374,7 +374,7 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
   logging.priority : string = "warning"
 
   #@description The simulation manager logging priority
-  manager.logging   : string = "warning"
+  manager.logging.priority : string = "warning"
 #+END_SRC
 **** Bank & service labels
 #+BEGIN_SRC sh

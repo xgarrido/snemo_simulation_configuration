@@ -7,7 +7,9 @@ BATCH = $(EMACS) --batch -Q --eval '(require (quote org))'			\
 	--eval '(setq org-confirm-babel-evaluate nil)'
 
 GIT_BRANCH = $(shell git branch | grep \* | cut -d' ' -f2)
+
 CCAGE_DIRECTORY = /sps/nemo/scratch/garrido/simulations/configuration
+LAL_DIRECTORY	= /exp/nemo/garrido/workdir/supernemo/simulations/configuration
 
 FILES  = $(notdir $(shell ls *.org 2> /dev/null | sed -e "s@simulation_publish.org@@g"))
 FILEST = $(FILES:%.org=$(GIT_BRANCH)/.%.tangle)
@@ -33,6 +35,9 @@ push: org
 	@echo "Pushing current configuration to Lyon"
 	@ssh garrido@ccage.in2p3.fr "cd $(CCAGE_DIRECTORY) && mkdir -p $(GIT_BRANCH); if [ -L current ]; then rm current; fi; ln -sf $(GIT_BRANCH) current"
 	@rsync -e ssh -avP --delete --recursive --force $(GIT_BRANCH)/*.{conf,def} garrido@ccage.in2p3.fr:$(CCAGE_DIRECTORY)/$(GIT_BRANCH)/.
+	@echo "Pushing current configuration to LAL"
+	@ssh garrido@lx3.lal.in2p3.fr "cd $(LAL_DIRECTORY) && mkdir -p $(GIT_BRANCH); if [ -L current ]; then rm current; fi; ln -sf $(GIT_BRANCH) current"
+	@rsync -e ssh -avP --delete --recursive --force $(GIT_BRANCH)/*.{conf,def} garrido@lx3.in2p3.fr:$(LAL_DIRECTORY)/$(GIT_BRANCH)/.
 
 doc: doc/index.html
 

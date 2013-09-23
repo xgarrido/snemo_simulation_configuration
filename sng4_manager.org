@@ -68,7 +68,7 @@ cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb_manager.org]] fil
 #+BEGIN_SRC sh
   [name="event_generator"]
 
-  #@description Configuration file for the embedded 'snemo::genbb::manager'
+  #@description Configuration file for the embedded '::genbb::manager'
   manager.config : string as path = \
       "${SNAILWARE_SIMULATION_DIR}/configuration/current/sngenbb_manager.conf"
 #+END_SRC
