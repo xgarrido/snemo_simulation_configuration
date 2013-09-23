@@ -131,7 +131,7 @@ This section provides some options to create and declare general modules such as
 I/O modules (see Section [[I/O modules]]) or/and removing data bank. Since these
 tasks are quite generic and depends to few parameters, the following code blocks
 provides easy interface to such modules. The section [[I/O modules]] provides
-example on how to use skeleton codes.
+example on how to use skeleton codes.dejkdjekdje
 
 *** Skeleton code for output module
 This skeleton code allows to define output module given the name of the
