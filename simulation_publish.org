@@ -21,7 +21,7 @@ in the =doc/= directory.
                   (functionp package))
         (package-install package)))
     (require 'htmlize)
-    (org-export-htmlize-generate-css)
+    (org-html-htmlize-generate-css)
     ;; define the org-publish-project for the starter kit
     (add-to-list
      'org-publish-project-alist

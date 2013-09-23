@@ -881,9 +881,6 @@ or line models.
 
 **** General options
 #+BEGIN_SRC sh
-  #@description The module number
-  module_number : integer = 0
-
   #@description The maximum number of fits to be saved (0 means all will be kept)
   maximum_number_of_fits : integer = 0
 #+END_SRC
@@ -896,9 +893,6 @@ or line models.
 
 ***** Verbosities
 #+BEGIN_SRC sh
-  #@description Trackfit verbosity
-  trackfit.verbose : boolean = 0
-
   #@description Trackfit verbosity
   trackfit.warning : boolean = 0
 
@@ -920,7 +914,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
 ***** Fit models
 #+BEGIN_SRC sh
   #@description Fit models
-  trackfit.models : string[2] = "line" "helix"
+  trackfit.models : string[2] = "helix" "line"
 #+END_SRC
 ***** Line fit parameters
 ****** Guess parameters
@@ -1159,7 +1153,7 @@ modules it contains.
 |--------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("fitting_chain", 4, fitting_chain)>>
+  <<chain_module("fitting_chain", 3, fitting_chain)>>
 #+END_SRC
 
 *** Process after clustering selection
