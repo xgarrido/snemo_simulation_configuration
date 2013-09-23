@@ -22,22 +22,22 @@ org: $(FILEST)
 	@if [ -L current ]; then rm current;fi && ln -sf $(GIT_BRANCH) current
 
 $(GIT_BRANCH)/.%.tangle: %.org
-	@echo "Tangling $< file"
+	@echo "NOTICE: Tangling $< file"
 	@$(BATCH) --eval '(org-babel-tangle-file "$<")'
 	@mkdir -p $(GIT_BRANCH)
 	@touch $@
 
 tarball: org
-	@echo "Making tarball configuration"
+	@echo "NOTICE: Making tarball configuration"
 	@tar czf $(GIT_BRANCH).tar.gz $(GIT_BRANCH)
 
 push: org
-	@echo "Pushing current configuration to Lyon"
+	@echo "NOTICE: Pushing current configuration to Lyon"
 	@ssh garrido@ccage.in2p3.fr "cd $(CCAGE_DIRECTORY) && mkdir -p $(GIT_BRANCH); if [ -L current ]; then rm current; fi; ln -sf $(GIT_BRANCH) current"
 	@rsync -e ssh -avP --delete --recursive --force $(GIT_BRANCH)/*.{conf,def} garrido@ccage.in2p3.fr:$(CCAGE_DIRECTORY)/$(GIT_BRANCH)/.
-	@echo "Pushing current configuration to LAL"
-	@ssh garrido@lx3.lal.in2p3.fr "cd $(LAL_DIRECTORY) && mkdir -p $(GIT_BRANCH); if [ -L current ]; then rm current; fi; ln -sf $(GIT_BRANCH) current"
-	@rsync -e ssh -avP --delete --recursive --force $(GIT_BRANCH)/*.{conf,def} garrido@lx3.in2p3.fr:$(LAL_DIRECTORY)/$(GIT_BRANCH)/.
+	@echo "NOTICE: Pushing current configuration to LAL"
+	@ssh garrido@lx3.lal.in2p3.fr "cd $(LAL_DIRECTORY) && mkdir -p $(GIT_BRANCH); if ( -d current ) then; rm current; endif; ln -sf $(GIT_BRANCH) current"
+	@rsync -e ssh -avP --delete --recursive --force $(GIT_BRANCH)/*.{conf,def} garrido@lx3.lal.in2p3.fr:$(LAL_DIRECTORY)/$(GIT_BRANCH)/.
 
 doc: doc/index.html
 
