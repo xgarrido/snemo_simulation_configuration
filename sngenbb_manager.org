@@ -32,7 +32,7 @@ manager.
 
   #@description List of files containing particle generator definition rules
   generators.configuration_files : string[1] as path = \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/sngenbb_wrappers.conf"
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngenbb_wrappers.conf"
 #+END_SRC
 
 * Genbb wrappers

@@ -63,19 +63,19 @@ service files.
 #+BEGIN_SRC sh
   #@description The configuration file of the embedded service manager
   service_manager.configuration : string[1] as path = \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/service_manager.conf"
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/service_manager.conf"
 #+END_SRC
 
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
   modules.configuration_files : string[6] as path =                             \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/io_modules.conf"       \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/utl_modules.conf"      \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/s2c_modules.conf"      \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/tracker_modules.conf"  \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/analysis_modules.conf" \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/plot_modules.conf"
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/io_modules.conf"       \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/utl_modules.conf"      \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/s2c_modules.conf"      \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_modules.conf"  \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/analysis_modules.conf" \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/plot_modules.conf"
 #+END_SRC
 
 ** Service manager
@@ -100,7 +100,7 @@ service files.
 #+BEGIN_SRC sh
   #@description The list of files that describe services
   services.configuration_files : string[1] as path = \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/services.conf"
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/services.conf"
 #+END_SRC
 
 * Modules
@@ -425,7 +425,7 @@ The full =geant4= configuration can be found in the [[file:sng4_manager.org][sng
 #+BEGIN_SRC sh
   #@description The simulation manager configuration file
   manager.configuration_filename : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/sng4_manager.conf"
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sng4_manager.conf"
 #+END_SRC
 
 *** Adding event header
@@ -467,7 +467,7 @@ properties are used and serialized.
 #+BEGIN_SRC sh
   #@description The external properties files to be exported in event_header properties
   mode.add_header.external_properties_path : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/snsimulation_header.conf"
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/snsimulation_header.conf"
 
   #@description The external properties prefix to export only properties starting with this prefix
   mode.add_header.external_properties_prefix : string = "analysis"
@@ -1504,7 +1504,7 @@ reconstruction ... but all of them will use the same geometry.
 
   #@description Embedded SuperNEMO geometry manager main configuration file
   manager.configuration_file : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/sngeometry_manager.conf"
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngeometry_manager.conf"
 
   #@description Embedded SuperNEMO geometry manager must build its mapping lookup table
   manager.build_mapping : boolean = 1
@@ -1529,7 +1529,7 @@ apply selection cuts on arbitrary data models.
 
   #@description The main configuration file for the embedded cut manager
   cut_manager.config : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/cut_manager.conf"
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/cut_manager.conf"
 #+END_SRC
 
 *** Manager
@@ -1550,11 +1550,11 @@ apply selection cuts on arbitrary data models.
 
   #@description A list of files that contains definition of cuts
   cuts.configuration_files : string[5] =                                                  \
-    "${SNAILWARE_SIMULATION_DIR}/configuration/current/simulated_data_cuts.conf"          \
-    "${SNAILWARE_SIMULATION_DIR}/configuration/current/calibrated_data_cuts.conf"         \
-    "${SNAILWARE_SIMULATION_DIR}/configuration/current/tracker_clustering_data_cuts.conf" \
-    "${SNAILWARE_SIMULATION_DIR}/configuration/current/tracker_trajectory_data_cuts.conf" \
-    "${SNAILWARE_SIMULATION_DIR}/configuration/current/particle_track_data_cuts.conf"
+    "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/simulated_data_cuts.conf"          \
+    "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/calibrated_data_cuts.conf"         \
+    "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_clustering_data_cuts.conf" \
+    "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_trajectory_data_cuts.conf" \
+    "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/particle_track_data_cuts.conf"
 #+END_SRC
 
 *** Skeleton codes
@@ -2088,7 +2088,7 @@ Embedded histograms are declared into a dedicated file defines in
 #+BEGIN_SRC sh
   #@description The main configuration file for the embedded histogram manager
   pool.histo.setups : string[1] as path = \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/histogram_templates.conf"
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/histogram_templates.conf"
 #+END_SRC
 
 Finally, all histograms created can be stored inside ROOT files or XML archives.
