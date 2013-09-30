@@ -105,7 +105,7 @@ Material of volumes are set and defined independently. Here the
       "${MATERIALS_DATA_DIR}/resources/data/std_materials.def"           \
       "${SNGEOMETRY_DATA_DIR}/resources/materials/elements.def"          \
       "${SNGEOMETRY_DATA_DIR}/resources/materials/materials.def"         \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/materials_aliases.def"
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/materials_aliases.def"
 #+END_SRC
 
 ** Miscellaneous

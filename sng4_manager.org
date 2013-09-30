@@ -118,7 +118,7 @@ SuperNEMO physics.
 #+BEGIN_SRC sh
   #@description Configuration file for the step hit processor factory:
   hit_processor_factory.config : string = \
-      "${SNAILWARE_SIMULATION_DIR}/configuration/current/step_hit_processor_manager.conf"
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/step_hit_processor_manager.conf"
 #+END_SRC
 
 *** Sensitive detectors
@@ -277,7 +277,7 @@ contamination or cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb_
   [name="primary_generator"]
 
   #@description Configuration file for the embedded 'snemo::genbb::manager'
-  config : string = "${SNAILWARE_SIMULATION_DIR}/configuration/current/sngenbb_manager.conf"
+  config : string = "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngenbb_manager.conf"
 #+END_SRC
 
 ** Geant4 related action
