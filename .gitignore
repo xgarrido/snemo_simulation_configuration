@@ -20,6 +20,6 @@ current
 doc/*
 /bb_decay/
 /master/
-/bkg_Bi214_Po214/
 /snemo_resolution/
-/calibrated_data/
+/bkg_Bi214_Po214/
+/legacy/
