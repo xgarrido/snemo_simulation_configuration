@@ -1,8 +1,7 @@
 #+TITLE:  SNGeometry Manager Configuration
 #+AUTHOR: Xavier Garrido
 #+DATE:   2013-03-12
-#+OPTIONS: toc:nil ^:{}
-#+LATEX_CLASS: memoir-article
+#+OPTIONS: ^:{}
 
 * Introduction
 :PROPERTIES:

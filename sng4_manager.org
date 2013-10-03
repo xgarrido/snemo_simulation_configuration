@@ -1,14 +1,10 @@
 #+TITLE:  SNG4 Manager Configuration
 #+AUTHOR: Xavier Garrido
 #+DATE:   2013-02-24
-#+OPTIONS: toc:nil ^:{}
-#+LATEX_CLASS: memoir-article
+#+OPTIONS: ^:{}
 #+STARTUP: entitiespretty
 
 * Introduction
-:PROPERTIES:
-:CUSTOM_ID: introduction
-:END:
 
 The =mctools/g4= library provides a Geant4 standard interface to generate simulated
 data. A dedicated manager class addresses all the resources needed to :
@@ -26,7 +22,6 @@ can be found in [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-C
 
 * Manager configuration
 :PROPERTIES:
-:CUSTOM_ID: manager_configuration
 :TANGLE: sng4_manager.conf
 :END:
 
