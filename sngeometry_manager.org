@@ -100,12 +100,12 @@ volume.
   mapping.max_depth : integer = 0
 
   #@description Categories not to be registered in the mapping dictionnary
-  mapping.excluded_categories : string [5] =               \
-                              "drift_cell_field_wires_set" \
-                              "drift_cell_field_wire"      \
-                              "drift_cell_base"            \
-                              "drift_cell_cathodic_ring"   \
-                              "drift_cell_anodic_wire"
+  mapping.excluded_categories : string [5] = \
+      "drift_cell_field_wires_set" \
+      "drift_cell_field_wire"      \
+      "drift_cell_base"            \
+      "drift_cell_cathodic_ring"   \
+      "drift_cell_anodic_wire"
 #+END_SRC
 
 ** Plugins configuration
@@ -117,7 +117,7 @@ volume.
   plugins.force_initialization_at_load : boolean = 0
 
   #@description Configuration files for geometry manager's plugins
-  plugins.configuration_files : string[3] as path =                                  \
+  plugins.configuration_files : string[3] as path =                                        \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/materials_plugin.conf"      \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/magnetic_field_plugin.conf" \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/locator_plugin.conf"
