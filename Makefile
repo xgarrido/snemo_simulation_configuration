@@ -1,10 +1,11 @@
 # Name of your emacs binary
 EMACS = emacs
 
-BATCH = $(EMACS) --batch -Q --eval '(require (quote org))'			\
-	--eval '(org-babel-do-load-languages (quote org-babel-load-languages)   \
-		(quote((sh . t))))'						\
-	--eval '(setq org-confirm-babel-evaluate nil)'
+BATCH = $(EMACS) --batch --no-init-file					\
+	--eval "(require 'org)"						\
+	--eval "(org-babel-do-load-languages 'org-babel-load-languages  \
+		'((sh . t)))"						\
+	--eval "(setq org-confirm-babel-evaluate nil)"
 
 GIT_BRANCH = $(shell git branch | grep \* | cut -d' ' -f2)
 
@@ -39,14 +40,14 @@ push: org
 	@ssh garrido@lx3.lal.in2p3.fr "cd $(LAL_DIRECTORY) && mkdir -p $(GIT_BRANCH); if ( -d current ) then; rm current; endif; ln -sf $(GIT_BRANCH) current"
 	@rsync -e ssh -avP --delete --recursive --force $(GIT_BRANCH)/*.{conf,def} garrido@lx3.lal.in2p3.fr:$(LAL_DIRECTORY)/$(GIT_BRANCH)/.
 
-doc: doc/index.html
+doc: html
 
-doc/index.html:
-	mkdir -p doc/stylesheets
-	$(BATCH) --batch -Q --eval '(org-babel-tangle-file "simulation_publish.org")'
-	$(BATCH) --batch -Q --eval '(org-babel-load-file "simulation_publish.org")'
+html:
+	@mkdir -p doc/html/css
+	$(BATCH) --eval '(org-babel-tangle-file "simulation_publish.org")'
+	$(BATCH) --eval '(org-babel-load-file "simulation_publish.org")'
 	rm simulation_publish.el
-	echo "Documentation published to doc/"
+	echo "NOTICE: Documentation published to doc/"
 
 clean:
 	rm -f *.tangle *.tar.gz *.conf *.def *.aux *.tex *.fls *fdb_latexmk *.log *.pdf doc/*html *~
