@@ -113,6 +113,16 @@ SuperNEMO.
   #energy_max      : real as energy = 5.0 MeV
 #+END_SRC
 
+*** \nbsp^{214}Pb \beta\beta0\nu
+#+BEGIN_SRC sh
+  [name="bb0nu_Pb214" type="genbb::wdecay0"]
+  #@config Neutrinoless double beta decay of Pb-214 [DBD]
+  decay_type      : string  = "DBD"
+  decay_isotope   : string  = "Pb214"
+  decay_dbd_level : integer = 0
+  decay_dbd_mode  : integer = 1
+#+END_SRC
+
 *** \nbsp^{208}Tl background
 #+BEGIN_SRC sh
   [name="bkg_Tl208" type="genbb::wdecay0"]
@@ -151,6 +161,14 @@ SuperNEMO.
   decay_isotope   : string  = "Bi207+Pb207m"
   #energy_min      : real as energy = 0.0 MeV
   #energy_max      : real as energy = 5.0 MeV
+#+END_SRC
+
+*** \nbsp^{40}K background
+#+BEGIN_SRC sh
+  [name="bkg_K40" type="genbb::wdecay0"]
+  #@config Two neutrino double beta decay of K-40 [DBD]
+  decay_type      : string  = "background"
+  decay_isotope   : string  = "K40"
 #+END_SRC
 
 ** Single particle generator
