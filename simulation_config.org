@@ -3,6 +3,7 @@
 #+DATE:   2013-02-22
 #+OPTIONS: toc:2 ^:{}
 #+STARTUP: entitiespretty
+#+PROPERTY: cache yes
 
 * Introduction
 
@@ -64,7 +65,7 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
-  modules.configuration_files : string[6] as path =                             \
+  modules.configuration_files : string[6] as path =                                   \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/io_modules.conf"       \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/utl_modules.conf"      \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/s2c_modules.conf"      \
@@ -1773,10 +1774,10 @@ This cuts puts together all the previous declared cuts.
   #@description Activate the check for multiplicity of clusters
   mode.range_tracker_hit : boolean = 1
 
-  #@description Minimal number of clusters
+  #@description Minimal number of cells in cluster
   range_tracker_hit.min : integer = 4
 
-  # #@description Maximal number of clusters
+  # #@description Maximal number of cells in cluster
   # range_tracker_hit.max : integer = 100000
 #+END_SRC
 
