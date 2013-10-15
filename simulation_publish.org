@@ -443,7 +443,11 @@ We also globally define the current directory
 #+END_SRC
 **** Colors
 #+BEGIN_SRC latex
-  \definecolor{mainColor}{RGB}{0,0,0}
+  \definecolor{red}{RGB}{221,42,43}
+  \definecolor{green}{RGB}{105,182,40}
+  \definecolor{blue}{RGB}{51,51,179}
+  \definecolor{orange}{RGB}{192,128,64}
+  \definecolor{gray}{gray}{0.7}
 #+END_SRC
 **** Minted lexer
 #+BEGIN_SRC latex
@@ -459,14 +463,14 @@ We also globally define the current directory
 #+BEGIN_SRC latex
   \newcommand{\HRule}{\rule{\linewidth}{1mm}}
   \renewcommand*{\maketitle}{%
-    {\color{mainColor}
+    {\color{blue}
     \pagestyle{empty}
     \vspace*{\stretch{2}}
     \begin{flushright}
       \HRule
       \\[9mm]
         {
-          \bf \Huge \@title
+          \bf\sffamily \Huge \@title
         }
         \\[5mm]
         \HRule
@@ -477,9 +481,9 @@ We also globally define the current directory
 ***** Footnote
 #+BEGIN_SRC latex
   \RequirePackage{fancyhdr}
-  \renewcommand{\footnoterule}{\color{mainColor!90}%
+  \renewcommand{\footnoterule}{\color{blue!90}%
     \vskip-\footruleskip\vskip-\footrulewidth%
-    \vspace{10pt}\hrule width\columnwidth height1.5pt \vspace{5pt} \color{mainColor!90}}
+    \vspace{10pt}\hrule width\columnwidth height1.5pt \vspace{5pt} \color{blue!90}}
   \renewcommand{\thefootnote}{\alph{footnote}}
   \interfootnotelinepenalty=10000
 #+END_SRC
@@ -487,11 +491,21 @@ We also globally define the current directory
 #+BEGIN_SRC latex
   \RequirePackage[margin=20pt,labelfont=bf,font=footnotesize,labelsep=endash]{caption}
 #+END_SRC
+**** Appearance tweaks
+***** Remove TOC dots
+#+BEGIN_SRC latex
+  \renewcommand\@dotsep{10000}
+#+END_SRC
 *** org to LaTeX stuff
 **** Use smart quote when exporting
 #+BEGIN_SRC emacs-lisp
   (setq org-export-with-smart-quotes t)
 #+END_SRC
+**** Keep LaTeX logfiles
+#+BEGIN_SRC emacs-lisp
+  (setq org-latex-remove-logfiles nil)
+#+END_SRC
+
 **** Default list of LaTeX packages
 Only include one default package and remove all the crapppy stuff included by
 =org= \rightarrow =latex= translation.
@@ -545,23 +559,20 @@ Code fragments are syntax highlighted using [[https://code.google.com/p/minted/]
 
 *** Project definition
 #+BEGIN_SRC emacs-lisp
-      (add-to-list
-       'org-publish-project-alist
-       `("pdf-documentation"
-         :base-directory ,this-directory
-         :base-extension "org"
-         :publishing-directory ,(expand-file-name "pdf" doc-directory)
-         :publishing-function org-latex-publish-to-pdf
-         :exclude "simulation_publish.org\\|simulation_config.org\\|sng4_manager.org\\|sngenbb_manager.org\\|step_hit_processor_factory.org"
-         :section-numbers nil
-         :with-toc        nil
-         :latex-class "snemo-simu"
-         :latex-header-extra "
-  \\definecolor{blue}{RGB}{0,72,112}
-  \\colorlet{sncolor}{blue}
-    "
-         ))
-      (org-publish-project "pdf-documentation" 'force)
+  (add-to-list
+   'org-publish-project-alist
+   `("pdf-documentation"
+     :base-directory ,this-directory
+     :base-extension "org"
+     :publishing-directory ,(expand-file-name "pdf" doc-directory)
+     :publishing-function org-latex-publish-to-pdf
+     :exclude "simulation_publish.org\\|sng4_manager.org\\|simulation_config.org\\|sngenbb_manager.org\\|step_hit_processor_factory.org"
+     :section-numbers 2
+     :with-toc        t
+     :latex-class "snemo-simu"
+     :latex-header-extra ""
+     ))
+  (org-publish-project "pdf-documentation" 'force)
 #+END_SRC
 
 ** Join exporter into one
