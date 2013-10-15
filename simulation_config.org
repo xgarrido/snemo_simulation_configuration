@@ -1,7 +1,7 @@
 #+TITLE:  SN@ilWare Simulation Configuration
 #+AUTHOR: Xavier Garrido
 #+DATE:   2013-02-22
-#+OPTIONS: toc:2 ^:{}
+#+OPTIONS: ^:{}
 #+STARTUP: entitiespretty
 #+PROPERTY: cache yes
 
