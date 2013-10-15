@@ -49,5 +49,5 @@ doc: $(FILES) simulation_publish.org
 
 clean:
 	@rm -f *.tangle *.tar.gz *.conf *.def *.aux *.tex *.fls *fdb_latexmk *.log *.pdf *~
-	@rm -f *.auxlock *.out
+	@rm -f *.auxlock *.out *.toc *.sty
 	@rm -rf doc current latex.d $(GIT_BRANCH)
