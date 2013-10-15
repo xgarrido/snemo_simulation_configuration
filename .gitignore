@@ -8,7 +8,9 @@
 *.log
 *.fls
 *.fdb*
-current
+*.out
+*.toc
+*.auxlock
 
 ## misc
 .svn
@@ -17,7 +19,8 @@ current
 *.tar.gz
 
 ## directories
-doc/*
+current
+/doc/
 /bb_decay/
 /master/
 /snemo_resolution/
