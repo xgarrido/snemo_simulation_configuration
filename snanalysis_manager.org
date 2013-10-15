@@ -1,13 +1,10 @@
 #+TITLE:  SNAnalysis Manager Configuration
 #+AUTHOR: Xavier Garrido
 #+DATE:   2013-03-13
-#+OPTIONS: toc:nil
-#+LATEX_CMD: xelatex
+#+OPTIONS: ^:{}
+#+STARTUP: entitiespretty
 
 * Introduction
-:PROPERTIES:
-:CUSTOM_ID: introduction
-:END:
 
 This file holds mainly modules in relation with "plotting" results. Since its
 configuration may change a lot between debug, tests, analysis thematics and since
@@ -18,7 +15,6 @@ As write before, it mainly holds "plot" modules with there configurations.
 
 * Plot modules
 :PROPERTIES:
-:CUSTOM_ID: plot_modules
 :TANGLE: plot_modules.conf
 :END:
 
@@ -338,7 +334,6 @@ determination.
 
 * Histogram templates
 :PROPERTIES:
-:CUSTOM_ID: histogram_templates
 :TANGLE:   histogram_templates.conf
 :END:
 

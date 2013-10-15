@@ -2,13 +2,9 @@
 #+AUTHOR: Xavier Garrido
 #+DATE:   2013-03-04
 #+OPTIONS: toc:nil ^:{}
-#+LATEX_CLASS: memoir-article
 #+STARTUP: entitiespretty
 
 * Introduction
-:PROPERTIES:
-:CUSTOM_ID: introduction
-:END:
 
 The =genbb= package is dedicated to the generation of double beta decay and/or
 radioactive background primary events as input for a simulation program.
@@ -17,8 +13,7 @@ More details concerning the use of =genbb= can be found in [[https://nemo.lpc-ca
 
 * Manager configuration
 :PROPERTIES:
-:CUSTOM_ID: manager_configuration
-:TANGLE:    sngenbb_manager.conf
+:TANGLE: sngenbb_manager.conf
 :END:
 
 ** Genbb manager configuration
@@ -37,8 +32,7 @@ manager.
 
 * Genbb wrappers
 :PROPERTIES:
-:CUSTOM_ID: wrapper_configuration
-:TANGLE:    sngenbb_wrappers.conf
+:TANGLE: sngenbb_wrappers.conf
 :END:
 
 This section holds the configuration of several =genbb= wrappers.

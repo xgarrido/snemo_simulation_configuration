@@ -1,12 +1,9 @@
 #+TITLE:  Step Hit Processor Configuration
 #+AUTHOR: Xavier Garrido
 #+DATE:   2013-03-04
-#+OPTIONS: toc:nil
+#+OPTIONS: ^:{}
 
 * Introduction
-:PROPERTIES:
-:CUSTOM_ID: introduction
-:END:
 
 This file holds the configuration for the different Step Hit Processors (SHP)
 used with SuperNEMO simulations. The basic idea behind SHP is to treat Geant4
@@ -20,7 +17,6 @@ them visible given a list of sensitive categories.
 
 * Processors
 :PROPERTIES:
-:CUSTOM_ID: processors
 :TANGLE: step_hit_processor_manager.conf
 :END:
 

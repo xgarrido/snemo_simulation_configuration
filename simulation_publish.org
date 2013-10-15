@@ -1,62 +1,67 @@
-#+TITLE: Simulation Publish
-#+OPTIONS: toc:nil num:nil ^:nil
+#+TITLE:  Simulation Publish
+#+AUTHOR: Xavier Garrido
+#+DATE:   2013-10-03
 
-This file is used to publish the simulation config documentation to =.html=
-in the =doc/= directory.
+This file is used to publish the simulation config documentation to =.html= and
+to =.pdf= in the =doc/= directory.
 
-* Project publish function
-#+BEGIN_SRC emacs-lisp :results silent
-  (message org-version)
+* Project publish functions
+Within the next sections, we will define two publishing projects :
+- an HTML exporter,
+- a PDF exporter.
+We first clean the list of publich project and then add the HTML & PDF exporters
+#+BEGIN_SRC emacs-lisp
   (unless (boundp 'org-publish-project-alist)
     (setq org-publish-project-alist nil))
-
+#+END_SRC
+We also globally define the current directory
+#+BEGIN_SRC emacs-lisp
+  (setq this-directory (file-name-directory (or load-file-name buffer-file-name)))
+  (setq doc-directory (concat this-directory "doc/"))
+#+END_SRC
+** HTML export
+*** Project definition
+#+BEGIN_SRC emacs-lisp
   (setq org-html-style-default "")
   (setq org-html-htmlize-output-type 'css)
-  (setq org-export-with-section-numbers nil)
+  (setq org-export-with-section-numbers 2)
+  (setq org-export-with-toc 2)
 
-  (let* ((this-dir (file-name-directory (or load-file-name buffer-file-name))))
-    ;; define the org-publish-project for the starter kit
-    (add-to-list
-     'org-publish-project-alist
-     `("simulation-documentation"
-       :base-directory ,this-dir
-       :base-extension "org"
-       :publishing-directory ,(expand-file-name "doc/html" this-dir)
-       :publishing-function org-html-publish-to-html
-       :html-head "<link rel=\"stylesheet\" href=\"css/styles.css\">
-                   <link rel=\"stylesheet\" href=\"css/org-pygments.css\">"
-       :html-preamble "<span><a href=\"simulation_config.html\">main</a></span>
-                       <span><a href=\"sngeometry_manager.html\">geometry manager</a></span>
-                       <span><a href=\"sng4_manager.html\">G4 manager</a></span>
-                       <span><a href=\"step_hit_processor_factory.html\">step hit processor</a></span>
-                       <span><a href=\"sngenbb_manager.html\">genbb manager</a></span>
-                       <span><a href=\"snanalysis_manager.html\">analysis</a></span>
-                       "
-       :html-postamble nil))
-    ;; publish the starter kit
-    (org-publish-project "simulation-documentation" 'force)
-    ;; copy starter-kit.html to index.html
-    (copy-file (expand-file-name "simulation_config.html" (expand-file-name "doc/html" this-dir))
-               (expand-file-name "index.html" (expand-file-name "doc/html" this-dir)) t))
+  (add-to-list
+   'org-publish-project-alist
+   `("html-documentation"
+     :base-directory ,this-directory
+     :base-extension "org"
+     :publishing-directory ,(expand-file-name "html" doc-directory)
+     :publishing-function org-html-publish-to-html
+     :html-head "<link rel=\"stylesheet\" href=\"css/styles.css\">
+                 <link rel=\"stylesheet\" href=\"css/org-pygments.css\">"
+     :html-preamble "<span><a href=\"simulation_config.html\">main</a></span>
+                     <span><a href=\"sngeometry_manager.html\">geometry manager</a></span>
+                     <span><a href=\"sng4_manager.html\">G4 manager</a></span>
+                     <span><a href=\"step_hit_processor_factory.html\">step hit processor</a></span>
+                     <span><a href=\"sngenbb_manager.html\">genbb manager</a></span>
+                     <span><a href=\"snanalysis_manager.html\">analysis</a></span>
+                     "
+     :html-postamble nil))
+  (org-publish-project "html-documentation" 'force)
+  (copy-file (expand-file-name "simulation_config.html" (expand-file-name "html" doc-directory))
+             (expand-file-name "index.html" (expand-file-name "html" doc-directory)) t)
   #+END_SRC
 
-* CSS stylesheets                                                  :noexport:
-:PROPERTIES:
-:CUSTOM_ID: css_stylesheets
-:END:
-** Main stylesheets
+*** CSS stylesheets                                              :noexport:
+**** Main stylesheets
 :PROPERTIES:
 :TANGLE: doc/html/css/styles.css
 :END:
-*** Google fonts
+***** Google fonts
 #+BEGIN_SRC css
   @import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
   @import url(https://fonts.googleapis.com/css?family=Inconsolata);
   @import url(https://fonts.googleapis.com/css?family=Lobster);
-  @import url(https://fonts.googleapis.com/css?family=Cabin);
 #+END_SRC
 
-*** Other stuff
+***** Main css definitions
 #+BEGIN_SRC css
   body {
       width:860px;
@@ -82,7 +87,7 @@ in the =doc/= directory.
 
   h1 {
       font-family:Lobster;
-      font-size:48px;
+      font-size: 48px;
   }
 
   h2 {
@@ -127,7 +132,7 @@ in the =doc/= directory.
 
   code, pre {
       font-family:Inconsolata, Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
-      color:#333;
+      color:#777;
       font-size:12px;
   }
 
@@ -283,8 +288,8 @@ in the =doc/= directory.
       /* font-size:1.1em; */
       text-transform:uppercase;
       float:left;
-      /* margin-left:-12em; */
-      width:9em;
+      margin-left:-6em;
+      width:15em;
       text-align:right;
       position:fixed;
   }
@@ -367,7 +372,7 @@ in the =doc/= directory.
   }
 #+END_SRC
 
-** Org source code styles
+**** Org source code styles
 :PROPERTIES:
 :TANGLE: doc/html/css/org-pygments.css
 :END:
@@ -398,4 +403,73 @@ in the =doc/= directory.
   pre {
       color: #353535;
   }
+#+END_SRC
+
+** PDF export
+*** LaTeX stuff
+**** Default list of LaTeX packages
+Only include one default package and remove all the crapppy stuff included by
+=org= \rightarrow =latex= translation.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'org-latex-packages-alist '("" "org-preamble"))
+#+END_SRC
+
+**** Template
+#+BEGIN_SRC emacs-lisp
+  (unless (boundp 'org-latex-classes)
+    (setq org-latex-classes nil))
+
+  (add-to-list 'org-latex-classes
+               '("lecture"
+                 "\\documentclass[10pt,a4paper,twoside,cpp_teaching_lectures]{report}
+                  [PACKAGES]
+                  \\usepackage{lecture-style}
+                  [NO-DEFAULT-PACKAGES]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+#+END_SRC
+**** =minted= setup
+
+Code fragments are syntax highlighted using [[https://code.google.com/p/minted/][minted]] LaTeX package
+#+BEGIN_SRC emacs-lisp
+  (setq org-latex-listings 'minted)
+  (setq org-latex-minted-options
+        '(;;("frame" "lines")
+          ("fontsize" "\\footnotesize")
+          ;;("samepage" "")
+          ("mathescape" "")
+          ("xrightmargin" "0.5cm")
+          ("xleftmargin"  "0.5cm")
+          ))
+#+END_SRC
+**** Set LaTeX command
+#+BEGIN_SRC emacs-lisp
+  (defun sk-latexmk-cmd (backend)
+    "When exporting from .org with latex, automatically run latex,
+        pdflatex, or xelatex as appropriate, using latexmk."
+    (when (org-export-derived-backend-p backend 'latex)
+      (let ((texcmd)))
+      (setq texcmd "jobname=$(basename %f | sed 's/\.tex//');latexmk -xelatex -shell-escape -quiet %f")
+      (setq org-latex-pdf-process (list texcmd))))
+  (org-add-hook 'org-export-before-processing-hook 'sk-latexmk-cmd)
+#+END_SRC
+
+*** Project definition
+#+BEGIN_SRC emacs-lisp
+  (setq org-export-with-section-numbers 2)
+  (setq org-latex-default-class "lecture")
+
+  (add-to-list
+   'org-publish-project-alist
+   `("pdf-documentation"
+     :base-directory ,this-directory
+     :base-extension "org"
+     :publishing-directory ,(expand-file-name "pdf" doc-directory)
+     :publishing-function org-latex-publish-to-pdf
+     ))
+  (org-publish-project "pdf-documentation" 'force)
 #+END_SRC

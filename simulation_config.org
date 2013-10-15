@@ -2,12 +2,10 @@
 #+AUTHOR: Xavier Garrido
 #+DATE:   2013-02-22
 #+OPTIONS: toc:2 ^:{}
-#+LATEX_CLASS: memoir-article
+#+STARTUP: entitiespretty
 
 * Introduction
-:PROPERTIES:
-:CUSTOM_ID: introduction
-:END:
+
 This file contains a SN@ilWare configuration to run SuperNEMO simulations. For
 more details on running SuperNEMO simulations and the concept behind
 modules/services see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=1889][these mandatory presentations]] given by
@@ -31,9 +29,7 @@ is asynchronous and thus, does not freeze your emacs (=org-babel-tangle=
 [2] Emacs lisp function can be run using =ALT-x= command and typing the function name.
 
 * Pipeline general configuration
-:PROPERTIES:
-:CUSTOM_ID: pipeline_configuration
-:END:
+
 SN@ilWare implements the concept of data processing pipeline. An event record
 object is passed through a chain of data processing modules, each of them being
 responsible for a given task. Modules and services are declared in Section
@@ -41,7 +37,6 @@ responsible for a given task. Modules and services are declared in Section
 
 ** Module manager
 :PROPERTIES:
-:CUSTOM_ID: module_manager
 :TANGLE: module_manager.conf
 :END:
 This file is the main and central piece of code for loading all modules/services
@@ -80,7 +75,6 @@ service files.
 
 ** Service manager
 :PROPERTIES:
-:CUSTOM_ID: service_manager
 :TANGLE: service_manager.conf
 :END:
 *** Logging priority
@@ -104,9 +98,7 @@ service files.
 #+END_SRC
 
 * Modules
-:PROPERTIES:
-:CUSTOM_ID: modules
-:END:
+
 A data processing module is an object that performs some specific action (apply
 an algorithm) on event records (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Dataprocessingmodules][SN@ilWare FAQ]] for more details). It inherits
 the =snemo::core::processing::base_module= mother/interface class. A module
@@ -123,7 +115,6 @@ pipeline processing.
 
 ** Skeleton codes
 :PROPERTIES:
-:CUSTOM_ID: skeleton_code
 :TANGLE: no
 :RESULTS: output
 :END:
@@ -187,6 +178,7 @@ receives a table list and builds the =chain_module= declaration given its name.
 #+NAME: chain_module
 #+HEADERS: :var mname="" :var nmodule=0 :var list="" :var logging="warning"
 #+BEGIN_SRC sh
+  last=$(echo ${list} | sed -e 's/^.* //')
   echo '[name="'$mname'" type="dpp::chain_module"]'
   echo
   echo '#@description Logging priority'
@@ -196,10 +188,11 @@ receives a table list and builds the =chain_module= declaration given its name.
   echo -ne 'modules : string['$nmodule'] = '
   for i in $list
   do
-      test $i = hline && continue
+      echo -ne '  '
       echo -ne '"'
       echo -ne $i | sed '/(/ s/("\|")//g'
-      echo -ne '" '
+      echo -ne '"'
+      if [ $i != $last ]; then echo ' \';fi
   done
 #+END_SRC
 
@@ -245,7 +238,6 @@ expand the =module_preamble= code.
 
 ** I/O modules
 :PROPERTIES:
-:CUSTOM_ID: io_modules
 :TANGLE: io_modules.conf
 :END:
 
@@ -312,7 +304,6 @@ expand the =module_preamble= code.
 
 ** Utility modules
 :PROPERTIES:
-:CUSTOM_ID: utility_modules
 :TANGLE: utl_modules.conf
 :END:
 
@@ -353,7 +344,6 @@ Here we define some common and useful tasks such as removing data/MC hits.
 
 ** Simulation to calibration modules
 :PROPERTIES:
-:CUSTOM_ID: s2c_modules
 :TANGLE: s2c_modules.conf
 :END:
 *** Insert preamble
@@ -491,7 +481,6 @@ properties are used and serialized.
 #+END_SRC
 *** Tracker simulation to calibration data
 :PROPERTIES:
-:CUSTOM_ID: tracker_s2c
 :END:
 
 This module converts simulated data into calibrated data for SuperNEMO
@@ -574,7 +563,6 @@ and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?doci
 
 *** Calorimeter simulation to calibration data
 :PROPERTIES:
-:CUSTOM_ID: calorimeter_s2c
 :END:
 
 This module converts Monte-Carlo hits into calorimeter hits. Like the previous
@@ -652,7 +640,6 @@ for the quenching of alpha particles.
 
 ** Tracker clustering, tracker fitting & particle tracking modules
 :PROPERTIES:
-:CUSTOM_ID: tracker_modules
 :TANGLE: tracker_modules.conf
 :END:
 *** Insert preamble
@@ -662,7 +649,6 @@ for the quenching of alpha particles.
 
 *** Clustering algorithms
 :PROPERTIES:
-:CUSTOM_ID: clustering_modules
 :END:
 This section holds different modules all related to tracker clustering.
 
@@ -848,7 +834,6 @@ by K. Bhardwaj.
 
 *** Fitting algorithm
 :PROPERTIES:
-:CUSTOM_ID: fitting_modules
 :END:
 As the time of writing this document, there is only one algorithm well
 integrated into SN@ilWare pipeline. It is based on [[https://nemo.lpc-caen.in2p3.fr/wiki/trackfit][trackfit]] originally
@@ -1088,7 +1073,6 @@ implemented but the particle tracking module will stay unchanged.
 #+END_SRC
 ** Analysis chain modules
 :PROPERTIES:
-:CUSTOM_ID: analysis_modules
 :TANGLE: analysis_modules.conf
 :END:
 This section holds most of the chain module so setting "to music" the different
@@ -1238,7 +1222,6 @@ modules it contains.
 
 ** Plot modules
 :PROPERTIES:
-:CUSTOM_ID: plot_modules
 :TANGLE: plot_modules.conf
 :END:
 
@@ -1452,7 +1435,6 @@ Experimental conditions:
 
 * Services
 :PROPERTIES:
-:CUSTOM_ID: services
 :TANGLE: services.conf
 :END:
 A service generally hosts a specific resource that can be shared by many other
@@ -1489,7 +1471,6 @@ software components, including other services or data processing modules (see
 
 ** Geometry service
 :PROPERTIES:
-:CUSTOM_ID: geometry_service
 :END:
 The following code block declares the geometry service to properly load all the
 geometry and material construction of the detector. This service, only declared
@@ -1515,7 +1496,6 @@ reconstruction ... but all of them will use the same geometry.
 
 ** Cuts service
 :PROPERTIES:
-:CUSTOM_ID: cuts_service
 :END:
 
 The [[https://nemo.lpc-caen.in2p3.fr/wiki/cuts][cuts]] package provides some basic classes and utilities to design, create and
@@ -1534,7 +1514,6 @@ apply selection cuts on arbitrary data models.
 
 *** Manager
 :PROPERTIES:
-:CUSTOM_ID: cut_manager
 :TANGLE: cut_manager.conf
 :END:
 
@@ -1559,7 +1538,6 @@ apply selection cuts on arbitrary data models.
 
 *** Skeleton codes
 :PROPERTIES:
-:CUSTOM_ID: skeleton_cut_code
 :TANGLE: no
 :RESULTS: output
 :END:
@@ -1594,25 +1572,27 @@ This skeleton code allows to check the availability of a data bank.
 #+NAME: multi
 #+HEADERS: :var cname="" :var mode="and" :var ncut=0 :var list="" :var logging="warning"
 #+BEGIN_SRC sh
+  last=$(echo ${list} | sed -e 's/^.* //')
   echo '[name="'$cname'" type="cuts::multi_'$mode'_cut"]'
   echo
   echo '#@description Logging priority'
   echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description The cuts to be combined'
-  echo -ne 'cuts : string['$ncut'] = '
+  echo -ne 'cuts : string['$ncut'] = \\'
+  echo
   for i in $list
   do
-      test $i = hline && continue
+      echo -ne '  '
       echo -ne '"'
       echo -ne $i | sed '/(/ s/("\|")//g'
-      echo -ne '" '
+      echo -ne '"'
+      if [ $i != $last ]; then echo ' \';fi
   done
 #+END_SRC
 
 *** Simulated data selection
 :PROPERTIES:
-:CUSTOM_ID: simulated_data_cuts
 :TANGLE: simulated_data_cuts.conf
 :END:
 
@@ -1624,7 +1604,6 @@ This skeleton code allows to check the availability of a data bank.
 
 *** Calibrated data selection
 :PROPERTIES:
-:CUSTOM_ID: calibrated_data_cuts
 :TANGLE: calibrated_data_cuts.conf
 :END:
 
@@ -1749,7 +1728,6 @@ This cuts puts together all the previous declared cuts.
 
 *** Tracker clustering data selection
 :PROPERTIES:
-:CUSTOM_ID: tracker_clustering_data_cuts
 :TANGLE: tracker_clustering_data_cuts.conf
 :END:
 
@@ -1817,7 +1795,6 @@ This cuts puts together all the previous declared cuts.
 
 *** Tracker trajectory data selection
 :PROPERTIES:
-:CUSTOM_ID: tracker_trajectory_data_cuts
 :TANGLE: tracker_trajectory_data_cuts.conf
 :END:
 
@@ -1843,7 +1820,6 @@ This cuts puts together all the previous declared cuts.
 
 *** Particle track selection
 :PROPERTIES:
-:CUSTOM_ID: particle_track_data_cuts
 :TANGLE: particle_track_data_cuts.conf
 :END:
 
@@ -1859,7 +1835,7 @@ This cuts puts together all the previous declared cuts.
   logging.priority : string = "warning"
 
   #@description The running mode of this 'utils_cut' instance
-  mode          : string = "has_bank"
+  mode : string = "has_bank"
 
   #@description The name of the bank to be checked (mandatory)
   has_bank.descriptions : string[1] = "PTD@snemo::analysis::model::particle_track_data"
@@ -2066,7 +2042,6 @@ has_charge.type : string = "undefined"
 #+END_SRC
 ** Histogram service
 :PROPERTIES:
-:CUSTOM_ID: histogram_service
 :END:
 
 The histogram service provides an esay way to handle histogram plot from
@@ -2101,7 +2076,6 @@ Finally, all histograms created can be stored inside ROOT files or XML archives.
 
 * Running SN@ilWare processing chain
 :PROPERTIES:
-:CUSTOM_ID: running_pipeline
 :END:
 Running processing pipeline is done by the =dpp_processing= program provided by
 =dpp= library. Its call is pretty simple and only implies to have a module
