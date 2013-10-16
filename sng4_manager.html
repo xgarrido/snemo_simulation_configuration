@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>SNG4 Manager Configuration</title>
+<!-- 2013-10-17 jeu. 00:18 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Xavier Garrido" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="css/styles.css">
+               <link rel="stylesheet" href="css/org-pygments.css">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012  Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<span><a href="simulation_config.html">main</a></span>
+                   <span><a href="sngeometry_manager.html">geometry manager</a></span>
+                   <span><a href="sng4_manager.html">G4 manager</a></span>
+                   <span><a href="step_hit_processor_factory.html">step hit processor</a></span>
+                   <span><a href="sngenbb_manager.html">genbb manager</a></span>
+                   <span><a href="snanalysis_manager.html">analysis</a></span>
+</div>
+<div id="content">
+<h1 class="title">SNG4 Manager Configuration</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Introduction</a></li>
+<li><a href="#sec-2">2. Manager configuration</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Main configuration level</a></li>
+<li><a href="#sec-2-2">2.2. Event generator</a></li>
+<li><a href="#sec-2-3">2.3. Vertex generation</a></li>
+<li><a href="#sec-2-4">2.4. Detector construction</a></li>
+<li><a href="#sec-2-5">2.5. Physics list</a></li>
+<li><a href="#sec-2-6">2.6. Geant4 related action</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The <code>mctools/g4</code> library provides a Geant4 standard interface to generate simulated
+data. A dedicated manager class addresses all the resources needed to :
+</p>
+
+<ul class="org-ul">
+<li>describe the geometry (through a geometry manager from the <a href="https://nemo.lpc-caen.in2p3.fr/wiki/sngeometry">sngeometry</a>
+library, a geometry service is also usable)
+</li>
+<li>randomize the primary events to be tracked by Geant4 in the virtual geometry
+model (using the <a href="https://nemo.lpc-caen.in2p3.fr/wiki/sngenbb">sngenbb</a> library)
+</li>
+<li>randomize the primary vertex from which the primary events originate (using
+the <a href="https://nemo.lpc-caen.in2p3.fr/wiki/sngenvertex">sngenvertex</a> library)
+</li>
+<li>setup Geant4 embeded utilities to handle the production of true hits
+</li>
+</ul>
+
+<p>
+More details concerning the use of <code>sng4</code> binaries and Monte-Carlo production
+can be found in <a href="https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carloproduction">SN@ilWare wiki</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Manager configuration</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+This section describe almost entirely the whole set of options to setup <code>sng4</code>
+manager. Each relevant part is split into a unique item which ease the
+navigation as well as the configuration. The most <b>important</b> code block is the
+next one which allows the reading of this file by <code>datatools::properties</code> object.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of setups for Geant4</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  ""</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Main configuration level</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Here, general options such as verbosity, debug flags are passed to sng4
+manager. By the way, some of these options can be overloaded by the
+<code>sng4_module</code> which configuration can be changed in <a href="simulation_config.html">simulation_config.org</a>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"manager"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority      : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Number of events to be simulated (superseded by the pipeline)</span>
+number_of_events      : <span class="org-variable-name">integer</span> = 20
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geant4 tracking verbosity flag (from 0 to 10):</span>
+g4_tracking_verbosity : <span class="org-variable-name">integer</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geant4 visualization activation flag:</span>
+g4_visualization      : <span class="org-variable-name">boolean</span> = 0
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Event generator</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+The following code holds the <code>genbb</code> manager to give access to several primary
+generators from neutrinoless double beta decay, to&nbsp;<sup>214</sup>Bi/<sup>208</sup>Tl contamination or
+cosmic muon generator. See <a href="sngenbb_manager.html">sngenbb_manager.org</a> file.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"event_generator"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration file for the embedded '::genbb::manager'</span>
+manager.config : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngenbb_manager.conf"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Vertex generation</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+This part basically provides the location of vertex generator implemented by
+<a href="https://nemo.lpc-caen.in2p3.fr/wiki/sngenvertex">sngenvertex.</a>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"vertex_generator"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Main configuration file for the vertex generator manager</span>
+manager.config : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_3.0/manager.conf"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Detector construction</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Main configuration file for the detector construction user object.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"detector_construction"</span>]
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-2-4-1" class="outline-4">
+<h4 id="sec-2-4-1">Logging priority</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4-2" class="outline-4">
+<h4 id="sec-2-4-2">GDML scheme and options</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<p>
+The Geometry Description Markup Language is an application-indepedent geometry
+description format based on XML<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup>. It is used as Geant4 toolkit bindings
+through <code>gemotools</code> converters.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Temporary directory for GDML file generation:</span>
+gdml.tmp_dir         : string as <span class="org-variable-name">path</span> = <span class="org-string">"/tmp/${USER}/sng4.d"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Access mode to the GDML schema ("local" or "remote")</span>
+gdml.schema_location : <span class="org-variable-name">string</span> = <span class="org-string">"local"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">"remote"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag to skip GDML validation</span>
+gdml.no_validation   : <span class="org-variable-name">boolean</span> = 0
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4-3" class="outline-4">
+<h4 id="sec-2-4-3">Step hit processors</h4>
+<div class="outline-text-4" id="text-2-4-3">
+<p>
+Step hit processors are used to convert Geant4 steps into detector hits for
+SuperNEMO physics.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging support for step hit processor factory</span>
+hit_processor_factory.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration file for the step hit processor factory:</span>
+hit_processor_factory.config : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/step_hit_processor_manager.conf"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4-4" class="outline-4">
+<h4 id="sec-2-4-4">Sensitive detectors</h4>
+<div class="outline-text-4" id="text-2-4-4">
+<p>
+This category defines sensitive detectors where special treatments of Geant4 steps
+must be applied. This can be in direct relation with step hit processors defined above.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Parameters for the generation of 'sensitive hits' through 'sensitive detectors' :</span>
+sensitive.detectors : <span class="org-variable-name">string</span>[4] = <span class="org-string">"calorimeter.SD"</span> <span class="org-string">"xcalorimeter.SD"</span> <span class="org-string">"gveto.SD"</span> <span class="org-string">"tracker.SD"</span>
+
+sensitive.calorimeter.SD.logging.support                 : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+sensitive.calorimeter.SD.hits_buffer_capacity            : <span class="org-variable-name">integer</span> = 200
+sensitive.calorimeter.SD.record_alpha_quenching          : <span class="org-variable-name">boolean</span> = 1
+sensitive.calorimeter.SD.record_track_id                 : <span class="org-variable-name">boolean</span> = 1
+sensitive.calorimeter.SD.record_primary_particle         : <span class="org-variable-name">boolean</span> = 1
+sensitive.calorimeter.SD.drop_zero_energy_deposit_steps  : <span class="org-variable-name">boolean</span> = 0
+sensitive.calorimeter.SD.track_gamma                     : <span class="org-variable-name">boolean</span> = 1
+
+sensitive.xcalorimeter.SD.logging.support                : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+sensitive.xcalorimeter.SD.hits_buffer_capacity           : <span class="org-variable-name">integer</span> = 200
+sensitive.xcalorimeter.SD.record_alpha_quenching         : <span class="org-variable-name">boolean</span> = 1
+sensitive.xcalorimeter.SD.record_track_id                : <span class="org-variable-name">boolean</span> = 1
+sensitive.xcalorimeter.SD.record_primary_particle        : <span class="org-variable-name">boolean</span> = 1
+sensitive.xcalorimeter.SD.drop_zero_energy_deposit_steps : <span class="org-variable-name">boolean</span> = 0
+sensitive.xcalorimeter.SD.track_gamma                    : <span class="org-variable-name">boolean</span> = 1
+
+sensitive.gveto.SD.logging.support                       : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+sensitive.gveto.SD.hits_buffer_capacity                  : <span class="org-variable-name">integer</span> = 200
+sensitive.gveto.SD.record_alpha_quenching                : <span class="org-variable-name">boolean</span> = 1
+sensitive.gveto.SD.record_track_id                       : <span class="org-variable-name">boolean</span> = 1
+sensitive.gveto.SD.record_primary_particle               : <span class="org-variable-name">boolean</span> = 1
+sensitive.gveto.SD.drop_zero_energy_deposit_steps        : <span class="org-variable-name">boolean</span> = 0
+sensitive.gveto.SD.track_gamma                           : <span class="org-variable-name">boolean</span> = 1
+
+sensitive.tracker.SD.logging.support                     : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+sensitive.tracker.SD.hits_buffer_capacity                : <span class="org-variable-name">integer</span> = 1000
+sensitive.tracker.SD.record_alpha_quenching              : <span class="org-variable-name">boolean</span> = 1
+sensitive.tracker.SD.record_track_id                     : <span class="org-variable-name">boolean</span> = 1
+sensitive.tracker.SD.record_primary_particle             : <span class="org-variable-name">boolean</span> = 1
+sensitive.tracker.SD.drop_zero_energy_deposit_steps      : <span class="org-variable-name">boolean</span> = 0
+sensitive.tracker.SD.track_gamma                         : <span class="org-variable-name">boolean</span> = 1
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4-5" class="outline-4">
+<h4 id="sec-2-4-5">Geant4 step hit limits</h4>
+<div class="outline-text-4" id="text-2-4-5">
+<p>
+The following code defines geometry models where Geant4 steps are size limited.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description List of geometry models with max steps:</span>
+limits.list_of_volumes : <span class="org-variable-name">string</span>[3] =  <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"source_external_strip.model.log"</span> <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"source_internal_strip.model.log"</span> <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"drift_cell_core.model.log"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Max step length inside source pad:</span>
+limits.max_step.source_external_strip.model.log : real as <span class="org-variable-name">length</span> = 0.01 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Max step length inside source pad:</span>
+limits.max_step.source_internal_strip.model.log : real as <span class="org-variable-name">length</span> = 0.01 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Max step length inside drift cell tracking volume:</span>
+limits.max_step.drift_cell_core.model.log : real as <span class="org-variable-name">length</span> = 5.0 mm
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4-6" class="outline-4">
+<h4 id="sec-2-4-6">Geant4 regions</h4>
+<div class="outline-text-4" id="text-2-4-6">
+<p>
+Definition of Geant4 regions.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag to use G4 regions</span>
+using_regions       : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description List of regions</span>
+regions             : <span class="org-variable-name">string</span>[3] = <span class="org-string">"calorimeter"</span> <span class="org-string">"tracker"</span> <span class="org-string">"source"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description List of attached volumes/models for 'calorimeter' region</span>
+regions.calorimeter.volumes : <span class="org-variable-name">string</span>[4] =    <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"calorimeter_scin_block_front.model.log"</span> <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"calorimeter_scin_block_back.model.log"</span>  <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"gveto_scin_block.model.log"</span>             <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"xwall_scin_block.model.log"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description List of attached volumes/models for 'tracker' region</span>
+regions.tracker.volumes     : <span class="org-variable-name">string</span>[1] = <span class="org-string">"drift_cell_core.model.log"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description List of attached volumes/models for 'source' region</span>
+regions.source.volumes      : <span class="org-variable-name">string</span>[2] =    <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"source_external_strip.model.log"</span>        <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"source_internal_strip.model.log"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4-7" class="outline-4">
+<h4 id="sec-2-4-7">Magnetic field</h4>
+<div class="outline-text-4" id="text-2-4-7">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag to use magnetic field</span>
+using_magnetic_field              : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority threshold of the embedded Geant4 magnetic fields</span>
+magnetic_field.logging.priority   : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Name of the magnetic field geometry plugin</span>
+magnetic_field.plugin_name        : <span class="org-variable-name">string</span> = <span class="org-string">"fields_driver"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description SetDeltaChord miss distance (mm):</span>
+magnetic_field.miss_distance : real as <span class="org-variable-name">length</span> = 0.5 mm
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Physics list</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+In the development of a Geant4-based application, it is the user's
+responsibility to decide which physics processes are required, and then to
+include them in the physics list. The next lines are just aliases to relevant
+phycical processes for SuperNEMO.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"physics_list"</span>]
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-2-5-1" class="outline-4">
+<h4 id="sec-2-5-1">Logging priority</h4>
+<div class="outline-text-4" id="text-2-5-1">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5-2" class="outline-4">
+<h4 id="sec-2-5-2">SuperNEMO physics plugins</h4>
+<div class="outline-text-4" id="text-2-5-2">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description List of physics constructors</span>
+physics_constructors.names : <span class="org-variable-name">string</span>[2] = <span class="org-string">"particles"</span> <span class="org-string">"em"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Class ID of the physics constructors named 'particles'</span>
+physics_constructors.particles.id     : <span class="org-variable-name">string</span> = <span class="org-string">"mctools::g4::particles_physics_constructor"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration file of the physics constructors named 'particles'</span>
+physics_constructors.particles.config : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/snparticles.conf"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Class ID of the physics constructors named 'em'</span>
+physics_constructors.em.id            : <span class="org-variable-name">string</span> = <span class="org-string">"mctools::g4::em_physics_constructor"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration file of the physics constructors named 'em'</span>
+physics_constructors.em.config        : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/snem_processes.conf"</span>
+</pre>
+</div>
+</div>
+
+<ul class="org-ul"><li>Particle physics constructor<br  /><div class="outline-text-5" id="text-2-5-2-1">
+<p>
+Quite experimental try to set particles used within SuperNEMO "framework".
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@config Configuration parameters for the particles Geant4 physics constructor</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for geantinos (neutral and charged, default: 0)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">use_geantinos               : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for optical photons (default: 0)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">use_optical_photons         : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for muon leptons (default: 0)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">use_muon_leptons         : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for tau leptons (default: 0)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">use_tau_leptons          : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for light mesons (default: 0)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">use_light_mesons         : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for charm mesons (default: 0)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">use_charm_mesons         : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for bottom mesons (default: 0)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">use_bottom_mesons        : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for nucleons (default: 1)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">use_nucleons             : boolean = 1</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for strange baryons (default: 0)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">use_strange_baryons      : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for charm baryons (default: 0)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">use_charm_baryons        : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for bottom baryons (default: 0)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">use_bottom_baryons       : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for light nuclei (default: 1)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">use_light_nuclei         : boolean = 1</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for light anti-nuclei (default: 0)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">use_light_anti_nuclei    : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for generic ion (default: 0)</span>
+use_generic_ion          : <span class="org-variable-name">boolean</span> = 1
+</pre>
+</div>
+</div>
+</li>
+<li>EM physics process<br  /><div class="outline-text-5" id="text-2-5-2-2">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@config Configuration parameters for the electro-magnetic Geant4 physics constructor</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Electro-magntox interaction model (value in: "standard", "low_energy", "penelope")</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.model : string = "standard"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for electron/positron energy loss process</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.electron.energy_loss         : boolean = 1</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for electron/positron multiple scaterring process</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.electron.multiple_scaterring : boolean = 1</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for electron/positron bremsstrahlung process</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.electron.bremsstrahlung      : boolean = 1</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for positron pannihilation</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.positron.annihilation        : boolean = 1</span>
+
+<span class="org-comment-delimiter">################</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Deexcitation #</span>
+<span class="org-comment-delimiter">################</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for deexcitation fluorescence process</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.fluo         : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for Auger process</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.auger        : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for PIXE</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.pixe         : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation model for PIXE cross-sections</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.pixe.model   : string = "Empirical"</span>
+
+<span class="org-comment-delimiter">###########################</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Deexcitation per region #</span>
+<span class="org-comment-delimiter">###########################</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The regions where to apply some deexcitation process</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions    : string[2] = "A" "B"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for deexcitation fluorescence process in region "A"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.A.fluo : boolean = 1</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for Auger process in region "A"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.A.auger : boolean = 1</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for PIXE in region "A"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.A.pixe : boolean = 1</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for deexcitation fluorescence process in region "B"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.B.fluo : boolean = 1</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for Auger process in region "B"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.B.auger : boolean = 1</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for PIXE in region "B"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.B.pixe : boolean = 1</span>
+</pre>
+</div>
+</div>
+</li></ul>
+</div>
+
+<div id="outline-container-sec-2-5-3" class="outline-4">
+<h4 id="sec-2-5-3">Using Geant4 region cuts</h4>
+<div class="outline-text-4" id="text-2-5-3">
+<p>
+These cuts are related to some production processes and then, define some
+minimal step hit size given the detector region.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Activate the use of specific cuts</span>
+using_production_cuts : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The production cut default value</span>
+production_cuts.default_value : real as <span class="org-variable-name">length</span> = 1.0 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The production cut for gamma</span>
+production_cuts.gamma : real as <span class="org-variable-name">length</span> = 1.0 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The production cut for electron</span>
+production_cuts.electron : real as <span class="org-variable-name">length</span> = 1.0 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The production cut for positron</span>
+production_cuts.positron : real as <span class="org-variable-name">length</span> = 1.0 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The production cut for proton</span>
+production_cuts.proton : real as <span class="org-variable-name">length</span> = 1.0 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description List of region with production cut</span>
+production_cuts.regions : <span class="org-variable-name">string</span>[3] = <span class="org-string">"calorimeter"</span> <span class="org-string">"tracker"</span> <span class="org-string">"source"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Production cut value for region "calorimeter"</span>
+production_cuts.regions.calorimeter.gamma : real as <span class="org-variable-name">length</span> = 5.0 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Production cut value for region "tracker"</span>
+production_cuts.regions.tracker.electron : real as <span class="org-variable-name">length</span> = 0.5 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Production cut value for region "source"</span>
+production_cuts.regions.source.electron : real as <span class="org-variable-name">length</span> = 0.05 mm
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Geant4 related action</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+The last part of the configuration concerned Geant4 actions but do not hold a
+lot of options.
+</p>
+</div>
+
+<div id="outline-container-sec-2-6-1" class="outline-4">
+<h4 id="sec-2-6-1">Run action</h4>
+<div class="outline-text-4" id="text-2-6-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"run_action"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority :</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Run action event number print modulo :</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">number_events_modulo : integer = 100</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description If set, this flag forbids the generation of output files :</span>
+file.no_save : <span class="org-variable-name">boolean</span> = 1
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-6-2" class="outline-4">
+<h4 id="sec-2-6-2">Event action</h4>
+<div class="outline-text-4" id="text-2-6-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"event_action"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority :</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-6-3" class="outline-4">
+<h4 id="sec-2-6-3">Primary generator action</h4>
+<div class="outline-text-4" id="text-2-6-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"primary_generator_action"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Configuration of the primary generator action</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Primary generator action logging priority</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-6-4" class="outline-4">
+<h4 id="sec-2-6-4">Tracking action</h4>
+<div class="outline-text-4" id="text-2-6-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"tracking_action"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority :</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-6-5" class="outline-4">
+<h4 id="sec-2-6-5">Stepping action</h4>
+<div class="outline-text-4" id="text-2-6-5">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"stepping_action"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority :</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-6-6" class="outline-4">
+<h4 id="sec-2-6-6">Stacking action</h4>
+<div class="outline-text-4" id="text-2-6-6">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"stacking_action"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority :</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Kill secondary particles within some volumes :</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">kill_particles : boolean = 0</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Kill secondary particles within some volumes :</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">kill_particles.volumes : string[1] = "drift_cell_core"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Kill secondary particles within some materials :</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">kill_particles.materials : string[1] = "tracking_gas"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+<a href="http://gdml.web.cern.ch/GDML">http://gdml.web.cern.ch/GDML</a>
+</p></div>
+
+
+</div>
+</div></div>
+</body>
+</html>

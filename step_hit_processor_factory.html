@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Step Hit Processor Configuration</title>
+<!-- 2013-10-17 jeu. 00:18 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Xavier Garrido" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="css/styles.css">
+               <link rel="stylesheet" href="css/org-pygments.css">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012  Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<span><a href="simulation_config.html">main</a></span>
+                   <span><a href="sngeometry_manager.html">geometry manager</a></span>
+                   <span><a href="sng4_manager.html">G4 manager</a></span>
+                   <span><a href="step_hit_processor_factory.html">step hit processor</a></span>
+                   <span><a href="sngenbb_manager.html">genbb manager</a></span>
+                   <span><a href="snanalysis_manager.html">analysis</a></span>
+</div>
+<div id="content">
+<h1 class="title">Step Hit Processor Configuration</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Introduction</a></li>
+<li><a href="#sec-2">2. Processors</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Calorimeter processors</a></li>
+<li><a href="#sec-2-2">2.2. Geiger cells processors</a></li>
+<li><a href="#sec-2-3">2.3. Visualization processors</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This file holds the configuration for the different Step Hit Processors (SHP)
+used with SuperNEMO simulations. The basic idea behind SHP is to treat Geant4
+step hits given the sensitive categories in where they occurs. Each Geant4 step
+is "digitized" and if the step is within a sensitive category with attached SHP
+then the step is processed. For SuperNEMO simulations there are mainly two kind
+of physics processors: Geiger cells and calorimeter processors.
+</p>
+
+<p>
+There is also a third kind of processors which handles <i>visual</i> hits to make
+them visible given a list of sensitive categories.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Processors</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of setups</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Calorimeter processors</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+There are few options for calorimeter processors :
+</p>
+<ul class="org-ul">
+<li>a <code>hit.category</code> is attached to each Geant4 step hits,
+</li>
+<li>the corresponding <code>sensitive.category</code> must be set,
+</li>
+<li><code>cluster.time_range</code> and <code>cluster.time_space</code> are related to the clustering of
+Geant4 step hits.
+</li>
+</ul>
+
+<p>
+The basic idea is to aggregate Geant4 step hits given the <code>cluster.time_range</code>
+and the <code>cluster.time_space</code> into a unique calorimeter hit.
+</p>
+</div>
+
+<div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1">Main wall</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"calorimeter.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::calorimeter_step_hit_processor"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The step hit processor for the calorimeter simulated hits</span>
+
+logging.priority               : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+hit.category                   : <span class="org-variable-name">string</span>  = <span class="org-string">"calo"</span>
+sensitive.category             : <span class="org-variable-name">string</span>  = <span class="org-string">"calorimeter.SD"</span>
+use_private_pool               : <span class="org-variable-name">boolean</span> = 1
+private_pool_capacity          : <span class="org-variable-name">integer</span> = 10
+
+mapping.category               : <span class="org-variable-name">string</span>    = <span class="org-string">"calorimeter_block"</span>
+mapping.category.any_addresses : <span class="org-variable-name">string</span>[1] = <span class="org-string">"part"</span>
+cluster.time_range             : real as <span class="org-variable-name">time</span>   =  1.0 ns
+cluster.space_range            : real as <span class="org-variable-name">length</span> = 10.0 mm
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2">X-wall</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"xcalo.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::calorimeter_step_hit_processor"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The step hit processor for the auxiliary calorimeter simulated hits</span>
+
+logging.priority    : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+hit.category        : <span class="org-variable-name">string</span>  = <span class="org-string">"xcalo"</span>
+sensitive.category  : <span class="org-variable-name">string</span>  = <span class="org-string">"xcalorimeter.SD"</span>
+mapping.category    : <span class="org-variable-name">string</span>  = <span class="org-string">"xcalo_block"</span>
+cluster.time_range  : real as <span class="org-variable-name">time</span>   =  1.0 ns
+cluster.space_range : real as <span class="org-variable-name">length</span> = 10.0 mm
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-3" class="outline-4">
+<h4 id="sec-2-1-3">&gamma; veto</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"gveto.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::calorimeter_step_hit_processor"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The step hit processor for the gamma veto simulated hits</span>
+
+logging.priority    : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+hit.category        : <span class="org-variable-name">string</span>  = <span class="org-string">"gveto"</span>
+sensitive.category  : <span class="org-variable-name">string</span>  = <span class="org-string">"gveto.SD"</span>
+mapping.category    : <span class="org-variable-name">string</span>  = <span class="org-string">"gveto_block"</span>
+cluster.time_range  : real as <span class="org-variable-name">time</span>   =  1.0 ns
+cluster.space_range : real as <span class="org-variable-name">length</span> = 10.0 mm
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Geiger cells processors</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"gg.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::core::processing::gg_step_hit_processor"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The step hit processor for the Geiger simulated hits</span>
+
+logging.priority       : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+hit.category           : <span class="org-variable-name">string</span>  = <span class="org-string">"gg"</span>
+sensitive.category     : <span class="org-variable-name">string</span>  = <span class="org-string">"tracker.SD"</span>
+mapping.category       : <span class="org-variable-name">string</span>  = <span class="org-string">"drift_cell_core"</span>
+rng.seed               : <span class="org-variable-name">integer</span> = 314159
+rng.id                 : <span class="org-variable-name">string</span>  = <span class="org-string">"mt19937"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">fiducial_drift_radius : real as length =   22.0 mm</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">fiducial_drift_length : real as length = 2800.0 mm</span>
+mean_ionization_energy : real as <span class="org-variable-name">energy</span> = 50.0 eV
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description For each cell traversed by a track, compute the position of maximal approach to the anode wire (debug purpose only so default is 0)</span>
+compute_maximal_approach_position : <span class="org-variable-name">boolean</span> = 0
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Visualization processors</h3>
+<div class="outline-text-3" id="text-2-3">
+</div><div id="outline-container-sec-2-3-1" class="outline-4">
+<h4 id="sec-2-3-1">Dedicated step hit processors</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"calorimeter.visu.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::push_all_step_hit_processor"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The step hit processor for collecting the calorimeter simulated hits</span>
+logging.priority   : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+hit.category       : <span class="org-variable-name">string</span> = <span class="org-string">"__visu.tracks"</span>
+sensitive.category : <span class="org-variable-name">string</span> = <span class="org-string">"calorimeter.SD"</span>
+
+[<span class="org-variable-name">name</span>=<span class="org-string">"xcalorimeter.visu.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::push_all_step_hit_processor"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The step hit processor for collecting the calorimeter simulated hits</span>
+logging.priority   : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+hit.category       : <span class="org-variable-name">string</span> = <span class="org-string">"__visu.tracks"</span>
+sensitive.category : <span class="org-variable-name">string</span> = <span class="org-string">"xcalorimeter.SD"</span>
+
+[<span class="org-variable-name">name</span>=<span class="org-string">"gveto.visu.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::push_all_step_hit_processor"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The step hit processor for collecting the calorimeter simulated hits</span>
+logging.priority   : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+hit.category       : <span class="org-variable-name">string</span> = <span class="org-string">"__visu.tracks"</span>
+sensitive.category : <span class="org-variable-name">string</span> = <span class="org-string">"gveto.SD"</span>
+
+[<span class="org-variable-name">name</span>=<span class="org-string">"tracker.visu.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::push_all_step_hit_processor"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The step hit processor for collecting the tracker simulated hits</span>
+logging.priority   : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+hit.category       : <span class="org-variable-name">string</span> = <span class="org-string">"__visu.tracks"</span>
+sensitive.category : <span class="org-variable-name">string</span> = <span class="org-string">"tracker.SD"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3-2" class="outline-4">
+<h4 id="sec-2-3-2">Enabling all volumes</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"all.volumes.visu.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::push_all_step_hit_processor"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The step hit processor for collecting all the visu hits</span>
+logging.priority     : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+hit.category         : <span class="org-variable-name">string</span>  = <span class="org-string">"__visu.tracks"</span>
+sensitive.category   : <span class="org-variable-name">string</span>  = <span class="org-string">"__all.volumes.SD"</span>
+geometry.volumes.all : <span class="org-variable-name">boolean</span> = 1
+geometry.volumes.excluded : <span class="org-variable-name">string</span>[2] = <span class="org-string">"field_wire.model.log"</span> <span class="org-string">"anode_wire.model.log"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3-3" class="outline-4">
+<h4 id="sec-2-3-3">Special visual step hit processors</h4>
+<div class="outline-text-4" id="text-2-3-3">
+</div><ul class="org-ul"><li>Source hits<br  /><div class="outline-text-5" id="text-2-3-3-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"source.visu.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::push_all_step_hit_processor"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The step hit processor for collecting simulated hits within source strip</span>
+logging.priority   : <span class="org-variable-name">string</span>    = <span class="org-string">"warning"</span>
+hit.category       : <span class="org-variable-name">string</span>    = <span class="org-string">"__visu.tracks"</span>
+sensitive.category : <span class="org-variable-name">string</span>    = <span class="org-string">"__source.SD"</span>
+geometry.volumes   : <span class="org-variable-name">string</span>[2] = <span class="org-sh-escaped-newline">\</span>
+                   <span class="org-string">"source_external_strip.model.log"</span> <span class="org-sh-escaped-newline">\</span>
+                   <span class="org-string">"source_internal_strip.model.log"</span>
+</pre>
+</div>
+</div>
+</li>
+
+<li>Wires hits<br  /><div class="outline-text-5" id="text-2-3-3-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"wires.visu.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::push_all_step_hit_processor"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The step hit processor for collecting simulated hits within tracker's wires</span>
+logging.priority      : <span class="org-variable-name">string</span>    = <span class="org-string">"warning"</span>
+hit.category          : <span class="org-variable-name">string</span>    = <span class="org-string">"__visu.tracks"</span>
+sensitive.category    : <span class="org-variable-name">string</span>    = <span class="org-string">"__wires.SD"</span>
+geometry.volumes      : <span class="org-variable-name">string</span>[2] = <span class="org-string">"field_wire.model.log"</span> <span class="org-string">"anode_wire.model.log"</span>
+visu.highlighted_hits : <span class="org-variable-name">boolean</span>   = 1
+</pre>
+</div>
+</div>
+</li>
+
+<li>Films hits<br  /><div class="outline-text-5" id="text-2-3-3-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"films.visu.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::push_all_step_hit_processor"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The step hit processor for collecting simulated hits within tracker's wires</span>
+logging.priority   : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+hit.category       : <span class="org-variable-name">string</span>  = <span class="org-string">"__visu.tracks"</span>
+sensitive.category : <span class="org-variable-name">string</span>  = <span class="org-string">"__films.SD"</span>
+geometry.volumes.with_materials : <span class="org-variable-name">string</span>[3] = <span class="org-string">"std::mylar"</span> <span class="org-string">"std::nylon"</span> <span class="org-string">"std::pfte"</span>
+visu.highlighted_hits : <span class="org-variable-name">boolean</span>   = 0
+</pre>
+</div>
+</div>
+</li>
+<li>Tracking chamber<br  /><div class="outline-text-5" id="text-2-3-3-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"tracking_gas.visu.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::push_all_step_hit_processor"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The step hit processor for collecting simulated hits within tracking gas</span>
+logging.priority   : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+hit.category       : <span class="org-variable-name">string</span>  = <span class="org-string">"__visu.tracks"</span>
+sensitive.category : <span class="org-variable-name">string</span>  = <span class="org-string">"__tracking_gas.SD"</span>
+geometry.volumes.with_materials : <span class="org-variable-name">string</span>[1] = <span class="org-string">"tracking_gas"</span>
+geometry.volumes.excluded       : <span class="org-variable-name">string</span>[1] = <span class="org-string">"drift_cell_core.model.log"</span>
+</pre>
+</div>
+</div>
+</li></ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
