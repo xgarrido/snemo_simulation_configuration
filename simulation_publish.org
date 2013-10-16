@@ -45,9 +45,9 @@ We also globally define the current directory
                      <span><a href=\"snanalysis_manager.html\">analysis</a></span>
                      "
      :html-postamble nil))
-  ;;(org-publish-project "html-documentation" 'force)
-  ;;(copy-file (expand-file-name "simulation_config.html" (expand-file-name "html" doc-directory))
-  ;;           (expand-file-name "index.html" (expand-file-name "html" doc-directory)) t)
+  (org-publish-project "html-documentation" 'force)
+  (copy-file (expand-file-name "simulation_config.html" (expand-file-name "html" doc-directory))
+             (expand-file-name "index.html" (expand-file-name "html" doc-directory)) t)
   #+END_SRC
 
 *** CSS stylesheets
@@ -481,9 +481,9 @@ We also globally define the current directory
 ***** Footnote
 #+BEGIN_SRC latex
   \RequirePackage{fancyhdr}
-  \renewcommand{\footnoterule}{\color{blue!90}%
+  \renewcommand{\footnoterule}{\color{blue!75}%
     \vskip-\footruleskip\vskip-\footrulewidth%
-    \vspace{10pt}\hrule width\columnwidth height1.5pt \vspace{5pt} \color{blue!90}}
+    \vspace{10pt}\hrule width\columnwidth height1.5pt \vspace{5pt} \color{blue!75}}
   \renewcommand{\thefootnote}{\alph{footnote}}
   \interfootnotelinepenalty=10000
 #+END_SRC
@@ -508,6 +508,7 @@ We also globally define the current directory
       \hspace{.05em}\protect\raisebox{.2ex}%
              {$\protect\underline{\text{Ware}}$}}\xspace}
 #+END_SRC
+
 *** org to LaTeX stuff
 **** Use smart quote when exporting
 #+BEGIN_SRC emacs-lisp

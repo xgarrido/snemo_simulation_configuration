@@ -1415,8 +1415,9 @@ a =string= key. The program is then quite dynamic in the sense that 0\nu
 halflife calculation can be done for different study purpose (just change the =key_fields=).
 #+BEGIN_SRC sh
   #@description The key fields from 'Event Header' bank to build a unique key for histogram
-  key_fields : string [2] = "analysis.decay_process" \
-                            "analysis.magnetic_field"
+  key_fields : string[2] =     \
+      "analysis.decay_process" \
+      "analysis.magnetic_field"
 #+END_SRC
 
 Experimental conditions:
@@ -1529,7 +1530,7 @@ apply selection cuts on arbitrary data models.
   factory.debug : boolean = 0
 
   #@description A list of files that contains definition of cuts
-  cuts.configuration_files : string[5] =                                                  \
+  cuts.configuration_files : string[5] as path =                                                \
     "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/simulated_data_cuts.conf"          \
     "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/calibrated_data_cuts.conf"         \
     "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_clustering_data_cuts.conf" \
