@@ -451,7 +451,7 @@ We also globally define the current directory
 #+END_SRC
 **** Minted lexer
 #+BEGIN_SRC latex
-  \usemintedstyle{upsud}
+  \usemintedstyle{snemo}
 #+END_SRC
 **** Layout
 ***** Geometry
@@ -500,6 +500,13 @@ We also globally define the current directory
 #+BEGIN_SRC latex
   \RequirePackage{titlesec}
   \titleformat*{\section}{\usekomafont{sectioning}\usekomafont{section}\color{blue}}
+#+END_SRC
+***** SN@ilWare logo
+#+BEGIN_SRC latex
+  \RequirePackage{xspace}
+  \def\Snailware{\mbox{$\overline{\text{SN@il}}$%
+      \hspace{.05em}\protect\raisebox{.2ex}%
+             {$\protect\underline{\text{Ware}}$}}\xspace}
 #+END_SRC
 *** org to LaTeX stuff
 **** Use smart quote when exporting
@@ -562,6 +569,14 @@ Code fragments are syntax highlighted using [[https://code.google.com/p/minted/]
   (org-add-hook 'org-export-before-processing-hook 'sk-latexmk-cmd)
 #+END_SRC
 
+**** Markup filter
+#+BEGIN_SRC emacs-lisp
+  (require 'ox)
+  (defun snailware-filter (contents backend info)
+    (when (eq backend 'latex)
+      (replace-regexp-in-string "SN@ilware" "\\\\Snailware" contents)))
+  (add-to-list 'org-export-filter-final-output-functions 'snailware-filter)
+#+END_SRC
 *** Project definition
 #+BEGIN_SRC emacs-lisp
   (add-to-list
@@ -571,7 +586,7 @@ Code fragments are syntax highlighted using [[https://code.google.com/p/minted/]
      :base-extension "org"
      :publishing-directory ,(expand-file-name "pdf" doc-directory)
      :publishing-function org-latex-publish-to-pdf
-     :exclude "simulation_publish.org\\|sng4_manager.org\\|simulation_config.org\\|sngenbb_manager.org\\|step_hit_processor_factory.org"
+     :exclude "simulation_publish.org"
      :section-numbers 2
      :with-toc        t
      :latex-class "snemo-simu"
