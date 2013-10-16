@@ -1,7 +1,7 @@
 #+TITLE:  SNGenbb Manager Configuration
 #+AUTHOR: Xavier Garrido
 #+DATE:   2013-03-04
-#+OPTIONS: toc:nil ^:{}
+#+OPTIONS: ^:{}
 #+STARTUP: entitiespretty
 
 * Introduction
