@@ -121,7 +121,6 @@ volume.
 * Material for SuperNEMO detector
 ** Material driver
 :PROPERTIES:
-:CUSTOM_ID: materials_plugin
 :TANGLE:    materials_plugin.conf
 :END:
 
@@ -158,7 +157,6 @@ to change the source foil isotope.
 
 ** Material aliases
 :PROPERTIES:
-:CUSTOM_ID: materials_aliases
 :TANGLE: materials_aliases.def
 :END:
 
@@ -239,7 +237,6 @@ to change the source foil isotope.
 * Magnetic field for SuperNEMO detector
 ** Magnetic field plugin
 :PROPERTIES:
-:CUSTOM_ID: magnetic_field_plugin
 :TANGLE:    magnetic_field_plugin.conf
 :END:
 
@@ -293,7 +290,6 @@ module.
 
 ** Magnetic field drivers
 :PROPERTIES:
-:CUSTOM_ID: magnetic_field_drivers
 :TANGLE:    magnetic_field_drivers.conf
 :END:
 
@@ -320,8 +316,7 @@ module.
 * Locators for SuperNEMO detector
 ** Locator driver
 :PROPERTIES:
-:CUSTOM_ID: locator_plugin
-:TANGLE:    locator_plugin.conf
+:TANGLE: locator_plugin.conf
 :END:
 
 *** Plugin declaration
