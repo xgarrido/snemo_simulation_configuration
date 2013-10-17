@@ -23,33 +23,41 @@ We also globally define the current directory
 *** Project definition
 #+BEGIN_SRC emacs-lisp
   (setq org-html-style-default "")
-  (setq org-html-htmlize-output-type 'css)
+    (setq org-html-htmlize-output-type 'css)
 
-  (add-to-list
-   'org-publish-project-alist
-   `("html-documentation"
-     :base-directory ,this-directory
-     :base-extension "org"
-     :publishing-directory ,(expand-file-name "html" doc-directory)
-     :publishing-function org-html-publish-to-html
-     :exclude "simulation_publish.org"
-     :section-numbers 2
-     :with-toc        t
-     :html-head "<link rel=\"stylesheet\" href=\"css/styles.css\">
-                 <link rel=\"stylesheet\" href=\"css/org-pygments.css\">"
-     :html-preamble "<span><a href=\"simulation_config.html\">main</a></span>
-                     <span><a href=\"sngeometry_manager.html\">geometry manager</a></span>
-                     <span><a href=\"sng4_manager.html\">G4 manager</a></span>
-                     <span><a href=\"step_hit_processor_factory.html\">step hit processor</a></span>
-                     <span><a href=\"sngenbb_manager.html\">genbb manager</a></span>
-                     <span><a href=\"snanalysis_manager.html\">analysis</a></span>
-                     "
-     :html-postamble nil))
-  ;; (org-publish-project "html-documentation" 'force)
-  ;; (copy-file (expand-file-name "simulation_config.html" (expand-file-name "html" doc-directory))
-  ;;            (expand-file-name "index.html" (expand-file-name "html" doc-directory)) t)
+    (add-to-list
+     'org-publish-project-alist
+     `("html-documentation"
+       :base-directory ,this-directory
+       :base-extension "org"
+       :publishing-directory ,(expand-file-name "html" doc-directory)
+       :publishing-function org-html-publish-to-html
+       :exclude "simulation_publish.org"
+       :section-numbers 2
+       :with-toc        2
+       :html-head "<link rel=\"stylesheet\" href=\"css/styles.css\">
+                   <link rel=\"stylesheet\" href=\"css/org-pygments.css\">"
+       :html-preamble "<span><a href=\"simulation_config.html\">main</a></span>
+                       <span><a href=\"sngeometry_manager.html\">geometry manager</a></span>
+                       <span><a href=\"sng4_manager.html\">G4 manager</a></span>
+                       <span><a href=\"step_hit_processor_factory.html\">step hit processor</a></span>
+                       <span><a href=\"sngenbb_manager.html\">genbb manager</a></span>
+                       <span><a href=\"snanalysis_manager.html\">analysis</a></span>
+                       "
+       :html-postamble nil))
+  (org-publish-project "html-documentation" 'force)
+  (copy-file (expand-file-name "simulation_config.html" (expand-file-name "html" doc-directory))
+             (expand-file-name "index.html" (expand-file-name "html" doc-directory)) t)
   #+END_SRC
-
+*** Markup filtering
+We replace all occurences of =.org= that are related to internal =org= files to
+=.html= to make link working all together.
+#+BEGIN_SRC emacs-lisp
+  (defun snemo-filter-link (contents backend info)
+    (when (eq backend 'html)
+      (replace-regexp-in-string ".org" ".html" contents)))
+  (add-to-list 'org-export-filter-link-functions 'snemo-filter-link)
+#+END_SRC
 *** CSS stylesheets
 **** Main stylesheets
 :PROPERTIES:
@@ -404,7 +412,7 @@ We also globally define the current directory
   }
 
   pre {
-      color: #353535;
+      color: #777777;
   }
 #+END_SRC
 
@@ -420,7 +428,6 @@ We also globally define the current directory
 #+END_SRC
 **** Package requirements
 #+BEGIN_SRC latex
-  \RequirePackage{hyperref}
   \hypersetup{
     xetex,
     colorlinks=true,
@@ -563,9 +570,7 @@ Code fragments are syntax highlighted using [[https://code.google.com/p/minted/]
 #+BEGIN_SRC emacs-lisp
   (setq org-latex-listings 'minted)
   (setq org-latex-minted-options
-        '(;;("frame" "lines")
-          ("fontsize" "\\footnotesize")
-          ;;("samepage" "")
+        '(("fontsize" "\\footnotesize")
           ("mathescape" "")
           ("xrightmargin" "0.5cm")
           ("xleftmargin"  "0.5cm")
