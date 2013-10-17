@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>SN@ilWare Simulation Configuration</title>
-<!-- 2013-10-17 jeu. 00:19 -->
+<!-- 2013-10-17 jeu. 22:41 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Xavier Garrido" />
@@ -87,7 +87,7 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" href="css/styles.css">
-               <link rel="stylesheet" href="css/org-pygments.css">
+                 <link rel="stylesheet" href="css/org-pygments.css">
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -138,11 +138,11 @@ for the JavaScript code in this tag.
 <body>
 <div id="preamble" class="status">
 <span><a href="simulation_config.html">main</a></span>
-                   <span><a href="sngeometry_manager.html">geometry manager</a></span>
-                   <span><a href="sng4_manager.html">G4 manager</a></span>
-                   <span><a href="step_hit_processor_factory.html">step hit processor</a></span>
-                   <span><a href="sngenbb_manager.html">genbb manager</a></span>
-                   <span><a href="snanalysis_manager.html">analysis</a></span>
+                     <span><a href="sngeometry_manager.html">geometry manager</a></span>
+                     <span><a href="sng4_manager.html">G4 manager</a></span>
+                     <span><a href="step_hit_processor_factory.html">step hit processor</a></span>
+                     <span><a href="sngenbb_manager.html">genbb manager</a></span>
+                     <span><a href="snanalysis_manager.html">analysis</a></span>
 </div>
 <div id="content">
 <h1 class="title">SN@ilWare Simulation Configuration</h1>
@@ -186,25 +186,26 @@ for the JavaScript code in this tag.
 <h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-This file contains a SN@ilWare configuration to run SuperNEMO simulations. For
-more details on running SuperNEMO simulations and the concept behind
-modules/services see <a href="http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=1889">these mandatory presentations</a> given by
-F. Mauger.
+This file contains a SN@ilWare configuration to run SuperNEMO simulations. The
+current version is hosted at
+<a href="https://github.com/xgarrido/snemo_simulation_configuration">https://github.com/xgarrido/snemo_simulation_configuration</a> under <code>git</code> version
+control. For more details on running SuperNEMO simulations and the concept
+behind modules/services see <a href="http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=1889">these mandatory presentations</a> given by F. Mauger.
 </p>
 
 <p>
 The following file is organised using <a href="http://orgmode.org/worg/org-contrib/babel/index.html">org-babel</a> and its ability to execute
 source code. It requires then a recent installation of emacs<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup> which bundles
-<code>org</code>. Without entering into too much details regarding <code>org-babel</code> abilities, the
-basic idea is to give a "literate" way to navigate through the different
+<code>org</code>. Without entering into too much details regarding <code>org-babel</code> abilities,
+the basic idea is to give a "literate" way to navigate through the different
 sections, each of them representing a configuration file. Moreover, using <code>org</code>
 folding/unfolding capability, item can be hide and the user can focus on
 relevant parts.
 </p>
 
 <p>
-To export the different configuration files, you can run <code>org-babel-tangle</code> which will
-tangle each code block into the given file<sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup> or use the associated
+To export the different configuration files, you can run <code>org-babel-tangle</code>
+which will tangle each code block into the given file<sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup> or use the associated
 Makefile. The author recommends to use the Makefile since the tangling process
 is asynchronous and thus, does not freeze your emacs (<code>org-babel-tangle</code>
 "occupies" emacs during its execution).
@@ -1037,7 +1038,7 @@ manager.event_generator_name  : <span class="org-variable-name">string</span>  =
 
 <li>G4 manager<br  /><div class="outline-text-5" id="text-3-5-2-6">
 <p>
-The full <code>geant4</code> configuration can be found in the <a href="sng4_manager.html">sng4_manager.org</a> file.
+The full <code>geant4</code> configuration can be found in the <a href="./sng4_manager.html">sng4_manager.org</a> file.
 </p>
 <div class="org-src-container">
 
@@ -3604,5 +3605,8 @@ Emacs lisp function can be run using <code>ALT-x</code> command and typing the f
 
 </div>
 </div></div>
+<div id="postamble" class="status">
+File under git version control - commit 61af006 - 2 hours ago
+</div>
 </body>
 </html>

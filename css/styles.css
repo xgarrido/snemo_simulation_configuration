@@ -248,6 +248,11 @@ footer {
     -webkit-transition:color .2s linear;
 }
 
+#postamble {
+    float:right;
+    font-size:10px;
+}
+
 @media print, screen and (max-width: 960px) {
 
     body {
