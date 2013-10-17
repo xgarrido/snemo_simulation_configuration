@@ -20,8 +20,15 @@ We also globally define the current directory
   (setq doc-directory (concat this-directory "doc/"))
 #+END_SRC
 ** HTML export
+*** Building html postamble
+#+NAME: html-postamble
+#+BEGIN_SRC sh :tangle no :results output
+  if [ -d .git ]; then
+      LC_MESSAGES=en git --no-pager log -1 HEAD --pretty=format:"File under git version control - commit %h - %cr"
+  fi
+#+END_SRC
 *** Project definition
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :noweb yes
   (setq org-html-style-default "")
     (setq org-html-htmlize-output-type 'css)
 
@@ -44,7 +51,7 @@ We also globally define the current directory
                        <span><a href=\"sngenbb_manager.html\">genbb manager</a></span>
                        <span><a href=\"snanalysis_manager.html\">analysis</a></span>
                        "
-       :html-postamble nil))
+       :html-postamble "<<html-postamble()>>"))
   (org-publish-project "html-documentation" 'force)
   (copy-file (expand-file-name "simulation_config.html" (expand-file-name "html" doc-directory))
              (expand-file-name "index.html" (expand-file-name "html" doc-directory)) t)
@@ -318,6 +325,11 @@ We replace all occurences of =.org= that are related to internal =org= files to
        -webkit-transition:color .2s linear;
    }
 
+   #postamble {
+       float:right;
+       font-size:10px;
+   }
+
    @media print, screen and (max-width: 960px) {
 
        body {
@@ -583,7 +595,6 @@ Code fragments are syntax highlighted using [[https://code.google.com/p/minted/]
 
 **** Markup filter
 #+BEGIN_SRC emacs-lisp
-  (require 'ox)
   (defun snailware-filter (contents backend info)
     (when (eq backend 'latex)
       (replace-regexp-in-string "SN@ilware" "\\\\Snailware" contents)))
@@ -604,7 +615,7 @@ Code fragments are syntax highlighted using [[https://code.google.com/p/minted/]
      :latex-class "snemo-simu"
      :latex-header-extra ""
      ))
-  (org-publish-project "pdf-documentation" 'force)
+  ;;(org-publish-project "pdf-documentation" 'force)
 #+END_SRC
 
 ** Join exporter into one
