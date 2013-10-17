@@ -413,7 +413,7 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
   manager.event_generator_name  : string  = "bb0nu_Se82"
 #+END_SRC
 **** G4 manager
-The full =geant4= configuration can be found in the [[file:./sng4_manager.org][sng4_manager.org]] file.
+The full =geant4= configuration can be found in the [[file:./sng4_manager.org][sng4_manager]] file.
 #+BEGIN_SRC sh
   #@description The simulation manager configuration file
   manager.configuration_filename : string as path = \
