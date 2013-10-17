@@ -34,7 +34,7 @@ We also globally define the current directory
      :publishing-function org-html-publish-to-html
      :exclude "simulation_publish.org"
      :section-numbers 2
-     :with-toc 2
+     :with-toc        t
      :html-head "<link rel=\"stylesheet\" href=\"css/styles.css\">
                  <link rel=\"stylesheet\" href=\"css/org-pygments.css\">"
      :html-preamble "<span><a href=\"simulation_config.html\">main</a></span>
@@ -45,9 +45,9 @@ We also globally define the current directory
                      <span><a href=\"snanalysis_manager.html\">analysis</a></span>
                      "
      :html-postamble nil))
-  (org-publish-project "html-documentation" 'force)
-  (copy-file (expand-file-name "simulation_config.html" (expand-file-name "html" doc-directory))
-             (expand-file-name "index.html" (expand-file-name "html" doc-directory)) t)
+  ;; (org-publish-project "html-documentation" 'force)
+  ;; (copy-file (expand-file-name "simulation_config.html" (expand-file-name "html" doc-directory))
+  ;;            (expand-file-name "index.html" (expand-file-name "html" doc-directory)) t)
   #+END_SRC
 
 *** CSS stylesheets
@@ -509,6 +509,19 @@ We also globally define the current directory
              {$\protect\underline{\text{Ware}}$}}\xspace}
 #+END_SRC
 
+**** VC status
+#+NAME: vc-status
+#+BEGIN_SRC sh :results output :tangle no
+  if [ -d .git ]; then
+      log=$(LC_MESSAGES=en git --no-pager log -1 HEAD --pretty=format:"commit \texttt{%h} -- %cr")
+      echo "\renewcommand*{\PrelimWords}{\textnormal{\small File under \texttt{git} version control}}"
+      echo "\renewcommand*{\PrelimText}{\textnormal{\small\textcolor{gray}{\PrelimWords\ -- ${log}}}}"
+  fi
+#+END_SRC
+#+BEGIN_SRC latex :noweb yes
+  \RequirePackage{prelim2e}
+  <<vc-status()>>
+#+END_SRC
 *** org to LaTeX stuff
 **** Use smart quote when exporting
 #+BEGIN_SRC emacs-lisp
@@ -560,14 +573,7 @@ Code fragments are syntax highlighted using [[https://code.google.com/p/minted/]
 #+END_SRC
 **** Set LaTeX command
 #+BEGIN_SRC emacs-lisp
-  (defun sk-latexmk-cmd (backend)
-    "When exporting from .org with latex, automatically run latex,
-        pdflatex, or xelatex as appropriate, using latexmk."
-    (when (org-export-derived-backend-p backend 'latex)
-      (let ((texcmd)))
-      (setq texcmd "jobname=$(basename %f | sed 's/\.tex//');latexmk -xelatex -shell-escape -quiet %f")
-      (setq org-latex-pdf-process (list texcmd))))
-  (org-add-hook 'org-export-before-processing-hook 'sk-latexmk-cmd)
+  (setq org-latex-pdf-process '("jobname=$(basename %f | sed 's/\.tex//');latexmk -xelatex -shell-escape -quiet %f"))
 #+END_SRC
 
 **** Markup filter
@@ -587,7 +593,7 @@ Code fragments are syntax highlighted using [[https://code.google.com/p/minted/]
      :base-extension "org"
      :publishing-directory ,(expand-file-name "pdf" doc-directory)
      :publishing-function org-latex-publish-to-pdf
-     :exclude "simulation_publish.org"
+     :exclude "simulation_publish.org\\|simulation_config.org"
      :section-numbers 2
      :with-toc        t
      :latex-class "snemo-simu"

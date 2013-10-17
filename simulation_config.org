@@ -7,21 +7,22 @@
 
 * Introduction
 
-This file contains a SN@ilWare configuration to run SuperNEMO simulations. For
-more details on running SuperNEMO simulations and the concept behind
-modules/services see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=1889][these mandatory presentations]] given by
-F. Mauger.
+This file contains a SN@ilWare configuration to run SuperNEMO simulations. The
+current version is hosted at
+[[https://github.com/xgarrido/snemo_simulation_configuration]] under =git= version
+control. For more details on running SuperNEMO simulations and the concept
+behind modules/services see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=1889][these mandatory presentations]] given by F. Mauger.
 
 The following file is organised using [[http://orgmode.org/worg/org-contrib/babel/index.html][org-babel]] and its ability to execute
 source code. It requires then a recent installation of emacs[1] which bundles
-=org=. Without entering into too much details regarding =org-babel= abilities, the
-basic idea is to give a "literate" way to navigate through the different
+=org=. Without entering into too much details regarding =org-babel= abilities,
+the basic idea is to give a "literate" way to navigate through the different
 sections, each of them representing a configuration file. Moreover, using =org=
 folding/unfolding capability, item can be hide and the user can focus on
 relevant parts.
 
-To export the different configuration files, you can run =org-babel-tangle= which will
-tangle each code block into the given file[2] or use the associated
+To export the different configuration files, you can run =org-babel-tangle=
+which will tangle each code block into the given file[2] or use the associated
 Makefile. The author recommends to use the Makefile since the tangling process
 is asynchronous and thus, does not freeze your emacs (=org-babel-tangle=
 "occupies" emacs during its execution).

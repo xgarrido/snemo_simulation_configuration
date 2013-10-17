@@ -4,10 +4,6 @@
 #+OPTIONS: ^:{}
 
 * Introduction
-:PROPERTIES:
-:CUSTOM_ID: Introduction
-:END:
-
 The =sngeometry= library provides some geometry wrappers arround =geomtools=
 library and dedicated to SuperNEMO detector description.
 
@@ -16,7 +12,6 @@ This file holds mainly the paths to geometry files most of them are placed in
 
 * Manager configuration
 :PROPERTIES:
-:CUSTOM_ID: manager_configuration
 :TANGLE: sngeometry_manager.conf
 :END:
 
