@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>SNGenbb Manager Configuration</title>
+<!-- 2013-10-20 dim. 00:54 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Xavier Garrido" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="css/styles.css">
+                 <link rel="stylesheet" href="css/org-pygments.css">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012  Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<a href="simulation_config.html">main</a>
+                     <a href="sngeometry_manager.html">geometry manager</a>
+                     <a href="sng4_manager.html">G4 manager</a>
+                     <a href="step_hit_processor_factory.html">step hit processor</a>
+                     <a href="sngenbb_manager.html">genbb manager</a>
+                     <a href="snanalysis_manager.html">analysis</a>
+</div>
+<div id="content">
+<h1 class="title">SNGenbb Manager Configuration</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Introduction</a></li>
+<li><a href="#sec-2">2. Manager configuration</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Genbb manager configuration</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Genbb wrappers</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Radioelement wrappers</a></li>
+<li><a href="#sec-3-2">3.2. Single particle generator</a></li>
+<li><a href="#sec-3-3">3.3. Combined generators</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The <code>genbb</code> package is dedicated to the generation of double beta decay and/or
+radioactive background primary events as input for a simulation program.
+</p>
+
+<p>
+More details concerning the use of <code>genbb</code> can be found in <a href="https://nemo.lpc-caen.in2p3.fr/wiki/genbb_help">LPC wiki</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Manager configuration</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Genbb manager configuration</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Here, general options such as verbosity, debug flags are passed to <code>genbb</code>
+manager.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@config Main configuration parameters for the genbb manager</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description List of files containing particle generator definition rules</span>
+generators.configuration_files : string[1] as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngenbb_wrappers.conf"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Genbb wrappers</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+This section holds the configuration of several <code>genbb</code> wrappers.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of setups</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Radioelement wrappers</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+This part basically provides all the available event generator wrapper for
+SuperNEMO.
+</p>
+</div>
+
+<div id="outline-container-sec-3-1-1" class="outline-4">
+<h4 id="sec-3-1-1">&nbsp;<sup>82</sup>Se &beta;&beta;0&nu;</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"bb0nu_Se82"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::wdecay0"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Neutrinoless double beta decay of Se-82 [DBD]</span>
+decay_type      : <span class="org-variable-name">string</span>  = <span class="org-string">"DBD"</span>
+decay_isotope   : <span class="org-variable-name">string</span>  = <span class="org-string">"Se82"</span>
+decay_dbd_level : <span class="org-variable-name">integer</span> = 0
+decay_dbd_mode  : <span class="org-variable-name">integer</span> = 1
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-1-2" class="outline-4">
+<h4 id="sec-3-1-2">&nbsp;<sup>82</sup>Se &beta;&beta;2&nu;</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"bb2nu_Se82"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::wdecay0"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Two neutrino double beta decay of Se-82 [DBD]</span>
+decay_type      : <span class="org-variable-name">string</span>  = <span class="org-string">"DBD"</span>
+decay_isotope   : <span class="org-variable-name">string</span>  = <span class="org-string">"Se82"</span>
+decay_dbd_level : <span class="org-variable-name">integer</span> = 0
+decay_dbd_mode  : <span class="org-variable-name">integer</span> = 4
+energy_min      : real as <span class="org-variable-name">energy</span> = 2.0 MeV
+<span class="org-comment-delimiter">#</span><span class="org-comment">energy_max      : real as energy = 5.0 MeV</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-1-3" class="outline-4">
+<h4 id="sec-3-1-3">&nbsp;<sup>48</sup>Ca &beta;&beta;0&nu;</h4>
+<div class="outline-text-4" id="text-3-1-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"bb0nu_Ca48"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::wdecay0"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Neutrinoless double beta decay of Ca-48 [DBD]</span>
+decay_type      : <span class="org-variable-name">string</span>  = <span class="org-string">"DBD"</span>
+decay_isotope   : <span class="org-variable-name">string</span>  = <span class="org-string">"Ca48"</span>
+decay_dbd_level : <span class="org-variable-name">integer</span> = 0
+decay_dbd_mode  : <span class="org-variable-name">integer</span> = 1
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-1-4" class="outline-4">
+<h4 id="sec-3-1-4">&nbsp;<sup>48</sup>Ca &beta;&beta;2&nu;</h4>
+<div class="outline-text-4" id="text-3-1-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"bb2nu_Ca48"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::wdecay0"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Two neutrino double beta decay of Ca-48 [DBD]</span>
+decay_type      : <span class="org-variable-name">string</span>  = <span class="org-string">"DBD"</span>
+decay_isotope   : <span class="org-variable-name">string</span>  = <span class="org-string">"Ca48"</span>
+decay_dbd_level : <span class="org-variable-name">integer</span> = 0
+decay_dbd_mode  : <span class="org-variable-name">integer</span> = 4
+energy_min      : real as <span class="org-variable-name">energy</span> = 3.2 MeV
+<span class="org-comment-delimiter">#</span><span class="org-comment">energy_max      : real as energy = 5.0 MeV</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-1-5" class="outline-4">
+<h4 id="sec-3-1-5">&nbsp;<sup>150</sup>Nd &beta;&beta;0&nu;</h4>
+<div class="outline-text-4" id="text-3-1-5">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"bb0nu_Nd150"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::wdecay0"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Neutrinoless double beta decay of Nd-150 [DBD]</span>
+decay_type      : <span class="org-variable-name">string</span>  = <span class="org-string">"DBD"</span>
+decay_isotope   : <span class="org-variable-name">string</span>  = <span class="org-string">"Nd150"</span>
+decay_dbd_level : <span class="org-variable-name">integer</span> = 0
+decay_dbd_mode  : <span class="org-variable-name">integer</span> = 1
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-1-6" class="outline-4">
+<h4 id="sec-3-1-6">&nbsp;<sup>150</sup>Nd &beta;&beta;2&nu;</h4>
+<div class="outline-text-4" id="text-3-1-6">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"bb2nu_Nd150"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::wdecay0"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Two neutrino double beta decay of Nd-150 [DBD]</span>
+decay_type      : <span class="org-variable-name">string</span>  = <span class="org-string">"DBD"</span>
+decay_isotope   : <span class="org-variable-name">string</span>  = <span class="org-string">"Nd150"</span>
+decay_dbd_level : <span class="org-variable-name">integer</span> = 0
+decay_dbd_mode  : <span class="org-variable-name">integer</span> = 4
+energy_min      : real as <span class="org-variable-name">energy</span> = 2.3 MeV
+<span class="org-comment-delimiter">#</span><span class="org-comment">energy_max      : real as energy = 5.0 MeV</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-1-7" class="outline-4">
+<h4 id="sec-3-1-7">&nbsp;<sup>214</sup>Pb &beta;&beta;0&nu;</h4>
+<div class="outline-text-4" id="text-3-1-7">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"bb0nu_Pb214"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::wdecay0"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Neutrinoless double beta decay of Pb-214 [DBD]</span>
+decay_type      : <span class="org-variable-name">string</span>  = <span class="org-string">"DBD"</span>
+decay_isotope   : <span class="org-variable-name">string</span>  = <span class="org-string">"Pb214"</span>
+decay_dbd_level : <span class="org-variable-name">integer</span> = 0
+decay_dbd_mode  : <span class="org-variable-name">integer</span> = 1
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-1-8" class="outline-4">
+<h4 id="sec-3-1-8">&nbsp;<sup>208</sup>Tl background</h4>
+<div class="outline-text-4" id="text-3-1-8">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"bkg_Tl208"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::wdecay0"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Tl-208 decay [background]</span>
+decay_type      : <span class="org-variable-name">string</span>  = <span class="org-string">"background"</span>
+decay_isotope   : <span class="org-variable-name">string</span>  = <span class="org-string">"Tl208"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">energy_min      : real as energy = 0.0 MeV</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">energy_max      : real as energy = 5.0 MeV</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-1-9" class="outline-4">
+<h4 id="sec-3-1-9">&nbsp;<sup>214</sup>Bi &rarr;&nbsp;<sup>214</sup>Po decay</h4>
+<div class="outline-text-4" id="text-3-1-9">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"bkg_Bi214_Po214"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::wdecay0"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Bi-214/Po-214 decay [background]</span>
+decay_type      : <span class="org-variable-name">string</span>  = <span class="org-string">"background"</span>
+decay_isotope   : <span class="org-variable-name">string</span>  = <span class="org-string">"Bi214+Po214"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">energy_min      : real as energy = 0.0 MeV</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">energy_max      : real as energy = 5.0 MeV</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-1-10" class="outline-4">
+<h4 id="sec-3-1-10">&nbsp;<sup>212</sup>Bi &rarr;&nbsp;<sup>212</sup>Po decay</h4>
+<div class="outline-text-4" id="text-3-1-10">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"bkg_Bi212_Po212"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::wdecay0"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Bi-212/Po-212 decay [background]</span>
+decay_type      : <span class="org-variable-name">string</span>  = <span class="org-string">"background"</span>
+decay_isotope   : <span class="org-variable-name">string</span>  = <span class="org-string">"Bi212+Po212"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">energy_min      : real as energy = 0.0 MeV</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">energy_max      : real as energy = 5.0 MeV</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-1-11" class="outline-4">
+<h4 id="sec-3-1-11">&nbsp;<sup>207</sup>Bi calibration source</h4>
+<div class="outline-text-4" id="text-3-1-11">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"calib_Bi207"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::wdecay0"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Bi-207 decay [calibration]</span>
+decay_type      : <span class="org-variable-name">string</span>  = <span class="org-string">"background"</span>
+decay_isotope   : <span class="org-variable-name">string</span>  = <span class="org-string">"Bi207+Pb207m"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">energy_min      : real as energy = 0.0 MeV</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">energy_max      : real as energy = 5.0 MeV</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-1-12" class="outline-4">
+<h4 id="sec-3-1-12">&nbsp;<sup>40</sup>K background</h4>
+<div class="outline-text-4" id="text-3-1-12">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"bkg_K40"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::wdecay0"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Two neutrino double beta decay of K-40 [DBD]</span>
+decay_type      : <span class="org-variable-name">string</span>  = <span class="org-string">"background"</span>
+decay_isotope   : <span class="org-variable-name">string</span>  = <span class="org-string">"K40"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Single particle generator</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Here, single particle can be generated using different energy distribution : fix
+energy, flat energy distribution given energy limits, gaussian energy
+distribution or following a tabulated energy spectrum.
+</p>
+</div>
+
+<div id="outline-container-sec-3-2-1" class="outline-4">
+<h4 id="sec-3-2-1">Single electron with flat energy distribution</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"electron_0-3MeV_flat"</span> <span class="org-variable-name">type</span>=<span class="org-string">"single_particle"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Seed for the embedded random number generator:</span>
+seed                  : <span class="org-variable-name">integer</span> = 314159
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generated particle ("electron", "positron", "gamma", "alpha"):</span>
+particle_name         : <span class="org-variable-name">string</span> = <span class="org-string">"electron"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):</span>
+mode                  : <span class="org-variable-name">string</span> = <span class="org-string">"energy_range"</span>
+
+<span class="org-comment-delimiter">### </span><span class="org-comment">Only for "energy_range" mode:</span>
+min_energy            : <span class="org-variable-name">real</span>   = 0000.
+max_energy            : <span class="org-variable-name">real</span>   = 3000.
+energy_unit           : <span class="org-variable-name">string</span> = <span class="org-string">"keV"</span>
+
+<span class="org-comment-delimiter">### </span><span class="org-comment">Only for "gaussian_energy" mode:</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">mean_energy           : real   = 1000.</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">sigma_energy          : real   =  100.</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">energy_unit           : string = "keV"</span>
+
+<span class="org-comment-delimiter">### </span><span class="org-comment">Only for "monokinetic" mode:</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">energy                : real   = 5500.</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">energy_unit           : string = "keV"</span>
+
+<span class="org-comment-delimiter">### </span><span class="org-comment">Only for "spectrum" mode:</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">spectrum.data_file    : string = "${SNGENBB_DATA_DIR}/testing/data/sample_tabulated_energy_spectrum.data"</span>
+
+randomized_direction   : <span class="org-variable-name">boolean</span> = 1
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> <span class="todo TODO">TODO</span> Combined generators</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Combination of several <code>genbb</code> generators can be done using
+<code>genbb::combined_particle_generator</code> object&#x2026;
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+File under git version control - commit 4c8b78d - 2 minutes ago
+</div>
+</body>
+</html>

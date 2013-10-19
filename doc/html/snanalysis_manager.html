@@ -1,0 +1,819 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>SNAnalysis Manager Configuration</title>
+<!-- 2013-10-20 dim. 00:54 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Xavier Garrido" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="css/styles.css">
+                 <link rel="stylesheet" href="css/org-pygments.css">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012  Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<a href="simulation_config.html">main</a>
+                     <a href="sngeometry_manager.html">geometry manager</a>
+                     <a href="sng4_manager.html">G4 manager</a>
+                     <a href="step_hit_processor_factory.html">step hit processor</a>
+                     <a href="sngenbb_manager.html">genbb manager</a>
+                     <a href="snanalysis_manager.html">analysis</a>
+</div>
+<div id="content">
+<h1 class="title">SNAnalysis Manager Configuration</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Introduction</a></li>
+<li><a href="#sec-2">2. Plot modules</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Basic plot module</a></li>
+<li><a href="#sec-2-2">2.2. Study calorimeter block size for SuperNEMO (deprecated)</a></li>
+<li><a href="#sec-2-3">2.3. Study calorimeter energy resolution for SuperNEMO (deprecated)</a></li>
+<li><a href="#sec-2-4">2.4. Study particle track result</a></li>
+<li><a href="#sec-2-5">2.5. &beta;&beta;&nu;&nu; analysis</a></li>
+<li><a href="#sec-2-6">2.6. Detector efficiency</a></li>
+<li><a href="#sec-2-7">2.7. BiPo plot module</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Histogram templates</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Energy template</a></li>
+<li><a href="#sec-3-2">3.2. Efficiency template</a></li>
+<li><a href="#sec-3-3">3.3. Halflife limit template</a></li>
+<li><a href="#sec-3-4">3.4. Source foil vertices distribution</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This file holds mainly modules in relation with "plotting" results. Since its
+configuration may change a lot between debug, tests, analysis thematics and since
+its role is slightly different to other reconstruction modules, it is assumed to
+be simpler to have it alone.
+</p>
+
+<p>
+As write before, it mainly holds "plot" modules with there configurations.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Plot modules</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+This section holds all the module related to histogram plotting. Historically,
+most of them are pretty simple modules. Recently, an <code>histogram_service</code> has
+been provided so latest plot modules make use of it (see <code>basic_plot</code> module for
+example). This module can not be as generic as processing module. Basically, for
+one study purpose, there is one or two plot modules.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of setups</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Basic plot module</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"basic_plot"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::basic_plot_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config 'snemo::analysis::processing::basic_plot_module' configuration parameters</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Debug flag</span>
+debug     : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The Histogram Service label</span>
+Histo_label : <span class="org-variable-name">string</span> = <span class="org-string">"Histo"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Event Header' bank</span>
+EH_label : <span class="org-variable-name">string</span>  = <span class="org-string">"EH"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Simulated Data' bank</span>
+SD_label : <span class="org-variable-name">string</span>  = <span class="org-string">"SD"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Study calorimeter block size for SuperNEMO (deprecated)</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"snemo_block_size"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::snemo_block_size_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config 'snemo::analysis::processing::snemo_block_size' configuration parameters</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Debug flag</span>
+debug     : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Interactive flag (ROOT window popup)</span>
+interactive : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Analysed Data' bank</span>
+AD_label : <span class="org-variable-name">string</span>  = <span class="org-string">"ANA"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Study calorimeter energy resolution for SuperNEMO (deprecated)</h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"snemo_energy_resolution"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::snemo_energy_resolution_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config 'snemo::analysis::processing::snemo_energy_resolution' configuration parameters</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Debug flag</span>
+debug     : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Interactive flag (ROOT window popup)</span>
+interactive : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Analysed Data' bank</span>
+AD_label : <span class="org-variable-name">string</span>  = <span class="org-string">"ANA"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Study particle track result</h3>
+<div class="outline-text-3" id="text-2-4">
+</div><div id="outline-container-sec-2-4-1" class="outline-4">
+<h4 id="sec-2-4-1">Particle charge</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"snemo_particle_charge"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::snemo_particle_charge_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Debug flag</span>
+debug     : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Interactive flag (ROOT window popup)</span>
+interactive : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Event Header' bank</span>
+EH_label : <span class="org-variable-name">string</span>  = <span class="org-string">"EH"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Simulated Data' bank</span>
+SD_label : <span class="org-variable-name">string</span>  = <span class="org-string">"SD"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Particle Track Data' bank</span>
+PTD_label : <span class="org-variable-name">string</span>  = <span class="org-string">"PTD"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4-2" class="outline-4">
+<h4 id="sec-2-4-2">Vertex resolution</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"snemo_vertex_resolution"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::snemo_vertex_resolution_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Debug flag</span>
+debug       : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Vertex reconstruction either on 'foil', 'calo' or 'xcalo'</span>
+parameter   : <span class="org-variable-name">string</span> = <span class="org-string">"calo"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Interactive flag (ROOT window popup)</span>
+interactive : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Event Header' bank</span>
+EH_label    : <span class="org-variable-name">string</span>  = <span class="org-string">"EH"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Simulated Data' bank</span>
+SD_label    : <span class="org-variable-name">string</span>  = <span class="org-string">"SD"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Particle Track Data' bank</span>
+PTD_label   : <span class="org-variable-name">string</span>  = <span class="org-string">"PTD"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4-3" class="outline-4">
+<h4 id="sec-2-4-3">Vertex distribution</h4>
+<div class="outline-text-4" id="text-2-4-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"snemo_vertex_distribution"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::snemo_vertex_distribution_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Debug flag</span>
+debug : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The Histogram Service label</span>
+Histo_label : <span class="org-variable-name">string</span> = <span class="org-string">"Histo"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Particle Track Data' bank</span>
+bank_label : <span class="org-variable-name">string</span>  = <span class="org-string">"SD"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4-4" class="outline-4">
+<h4 id="sec-2-4-4">Study track fit quality</h4>
+<div class="outline-text-4" id="text-2-4-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"snemo_particle_reduced_chi2"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::snemo_particle_track_parameters_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Debug flag</span>
+debug       : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Interactive flag (ROOT window popup)</span>
+interactive : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Event Header' bank</span>
+EH_label    : <span class="org-variable-name">string</span>  = <span class="org-string">"EH"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Simulated Data' bank</span>
+SD_label    : <span class="org-variable-name">string</span>  = <span class="org-string">"SD"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Particle Track Data' bank</span>
+PTD_label   : <span class="org-variable-name">string</span>  = <span class="org-string">"PTD"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4-5" class="outline-4">
+<h4 id="sec-2-4-5">Study fit curvature</h4>
+<div class="outline-text-4" id="text-2-4-5">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"snemo_particle_curvature"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::snemo_particle_track_parameters_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Debug flag</span>
+debug       : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Parameter to be plot (either 'reduced_chi2' or 'curvature')</span>
+parameter   : <span class="org-variable-name">string</span> = <span class="org-string">"curvature"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Interactive flag (ROOT window popup)</span>
+interactive : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Event Header' bank</span>
+EH_label    : <span class="org-variable-name">string</span>  = <span class="org-string">"EH"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Simulated Data' bank</span>
+SD_label    : <span class="org-variable-name">string</span>  = <span class="org-string">"SD"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Particle Track Data' bank</span>
+PTD_label   : <span class="org-variable-name">string</span>  = <span class="org-string">"PTD"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> &beta;&beta;&nu;&nu; analysis</h3>
+<div class="outline-text-3" id="text-2-5">
+</div><div id="outline-container-sec-2-5-1" class="outline-4">
+<h4 id="sec-2-5-1">Discrimination</h4>
+<div class="outline-text-4" id="text-2-5-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"snemo_bb0nu_discrimination"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::snemo_bb0nu_discrimination_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Debug flag</span>
+debug       : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Interactive flag (ROOT window popup)</span>
+interactive : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Event Header' bank</span>
+EH_label    : <span class="org-variable-name">string</span>  = <span class="org-string">"EH"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Particle Track Data' bank</span>
+PTD_label   : <span class="org-variable-name">string</span>  = <span class="org-string">"PTD"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5-2" class="outline-4">
+<h4 id="sec-2-5-2">Calculation of halflife limit</h4>
+<div class="outline-text-4" id="text-2-5-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"snemo_bb0nu_halflife_limit"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::snemo_bb0nu_halflife_limit_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Debug flag</span>
+debug       : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Interactive flag (ROOT window popup)</span>
+interactive : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Event Header' bank</span>
+EH_label    : <span class="org-variable-name">string</span>  = <span class="org-string">"EH"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Particle Track Data' bank</span>
+PTD_label   : <span class="org-variable-name">string</span>  = <span class="org-string">"PTD"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The Histogram Service label</span>
+Histo_label : <span class="org-variable-name">string</span> = <span class="org-string">"Histo"</span>
+</pre>
+</div>
+
+<p>
+The key fields are used to build different key for histogram dictionnary. The
+basic idea is to have this information inside <code>event_header</code> and use it to build
+a <code>string</code> key. The program is then quite dynamic in the sense that 0&nu;
+halflife calculation can be done for different study purpose (just change the <code>key_fields</code>).
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The key fields from 'Event Header' bank to build a unique key for histogram</span>
+key_fields : <span class="org-variable-name">string</span>[2] =       <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"analysis.decay_process"</span>   <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"analysis.calo_resolution"</span>
+</pre>
+</div>
+
+<p>
+Experimental conditions:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The atomic mass number of the isotope</span>
+experiment.isotope_mass_number : <span class="org-variable-name">integer</span> = 82
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The total mass of the isotope</span>
+experiment.isotope_mass : <span class="org-variable-name">string</span> = <span class="org-string">"5 kg"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The bb2nu halflife of the isotope</span>
+experiment.isotope_bb2nu_halflife : <span class="org-variable-name">real</span> = 9.0e19 <span class="org-comment-delimiter">#</span><span class="org-comment">year</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The exposure time of the experiment</span>
+experiment.exposure_time : <span class="org-variable-name">real</span> = 2.0 <span class="org-comment-delimiter">#</span><span class="org-comment">year</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5-3" class="outline-4">
+<h4 id="sec-2-5-3">&beta;&beta; spectrum (not existing anymore)</h4>
+<div class="outline-text-4" id="text-2-5-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"snemo_bb_energy_spectra"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::snemo_bb_energy_spectra_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config 'snemo::analysis::processing::snemo_bb_energy_spectra' configuration parameters</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Debug flag</span>
+debug       : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Interactive flag (ROOT window popup)</span>
+interactive : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Event Header' bank</span>
+EH_label    : <span class="org-variable-name">string</span>  = <span class="org-string">"EH"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Particle Track Data' bank</span>
+PTD_label   : <span class="org-variable-name">string</span>  = <span class="org-string">"PTD"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The key fields from 'Event Header' bank to build a unique key for histogram</span>
+key_fields : string [3] = <span class="org-string">"analysis.source_isotope"</span> <span class="org-sh-escaped-newline">\</span>
+                          <span class="org-string">"analysis.decay_process"</span>  <span class="org-sh-escaped-newline">\</span>
+                          <span class="org-string">"analysis.calo_resolution"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The number of energy bins for two electrons energy distribution</span>
+nbr_of_energy_bins : <span class="org-variable-name">integer</span> = 25
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The minimal two electrons energy</span>
+minimal_norm_energy : <span class="org-variable-name">real</span> = 0.7
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The maximal two electrons energy</span>
+maximal_norm_energy : <span class="org-variable-name">real</span> = 1.05
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The atomic mass number of the isotope</span>
+isotope_mass_number : <span class="org-variable-name">integer</span> = 150
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The total mass of the isotope</span>
+isotope_mass : <span class="org-variable-name">string</span> = <span class="org-string">"7 kg"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The total mass of the isotope</span>
+isotope_qbb : <span class="org-variable-name">string</span> = <span class="org-string">"3368 keV"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The bb2nu halflife of the isotope</span>
+isotope_bb2nu_halflife : <span class="org-variable-name">real</span> = 9.1e18 <span class="org-comment-delimiter">#</span><span class="org-comment">year</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The bb0nu halflife of the isotope</span>
+isotope_bb0nu_halflife : <span class="org-variable-name">real</span> = 1.56978e+23 <span class="org-comment-delimiter">#</span><span class="org-comment">year</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The exposure time of the experiment</span>
+exposure_time : <span class="org-variable-name">real</span> = 2.0 <span class="org-comment-delimiter">#</span><span class="org-comment">year</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Detector efficiency</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+This module computes the efficiency for &beta;&beta;0&nu; per calorimeter
+blocks.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"snemo_detector_efficiency"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::snemo_detector_efficiency_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Debug flag</span>
+debug       : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the Geometry service</span>
+Geo_label : <span class="org-variable-name">string</span>  = <span class="org-string">"Geo"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the bank</span>
+bank_label : <span class="org-variable-name">string</span>  = <span class="org-string">"CD"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> BiPo plot module</h3>
+<div class="outline-text-3" id="text-2-7">
+<p>
+This module plots BiPo alpha track fit and then compares start time
+determination.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"BiPo_alpha_track"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::snemo_Bi214_Po214_alpha_track_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config 'snemo::analysis::processing::basic_plot_module' configuration parameters</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Debug flag</span>
+debug     : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The Histogram Service label</span>
+Histo_label : <span class="org-variable-name">string</span> = <span class="org-string">"Histo"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Simulated Data' bank</span>
+SD_label : <span class="org-variable-name">string</span>  = <span class="org-string">"SD"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Particle Track Data' bank</span>
+PTD_label : <span class="org-variable-name">string</span>  = <span class="org-string">"PTD"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Histogram templates</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Histogram declarations are done in this file where several informations can be
+passed to the histogram service. There is also a possibility to declare
+"template" histogram from which several histograms can refered to. These
+group histograms will share the same binning, axis labels &#x2026;
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of setups</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Energy template</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"energy_template"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mygsl::histogram_1d"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The title of the histogram (optional)</span>
+title : <span class="org-variable-name">string</span> = <span class="org-string">""</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The group of the histogram (optional)</span>
+group : <span class="org-variable-name">string</span> = <span class="org-string">"__template"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The build mode (default : "regular", "table", "mimic");</span>
+mode : <span class="org-variable-name">string</span> = <span class="org-string">"regular"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The linear mode (default)</span>
+linear : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The X axis label</span>
+display.xaxis.label : <span class="org-variable-name">string</span> = <span class="org-string">"$\Upsigma_\text{\tiny 1,2}$E$_\text{calibrated}$"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The X axis unit for display (a standard unit, typically SI or CLHEP)</span>
+display.xaxis.unit : <span class="org-variable-name">string</span> = <span class="org-string">"keV"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The Y axis label</span>
+display.yaxis.label : <span class="org-variable-name">string</span> = <span class="org-string">"dN/dE [A.U.]"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The number of bins</span>
+number_of_bins : <span class="org-variable-name">integer</span> = 25
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The unit of the bins' bounds (a standard unit, typically SI or CLHEP)</span>
+unit : <span class="org-variable-name">string</span> = <span class="org-string">"keV"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The lower bound of the histogram</span>
+min : <span class="org-variable-name">real</span> = 2000.0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The upper bound of the histogram</span>
+max : <span class="org-variable-name">real</span> = 3200.0
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Efficiency template</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"efficiency_template"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mygsl::histogram_1d"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The histogram of the energy selection efficiency</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The title of the histogram (optional)</span>
+title : <span class="org-variable-name">string</span> = <span class="org-string">""</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The group of the histogram (optional)</span>
+group : <span class="org-variable-name">string</span> = <span class="org-string">"__template"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The build mode (default : "regular", "table", "mimic");</span>
+mode : <span class="org-variable-name">string</span> = <span class="org-string">"regular"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The linear mode (default)</span>
+linear : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The X axis label</span>
+display.xaxis.label : <span class="org-variable-name">string</span> = <span class="org-string">"$\Upsigma_\text{\tiny 1,2}\text{E}_\text{calibrated}\geq\text{E}_\text{cut}$"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The X axis unit for display (a standard unit, typically SI or CLHEP)</span>
+display.xaxis.unit : <span class="org-variable-name">string</span> = <span class="org-string">"keV"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The Y axis label</span>
+display.yaxis.label : <span class="org-variable-name">string</span> = <span class="org-string">"efficiency"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The number of bins</span>
+number_of_bins : <span class="org-variable-name">integer</span> = 25
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The unit of the bins' bounds (a standard unit, typically SI or CLHEP)</span>
+unit : <span class="org-variable-name">string</span> = <span class="org-string">"keV"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The lower bound of the histogram</span>
+min : <span class="org-variable-name">real</span> = 2000.0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The upper bound of the histogram</span>
+max : <span class="org-variable-name">real</span> = 3200.0
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Halflife limit template</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"halflife_template"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mygsl::histogram_1d"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config The histogram of the energy selection efficiency</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The title of the histogram (optional)</span>
+title : <span class="org-variable-name">string</span> = <span class="org-string">""</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The group of the histogram (optional)</span>
+group : <span class="org-variable-name">string</span> = <span class="org-string">"__template"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The build mode (default : "regular", "table", "mimic");</span>
+mode : <span class="org-variable-name">string</span> = <span class="org-string">"regular"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The linear mode (default)</span>
+linear : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The X axis label</span>
+display.xaxis.label : <span class="org-variable-name">string</span> = <span class="org-string">"$\Upsigma_\text{\tiny 1,2}\text{E}_\text{calibrated}\geq\text{E}_\text{cut}$"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The X axis unit for display (a standard unit, typically SI or CLHEP)</span>
+display.xaxis.unit : <span class="org-variable-name">string</span> = <span class="org-string">"keV"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The Y axis label</span>
+display.yaxis.label : <span class="org-variable-name">string</span> = <span class="org-string">"halflife limit"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The number of bins</span>
+number_of_bins : <span class="org-variable-name">integer</span> = 25
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The unit of the bins' bounds (a standard unit, typically SI or CLHEP)</span>
+unit : <span class="org-variable-name">string</span> = <span class="org-string">"keV"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The lower bound of the histogram</span>
+min : <span class="org-variable-name">real</span> = 2000.0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The upper bound of the histogram</span>
+max : <span class="org-variable-name">real</span> = 3200.0
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Source foil vertices distribution</h3>
+<div class="outline-text-3" id="text-3-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"vertex_distribution_template"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mygsl::histogram_2d"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The title of the histogram (optional)</span>
+title : <span class="org-variable-name">string</span> = <span class="org-string">""</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The group of the histogram (optional)</span>
+group : <span class="org-variable-name">string</span> = <span class="org-string">"__template"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The build mode (default : "regular", "table", "mimic");</span>
+mode : <span class="org-variable-name">string</span> = <span class="org-string">"regular"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The linear mode (default)</span>
+x.linear : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The X bin unit</span>
+x.unit : <span class="org-variable-name">string</span> = <span class="org-string">"mm"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The lower bound of the histogram</span>
+x.min : <span class="org-variable-name">real</span> = -2500.0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The upper bound of the histogram</span>
+x.max : <span class="org-variable-name">real</span> = +2500.0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The upper bound of the histogram</span>
+x.number_of_bins : <span class="org-variable-name">integer</span> = 100
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The linear mode (default)</span>
+y.linear : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The X bin unit</span>
+y.unit : <span class="org-variable-name">string</span> = <span class="org-string">"mm"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The lower bound of the histogram</span>
+y.min : <span class="org-variable-name">real</span> = -1500.0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The upper bound of the histogram</span>
+y.max : <span class="org-variable-name">real</span> = +1500.0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The upper bound of the histogram</span>
+y.number_of_bins : <span class="org-variable-name">integer</span> = 100
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The X axis label</span>
+display.xaxis.label : <span class="org-variable-name">string</span> = <span class="org-string">"y"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The X axis unit for display (a standard unit, typically SI or CLHEP)</span>
+display.xaxis.unit : <span class="org-variable-name">string</span> = <span class="org-string">"mm"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The Y axis label</span>
+display.yaxis.label : <span class="org-variable-name">string</span> = <span class="org-string">"z"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The Y axis unit for display (a standard unit, typically SI or CLHEP)</span>
+display.yaxis.unit : <span class="org-variable-name">string</span> = <span class="org-string">"mm"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+File under git version control - commit 4c8b78d - 2 minutes ago
+</div>
+</body>
+</html>
