@@ -44,12 +44,12 @@ We also globally define the current directory
        :with-toc        2
        :html-head "<link rel=\"stylesheet\" href=\"css/styles.css\">
                    <link rel=\"stylesheet\" href=\"css/org-pygments.css\">"
-       :html-preamble "<span><a href=\"simulation_config.html\">main</a></span>
-                       <span><a href=\"sngeometry_manager.html\">geometry manager</a></span>
-                       <span><a href=\"sng4_manager.html\">G4 manager</a></span>
-                       <span><a href=\"step_hit_processor_factory.html\">step hit processor</a></span>
-                       <span><a href=\"sngenbb_manager.html\">genbb manager</a></span>
-                       <span><a href=\"snanalysis_manager.html\">analysis</a></span>
+       :html-preamble "<a href=\"simulation_config.html\">main</a>
+                       <a href=\"sngeometry_manager.html\">geometry manager</a>
+                       <a href=\"sng4_manager.html\">G4 manager</a>
+                       <a href=\"step_hit_processor_factory.html\">step hit processor</a>
+                       <a href=\"sngenbb_manager.html\">genbb manager</a>
+                       <a href=\"snanalysis_manager.html\">analysis</a>
                        "
        :html-postamble "<<html-postamble()>>"))
   (org-publish-project "html-documentation" 'force)
@@ -77,7 +77,7 @@ We replace all occurences of =.org= that are related to internal =org= files to
   @import url(https://fonts.googleapis.com/css?family=Lobster);
 #+END_SRC
 
-***** Main css definitions
+***** Main =css= definitions
 #+BEGIN_SRC css
    body {
        width:860px;

@@ -42,7 +42,7 @@ responsible for a given task. Modules and services are declared in Section
 :TANGLE: module_manager.conf
 :END:
 This file is the main and central piece of code for loading all modules/services
-needed by =snemo_processing= binary. It provides links to module files and
+needed by =dpp_processing= binary. It provides links to module files and
 service files.
 *** Logging priority
 #+BEGIN_SRC sh
