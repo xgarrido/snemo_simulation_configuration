@@ -42,10 +42,11 @@ push: org
 
 doc: $(FILES) simulation_publish.org
 	@mkdir -p doc/html/css
-	$(BATCH) --eval '(org-babel-tangle-file "simulation_publish.org")'
-	$(BATCH) --eval '(org-babel-load-file   "simulation_publish.org")'
-	rm simulation_publish.el
-	echo "NOTICE: Documentation published to doc/"
+	@$(BATCH) --eval '(org-babel-tangle-file "simulation_publish.org")'
+	@$(BATCH) --eval '(org-babel-load-file   "simulation_publish.org")'
+	cp -r doc/html/* .
+	@echo "NOTICE: Documentation published to doc/"
+	rm simulation_publish.el && find . -name "*.html~" | xargs rm
 
 clean:
 	@rm -f *.tangle *.tar.gz *.conf *.def *.aux *.tex *.fls *fdb_latexmk *.log *.pdf *~
