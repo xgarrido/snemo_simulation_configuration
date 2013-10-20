@@ -22,10 +22,11 @@ The following code defines the location of several vertices files. All of them
 are defined in Section [[Vertex configuration]].
 #+BEGIN_SRC sh
   #@description Names of the files configuring the list of registered vertex generators
-  vg_list : string[3] as path =                                              \
+  vg_list : string[4] as path =                                              \
     "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/scin_vg.lis"    \
     "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_vg.lis" \
-    "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/source_vg.lis"
+    "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/source_vg.lis"  \
+    "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/hall_vg.lis"
 #+END_SRC
 
 * Vertex configuration
@@ -43,6 +44,13 @@ This section defines several vertices configuration :
 :PROPERTIES:
 :TANGLE: scin_vg.lis
 :END:
+
+Insert preamble
+#+BEGIN_SRC sh
+  #@description A list of vertex generators
+  #@key_label   "name"
+  #@meta_label  "type"
+#+END_SRC
 
 - Generate vertex in the bulk volume of the wrapper for the main calorimeter's
   scintillator blocks:
@@ -162,6 +170,13 @@ This section defines several vertices configuration :
 :TANGLE: tracker_vg.lis
 :END:
 
+Insert preamble
+#+BEGIN_SRC sh
+  #@description A list of vertex generators
+  #@key_label   "name"
+  #@meta_label  "type"
+#+END_SRC
+
 - Generate vertex from the bulk volume of the anode wires:
 
   #+BEGIN_SRC sh
@@ -231,11 +246,22 @@ This section defines several vertices configuration :
     mode.surface.top    : boolean = 0
   #+END_SRC
 ** Source vertices
+:PROPERTIES:
+:TANGLE: source_vg.lis
+:END:
+
 Since there are two types of source strips namely "internal" and "external" with
 different size and then different isotope mass, we first define independent
 vertices for each of this model and then use a =genvtx::combined_vg= model to
 combine with appropriate weights. These vertices are only available with
 SuperNEMO geometry version greater than 2.0.
+
+Insert preamble
+#+BEGIN_SRC sh
+  #@description A list of vertex generators
+  #@key_label   "name"
+  #@meta_label  "type"
+#+END_SRC
 
 *** Internal source strips
 - Generate vertex from the bulk volume of the source foil:
@@ -367,6 +393,17 @@ SuperNEMO geometry version greater than 2.0.
     generators.source_strips_internal_surface.absolute_weight : real  = 1.0
   #+END_SRC
 ** External vertices
+:PROPERTIES:
+:TANGLE: hall_vg.lis
+:END:
+
+Insert preamble
+#+BEGIN_SRC sh
+  #@description A list of vertex generators
+  #@key_label   "name"
+  #@meta_label  "type"
+#+END_SRC
+
 - Generate vertex from the surface of the hall walls
   #+BEGIN_SRC sh
     [name="experimental_hall_surface" type="genvtx::box_model_vg"]
