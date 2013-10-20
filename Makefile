@@ -20,6 +20,7 @@ all: org
 org: $(FILEST)
 	@if ls | grep -q "\.def"; then mv *.def $(GIT_BRANCH)/.;fi
 	@if ls | grep -q "\.conf"; then mv *.conf $(GIT_BRANCH)/.;fi
+	@if ls | grep -q "\.lis"; then mv *.lis $(GIT_BRANCH)/.;fi
 	@if [ -L current ]; then rm current;fi && ln -sf $(GIT_BRANCH) current
 
 $(GIT_BRANCH)/.%.tangle: %.org
