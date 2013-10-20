@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>SNG4 Manager Configuration</title>
-<!-- 2013-10-20 dim. 01:23 -->
+<!-- 2013-10-20 dim. 23:02 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Xavier Garrido" />
@@ -140,8 +140,9 @@ for the JavaScript code in this tag.
 <a href="simulation_config.html">main</a>
                      <a href="sngeometry_manager.html">geometry manager</a>
                      <a href="sng4_manager.html">G4 manager</a>
-                     <a href="step_hit_processor_factory.html">step hit processor</a>
                      <a href="sngenbb_manager.html">genbb manager</a>
+                     <a href="sngenvertex_manager.html">vertex manager</a>
+                     <a href="step_hit_processor_factory.html">step hit processor</a>
                      <a href="snanalysis_manager.html">analysis</a>
 </div>
 <div id="content">
@@ -178,17 +179,17 @@ data. A dedicated manager class addresses all the resources needed to :
 library, a geometry service is also usable)
 </li>
 <li>randomize the primary events to be tracked by Geant4 in the virtual geometry
-model (using the <a href="https://nemo.lpc-caen.in2p3.fr/wiki/sngenbb">sngenbb</a> library)
+model (using the <a href="https://nemo.lpc-caen.in2p3.fr/wiki/genbb_help">genbb_help</a> library)
 </li>
 <li>randomize the primary vertex from which the primary events originate (using
-the <a href="https://nemo.lpc-caen.in2p3.fr/wiki/sngenvertex">sngenvertex</a> library)
+the <a href="https://nemo.lpc-caen.in2p3.fr/wiki/genvtx">genvtx</a> library)
 </li>
 <li>setup Geant4 embeded utilities to handle the production of true hits
 </li>
 </ul>
 
 <p>
-More details concerning the use of <code>sng4</code> binaries and Monte-Carlo production
+More details concerning the use of <code>mctools</code> binaries and Monte-Carlo production
 can be found in <a href="https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carloproduction">SN@ilWare wiki</a>.
 </p>
 </div>
@@ -218,7 +219,7 @@ next one which allows the reading of this file by <code>datatools::properties</c
 <p>
 Here, general options such as verbosity, debug flags are passed to sng4
 manager. By the way, some of these options can be overloaded by the
-<code>sng4_module</code> which configuration can be changed in <a href="simulation_config.html">simulation_config.org</a>.
+<code>sng4_module</code> which configuration can be changed in <a href="simulation_config.html">simulation_config</a>.
 </p>
 <div class="org-src-container">
 
@@ -245,7 +246,7 @@ g4_visualization      : <span class="org-variable-name">boolean</span> = 0
 <p>
 The following code holds the <code>genbb</code> manager to give access to several primary
 generators from neutrinoless double beta decay, to&nbsp;<sup>214</sup>Bi/<sup>208</sup>Tl contamination or
-cosmic muon generator. See <a href="sngenbb_manager.html">sngenbb_manager.org</a> file.
+cosmic muon generator. See <a href="sngenbb_manager.html">sngenbb_manager</a> file.
 </p>
 <div class="org-src-container">
 
@@ -263,7 +264,7 @@ manager.config : string as <span class="org-variable-name">path</span> = <span c
 <div class="outline-text-3" id="text-2-3">
 <p>
 This part basically provides the location of vertex generator implemented by
-<a href="https://nemo.lpc-caen.in2p3.fr/wiki/sngenvertex">sngenvertex.</a>
+<a href="https://nemo.lpc-caen.in2p3.fr/wiki/genvtx">genvtx</a>. See <a href="sngenvertex_manager.html">sngenvertex_manager</a> file.
 </p>
 <div class="org-src-container">
 
@@ -271,7 +272,7 @@ This part basically provides the location of vertex generator implemented by
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Main configuration file for the vertex generator manager</span>
 manager.config : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_3.0/manager.conf"</span>
+    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngenvertex_manager.conf"</span>
 </pre>
 </div>
 </div>
@@ -800,7 +801,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 </div>
 </div></div>
 <div id="postamble" class="status">
-File under git version control - commit 9e0ccea - 26 minutes ago
+File under git version control - commit ed9ff8f - 2013-10-20
 </div>
 </body>
 </html>
