@@ -12,12 +12,12 @@ data. A dedicated manager class addresses all the resources needed to :
 - describe the geometry (through a geometry manager from the [[https://nemo.lpc-caen.in2p3.fr/wiki/sngeometry][sngeometry]]
   library, a geometry service is also usable)
 - randomize the primary events to be tracked by Geant4 in the virtual geometry
-  model (using the [[https://nemo.lpc-caen.in2p3.fr/wiki/sngenbb][sngenbb]] library)
+  model (using the [[https://nemo.lpc-caen.in2p3.fr/wiki/genbb_help][genbb_help]] library)
 - randomize the primary vertex from which the primary events originate (using
-  the [[https://nemo.lpc-caen.in2p3.fr/wiki/sngenvertex][sngenvertex]] library)
+  the [[https://nemo.lpc-caen.in2p3.fr/wiki/genvtx][genvtx]] library)
 - setup Geant4 embeded utilities to handle the production of true hits
 
-More details concerning the use of =sng4= binaries and Monte-Carlo production
+More details concerning the use of =mctools= binaries and Monte-Carlo production
 can be found in [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carloproduction][SN@ilWare wiki]].
 
 * Manager configuration
@@ -39,7 +39,7 @@ next one which allows the reading of this file by =datatools::properties= object
 ** Main configuration level
 Here, general options such as verbosity, debug flags are passed to sng4
 manager. By the way, some of these options can be overloaded by the
-=sng4_module= which configuration can be changed in [[file:simulation_config.org][simulation_config.org]].
+=sng4_module= which configuration can be changed in [[file:simulation_config.org][simulation_config]].
 #+BEGIN_SRC sh
   [name="manager"]
 
@@ -59,7 +59,7 @@ manager. By the way, some of these options can be overloaded by the
 ** Event generator
 The following code holds the =genbb= manager to give access to several primary
 generators from neutrinoless double beta decay, to\nbsp^{214}Bi/^{208}Tl contamination or
-cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb_manager.org]] file.
+cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb_manager]] file.
 #+BEGIN_SRC sh
   [name="event_generator"]
 
@@ -70,13 +70,13 @@ cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb_manager.org]] fil
 
 ** Vertex generation
 This part basically provides the location of vertex generator implemented by
-[[https://nemo.lpc-caen.in2p3.fr/wiki/sngenvertex][sngenvertex.]]
+[[https://nemo.lpc-caen.in2p3.fr/wiki/genvtx][genvtx]]. See [[file:sngenvertex_manager.org][sngenvertex_manager]] file.
 #+BEGIN_SRC sh
   [name="vertex_generator"]
 
   #@description Main configuration file for the vertex generator manager
   manager.config : string as path = \
-      "${SNGENVERTEX_DATA_DIR}/resources/setups/snemo/config_3.0/manager.conf"
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngenvertex_manager.conf"
 #+END_SRC
 
 ** Detector construction
