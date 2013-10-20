@@ -611,7 +611,7 @@ Code fragments are syntax highlighted using [[https://code.google.com/p/minted/]
      :base-extension "org"
      :publishing-directory ,(expand-file-name "pdf" doc-directory)
      :publishing-function org-latex-publish-to-pdf
-     :exclude "simulation_publish.org\\|simulation_config.org"
+     :exclude "simulation_publish.org"
      :section-numbers 2
      :with-toc        t
      :latex-class "snemo-simu"
