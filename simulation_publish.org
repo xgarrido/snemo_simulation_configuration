@@ -47,8 +47,9 @@ We also globally define the current directory
        :html-preamble "<a href=\"simulation_config.html\">main</a>
                        <a href=\"sngeometry_manager.html\">geometry manager</a>
                        <a href=\"sng4_manager.html\">G4 manager</a>
-                       <a href=\"step_hit_processor_factory.html\">step hit processor</a>
                        <a href=\"sngenbb_manager.html\">genbb manager</a>
+                       <a href=\"sngenvertex_manager.html\">vertex manager</a>
+                       <a href=\"step_hit_processor_factory.html\">step hit processor</a>
                        <a href=\"snanalysis_manager.html\">analysis</a>
                        "
        :html-postamble "<<html-postamble()>>"))
