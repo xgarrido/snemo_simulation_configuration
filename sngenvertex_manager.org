@@ -31,14 +31,12 @@ are defined in Section [[Vertex configuration]].
 
 * Vertex configuration
 This section defines several vertices configuration :
-- [[Scintillator vertices]] :: to generate external events coming from calorimeter
-     walls,
-- [[Tracker vertices]] :: to generate events from the internal drift chamber either
-     on wires surface or inside gas tracking,
-- [[Source vertices]] :: to produce 2\beta events or to simulate source
-     contamination.
-- [[External vertices]] :: to generate events from outside the detector like
-     neutrons
+- [[Scintillator vertices][Scintillator vertices]]: to generate external events coming from calorimeter
+  walls,
+- [[Tracker vertices][Tracker vertices]]: to generate events from the internal drift chamber either on
+  wires surface or inside gas tracking,
+- [[Tracker vertices][Source vertices]]: to produce 2\beta events or to simulate source contamination.
+- [[External vertices][External vertices]]: to generate events from outside the detector like neutrons
 
 ** Scintillator vertices
 :PROPERTIES:
