@@ -103,19 +103,19 @@ service files.
 
 A data processing module is an object that performs some specific action (apply
 an algorithm) on event records (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Dataprocessingmodules][SN@ilWare FAQ]] for more details). It inherits
-the =snemo::core::processing::base_module= mother/interface class. A module
-class implements a few mandatory methods :
+the =dpp::base_module= mother/interface class. A module class implements a few
+mandatory methods :
 
 - constructor
 - destructor
-- initialize
-- reset
-- process
+- =initialize=
+- =reset=
+- =process=
 
 The next items hold the configuration for several modules used in SN@ilWare
 pipeline processing.
 
-** Skeleton codes
+** Skeleton codes                                                 :noexport:
 :PROPERTIES:
 :TANGLE: no
 :RESULTS: output
@@ -222,7 +222,7 @@ This skeleton code is a template to declare =if_module= processor.
   echo 'else_module : string = "'$else'"'
 #+END_SRC
 
-** Mandatory preamble
+** Mandatory preamble                                             :noexport:
 
 This piece of code is not tangled by =org= but inserted into all module
 preamble. This is mandatory in order to load properly and statically the
@@ -1539,7 +1539,7 @@ apply selection cuts on arbitrary data models.
     "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/particle_track_data_cuts.conf"
 #+END_SRC
 
-*** Skeleton codes
+*** Skeleton codes                                               :noexport:
 :PROPERTIES:
 :TANGLE: no
 :RESULTS: output
