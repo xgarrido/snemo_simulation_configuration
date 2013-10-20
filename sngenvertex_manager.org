@@ -97,3 +97,136 @@ This section defines several vertices configuration :
     #@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")
     mode   : string  = "bulk"
   #+END_SRC
+
+- Generate vertex from the surface of the main calorimeter's scintillator blocks:
+
+  #+BEGIN_SRC sh
+    [name="calo_wrapper_surface" type="genvtx::box_model_vg"]
+
+    #@config Vertex generation from the surface of the main calorimeter wrapper
+
+    #@description Logging priority
+    logging.priority : string = "warning"
+
+    #@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)
+    origin : string  = "category='calorimeter_wrapper' module={*} side={*} column={*} row={*}"
+
+    #@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")
+    mode   : string  = "surface"
+
+    #@description Surface mode box top face activation
+    mode.surface.top  : boolean = 1
+  #+END_SRC
+
+- Generate vertex from the surface of the X-calorimeter's scintillator blocks:
+
+  #+BEGIN_SRC sh
+    [name="xcalo_wrapper_surface" type="genvtx::box_model_vg"]
+
+    #@config Vertex generation from the surface of the X-wall calorimeter wrapper
+
+    #@description Logging priority
+    logging.priority : string = "warning"
+
+    #@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)
+    origin : string  = "category='xcalo_wrapper' module={*} side={*} column={*} row={*}"
+
+    #@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")
+    mode   : string  = "surface"
+
+    #@description Surface mode box top face activation
+    mode.surface.top  : boolean = 1
+  #+END_SRC
+
+- Generate vertex from the surface of the \gamma veto's scintillator blocks:
+
+  #+BEGIN_SRC sh
+    [name="gveto_wrapper_surface" type="genvtx::box_model_vg"]
+
+    #@config Vertex generation from the surface of the gamma veto wrapper
+
+    #@description Logging priority
+    logging.priority : string = "warning"
+
+    #@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)
+    origin : string  = "category='gveto_wrapper' module={*} side={*} wall={*} column={*}"
+
+    #@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")
+    mode   : string  = "surface"
+
+    #@description Surface mode box top face activation
+    mode.surface.top  : boolean = 1
+  #+END_SRC
+** Tracker vertices
+:PROPERTIES:
+:TANGLE: tracker_vg.lis
+:END:
+
+- Generate vertex from the bulk volume of the anode wires:
+
+  #+BEGIN_SRC sh
+    [name="anode_wire_bulk" type="genvtx::cylinder_model_vg"]
+
+    #@config Vertex generation from the bulk volume of the anode wires
+
+    #@description Logging priority
+    logging.priority  : string = "warning"
+
+    #@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)
+    origin : string  = "category='drift_cell_anodic_wire' module={*} side={*} layer={*} row={*}"
+
+    #@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")
+    mode   : string  = "bulk"
+  #+END_SRC
+
+- Generate vertex on the surface of the anode wires:
+
+  #+BEGIN_SRC sh
+    [name="anode_wire_surface" type="genvtx::cylinder_model_vg"]
+
+    #@config Vertex generation from the surface of the anode wires
+
+    #@description Logging priority
+    logging.priority  : string = "warning"
+
+    #@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)
+    origin : string  = "category='drift_cell_anodic_wire' module={*} side={*} layer={*} row={*}"
+
+    #@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")
+    mode   : string  = "surface"
+
+    #@description Surface mode box side face activation
+    mode.surface.side   : boolean = 1
+
+    #@description Surface mode box bottom face activation
+    mode.surface.bottom : boolean = 0
+
+    #@description Surface mode box top face activation
+    mode.surface.top    : boolean = 0
+  #+END_SRC
+
+- Generate vertex on the surface of the field wires:
+
+  #+BEGIN_SRC sh
+    [name="field_wire_surface" type="genvtx::cylinder_model_vg"]
+
+    #@config Vertex generation from the surface of the field wires
+
+    #@description Logging priority
+    logging.priority  : string = "warning"
+
+    #@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)
+    origin : string  = "category='drift_cell_field_wire' module={*} side={*} layer={*} row={*} set={*} wire={*}"
+
+    #@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")
+    mode   : string  = "surface"
+
+    #@description Surface mode box side face activation
+    mode.surface.side   : boolean = 1
+
+    #@description Surface mode box bottom face activation
+    mode.surface.bottom : boolean = 0
+
+    #@description Surface mode box top face activation
+    mode.surface.top    : boolean = 0
+  #+END_SRC
