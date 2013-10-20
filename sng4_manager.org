@@ -39,7 +39,7 @@ next one which allows the reading of this file by =datatools::properties= object
 ** Main configuration level
 Here, general options such as verbosity, debug flags are passed to sng4
 manager. By the way, some of these options can be overloaded by the
-=sng4_module= which configuration can be changed in [[file:simulation_config.org][simulation_config]].
+=sng4_module= which configuration can be changed in [[file:simulation_config.org][the main simulation file]].
 #+BEGIN_SRC sh
   [name="manager"]
 
@@ -59,7 +59,7 @@ manager. By the way, some of these options can be overloaded by the
 ** Event generator
 The following code holds the =genbb= manager to give access to several primary
 generators from neutrinoless double beta decay, to\nbsp^{214}Bi/^{208}Tl contamination or
-cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb_manager]] file.
+cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb manager]] file.
 #+BEGIN_SRC sh
   [name="event_generator"]
 
@@ -70,7 +70,7 @@ cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb_manager]] file.
 
 ** Vertex generation
 This part basically provides the location of vertex generator implemented by
-[[https://nemo.lpc-caen.in2p3.fr/wiki/genvtx][genvtx]]. See [[file:sngenvertex_manager.org][sngenvertex_manager]] file.
+[[https://nemo.lpc-caen.in2p3.fr/wiki/genvtx][genvtx]]. See [[file:sngenvertex_manager.org][sngenvertex manager]] file.
 #+BEGIN_SRC sh
   [name="vertex_generator"]
 
