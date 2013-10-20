@@ -24,7 +24,7 @@ We also globally define the current directory
 #+NAME: html-postamble
 #+BEGIN_SRC sh :tangle no :results output
   if [ -d .git ]; then
-      LC_MESSAGES=en git --no-pager log -1 HEAD --pretty=format:"File under git version control - commit %h - %cr"
+      LC_MESSAGES=en git --no-pager log -1 HEAD --date=short --pretty=format:"File under git version control - commit %h - %ad"
   fi
 #+END_SRC
 *** Project definition
@@ -533,7 +533,7 @@ We replace all occurences of =.org= that are related to internal =org= files to
 #+NAME: vc-status
 #+BEGIN_SRC sh :results output :tangle no
   if [ -d .git ]; then
-      log=$(LC_MESSAGES=en git --no-pager log -1 HEAD --pretty=format:"commit \texttt{%h} -- %cr")
+      log=$(LC_MESSAGES=en git --no-pager log -1 HEAD --date=short --pretty=format:"commit %h - %ad")
       echo "\renewcommand*{\PrelimWords}{\textnormal{\small File under \texttt{git} version control}}"
       echo "\renewcommand*{\PrelimText}{\textnormal{\small\textcolor{gray}{\PrelimWords\ -- ${log}}}}"
   fi
@@ -616,7 +616,7 @@ Code fragments are syntax highlighted using [[https://code.google.com/p/minted/]
      :latex-class "snemo-simu"
      :latex-header-extra ""
      ))
-  ;;(org-publish-project "pdf-documentation" 'force)
+  (org-publish-project "pdf-documentation" 'force)
 #+END_SRC
 
 ** Join exporter into one
