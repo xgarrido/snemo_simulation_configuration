@@ -534,7 +534,7 @@ We replace all occurences of =.org= that are related to internal =org= files to
 #+NAME: vc-status
 #+BEGIN_SRC sh :results output :tangle no
   if [ -d .git ]; then
-      log=$(LC_MESSAGES=en git --no-pager log -1 HEAD --date=short --pretty=format:"commit %h - %ad")
+      log=$(LC_MESSAGES=en git --no-pager log -1 HEAD --date=short --pretty=format:"commit \texttt{%h} - %ad")
       echo "\renewcommand*{\PrelimWords}{\textnormal{\small File under \texttt{git} version control}}"
       echo "\renewcommand*{\PrelimText}{\textnormal{\small\textcolor{gray}{\PrelimWords\ -- ${log}}}}"
   fi
