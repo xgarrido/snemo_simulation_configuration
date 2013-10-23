@@ -281,6 +281,7 @@ Insert preamble
     #@description Generation mode ("surface" or "bulk")
     mode   : string = "bulk"
   #+END_SRC
+
 - Generate vertex from the surface of the source foil:
   #+BEGIN_SRC sh
     [name="source_strips_internal_surface" type="genvtx::box_model_vg"]
@@ -307,6 +308,7 @@ Insert preamble
   #+END_SRC
 
 *** External source strips
+
 - Generate vertex from the bulk volume of the source foil:
   #+BEGIN_SRC sh
     [name="source_strips_external_bulk" type="genvtx::box_model_vg"]
@@ -325,6 +327,7 @@ Insert preamble
     #@description Generation mode ("surface" or "bulk")
     mode   : string = "bulk"
   #+END_SRC
+
 - Generate vertex from the surface of the source foil:
   #+BEGIN_SRC sh
     [name="source_strips_external_surface" type="genvtx::box_model_vg"]
@@ -351,6 +354,7 @@ Insert preamble
   #+END_SRC
 
 *** Combined vertex
+
 - Generate vertex from both the bulk volume of all the source foils:
   #+BEGIN_SRC sh
     [name="source_strips_bulk" type="genvtx::combined_vg"]
@@ -370,6 +374,7 @@ Insert preamble
     generators.source_strips_external_bulk.absolute_weight : real  = 0.054
     generators.source_strips_internal_bulk.absolute_weight : real  = 1.0
   #+END_SRC
+
 - Generate vertex from the surface of all the source foils:
   #+BEGIN_SRC sh
     [name="source_strips_surface" type="genvtx::combined_vg"]
