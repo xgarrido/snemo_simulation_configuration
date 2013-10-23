@@ -340,7 +340,7 @@ Insert preamble
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     origin : string = "category='source_strip' module={*} strip={0;35}"
 
-    #@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)
+    #@description Generation mode ("surface" or "bulk")
     mode   : string = "surface"
 
     #@description Surface mode box back face activation
