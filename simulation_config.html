@@ -187,12 +187,23 @@ for the JavaScript code in this tag.
 This file contains a SN@ilWare configuration to run SuperNEMO simulations. The
 current version is hosted at
 <a href="https://github.com/xgarrido/snemo_simulation_configuration">https://github.com/xgarrido/snemo_simulation_configuration</a> under <code>git</code> version
-control. For more details on running SuperNEMO simulations and the concept
-behind modules/services see <a href="http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=1889">these mandatory presentations</a> given by F. Mauger.
+control. You can clone this repository by doing
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">git clone https://github.com/xgarrido/snemo_simulation_configuration snemo_configuration
+</pre>
+</div>
+
+<p>
+This will create a directory <code>snemo_configuration</code> in the working directory
+containing all the source files needed to configure and to setup SN@ilWare
+programs.
 </p>
 
 <p>
-The following file is organised using <a href="http://orgmode.org/worg/org-contrib/babel/index.html">org-babel</a> and its ability to execute
+The configuration files are organised using <a href="http://orgmode.org/worg/org-contrib/babel/index.html">org-babel</a> and its ability to execute
 source code. It requires then a recent installation of emacs<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup> which bundles
 <code>org</code>. Without entering into too much details regarding <code>org-babel</code> abilities,
 the basic idea is to give a "literate" way to navigate through the different
@@ -217,7 +228,9 @@ is asynchronous and thus, does not freeze your emacs (<code>org-babel-tangle</co
 SN@ilWare implements the concept of data processing pipeline. An event record
 object is passed through a chain of data processing modules, each of them being
 responsible for a given task. Modules and services are declared in Section
-<a href="#sec-3">3</a> and Section <a href="#sec-4">4</a>.
+<a href="#sec-3">3</a> and Section <a href="#sec-4">4</a>. For more details on running SuperNEMO simulations
+and the concept behind modules/services see <a href="http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=1889">these mandatory presentations</a> given
+by F. Mauger.
 </p>
 </div>
 
@@ -354,6 +367,10 @@ pipeline processing.
 <div id="outline-container-sec-3-1" class="outline-3">
 <h3 id="sec-3-1"><span class="section-number-3">3.1</span> I/O modules</h3>
 <div class="outline-text-3" id="text-3-1">
+<p>
+This section defines some I/O output modules to store data record. By default,
+all I/O files are saved in <code>/tmp/${USER}/snemo.d</code> directory.
+</p>
 </div>
 
 <div id="outline-container-sec-3-1-1" class="outline-4">
@@ -3374,9 +3391,63 @@ output_files : string[2] as <span class="org-variable-name">path</span> =     <s
 <h2 id="sec-5"><span class="section-number-2">5</span> Running SN@ilWare processing chain</h2>
 <div class="outline-text-2" id="text-5">
 <p>
+To run and to exploit results from SN@ilWare, you first need to export<sup><a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a></sup> the
+<code>SNAILWARE_SIMULATION_DIR</code> path. Everything is done with respect to this
+directory.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-builtin">export</span> <span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>=${<span class="org-variable-name">PWD</span>}
+</pre>
+</div>
+
+<p>
 Running processing pipeline is done by the <code>dpp_processing</code> program provided by
 <code>dpp</code> library. Its call is pretty simple and only implies to have a module
-manager file. Depending on the module you want to run, several libraries must be loaded
+manager file. Depending on the module you want to run, several libraries must be
+loaded. For example, if you only want to do simulation, you can run the
+following command
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">dpp_processing                                                                                        <span class="org-sh-escaped-newline">\</span>
+    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/module_manager.conf <span class="org-sh-escaped-newline">\</span>
+    --module simulation_chain                                                                         <span class="org-sh-escaped-newline">\</span>
+    --load-dll sng4                                                                                   <span class="org-sh-escaped-newline">\</span>
+    --max-records 100
+</pre>
+</div>
+
+<p>
+It will launch 100 simulated events using the <code>simulation_chain</code> module as
+setup <a href="#sec-3-3-2">in this section</a>.
+</p>
+
+<p>
+In the same way you can run the calibration chain by doing
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">dpp_processing                                                                                        <span class="org-sh-escaped-newline">\</span>
+    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/module_manager.conf <span class="org-sh-escaped-newline">\</span>
+    --module calibration_chain                                                                        <span class="org-sh-escaped-newline">\</span>
+    --load-dll sng4                                                                                   <span class="org-sh-escaped-newline">\</span>
+    --input-file /tmp/$<span class="org-variable-name">USER</span>/io_output_simulated.brio
+</pre>
+</div>
+<p>
+where file <code>/tmp/$USER/io_output_simulated.brio</code> is the one produced by the
+<code>simulation_chain</code> module as defined and setup <a href="#sec-3-1-2">in this section</a>.
+</p>
+
+<p>
+All the different process steps can then be run using the dedicated module such
+as <a href="#sec-3-4-2">clustering</a> or <a href="#sec-3-4-3">fitting</a> Geiger cells. The most complete mode is the
+<code>full_chain</code> module where all process are done from simulation &rarr; calibration &rarr;
+track reconstruction.
 </p>
 </div>
 </div>
@@ -3389,14 +3460,21 @@ At the time of writing this document, emacs version is 24.2.
 </p></div>
 
 <div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
-Emacs lisp function can be run using <code>ALT-x</code> command and typing the function name.
+Emacs lisp function can be run using <code>ALT-x</code> command and typing the function
+name.
+</p></div>
+
+<div class="footdef"><sup><a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a></sup> <p class="footpara">
+Assuming you are using a recent version of <code>bash</code>. With <code>c-shell</code> and
+derivatives <code>export</code> is replace by <code>setenv</code>. Nevertheless, this setup has never
+been tested under this shells.
 </p></div>
 
 
 </div>
 </div></div>
 <div id="postamble" class="status">
-File under git version control - commit 7e408bd - 2013-10-20
+File under git version control - commit c8129d9 - 2013-10-20
 </div>
 </body>
 </html>

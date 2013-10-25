@@ -260,12 +260,12 @@ scintillator blocks:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">origin : string  = "category=calorimeter_wrapper module={*} side={1} column={0;1;2;4;19} row={0;1;2;12;13}"</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='calorimeter_wrapper' module={*} side={*} column={*} row={*}"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">origin : string = "category=calorimeter_wrapper module={*} side={1} column={0;1;2;4;19} row={0;1;2;12;13}"</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='calorimeter_wrapper' module={*} side={*} column={*} row={*}"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"bulk"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 </pre>
 </div>
 </li>
@@ -282,11 +282,11 @@ scintillator blocks:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='xcalo_wrapper' module={*} side={*} column={*} row={*}"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='xcalo_wrapper' module={*} side={*} column={*} row={*}"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"bulk"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 </pre>
 </div>
 </li>
@@ -303,10 +303,11 @@ calorimeter's scintillator blocks:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='gveto_wrapper' module={*} side={*} wall={*} column={*}"</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"bulk"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='gveto_wrapper' module={*} side={*} wall={*} column={*}"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 </pre>
 </div>
 </li>
@@ -322,11 +323,11 @@ mode   : <span class="org-variable-name">string</span>  = <span class="org-strin
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='calorimeter_wrapper' module={*} side={*} column={*} row={*}"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='calorimeter_wrapper' module={*} side={*} column={*} row={*}"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"surface"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box top face activation</span>
 mode.surface.top  : <span class="org-variable-name">boolean</span> = 1
@@ -345,11 +346,11 @@ mode.surface.top  : <span class="org-variable-name">boolean</span> = 1
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='xcalo_wrapper' module={*} side={*} column={*} row={*}"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='xcalo_wrapper' module={*} side={*} column={*} row={*}"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"surface"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box top face activation</span>
 mode.surface.top  : <span class="org-variable-name">boolean</span> = 1
@@ -368,11 +369,11 @@ mode.surface.top  : <span class="org-variable-name">boolean</span> = 1
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='gveto_wrapper' module={*} side={*} wall={*} column={*}"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='gveto_wrapper' module={*} side={*} wall={*} column={*}"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"surface"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box top face activation</span>
 mode.surface.top  : <span class="org-variable-name">boolean</span> = 1
@@ -409,11 +410,11 @@ Insert preamble
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='drift_cell_anodic_wire' module={*} side={*} layer={*} row={*}"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='drift_cell_anodic_wire' module={*} side={*} layer={*} row={*}"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"bulk"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 </pre>
 </div>
 </li>
@@ -429,11 +430,11 @@ mode   : <span class="org-variable-name">string</span>  = <span class="org-strin
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='drift_cell_anodic_wire' module={*} side={*} layer={*} row={*}"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='drift_cell_anodic_wire' module={*} side={*} layer={*} row={*}"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"surface"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box side face activation</span>
 mode.surface.side   : <span class="org-variable-name">boolean</span> = 1
@@ -458,11 +459,11 @@ mode.surface.top    : <span class="org-variable-name">boolean</span> = 0
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='drift_cell_field_wire' module={*} side={*} layer={*} row={*} set={*} wire={*}"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='drift_cell_field_wire' module={*} side={*} layer={*} row={*} set={*} wire={*}"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"surface"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box side face activation</span>
 mode.surface.side   : <span class="org-variable-name">boolean</span> = 1
@@ -519,14 +520,15 @@ logging.priority  : <span class="org-variable-name">string</span> = <span class=
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
 geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo(&gt;=2)"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='source_strip' module={*} strip=[1;34]"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='source_strip' module={*} strip=[1;34]"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"bulk"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 </pre>
 </div>
 </li>
+
 <li>Generate vertex from the surface of the source foil:
 <div class="org-src-container">
 
@@ -540,11 +542,11 @@ logging.priority  : <span class="org-variable-name">string</span> = <span class=
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
 geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo(&gt;=2)"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='source_strip' module={*} strip=[1;34]"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='source_strip' module={*} strip=[1;34]"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"surface"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box back face activation</span>
 mode.surface.back  : <span class="org-variable-name">boolean</span> = 1
@@ -574,14 +576,15 @@ logging.priority  : <span class="org-variable-name">string</span> = <span class=
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
 geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo(&gt;=2)"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='source_strip' module={*} strip={0;35}"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='source_strip' module={*} strip={0;35}"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"bulk"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 </pre>
 </div>
 </li>
+
 <li>Generate vertex from the surface of the source foil:
 <div class="org-src-container">
 
@@ -595,11 +598,11 @@ logging.priority  : <span class="org-variable-name">string</span> = <span class=
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
 geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo(&gt;=2)"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='source_strip' module={*} strip={0;35}"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='source_strip' module={*} strip={0;35}"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"surface"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box back face activation</span>
 mode.surface.back  : <span class="org-variable-name">boolean</span> = 1
@@ -638,6 +641,7 @@ generators.source_strips_internal_bulk.absolute_weight : <span class="org-variab
 </pre>
 </div>
 </li>
+
 <li>Generate vertex from the surface of all the source foils:
 <div class="org-src-container">
 
@@ -692,11 +696,11 @@ Insert preamble
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"notice"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='hall'"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='hall'"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"surface"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box back face activation</span>
 mode.surface.back   : <span class="org-variable-name">boolean</span> = 1
@@ -729,11 +733,11 @@ mode.surface.right  : <span class="org-variable-name">boolean</span> = 1
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"notice"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The rule that describes the geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
-origin : <span class="org-variable-name">string</span>  = <span class="org-string">"category='hall'"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='hall'"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode used for vertex generator from the underlying box model associated to the target logical volume ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span>  = <span class="org-string">"bulk"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 </pre>
 </div>
 </li>
@@ -743,7 +747,7 @@ mode   : <span class="org-variable-name">string</span>  = <span class="org-strin
 </div>
 </div>
 <div id="postamble" class="status">
-File under git version control - commit 7e408bd - 2013-10-20
+File under git version control - commit c8129d9 - 2013-10-20
 </div>
 </body>
 </html>
