@@ -10,8 +10,15 @@
 This file contains a SN@ilWare configuration to run SuperNEMO simulations. The
 current version is hosted at
 [[https://github.com/xgarrido/snemo_simulation_configuration]] under =git= version
-control. For more details on running SuperNEMO simulations and the concept
-behind modules/services see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=1889][these mandatory presentations]] given by F. Mauger.
+control. You can clone this repository by doing
+
+#+BEGIN_SRC sh
+  git clone https://github.com/xgarrido/snemo_simulation_configuration snemo_configuration
+#+END_SRC
+
+This will create a directory =snemo_configuration= in the working directory
+containing all the source files needed to configure and to setup SN@ilWare
+programs.
 
 The following file is organised using [[http://orgmode.org/worg/org-contrib/babel/index.html][org-babel]] and its ability to execute
 source code. It requires then a recent installation of emacs[1] which bundles
@@ -35,7 +42,9 @@ is asynchronous and thus, does not freeze your emacs (=org-babel-tangle=
 SN@ilWare implements the concept of data processing pipeline. An event record
 object is passed through a chain of data processing modules, each of them being
 responsible for a given task. Modules and services are declared in Section
-[[Modules]] and Section [[Services]].
+[[Modules]] and Section [[Services]]. For more details on running SuperNEMO simulations
+and the concept behind modules/services see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=1889][these mandatory presentations]] given
+by F. Mauger.
 
 ** Module manager
 :PROPERTIES:
@@ -242,6 +251,9 @@ expand the =module_preamble= code.
 :PROPERTIES:
 :TANGLE: io_modules.conf
 :END:
+
+This section defines some I/O output modules to store data record. By default,
+all I/O files are saved in =/tmp/${USER}/snemo.d= directory.
 
 *** Insert preamble
 #+BEGIN_SRC sh :noweb yes
@@ -482,8 +494,6 @@ properties are used and serialized.
   analysis.source_isotope : string = "Se82"
 #+END_SRC
 *** Tracker simulation to calibration data
-:PROPERTIES:
-:END:
 
 This module converts simulated data into calibrated data for SuperNEMO
 tracker. It is a mock digitization/calibration data module of Monte-Carlo
@@ -650,8 +660,6 @@ for the quenching of alpha particles.
 #+END_SRC
 
 *** Clustering algorithms
-:PROPERTIES:
-:END:
 This section holds different modules all related to tracker clustering.
 
 **** Basic tracker clustering
@@ -2078,8 +2086,49 @@ Finally, all histograms created can be stored inside ROOT files or XML archives.
 #+END_SRC
 
 * Running SN@ilWare processing chain
-:PROPERTIES:
-:END:
+
+To run and to exploit results from SN@ilWare, you first need to export[3] the
+=SNAILWARE_SIMULATION_DIR= path. Everything is done with respect to this
+directory.
+
+#+BEGIN_SRC sh
+  export SNAILWARE_SIMULATION_DIR=${PWD}
+#+END_SRC
+
 Running processing pipeline is done by the =dpp_processing= program provided by
 =dpp= library. Its call is pretty simple and only implies to have a module
-manager file. Depending on the module you want to run, several libraries must be loaded
+manager file. Depending on the module you want to run, several libraries must be
+loaded. For example, if you only want to do simulation, you can run the
+following command
+
+#+BEGIN_SRC sh
+  dpp_processing                                                                                        \
+      --module-manager-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/module_manager.conf \
+      --module simulation_chain                                                                         \
+      --load-dll sng4                                                                                   \
+      --max-records 100
+#+END_SRC
+
+It will launch 100 simulated events using the =simulation_chain= module as
+setup [[G4 simulation][in this section]].
+
+In the same way you can run the calibration chain by doing
+
+#+BEGIN_SRC sh
+  dpp_processing                                                                                        \
+      --module-manager-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/module_manager.conf \
+      --module calibration_chain                                                                        \
+      --load-dll sng4                                                                                   \
+      --input-file /tmp/$USER/io_output_simulated.brio
+#+END_SRC
+where file =/tmp/$USER/io_output_simulated.brio= is the one produced by the
+=simulation_chain= module as defined and setup [[Simulation output][in this section]].
+
+All the different process steps can then be run using the dedicated module such
+as [[Clustering algorithms][clustering]] or [[Fitting algorithm][fitting]] Geiger cells. The most complete mode is the
+=full_chain= module where all process are done from simulation \to calibration \to
+track reconstruction.
+
+[3] Assuming you are using a recent version of =bash=. With =c-shell= and
+derivatives =export= is replace by =setenv=. Nevertheless, this setup has never
+been tested under this shells.
