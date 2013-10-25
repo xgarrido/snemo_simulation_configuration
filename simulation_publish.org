@@ -618,6 +618,7 @@ Code fragments are syntax highlighted using [[https://code.google.com/p/minted/]
      :latex-header-extra ""
      ))
   (org-publish-project "pdf-documentation" 'force)
+  (shell-command "mkdir -p latex.d && mv *.{tex,auxlock,toc,out,fls,aux,pdf,log,fdb_latexmk,sty} latex.d/.")
 #+END_SRC
 
 ** Join exporter into one
