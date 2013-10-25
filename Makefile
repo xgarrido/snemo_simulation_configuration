@@ -41,12 +41,17 @@ push: org
 	@ssh garrido@lx3.lal.in2p3.fr "cd $(LAL_DIRECTORY) && mkdir -p $(GIT_BRANCH); if ( -d current ) then; rm current; endif; ln -sf $(GIT_BRANCH) current"
 	@rsync -e ssh -avP --delete --recursive --force $(GIT_BRANCH)/*.{conf,def} garrido@lx3.lal.in2p3.fr:$(LAL_DIRECTORY)/$(GIT_BRANCH)/.
 
-doc: $(FILES) simulation_publish.org
+doc: html pdf
+
+html:
 	@mkdir -p doc/html/css
-	@$(BATCH) --eval '(org-babel-tangle-file "simulation_publish.org")'
-	@$(BATCH) --eval '(org-babel-load-file   "simulation_publish.org")'
-	@rm simulation_publish.el
-	@echo "NOTICE: Documentation published to doc/"
+	@$(BATCH) --eval '(org-babel-tangle-file "simulation_publish.org")' \
+	--eval '(org-babel-load-file   "simulation_publish.org")' --visit "simulation_publish.org" --funcall org-publish-html
+
+pdf:
+	@mkdir -p doc/html/css
+	@$(BATCH) --eval '(org-babel-tangle-file "simulation_publish.org")' \
+	--eval '(org-babel-load-file   "simulation_publish.org")' --visit "simulation_publish.org" --funcall org-publish-pdf
 
 clean:
 	@rm -f *.tangle *.tar.gz *.conf *.def *.aux *.tex *.fls *fdb_latexmk *.log *.pdf *~ *.el
