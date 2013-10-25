@@ -20,7 +20,7 @@ This will create a directory =snemo_configuration= in the working directory
 containing all the source files needed to configure and to setup SN@ilWare
 programs.
 
-The following file is organised using [[http://orgmode.org/worg/org-contrib/babel/index.html][org-babel]] and its ability to execute
+The configuration files are organised using [[http://orgmode.org/worg/org-contrib/babel/index.html][org-babel]] and its ability to execute
 source code. It requires then a recent installation of emacs[1] which bundles
 =org=. Without entering into too much details regarding =org-babel= abilities,
 the basic idea is to give a "literate" way to navigate through the different
@@ -35,7 +35,8 @@ is asynchronous and thus, does not freeze your emacs (=org-babel-tangle=
 "occupies" emacs during its execution).
 
 [1] At the time of writing this document, emacs version is 24.2.
-[2] Emacs lisp function can be run using =ALT-x= command and typing the function name.
+[2] Emacs lisp function can be run using =ALT-x= command and typing the function
+name.
 
 * Pipeline general configuration
 
