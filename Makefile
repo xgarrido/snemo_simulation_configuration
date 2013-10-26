@@ -47,13 +47,13 @@ html:
 	@mkdir -p doc/html/css
 	@$(BATCH) --eval '(org-babel-tangle-file "simulation_publish.org")' \
 	--eval '(org-babel-load-file   "simulation_publish.org")' --visit "simulation_publish.org" --funcall org-publish-html
+	@cp -r doc/html/*.html .
 	@rm -f simulation_publish.el snemo-simu-latex.sty
 
 pdf:
 	@mkdir -p doc/html/css
 	@$(BATCH) --eval '(org-babel-tangle-file "simulation_publish.org")' \
 	--eval '(org-babel-load-file   "simulation_publish.org")' --visit "simulation_publish.org" --funcall org-publish-pdf
-	@cp -r doc/html/* .
 	@rm -f simulation_publish.el snemo-simu-latex.sty
 
 clean:
