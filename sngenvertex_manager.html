@@ -7,86 +7,8 @@
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Xavier Garrido" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
-
-  table { border-collapse:collapse; }
-  td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  /*]]>*/-->
-</style>
 <link rel="stylesheet" href="css/styles.css">
-                 <link rel="stylesheet" href="css/org-pygments.css">
+               <link rel="stylesheet" href="css/org-pygments.css">
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -137,12 +59,12 @@ for the JavaScript code in this tag.
 <body>
 <div id="preamble" class="status">
 <a href="simulation_config.html">main</a>
-                     <a href="sngeometry_manager.html">geometry manager</a>
-                     <a href="sng4_manager.html">G4 manager</a>
-                     <a href="sngenbb_manager.html">genbb manager</a>
-                     <a href="sngenvertex_manager.html">vertex manager</a>
-                     <a href="step_hit_processor_factory.html">step hit processor</a>
-                     <a href="snanalysis_manager.html">analysis</a>
+                   <a href="sngeometry_manager.html">geometry manager</a>
+                   <a href="sng4_manager.html">G4 manager</a>
+                   <a href="sngenbb_manager.html">genbb manager</a>
+                   <a href="sngenvertex_manager.html">vertex manager</a>
+                   <a href="step_hit_processor_factory.html">step hit processor</a>
+                   <a href="snanalysis_manager.html">analysis</a>
 </div>
 <div id="content">
 <h1 class="title">SNGenvertex Manager Configuration</h1>
@@ -248,7 +170,7 @@ Insert preamble
 </div>
 
 <ul class="org-ul">
-<li>Generate vertex in the bulk volume of the wrapper for the main calorimeter's
+<li>Generate vertex in the bulk volume of the wrapper for the main calorimeter&rsquo;s
 scintillator blocks:
 
 <div class="org-src-container">
@@ -270,7 +192,7 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 </div>
 </li>
 
-<li>Generate vertex in the bulk volume of the wrapper for the X-calorimeter's
+<li>Generate vertex in the bulk volume of the wrapper for the X-calorimeter&rsquo;s
 scintillator blocks:
 
 <div class="org-src-container">
@@ -292,7 +214,7 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 </li>
 
 <li>Generate vertex in the bulk volume of the wrapper for the &gamma; veto
-calorimeter's scintillator blocks:
+calorimeter&rsquo;s scintillator blocks:
 
 <div class="org-src-container">
 
@@ -312,7 +234,7 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 </div>
 </li>
 
-<li>Generate vertex from the surface of the main calorimeter's scintillator blocks:
+<li>Generate vertex from the surface of the main calorimeter&rsquo;s scintillator blocks:
 
 <div class="org-src-container">
 
@@ -335,7 +257,7 @@ mode.surface.top  : <span class="org-variable-name">boolean</span> = 1
 </div>
 </li>
 
-<li>Generate vertex from the surface of the X-calorimeter's scintillator blocks:
+<li>Generate vertex from the surface of the X-calorimeter&rsquo;s scintillator blocks:
 
 <div class="org-src-container">
 
@@ -358,7 +280,7 @@ mode.surface.top  : <span class="org-variable-name">boolean</span> = 1
 </div>
 </li>
 
-<li>Generate vertex from the surface of the &gamma; veto's scintillator blocks:
+<li>Generate vertex from the surface of the &gamma; veto&rsquo;s scintillator blocks:
 
 <div class="org-src-container">
 
@@ -484,7 +406,7 @@ mode.surface.top    : <span class="org-variable-name">boolean</span> = 0
 <h3 id="sec-3-3"><span class="section-number-3">3.3</span> Source vertices</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
-Since there are two types of source strips namely "internal" and "external" with
+Since there are two types of source strips namely &ldquo;internal&rdquo; and &ldquo;external&rdquo; with
 different size and then different isotope mass, we first define independent
 vertices for each of this model and then use a <code>genvtx::combined_vg</code> model to
 combine with appropriate weights. These vertices are only available with
@@ -747,7 +669,7 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 </div>
 </div>
 <div id="postamble" class="status">
-File under git version control - commit c8129d9 - 2013-10-20
+File under git version control - commit 643cf43 - 2013-10-26
 </div>
 </body>
 </html>
