@@ -20,6 +20,10 @@ We also globally define the current directory
   (setq doc-directory (concat this-directory "doc/"))
 #+END_SRC
 ** HTML export
+*** Requirements
+#+BEGIN_SRC emacs-lisp
+  (require 'ox-html)
+#+END_SRC
 *** Building html postamble
 #+NAME: html-postamble
 #+BEGIN_SRC sh :tangle no :results output
@@ -29,44 +33,48 @@ We also globally define the current directory
 #+END_SRC
 *** Project definition
 #+BEGIN_SRC emacs-lisp :noweb yes
-  (setq org-html-style-default "")
-    (setq org-html-htmlize-output-type 'css)
+  (unless (boundp 'org-publish-project-alist)
+    (setq org-publish-project-alist nil))
 
-    (add-to-list
-     'org-publish-project-alist
-     `("html-documentation"
-       :base-directory ,this-directory
-       :base-extension "org"
-       :publishing-directory ,(expand-file-name "html" doc-directory)
-       :publishing-function org-html-publish-to-html
-       :exclude "simulation_publish.org"
-       :section-numbers 2
-       :with-toc        2
-       :time-stamp-file nil
-       :html-head "<link rel=\"stylesheet\" href=\"css/styles.css\">
-                   <link rel=\"stylesheet\" href=\"css/org-pygments.css\">"
-       :html-preamble "<a href=\"simulation_config.html\">main</a>
-                       <a href=\"sngeometry_manager.html\">geometry manager</a>
-                       <a href=\"sng4_manager.html\">G4 manager</a>
-                       <a href=\"sngenbb_manager.html\">genbb manager</a>
-                       <a href=\"sngenvertex_manager.html\">vertex manager</a>
-                       <a href=\"step_hit_processor_factory.html\">step hit processor</a>
-                       <a href=\"snanalysis_manager.html\">analysis</a>
-                       "
-       :html-postamble "<<html-postamble()>>"))
-  (org-publish-project "html-documentation" 'force)
-  (copy-file (expand-file-name "simulation_config.html" (expand-file-name "html" doc-directory))
-             (expand-file-name "index.html" (expand-file-name "html" doc-directory)) t)
+  (setq org-html-style-default "")
+  (setq org-html-htmlize-output-type 'css)
+
+  (add-to-list
+   'org-publish-project-alist
+   `("html-documentation"
+     :base-directory ,this-directory
+     :base-extension "org"
+     :publishing-directory ,(expand-file-name "html" doc-directory)
+     :publishing-function org-html-publish-to-html
+     :exclude "simulation_publish.org"
+     :section-numbers 2
+     :with-toc        2
+     :time-stamp-file nil
+     :html-head "<link rel=\"stylesheet\" href=\"css/styles.css\">
+                 <link rel=\"stylesheet\" href=\"css/org-pygments.css\">"
+     :html-preamble "<a href=\"simulation_config.html\">main</a>
+                     <a href=\"sngeometry_manager.html\">geometry manager</a>
+                     <a href=\"sng4_manager.html\">G4 manager</a>
+                     <a href=\"sngenbb_manager.html\">genbb manager</a>
+                     <a href=\"sngenvertex_manager.html\">vertex manager</a>
+                     <a href=\"step_hit_processor_factory.html\">step hit processor</a>
+                     <a href=\"snanalysis_manager.html\">analysis</a>
+                     "
+     :html-postamble "<<html-postamble()>>"))
   #+END_SRC
 *** Markup filtering
 We replace all occurences of =.org= that are related to internal =org= files to
 =.html= to make link working all together.
+
 #+BEGIN_SRC emacs-lisp
-  (defun snemo-filter-link (contents backend info)
+  (defun html::filter-keyword (contents backend info)
     (when (eq backend 'html)
-      (replace-regexp-in-string ".org" ".html" contents)))
-  (add-to-list 'org-export-filter-link-functions 'snemo-filter-link)
+      (replace-regexp-in-string "SN@ilWare"
+                                "<font style=\"text-decoration: overline;\">SN@il</font><font style=\"text-decoration: underline;\">Ware</font>"
+                                contents)))
+  ;;(add-to-list 'org-export-filter-final-output-functions 'html::filter-keyword)
 #+END_SRC
+
 *** CSS stylesheets
 **** Main stylesheets
 :PROPERTIES:
@@ -80,6 +88,7 @@ We replace all occurences of =.org= that are related to internal =org= files to
 #+END_SRC
 
 ***** Main =css= definitions
+****** Body
 #+BEGIN_SRC css
   body {
       width:860px;
@@ -89,14 +98,12 @@ We replace all occurences of =.org= that are related to internal =org= files to
       color:#777;
       font-weight:300;
   }
+#+END_SRC
 
+****** Headline
+#+BEGIN_SRC css
   h1, h2, h3, h4, h5, h6 {
       color:#222;
-      margin:0 0 20px;
-  }
-
-
-  p, ul, ol, table, pre, dl {
       margin:0 0 20px;
   }
 
@@ -120,7 +127,10 @@ We replace all occurences of =.org= that are related to internal =org= files to
   h4, h5, h6 {
       font-style: italic;
   }
+#+END_SRC
 
+****** Link
+#+BEGIN_SRC css
   a {
       color:#39c;
       font-weight:400;
@@ -140,6 +150,13 @@ We replace all occurences of =.org= that are related to internal =org= files to
 
   a:hover small {
       color:#777;
+  }
+#+END_SRC
+
+****** Code, table, image
+#+BEGIN_SRC css
+  p, ul, ol, table, pre, dl {
+      margin:0 0 20px;
   }
 
   blockquote {
@@ -188,7 +205,68 @@ We replace all occurences of =.org= that are related to internal =org= files to
   img {
       max-width:100%;
   }
+#+END_SRC
+****** Misc. (bold, =hr= style)
+#+BEGIN_SRC css
+  #content {
+      width:700px;
+      float:right;
+      padding-bottom:50px;
+  /* border:1px solid #e5e5e5; */
+  /* border-width:1px 0; */
+  /* padding:20px 0; */
+  /* margin:0 0 20px; */
+  }
 
+  strong {
+      color:#222;
+      font-weight:700;
+  }
+  small {
+      font-size:11px;
+  }
+
+  hr {
+      border:0;
+      background:#e5e5e5;
+      height:1px;
+      margin:0 0 20px;
+  }
+#+END_SRC
+
+****** Scrollbars
+#+BEGIN_SRC css
+  .scrollbar-container {
+      position: absolute;
+      top: 0; bottom: 0; left: 0; right: 0;
+      margin: 20px;
+
+      border: 4px solid rgba(0, 0, 0, 0.2);
+      overflow: auto;
+      background-color: whiteSmoke;
+  }
+  .scrollbar-container .inner {
+      height: 2011px;
+      width: 1985px;
+      padding: 1em;
+      background-color: white;
+      font-family: sans-serif;
+  }
+  ::-webkit-scrollbar {
+      background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+      border: solid whiteSmoke 4px;
+      border-radius:15px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(0, 0, 0, 0.3);
+  }
+#+END_SRC
+
+****** Header
+#+BEGIN_SRC css
   header {
       width:270px;
       float:left;
@@ -256,11 +334,6 @@ We replace all occurences of =.org= that are related to internal =org= files to
       box-shadow: inset 0px 2px 2px 0px #ddd;
   }
 
-  strong {
-      color:#222;
-      font-weight:700;
-  }
-
   header ul li + li {
       width:88px;
       border-left:1px solid #fff;
@@ -276,35 +349,20 @@ We replace all occurences of =.org= that are related to internal =org= files to
       display:block;
       color:#222;
   }
+#+END_SRC
 
-  #content {
-      width:700px;
-      float:right;
-      padding-bottom:50px;
-      /* border:1px solid #e5e5e5; */
-      /* border-width:1px 0; */
-      /* padding:20px 0; */
-      /* margin:0 0 20px; */
-  }
-
-  small {
-      font-size:11px;
-  }
-
-  hr {
-      border:0;
-      background:#e5e5e5;
-      height:1px;
-      margin:0 0 20px;
-  }
-
+****** Footer
+#+BEGIN_SRC css
   footer {
       width:270px;
       float:left;
       position:fixed;
       bottom:50px;
   }
+#+END_SRC
 
+****** Preamble, postamble
+#+BEGIN_SRC css
   #preamble {
       /* font-size:1.1em; */
       text-transform:uppercase;
@@ -332,7 +390,10 @@ We replace all occurences of =.org= that are related to internal =org= files to
       float:right;
       font-size:10px;
   }
+#+END_SRC
 
+****** Adapting media source
+#+BEGIN_SRC css
   @media print, screen and (max-width: 960px) {
 
       body {
@@ -544,7 +605,7 @@ We replace all occurences of =.org= that are related to internal =org= files to
   \RequirePackage{prelim2e}
   <<vc-status()>>
 #+END_SRC
-*** org to LaTeX stuff
+*** =org= to LaTeX stuff
 **** Use smart quote when exporting
 #+BEGIN_SRC emacs-lisp
   (setq org-export-with-smart-quotes t)
@@ -593,15 +654,15 @@ Code fragments are syntax highlighted using [[https://code.google.com/p/minted/]
 #+END_SRC
 **** Set LaTeX command
 #+BEGIN_SRC emacs-lisp
-  (setq org-latex-pdf-process '("jobname=$(basename %f | sed 's/\.tex//');latexmk -xelatex -shell-escape -quiet %f"))
+  (setq org-latex-pdf-process '("latexmk -xelatex -shell-escape -quiet %f"))
 #+END_SRC
 
 **** Markup filter
 #+BEGIN_SRC emacs-lisp
-  (defun snailware-filter (contents backend info)
+  (defun latex::snailware-keyword-filter (contents backend info)
     (when (eq backend 'latex)
       (replace-regexp-in-string "SN@ilware" "\\\\Snailware" contents)))
-  (add-to-list 'org-export-filter-final-output-functions 'snailware-filter)
+  (add-to-list 'org-export-filter-final-output-functions 'latex::snailware-keyword-filter)
 #+END_SRC
 *** Project definition
 #+BEGIN_SRC emacs-lisp
@@ -618,13 +679,22 @@ Code fragments are syntax highlighted using [[https://code.google.com/p/minted/]
      :latex-class "snemo-simu"
      :latex-header-extra ""
      ))
-  (org-publish-project "pdf-documentation" 'force)
-  (shell-command "mkdir -p latex.d && mv *.{tex,auxlock,toc,out,fls,aux,pdf,log,fdb_latexmk,sty} latex.d/.")
 #+END_SRC
 
-** Join exporter into one
-#+BEGIN_SRC emacs-lisp :tangle no
-   (add-to-list
-    'org-publish-project-alist
-    `("documentation" :components ("html-documentation" "pdf-documentation")))
+** Exporter functions
+#+BEGIN_SRC emacs-lisp
+  (defun org-publish-html ()
+    (progn
+      (org-publish-project "html-documentation" 'force)
+      (copy-file (expand-file-name "simulation_config.html" (expand-file-name "html" doc-directory))
+                 (expand-file-name "index.html" (expand-file-name "html" doc-directory)) t)
+      ))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defun org-publish-pdf ()
+    (progn
+      (org-publish-project "pdf-documentation" 'force)
+      (shell-command "mkdir -p latex.d && mv *.{tex,auxlock,toc,out,fls,aux,pdf,log,fdb_latexmk,sty} latex.d/.")
+      ))
 #+END_SRC
