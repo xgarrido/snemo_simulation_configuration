@@ -57,7 +57,7 @@ We also globally define the current directory
                      <a href=\"sng4_manager.html\">G4 manager</a>
                      <a href=\"sngenbb_manager.html\">genbb manager</a>
                      <a href=\"sngenvertex_manager.html\">vertex manager</a>
-                     <a href=\"step_hit_processor_factory.html\">step hit processor</a>
+                     <a href=\"step_hit_processor_factory.html\">step hit processors</a>
                      <a href=\"snanalysis_manager.html\">analysis</a>
                      "
      :html-postamble "<<html-postamble()>>"))
