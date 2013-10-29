@@ -323,9 +323,9 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description List of files describing the materials</span>
 materials.files : string[6] as <span class="org-variable-name">path</span> =                          <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${MATERIALS_DATA_DIR}/resources/data/std_isotopes.def"</span>    <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${MATERIALS_DATA_DIR}/resources/data/std_elements.def"</span>    <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${MATERIALS_DATA_DIR}/resources/data/std_materials.def"</span>   <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@materials:data/std_isotopes.def"</span>    <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@materials:data/std_elements.def"</span>    <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@materials:data/std_materials.def"</span>   <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/materials/elements.def"</span>  <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/materials/materials.def"</span> <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/materials_aliases.def"</span>
@@ -579,7 +579,7 @@ locators.module_number : <span class="org-variable-name">integer</span> = 0
 </div>
 </div>
 <div id="postamble" class="status">
-File under git version control - commit 12527ea - 2013-10-26
+File under git version control - commit deda2c0 - 2013-10-29
 </div>
 </body>
 </html>
