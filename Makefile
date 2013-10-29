@@ -48,6 +48,12 @@ html:
 	@$(BATCH) --eval '(org-babel-tangle-file "simulation_publish.org")' \
 	--eval '(org-babel-load-file   "simulation_publish.org")' --visit "simulation_publish.org" --funcall org-publish-html
 	@rm -f simulation_publish.el snemo-simu-latex.sty
+	@find doc -name *.*~ | xargs rm -f
+	@(cd doc/html && tar czvf /tmp/org-snemo-publish.tar.gz .)
+	@git checkout gh-pages
+	@tar xzvf /tmp/org-snemo-publish.tar.gz
+	@if [ -n "`git status --porcelain`" ]; then git commit -am "update doc" && git push; fi
+	@git checkout master
 
 pdf:
 	@mkdir -p doc/html/css
