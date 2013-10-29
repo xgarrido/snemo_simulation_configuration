@@ -1148,7 +1148,7 @@ modules it contains.
 |--------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("fitting_chain", 3, fitting_chain)>>
+  <<chain_module("fitting_chain", 4, fitting_chain)>>
 #+END_SRC
 
 *** Process after clustering selection
