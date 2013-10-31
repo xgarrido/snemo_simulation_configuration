@@ -887,13 +887,10 @@ or line models.
   algorithm : string  = "trackfit"
 #+END_SRC
 
-***** Verbosities
+***** Logging priority
 #+BEGIN_SRC sh
-  #@description Trackfit verbosity
-  trackfit.warning : boolean = 0
-
-  #@description Trackfit verbosity
-  trackfit.devel : boolean = 0
+  #@description Logging priority
+  trackfit.logging.priority : string = "warning"
 #+END_SRC
 
 ***** Drift time calibration
@@ -915,11 +912,8 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
 ***** Line fit parameters
 ****** Guess parameters
 #+BEGIN_SRC sh
-  #@description Activate devel messages for line guess driver
-  trackfit.line.guess.devel  : boolean = 0
-
-  #@description Activate warning messages for line guess driver
-  trackfit.line.guess.warning  : boolean = 0
+  #@description Activate logging messages for line guess driver
+  trackfit.line.guess.logging.priority  : string = "error"
 
   #@description Use max radius (cell size) to construct initial guess point (1) or use the effective drift Geiger distance of the hit (0)
   trackfit.line.guess.use_max_radius    : boolean = 0
@@ -934,7 +928,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   trackfit.line.guess.guess_trust_mode  : string = "counter"
 
   #@description Fit the delayed geiger cluster
-  trackfit.line.guess.fit_delay_cluster  : boolean = 1
+  trackfit.line.guess.fit_delay_cluster : boolean = 1
 #+END_SRC
 
 ****** Fit parameters
@@ -966,11 +960,8 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
 ***** Helix fit parameters
 ****** Guess parameters
 #+BEGIN_SRC sh
-  #@description Activate devel messages for helix guess driver
-  trackfit.helix.guess.devel  : boolean = 0
-
-  #@description Activate warning messages for helix guess driver
-  trackfit.helix.guess.warning  : boolean = 0
+  #@description Activate logging messages for helix guess driver
+  trackfit.helix.guess.logging.priority  : string = "error"
 
   #@description Use max radius (cell size) to construct initial guess point (1) or use the effective drift Geiger distance of the hit (0)
   trackfit.helix.guess.use_max_radius    : boolean = 0
@@ -985,7 +976,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   trackfit.helix.guess.guess_trust_mode  : string = "counter"
 
   #@description Fit the delayed geiger cluster (by default, false since this mode is devoted to line fit)
-  trackfit.helix.guess.fit_delay_cluster  : boolean = 0
+  trackfit.helix.guess.fit_delay_cluster : boolean = 0
 #+END_SRC
 ****** Fit parameters
 #+BEGIN_SRC sh
@@ -1769,7 +1760,7 @@ This cuts puts together all the previous declared cuts.
   range_cluster.min : integer = 2
 
   #@description Maximal number of clusters
-  range_cluster.max : integer = 2
+  range_cluster.max : integer = 4
 #+END_SRC
 
 **** Select number of hit within a cluster
@@ -1786,7 +1777,7 @@ This cuts puts together all the previous declared cuts.
   mode.range_tracker_hit : boolean = 1
 
   #@description Minimal number of cells in cluster
-  range_tracker_hit.min : integer = 4
+  range_tracker_hit.min : integer = 1
 
   # #@description Maximal number of cells in cluster
   # range_tracker_hit.max : integer = 100000
