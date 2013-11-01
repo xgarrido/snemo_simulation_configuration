@@ -1914,5 +1914,5 @@ as [[Clustering algorithms][clustering]] or [[Fitting algorithm][fitting]] Geige
 track reconstruction.
 
 [3] Assuming you are using a recent version of =bash=. With =c-shell= and
-derivatives =export= is replace by =setenv=. Nevertheless, this setup has never
+derivatives, =export= is replace by =setenv=. Nevertheless, this setup has never
 been tested under this shells.
