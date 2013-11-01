@@ -232,6 +232,10 @@ We replace all occurences of =.org= that are related to internal =org= files to
       height:1px;
       margin:0 0 20px;
   }
+
+  .footpara {
+      display: inline;
+  }
 #+END_SRC
 
 ****** Scrollbars
