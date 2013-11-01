@@ -890,7 +890,7 @@ or line models.
 ***** Logging priority
 #+BEGIN_SRC sh
   #@description Logging priority
-  trackfit.logging.priority : string = "warning"
+  trackfit.logging.priority : string = "error"
 #+END_SRC
 
 ***** Drift time calibration
@@ -1223,218 +1223,9 @@ modules it contains.
 #+END_SRC
 
 ** Plot modules
-:PROPERTIES:
-:TANGLE: plot_modules.conf
-:END:
 
-This last section holds all the module related to histogram
-plotting. Historically, most of them are pretty simple modules. Recently, an
-=histogram_service= has been provided so latest plot modules make use of it (see
-=basic_plot= module for example). This module can not be as generic as processing
-module. Basically, for one study purpose, there is one or two plot modules.
-
-*** Insert preamble
-#+BEGIN_SRC sh :noweb yes
-  <<module_preamble>>
-#+END_SRC
-
-*** Basic plot module
-#+BEGIN_SRC sh
-  [name="basic_plot" type="snemo::analysis::processing::basic_plot_module"]
-
-  #@config 'snemo::analysis::processing::basic_plot_module' configuration parameters
-
-  #@description Debug flag
-  debug     : boolean = 0
-
-  #@description The Histogram Service label
-  Histo_label : string = "Histo"
-
-  #@description The label of the 'Event Header' bank
-  EH_label : string  = "EH"
-
-  #@description The label of the 'Simulated Data' bank
-  SD_label : string  = "SD"
-#+END_SRC
-
-*** Study calorimeter block size for SuperNEMO (deprecated)
-#+BEGIN_SRC sh :tangle no
-  [name="snemo_block_size" type="snemo::analysis::processing::snemo_block_size_module"]
-
-  #@config 'snemo::analysis::processing::snemo_block_size' configuration parameters
-
-  #@description Debug flag
-  debug     : boolean = 0
-
-  #@description Interactive flag (ROOT window popup)
-  interactive : boolean = 1
-
-  #@description The label of the 'Analysed Data' bank
-  AD_label : string  = "ANA"
-#+END_SRC
-
-*** Study calorimeter energy resolution for SuperNEMO (deprecated)
-#+BEGIN_SRC sh :tangle no
-  [name="snemo_energy_resolution" type="snemo::analysis::processing::snemo_energy_resolution_module"]
-
-  #@config 'snemo::analysis::processing::snemo_energy_resolution' configuration parameters
-
-  #@description Debug flag
-  debug     : boolean = 0
-
-  #@description Interactive flag (ROOT window popup)
-  interactive : boolean = 1
-
-  #@description The label of the 'Analysed Data' bank
-  AD_label : string  = "ANA"
-#+END_SRC
-*** Study particle track result
-**** Particle charge
-#+BEGIN_SRC sh
-  [name="snemo_particle_charge" type="snemo::analysis::processing::snemo_particle_charge_module"]
-
-  #@description Debug flag
-  debug     : boolean = 0
-
-  #@description Interactive flag (ROOT window popup)
-  interactive : boolean = 1
-
-  #@description The label of the 'Event Header' bank
-  EH_label : string  = "EH"
-
-  #@description The label of the 'Simulated Data' bank
-  SD_label : string  = "SD"
-
-  #@description The label of the 'Particle Track Data' bank
-  PTD_label : string  = "PTD"
-#+END_SRC
-**** Vertex resolution
-#+BEGIN_SRC sh
-  [name="snemo_vertex_resolution" type="snemo::analysis::processing::snemo_vertex_resolution_module"]
-
-  #@description Debug flag
-  debug       : boolean = 0
-
-  #@description Vertex reconstruction either on 'foil', 'calo' or 'xcalo'
-  parameter   : string = "calo"
-
-  #@description Interactive flag (ROOT window popup)
-  interactive : boolean = 1
-
-  #@description The label of the 'Event Header' bank
-  EH_label    : string  = "EH"
-
-  #@description The label of the 'Simulated Data' bank
-  SD_label    : string  = "SD"
-
-  #@description The label of the 'Particle Track Data' bank
-  PTD_label   : string  = "PTD"
-#+END_SRC
-**** Study track fit quality
-#+BEGIN_SRC sh
-  [name="snemo_particle_reduced_chi2" type="snemo::analysis::processing::snemo_particle_track_parameters_module"]
-
-  #@description Debug flag
-  debug       : boolean = 0
-
-  #@description Interactive flag (ROOT window popup)
-  interactive : boolean = 1
-
-  #@description The label of the 'Event Header' bank
-  EH_label    : string  = "EH"
-
-  #@description The label of the 'Simulated Data' bank
-  SD_label    : string  = "SD"
-
-  #@description The label of the 'Particle Track Data' bank
-  PTD_label   : string  = "PTD"
-#+END_SRC
-
-**** Study fit curvature
-#+BEGIN_SRC sh
-  [name="snemo_particle_curvature" type="snemo::analysis::processing::snemo_particle_track_parameters_module"]
-
-  #@description Debug flag
-  debug       : boolean = 0
-
-  #@description Parameter to be plot (either 'reduced_chi2' or 'curvature')
-  parameter   : string = "curvature"
-
-  #@description Interactive flag (ROOT window popup)
-  interactive : boolean = 1
-
-  #@description The label of the 'Event Header' bank
-  EH_label    : string  = "EH"
-
-  #@description The label of the 'Simulated Data' bank
-  SD_label    : string  = "SD"
-
-  #@description The label of the 'Particle Track Data' bank
-  PTD_label   : string  = "PTD"
-#+END_SRC
-*** \beta\beta\nu\nu analysis
-**** Discrimination
-#+BEGIN_SRC sh
-  [name="snemo_bb0nu_discrimination" type="snemo::analysis::processing::snemo_bb0nu_discrimination_module"]
-
-  #@description Debug flag
-  debug       : boolean = 0
-
-  #@description Interactive flag (ROOT window popup)
-  interactive : boolean = 1
-
-  #@description The label of the 'Event Header' bank
-  EH_label    : string  = "EH"
-
-  #@description The label of the 'Particle Track Data' bank
-  PTD_label   : string  = "PTD"
-#+END_SRC
-
-**** Calculation of halflife limit
-#+BEGIN_SRC sh
-  [name="snemo_bb0nu_halflife_limit" type="snemo::analysis::processing::snemo_bb0nu_halflife_limit_module"]
-
-  #@description Debug flag
-  debug       : boolean = 0
-
-  #@description Interactive flag (ROOT window popup)
-  interactive : boolean = 1
-
-  #@description The label of the 'Event Header' bank
-  EH_label    : string  = "EH"
-
-  #@description The label of the 'Particle Track Data' bank
-  PTD_label   : string  = "PTD"
-
-  #@description The Histogram Service label
-  Histo_label : string = "Histo"
-#+END_SRC
-
-The key fields are used to build different key for histogram dictionnary. The
-basic idea is to have this information inside =event_header= and use it to build
-a =string= key. The program is then quite dynamic in the sense that 0\nu
-halflife calculation can be done for different study purpose (just change the =key_fields=).
-#+BEGIN_SRC sh
-  #@description The key fields from 'Event Header' bank to build a unique key for histogram
-  key_fields : string[2] =     \
-      "analysis.decay_process" \
-      "analysis.magnetic_field"
-#+END_SRC
-
-Experimental conditions:
-#+BEGIN_SRC sh
-  #@description The atomic mass number of the isotope
-  experiment.isotope_mass_number : integer = 82
-
-  #@description The total mass of the isotope
-  experiment.isotope_mass : string = "5 kg"
-
-  #@description The bb2nu halflife of the isotope
-  experiment.isotope_bb2nu_halflife : real = 9.0e19 #year
-
-  #@description The exposure time of the experiment
-  experiment.exposure_time : real = 2.0 #year
-#+END_SRC
+The /plot/ modules used for final analysis have been grouped and all placed in
+the [[file:./snanalysis_manager.org][snanalysis_manager]] file.
 
 * Services
 :PROPERTIES:
@@ -2065,7 +1856,8 @@ Embedded histograms are declared into a dedicated file defines in
 [[file:snanalysis_manager.org][snanalysis_manager.org]]
 #+BEGIN_SRC sh
   #@description The main configuration file for the embedded histogram manager
-  pool.histo.setups : string[1] as path = \
+  pool.histo.setups : string[2] as path =                                             \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/basic_histograms.conf" \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/histogram_templates.conf"
 #+END_SRC
 

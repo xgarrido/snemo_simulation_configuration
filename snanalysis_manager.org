@@ -24,6 +24,7 @@ been provided so latest plot modules make use of it (see =basic_plot= module for
 example). This module can not be as generic as processing module. Basically, for
 one study purpose, there is one or two plot modules.
 
+** Insert preamble
 #+BEGIN_SRC sh
   #@description A sample list of setups
   #@key_label   "name"
@@ -31,25 +32,137 @@ one study purpose, there is one or two plot modules.
 #+END_SRC
 
 ** Basic plot module
+Here we define a very basic plot module working on =simulated_data= input files. We
+also define the set of histograms to be used.
+*** Module definition
 #+BEGIN_SRC sh
   [name="basic_plot" type="snemo::analysis::processing::basic_plot_module"]
 
   #@config 'snemo::analysis::processing::basic_plot_module' configuration parameters
 
-  #@description Debug flag
-  debug     : boolean = 0
+  #@description Logging flag
+  logging.priority : string = "trace"
 
   #@description The Histogram Service label
   Histo_label : string = "Histo"
-
-  #@description The label of the 'Event Header' bank
-  EH_label : string  = "EH"
 
   #@description The label of the 'Simulated Data' bank
   SD_label : string  = "SD"
 #+END_SRC
 
-** Study calorimeter block size for SuperNEMO (deprecated)
+*** Histogram definitions
+:PROPERTIES:
+:TANGLE: basic_histograms.conf
+:END:
+**** Insert preamble
+#+BEGIN_SRC sh
+  #@description A sample list of setups
+  #@key_label   "name"
+  #@meta_label  "type"
+#+END_SRC
+
+**** Number of Geiger hits in =simulated_data= bank
+#+BEGIN_SRC sh
+  [name="SD::ngghits" type="mygsl::histogram_1d"]
+  #@config The histogram of the number of MC Geiger hits
+
+  #@description The title of the histogram (optional)
+  title : string = "Number of MC Geiger hits"
+
+  #@description The group of the histogram (optional)
+  group : string = "SD::histos"
+
+  #@description The build mode (default : "regular", "table", "mimic");
+  mode : string = "regular"
+
+  #@description The linear mode (default)
+  linear : boolean = 1
+
+  #@description The number of bins
+  number_of_bins : integer = 100
+
+  #@description The lower bound of the histogram
+  min : real = 0.0
+
+  #@description The upper bound of the histogram
+  max : real = 100.0
+
+  #@description The X axis label
+  display.xaxis.label : string = "Ngg"
+
+  #@description The Y axis label
+  display.yaxis.label : string = "Counts"
+#+END_SRC
+
+**** Number of calorimeter hits in =simulated_data= bank
+#+BEGIN_SRC sh
+  [name="SD::ncalohits" type="mygsl::histogram_1d"]
+  #@config The histogram of the number of MC calo hits
+
+  #@description The title of the histogram (optional)
+  title : string = "Number of MC calorimeter hits"
+
+  #@description The group of the histogram (optional)
+  group : string = "SD::histos"
+
+  #@description The build mode (default : "regular", "table", "mimic");
+  mode : string = "regular"
+
+  #@description The linear mode (default)
+  linear : boolean = 1
+
+  #@description The number of bins
+  number_of_bins : integer = 10
+
+  #@description The lower bound of the histogram
+  min : real = 0.0
+
+  #@description The upper bound of the histogram
+  max : real = 10.0
+
+  #@description The X axis label
+  display.xaxis.label : string = "Ncalo"
+
+  #@description The Y axis label
+  display.yaxis.label : string = "Counts"
+
+  #@description Display style
+  display.style : string = "solid"
+
+  #@description Display color
+  display.color : string = "blue"
+#+END_SRC
+
+**** Number of Geiger hits vs. number of calorimeter
+#+BEGIN_SRC sh
+  [name="SD::ngghits_vs_ncalohits" type="mygsl::histogram_2d"]
+  ##@config The 'h3' histogram
+
+  #@description The title of the histogram (optional)
+  title : string = "Geiger hits vs Calo hits"
+
+  #@description The group of the histogram (optional)
+  group : string = "SD::histos"
+
+  #@description The build mode (default : "regular", "table", "mimic");
+  mode : string = "table"
+
+  #@description The array of X bins' bounds
+  x.bounds : real [4] = 0.0  24.0  36  100.0
+
+  #@description The array of Y bins' bounds
+  y.bounds : real [5] = 0.0  1.0  2.0  3.0  10.0
+
+  #@description The X axis label
+  display.xaxis.label : string = "Ngg"
+
+  #@description The Y axis label
+  display.yaxis.label : string = "Ncalo"
+
+  #@description The Z axis label
+  display.zaxis.label : string = "Counts"
+#+END_SRC
+** Study calorimeter block size for SuperNEMO                   :deprecated:
 #+BEGIN_SRC sh :tangle no
   [name="snemo_block_size" type="snemo::analysis::processing::snemo_block_size_module"]
 
@@ -65,7 +178,7 @@ one study purpose, there is one or two plot modules.
   AD_label : string  = "ANA"
 #+END_SRC
 
-** Study calorimeter energy resolution for SuperNEMO (deprecated)
+** Study calorimeter energy resolution for SuperNEMO            :deprecated:
 #+BEGIN_SRC sh :tangle no
   [name="snemo_energy_resolution" type="snemo::analysis::processing::snemo_energy_resolution_module"]
 
@@ -334,7 +447,7 @@ determination.
 
 * Histogram templates
 :PROPERTIES:
-:TANGLE:   histogram_templates.conf
+:TANGLE: histogram_templates.conf
 :END:
 
 Histogram declarations are done in this file where several informations can be
@@ -342,6 +455,7 @@ passed to the histogram service. There is also a possibility to declare
 "template" histogram from which several histograms can refered to. These
 group histograms will share the same binning, axis labels ...
 
+** Insert preamble
 #+BEGIN_SRC sh
   #@description A sample list of setups
   #@key_label   "name"
