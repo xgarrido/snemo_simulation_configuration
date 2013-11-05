@@ -621,6 +621,9 @@ for the quenching of alpha particles.
 
 **** Alpha quenching parameters
 #+BEGIN_SRC sh
+  #@description Alpha quenching boolean
+  alpha_quenching : boolean = 1
+
   #@description Alpha quenching parameters
   alpha_quenching_parameters : real[3] = 77.4 0.639 2.34
 #+END_SRC
@@ -1264,8 +1267,7 @@ software components, including other services or data processing modules (see
 #+END_SRC
 
 ** Geometry service
-:PROPERTIES:
-:END:
+
 The following code block declares the geometry service to properly load all the
 geometry and material construction of the detector. This service, only declared
 here, can be used by several operations like calibration, particle track
@@ -1835,8 +1837,6 @@ has_charge.type : string = "undefined"
   <<multi("particle_track_cut", "and", 6, particle_track_cuts)>>
 #+END_SRC
 ** Histogram service
-:PROPERTIES:
-:END:
 
 The histogram service provides an esay way to handle histogram plot from
 different modules (mainly plot modules). It provides a service where 1D or 2D
