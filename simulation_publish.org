@@ -391,7 +391,8 @@ We replace all occurences of =.org= that are related to internal =org= files to
   }
 
   #postamble {
-      float:right;
+      clear: both;
+      text-align: center;
       font-size:10px;
   }
 #+END_SRC
