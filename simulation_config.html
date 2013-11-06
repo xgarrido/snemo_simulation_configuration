@@ -1093,7 +1093,10 @@ random.seed : <span class="org-variable-name">integer</span> = 12345
 <li>Alpha quenching parameters<br  /><div class="outline-text-5" id="text-3-3-5-4">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Alpha quenching parameters</span>
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Alpha quenching boolean</span>
+alpha_quenching : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Alpha quenching parameters</span>
 alpha_quenching_parameters : <span class="org-variable-name">real</span>[3] = 77.4 0.639 2.34
 </pre>
 </div>
@@ -3111,7 +3114,7 @@ name.
 
 <div class="footdef"><sup><a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a></sup> <p class="footpara">
 Assuming you are using a recent version of <code>bash</code>. With <code>c-shell</code> and
-derivatives <code>export</code> is replace by <code>setenv</code>. Nevertheless, this setup has never
+derivatives, <code>export</code> is replace by <code>setenv</code>. Nevertheless, this setup has never
 been tested under this shells.
 </p></div>
 
@@ -3119,7 +3122,7 @@ been tested under this shells.
 </div>
 </div></div>
 <div id="postamble" class="status">
-File under git version control - commit 0ec9401 - 2013-11-01
+File under git version control - commit c812530 - 2013-11-06
 </div>
 </body>
 </html>

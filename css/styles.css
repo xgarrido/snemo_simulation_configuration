@@ -280,7 +280,8 @@ footer {
 }
 
 #postamble {
-    float:right;
+    clear: both;
+    text-align: center;
     font-size:10px;
 }
 
