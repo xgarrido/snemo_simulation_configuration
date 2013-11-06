@@ -7,6 +7,10 @@ BATCH = $(EMACS) --batch --no-init-file					\
 		'((sh . t)))"						\
 	--eval "(setq org-confirm-babel-evaluate nil)"
 
+BATCH_DOC = $(BATCH)							\
+	--eval '(org-babel-tangle-file "simulation_publish.org")'	\
+	--eval '(org-babel-load-file "simulation_publish.org")'
+
 GIT_BRANCH = $(shell git branch | grep \* | cut -d' ' -f2)
 
 CCAGE_DIRECTORY = /sps/nemo/scratch/garrido/simulations/configuration
@@ -25,7 +29,7 @@ org: $(FILEST)
 
 $(GIT_BRANCH)/.%.tangle: %.org
 	@echo "NOTICE: Tangling $< file"
-	@$(BATCH) --eval '(org-babel-tangle-file "$<")'
+	@$(BATCH) --visit "$<" --funcall org-babel-tangle
 	@mkdir -p $(GIT_BRANCH)
 	@touch $@
 
@@ -45,8 +49,7 @@ doc: html pdf
 
 html:
 	@mkdir -p doc/html/css
-	@$(BATCH) --eval '(org-babel-tangle-file "simulation_publish.org")' \
-	--eval '(org-babel-load-file   "simulation_publish.org")' --visit "simulation_publish.org" --funcall org-publish-html
+	@$(BATCH_DOC) --visit "simulation_publish.org" --funcall org-publish-html
 	@rm -f simulation_publish.el snemo-simu-latex.sty
 	@find doc -name *.*~ | xargs rm -f
 	@(cd doc/html && tar czvf /tmp/org-snemo-publish.tar.gz .)
@@ -54,12 +57,13 @@ html:
 	@tar xzvf /tmp/org-snemo-publish.tar.gz
 	@if [ -n "`git status --porcelain`" ]; then git commit -am "update doc" && git push; fi
 	@git checkout master
+	@echo "NOTICE: HTML cocumentation done"
 
 pdf:
 	@mkdir -p doc/html/css
-	@$(BATCH) --eval '(org-babel-tangle-file "simulation_publish.org")' \
-	--eval '(org-babel-load-file   "simulation_publish.org")' --visit "simulation_publish.org" --funcall org-publish-pdf
+	@$(BATCH_DOC) --visit "simulation_publish.org" --funcall org-publish-pdf
 	@rm -f simulation_publish.el snemo-simu-latex.sty
+	@echo "NOTICE: PDF cocumentation done"
 
 clean:
 	@rm -f *.tangle *.tar.gz *.conf *.def *.aux *.tex *.fls *fdb_latexmk *.log *.pdf *~ *.el
