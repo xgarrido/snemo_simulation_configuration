@@ -678,7 +678,7 @@ different particles. Due to over-simplicty, it does not need any parameters !
   [name="btc_tracker_clustering" type="snemo::analysis::processing::basic_tracker_clustering_module"]
 
   #@description Logging priority
-  logging.priority : string = "trace"
+  logging.priority : string = "warning"
 
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
@@ -690,7 +690,7 @@ different particles. Due to over-simplicty, it does not need any parameters !
   TCD_label : string  = "TCD"
 
   #@description The ID of the tracker hits clustering algorithm
-  algorithm : string  = "SULTAN"
+  algorithm : string  = "BTC"
 #+END_SRC
 
 **** Cellular Automaton Tracker
@@ -756,7 +756,7 @@ Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/
     [name="sultan_tracker_clustering" type="snemo::reconstruction::processing::tracker_clustering_module"]
 
     #@description Logging support
-    logging.priority : string = "warning"
+    logging.priority : string = "trace"
 
     #@description The label of the Geometry service
     Geo_label : string  = "Geo"
@@ -771,7 +771,7 @@ Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/
     algorithm : string  = "SULTAN"
 
     #@description SULTAN verbosity level
-    SULTAN.level : string = "NORMAL"
+    SULTAN.level : string = "VVERBOSE"
 
     #@description SULTAN number of layers to skip
     SULTAN.nofflayers : integer = 1
