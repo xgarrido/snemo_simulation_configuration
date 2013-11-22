@@ -667,6 +667,7 @@ for the quenching of alpha particles.
 This section holds different modules all related to tracker clustering.
 
 **** Basic tracker clustering
+
 This algorithm is too much simple but it can serve as a comparison point with
 respect to more elaborated algorithms in terms of time processing. It basically
 associates geiger cells but considering succesive neighbors. It does not use the
@@ -677,7 +678,7 @@ different particles. Due to over-simplicty, it does not need any parameters !
   [name="btc_tracker_clustering" type="snemo::analysis::processing::basic_tracker_clustering_module"]
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = "trace"
 
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
@@ -689,10 +690,11 @@ different particles. Due to over-simplicty, it does not need any parameters !
   TCD_label : string  = "TCD"
 
   #@description The ID of the tracker hits clustering algorithm
-  algorithm : string  = "BTC"
+  algorithm : string  = "SULTAN"
 #+END_SRC
 
 **** Cellular Automaton Tracker
+
 This algorithm provides tons of parameters and is based in F. Nova work. A
 somewhat complete overview of CAT main features can be seen in DocDb [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2120][#2120]].
 
@@ -705,9 +707,6 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
 
-  #@description The label of the 'Event Header' bank
-  EH_label : string  = "EH"
-
   #@description The label of the 'Calibrated Data' bank
   CD_label : string  = "CD"
 
@@ -716,12 +715,6 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
 
   #@description The ID of the tracker hits clustering algorithm
   algorithm : string  = "CAT"
-
-  #@description The module number
-  module_number : integer = 0
-
-  #@description The geometry category of the Geiger drift volume
-  gg_cell_geom_category : string = "drift_cell_core"
 
   #@description Activation of the clustering of prompt hits
   TPC.processing_prompt_hits : boolean = 1
@@ -735,23 +728,59 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
   #@description Activation of the clustering of delayed hits
   TPC.split_chamber : boolean = 0
 
+  #@description CAT verbosity level
+  CAT.level : string = "NORMAL"
+
   #@description CAT param
   CAT.ratio : real = 10.
 
-  #@description CAT param
-  CAT.nsigma : real = 4.
-
-  #@description CAT param
-  CAT.nofflayers : integer = 1.
-
-  #@description CAT param
-  CAT.level : string = "NORMAL"
+  #@description CAT number of layers to skip
+  CAT.nofflayers : integer = 1
 
   #@description CAT param
   #CAT.max_time : real = 5000
 
   #@description CAT driver param
   #CAT.driver.sigma_z_factor : real = 1.
+#+END_SRC
+
+**** SULTAN tracker
+
+Federico Nova recently implements a new way to cluster Geiger cells by
+translating their intrinsic parameters namely cell position, drift radius and
+azimuthal position in Legendre phase space. The idea was originally suggested by
+Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2556][DocDB 2256]]) and Federico added the ability to fit helix
+(see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2977][DocDB 2977]] as well as the [[http://www.sciencedirect.com/science/article/pii/S0168900208005780][original paper]]).
+
+#+BEGIN_SRC sh
+    [name="sultan_tracker_clustering" type="snemo::reconstruction::processing::tracker_clustering_module"]
+
+    #@description Logging support
+    logging.priority : string = "warning"
+
+    #@description The label of the Geometry service
+    Geo_label : string  = "Geo"
+
+    #@description The label of the 'Calibrated Data' bank
+    CD_label : string  = "CD"
+
+    #@description The label of the 'Tracker Clustering Data' bank
+    TCD_label : string  = "TCD"
+
+    #@description The ID of the tracker hits clustering algorithm
+    algorithm : string  = "SULTAN"
+
+    #@description SULTAN verbosity level
+    SULTAN.level : string = "NORMAL"
+
+    #@description SULTAN number of layers to skip
+    SULTAN.nofflayers : integer = 1
+
+    #@description SULTAN param
+    #SULTAN.max_time : real = 5000
+
+    #@description SULTAN driver param
+    #SULTAN.driver.sigma_z_factor : real = 1.
 #+END_SRC
 
 **** Tracker Cluster Path
