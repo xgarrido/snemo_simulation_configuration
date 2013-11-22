@@ -1210,9 +1210,6 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the Geometry service</span>
 Geo_label : <span class="org-variable-name">string</span>  = <span class="org-string">"Geo"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Event Header' bank</span>
-EH_label : <span class="org-variable-name">string</span>  = <span class="org-string">"EH"</span>
-
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Calibrated Data' bank</span>
 CD_label : <span class="org-variable-name">string</span>  = <span class="org-string">"CD"</span>
 
@@ -1221,12 +1218,6 @@ TCD_label : <span class="org-variable-name">string</span>  = <span class="org-st
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The ID of the tracker hits clustering algorithm</span>
 algorithm : <span class="org-variable-name">string</span>  = <span class="org-string">"CAT"</span>
-
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The module number</span>
-module_number : <span class="org-variable-name">integer</span> = 0
-
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The geometry category of the Geiger drift volume</span>
-gg_cell_geom_category : <span class="org-variable-name">string</span> = <span class="org-string">"drift_cell_core"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Activation of the clustering of prompt hits</span>
 TPC.processing_prompt_hits : <span class="org-variable-name">boolean</span> = 1
@@ -1240,17 +1231,14 @@ TPC.delayed_hit_cluster_time : <span class="org-variable-name">real</span> = 10.
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Activation of the clustering of delayed hits</span>
 TPC.split_chamber : <span class="org-variable-name">boolean</span> = 0
 
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description CAT verbosity level</span>
+CAT.level : <span class="org-variable-name">string</span> = <span class="org-string">"NORMAL"</span>
+
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description CAT param</span>
 CAT.ratio : <span class="org-variable-name">real</span> = 10.
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description CAT param</span>
-CAT.nsigma : <span class="org-variable-name">real</span> = 4.
-
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description CAT param</span>
-CAT.nofflayers : <span class="org-variable-name">integer</span> = 1.
-
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description CAT param</span>
-CAT.level : <span class="org-variable-name">string</span> = <span class="org-string">"NORMAL"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description CAT number of layers to skip</span>
+CAT.nofflayers : <span class="org-variable-name">integer</span> = 1
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description CAT param</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">CAT.max_time : real = 5000</span>
@@ -1261,7 +1249,50 @@ CAT.level : <span class="org-variable-name">string</span> = <span class="org-str
 </div>
 </div>
 </li>
-<li>Tracker Cluster Path<br  /><div class="outline-text-5" id="text-3-4-2-3">
+<li>SULTAN tracker<br  /><div class="outline-text-5" id="text-3-4-2-3">
+<p>
+Federico Nova recently implements a new way to cluster Geiger cells by
+translating their intrinsic parameters namely cell position, drift radius and
+azimuthal position in Legendre phase space. The idea was originally suggested by
+Yorck Ramachers (see <a href="http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2556">DocDB 2256</a>) and Federico added the ability to fit helix
+(see <a href="http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2977">DocDB 2977</a> as well as the <a href="http://www.sciencedirect.com/science/article/pii/S0168900208005780">original paper</a>).
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"sultan_tracker_clustering"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::reconstruction::processing::tracker_clustering_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging support</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"trace"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the Geometry service</span>
+Geo_label : <span class="org-variable-name">string</span>  = <span class="org-string">"Geo"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Calibrated Data' bank</span>
+CD_label : <span class="org-variable-name">string</span>  = <span class="org-string">"CD"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Tracker Clustering Data' bank</span>
+TCD_label : <span class="org-variable-name">string</span>  = <span class="org-string">"TCD"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The ID of the tracker hits clustering algorithm</span>
+algorithm : <span class="org-variable-name">string</span>  = <span class="org-string">"SULTAN"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description SULTAN verbosity level</span>
+SULTAN.level : <span class="org-variable-name">string</span> = <span class="org-string">"VVERBOSE"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description SULTAN number of layers to skip</span>
+SULTAN.nofflayers : <span class="org-variable-name">integer</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description SULTAN param</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">SULTAN.max_time : real = 5000</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description SULTAN driver param</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">SULTAN.driver.sigma_z_factor : real = 1.</span>
+</pre>
+</div>
+</div>
+</li>
+<li>Tracker Cluster Path<br  /><div class="outline-text-5" id="text-3-4-2-4">
 <p>
 This algorithm has been developped by Warwick group since June 2012 and mainly
 by K. Bhardwaj.
@@ -3122,7 +3153,7 @@ been tested under this shells.
 </div>
 </div></div>
 <div id="postamble" class="status">
-File under git version control - commit c812530 - 2013-11-06
+File under git version control - commit 6e33c18 - 2013-11-22
 </div>
 </body>
 </html>
