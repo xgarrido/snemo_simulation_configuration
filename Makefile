@@ -51,19 +51,22 @@ html:
 	@mkdir -p doc/html/css
 	@$(BATCH_DOC) --visit "simulation_publish.org" --funcall org-publish-html
 	@rm -f simulation_publish.el snemo-simu-latex.sty
+	@echo "NOTICE: HTML documentation done"
+
+pdf:
+	@mkdir -p doc/html/css
+	@$(BATCH_DOC) --visit "simulation_publish.org" --funcall org-publish-pdf
+	@rm -f simulation_publish.el snemo-simu-latex.sty
+	@echo "NOTICE: PDF documentation done"
+
+publish: html
 	@find doc -name *.*~ | xargs rm -f
 	@(cd doc/html && tar czvf /tmp/org-snemo-publish.tar.gz .)
 	@git checkout gh-pages
 	@tar xzvf /tmp/org-snemo-publish.tar.gz
 	@if [ -n "`git status --porcelain`" ]; then git commit -am "update doc" && git push; fi
 	@git checkout master
-	@echo "NOTICE: HTML cocumentation done"
-
-pdf:
-	@mkdir -p doc/html/css
-	@$(BATCH_DOC) --visit "simulation_publish.org" --funcall org-publish-pdf
-	@rm -f simulation_publish.el snemo-simu-latex.sty
-	@echo "NOTICE: PDF cocumentation done"
+	@echo "NOTICE: Publishing done"
 
 clean:
 	@rm -f *.tangle *.tar.gz *.conf *.def *.aux *.tex *.fls *fdb_latexmk *.log *.pdf *~ *.el
