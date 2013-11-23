@@ -395,7 +395,7 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 **** Seed values
 #+BEGIN_SRC sh
   #@description The simulation manager PRNG seed
-  manager.seed : integer = 2
+  manager.seed                  : integer = 2
 
   #@description The vertex generator PRNG seed
   manager.vertex_generator_seed : integer = 4
@@ -664,6 +664,7 @@ for the quenching of alpha particles.
 #+END_SRC
 
 *** Clustering algorithms
+
 This section holds different modules all related to tracker clustering.
 
 **** Basic tracker clustering
@@ -1109,7 +1110,7 @@ implemented but the particle tracking module will stay unchanged.
 :PROPERTIES:
 :TANGLE: analysis_modules.conf
 :END:
-This section holds most of the chain module so setting "to music" the different
+This section holds most of the chain module to set "to music" the different
 modules and tasks. It also contains the different paths given the selection
 requirements. One important point is that module order really matters since a
 module, especially =chain_module=, needs to know the declaration of all the
