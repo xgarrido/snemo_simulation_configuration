@@ -237,7 +237,7 @@ to change the source foil isotope.
 * Magnetic field for SuperNEMO detector
 ** Magnetic field plugin
 :PROPERTIES:
-:TANGLE:    magnetic_field_plugin.conf
+:TANGLE: magnetic_field_plugin.conf
 :END:
 
 *** Plugin declaration
@@ -253,13 +253,13 @@ to change the source foil isotope.
 *** Logging priority
 #+BEGIN_SRC sh
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = "trace"
 #+END_SRC
 
 *** EM field manager configuration
 #+BEGIN_SRC sh
   #@description Manager logging priority
-  manager.logging.priority : string = "warning"
+  manager.logging.priority : string = "trace"
 
   #@description The name of the geometry service
   manager.services.geometry : string = "Geo"
@@ -290,7 +290,7 @@ module.
 
 ** Magnetic field drivers
 :PROPERTIES:
-:TANGLE:    magnetic_field_drivers.conf
+:TANGLE: magnetic_field_drivers.conf
 :END:
 
 *** Driver preamble
