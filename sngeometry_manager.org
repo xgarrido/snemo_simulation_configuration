@@ -253,13 +253,13 @@ to change the source foil isotope.
 *** Logging priority
 #+BEGIN_SRC sh
   #@description Logging priority
-  logging.priority : string = "trace"
+  logging.priority : string = "warning"
 #+END_SRC
 
 *** EM field manager configuration
 #+BEGIN_SRC sh
   #@description Manager logging priority
-  manager.logging.priority : string = "trace"
+  manager.logging.priority : string = "warning"
 
   #@description The name of the geometry service
   manager.services.geometry : string = "Geo"
