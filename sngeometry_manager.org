@@ -95,7 +95,7 @@ volume.
   mapping.max_depth : integer = 0
 
   #@description Categories not to be registered in the mapping dictionnary
-  mapping.excluded_categories : string [5] = \
+  mapping.excluded_categories : string[5] = \
       "drift_cell_field_wires_set" \
       "drift_cell_field_wire"      \
       "drift_cell_base"            \
@@ -276,13 +276,16 @@ component. For SuperNEMO, constant magnetic field is defined inside demonstrator
 module.
 #+BEGIN_SRC sh
   #@description Flag to activate the geometry volume/field associations map
-  manager.build_geom_map                           : boolean = 1
+  manager.build_geom_map : boolean = 1
+
+  #@description Manager logging priority
+  manager.geom_map.logging.priority : string = "warning"
 
   #@description The list of EM fields associated to some logical volumes
-  manager.geom_map.associations.labels             : string[1] = "sn_module"
+  manager.geom_map.associations.labels : string[1] = "sn_module"
 
   #@description The logical model associated for the label 'tracker'
-  manager.geom_map.associations.sn_module.volume     : string = "module_basic.model.log"
+  manager.geom_map.associations.sn_module.volume : string = "module_basic.model.log"
 
   #@description The EM field associated for the label "tracker"
   manager.geom_map.associations.sn_module.field_name : string = "B_module"
