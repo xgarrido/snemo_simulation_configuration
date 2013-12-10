@@ -528,10 +528,7 @@ properties are used and serialized.
 
 #+BEGIN_SRC sh :tangle snsimulation_header.conf
   #@description The analysis description
-  analysis.description : string = "Study the efficiency of e-/e+ discrimination wrt magnetic field"
-
-  #@description The SuperNEMO magnetic field
-  analysis.magnetic_field : real as magnetic_field = 25.0 gauss
+  analysis.description : string = "Study the efficiency of e-/e+ discrimination"
 
   #@description The total number of event simulated
   analysis.total_number_of_event : integer = 100000
