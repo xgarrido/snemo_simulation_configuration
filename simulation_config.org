@@ -487,6 +487,7 @@ record. This module adds some information related either to real data (run
 number) or simulated data like =genbb= weight in case the total energy of primary
 particles has been restricted.
 
+**** General informations
 #+BEGIN_SRC sh
   [name="add_header" type="snemo::analysis::processing::event_header_utils_module"]
 
@@ -517,6 +518,7 @@ of some properties/descriptions of simulation runs (see below).
 The =external_properties_prefix= allows to filter which properties should be
 stored. If no =external_properties_prefix= field is defined then all the
 properties are used and serialized.
+
 #+BEGIN_SRC sh
   #@description The external properties files to be exported in event_header properties
   mode.add_header.external_properties_path : string as path = \
@@ -526,9 +528,28 @@ properties are used and serialized.
   mode.add_header.external_properties_prefix : string = "analysis"
 #+END_SRC
 
-#+BEGIN_SRC sh :tangle snsimulation_header.conf
+**** Analysis informations
+:PROPERTIES:
+:TANGLE: snsimulation_header.conf
+:END:
+The following code block allows to "tag" the current version /i.e./ getting the
+=git= branch name, commit chunk
+
+#+NAME: vc-status
+#+BEGIN_SRC sh :tangle no :results output
+  if [ -d .git ]; then
+      log+="git "$(git rev-parse --abbrev-ref HEAD)" branch - "
+      log+=$(LC_MESSAGES=en git --no-pager log -1 HEAD --date=short --pretty=format:"commit %h - %ad")
+      echo -ne $log
+  fi
+#+END_SRC
+
+#+BEGIN_SRC sh :noweb yes
   #@description The analysis description
-  analysis.description : string = "Study the efficiency of e-/e+ discrimination"
+  analysis.description : string = "Sensitivity studies for SuperNEMO demonstrator"
+
+  #@description The version control status
+  analysis.vc_status : string = "<<vc-status()>>"
 
   #@description The total number of event simulated
   analysis.total_number_of_event : integer = 100000
