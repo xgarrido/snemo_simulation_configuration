@@ -1931,7 +1931,7 @@ has_charge.type : string = "undefined"
 # | has_negative_charge           |
 
 #+BEGIN_SRC sh :noweb yes
-  <<multi("particle_track_cut", "and", 3, particle_track_cuts)>>
+  <<multi("particle_track_cut", "and", 6, particle_track_cuts)>>
 #+END_SRC
 ** Histogram service
 
