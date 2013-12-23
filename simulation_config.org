@@ -2094,12 +2094,13 @@ has_charge.type : string = "undefined"
 | range_particle                |
 | has_associated_calorimeter    |
 | range_associated_calorimeters |
-| chi2_cut                      |
 | has_vertex_on_foil            |
+| has_negative_charge           |
 |-------------------------------|
+# | chi2_cut                      |
 
 #+BEGIN_SRC sh :noweb yes
-  <<multi("particle_track_cut", "and", 6, particle_track_cuts)>>
+  <<multi("particle_track_cut", "and", 7, particle_track_cuts)>>
 #+END_SRC
 ** Histogram service
 :PROPERTIES:
