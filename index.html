@@ -261,34 +261,8 @@ services.configuration_files : string[1] as <span class="org-variable-name">path
 <h3 id="sec-2-3"><span class="section-number-3">2.3</span> DLL loader</h3>
 <div class="outline-text-3" id="text-2-3">
 </div><div id="outline-container-sec-2-3-1" class="outline-4">
-<h4 id="sec-2-3-1">Code generator</h4>
+<h4 id="sec-2-3-1">Libraries</h4>
 <div class="outline-text-4" id="text-2-3-1">
-<p>
-This skeleton code ease the declaration of dll loader since it
-receives a table list and builds the corresponding <code>dlls.conf</code> file.
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-sh" id="dll_loader"><span class="org-builtin">echo</span> <span class="org-string">'#@description A sample list of setups'</span>
-<span class="org-builtin">echo</span> <span class="org-string">'#@key_label   "name"'</span>
-<span class="org-builtin">echo</span> <span class="org-string">'#@meta_label  "filename"'</span>
-<span class="org-keyword">for</span> i<span class="org-keyword"> in</span> $<span class="org-variable-name">list</span>
-<span class="org-keyword">do</span>
-    <span class="org-variable-name">dll</span>=$(<span class="org-builtin">echo</span> $<span class="org-variable-name">i</span> | sed <span class="org-string">'/(/ s/("\|")//g'</span>)
-    <span class="org-builtin">echo</span> <span class="org-string">'[name="'</span>$<span class="org-variable-name">dll</span><span class="org-string">'" filename=""]'</span>
-    <span class="org-builtin">echo</span> <span class="org-string">'#config The '</span>$<span class="org-variable-name">dll</span><span class="org-string">' library'</span>
-    <span class="org-builtin">echo</span> <span class="org-string">'autoload : boolean = 1'</span>
-    <span class="org-builtin">echo</span>
-<span class="org-keyword">done</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-sec-2-3-2" class="outline-4">
-<h4 id="sec-2-3-2">Libraries</h4>
-<div class="outline-text-4" id="text-2-3-2">
 <p>
 This part set the different libraries to be loaded at runtime. This is needed
 since event data models or algorithms may be defined in other libraries than the
@@ -1017,28 +991,15 @@ mode.add_header.external_properties_prefix : <span class="org-variable-name">str
 </div>
 </li>
 <li>Analysis informations<br  /><div class="outline-text-5" id="text-3-3-3-2">
-<p>
-The following code block allows to &ldquo;tag&rdquo; the current version <i>i.e.</i> getting the
-<code>git</code> branch name, commit chunk
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-sh" id="vc-status"><span class="org-keyword">if</span> [ -d .git ]; <span class="org-keyword">then</span>
-    <span class="org-variable-name">log</span>+=<span class="org-string">"git "</span>$(git rev-parse --abbrev-ref HEAD)<span class="org-string">" branch - "</span>
-    <span class="org-variable-name">log</span>+=$(<span class="org-variable-name">LC_MESSAGES</span>=en git --no-pager log -1 HEAD --date=short --pretty=format:<span class="org-string">"commit %h - %ad"</span>)
-    <span class="org-builtin">echo</span> -ne $<span class="org-variable-name">log</span>
-<span class="org-keyword">fi</span>
-</pre>
 </div>
-
+<ul class="org-ul"><li>Properties store<br  /><div class="outline-text-6" id="text-3-3-3-2-1">
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The analysis description</span>
 analysis.description : <span class="org-variable-name">string</span> = <span class="org-string">"Sensitivity studies for SuperNEMO demonstrator"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The version control status</span>
-analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git master branch - commit f32c6a1 - 2013-12-25"</span>
+analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git master branch - commit eb74fff - 2013-12-25"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The total number of event simulated</span>
 analysis.total_number_of_event : <span class="org-variable-name">integer</span> = 100000
@@ -1051,6 +1012,7 @@ analysis.source_isotope : <span class="org-variable-name">string</span> = <span 
 </pre>
 </div>
 </div>
+</li></ul>
 </li></ul>
 </div>
 
@@ -2397,14 +2359,6 @@ software components, including other services or data processing modules (see
 
 <div class="org-src-container">
 
-<pre class="src src-sh" id="service_preamble"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of setups</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
-</pre>
-</div>
-
-<div class="org-src-container">
-
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of setups</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
@@ -3338,7 +3292,7 @@ been tested under this shells.
 </div>
 </div></div>
 <div id="postamble" class="status">
-File under git version control - commit f32c6a1 - 2013-12-25
+File under git version control - commit eb74fff - 2013-12-25
 </div>
 </body>
 </html>
