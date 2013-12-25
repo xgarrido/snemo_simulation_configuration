@@ -535,7 +535,7 @@ The following code block allows to "tag" the current version /i.e./ getting the
 =git= branch name, commit chunk
 
 #+NAME: vc-status
-#+BEGIN_SRC sh :tangle no :results output
+#+BEGIN_SRC sh :tangle no :results output :exports none
   if [ -d .git ]; then
       log+="git "$(git rev-parse --abbrev-ref HEAD)" branch - "
       log+=$(LC_MESSAGES=en git --no-pager log -1 HEAD --date=short --pretty=format:"commit %h - %ad")
