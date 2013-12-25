@@ -14,7 +14,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012  Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -77,6 +77,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#sec-2-1">2.1. Module manager</a></li>
 <li><a href="#sec-2-2">2.2. Service manager</a></li>
+<li><a href="#sec-2-3">2.3. DLL loader</a></li>
 </ul>
 </li>
 <li><a href="#sec-3">3. Modules</a>
@@ -256,7 +257,121 @@ services.configuration_files : string[1] as <span class="org-variable-name">path
 </div>
 </div>
 </div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> DLL loader</h3>
+<div class="outline-text-3" id="text-2-3">
+</div><div id="outline-container-sec-2-3-1" class="outline-4">
+<h4 id="sec-2-3-1">Code generator</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+This skeleton code ease the declaration of dll loader since it
+receives a table list and builds the corresponding <code>dlls.conf</code> file.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh" id="dll_loader"><span class="org-builtin">echo</span> <span class="org-string">'#@description A sample list of setups'</span>
+<span class="org-builtin">echo</span> <span class="org-string">'#@key_label   "name"'</span>
+<span class="org-builtin">echo</span> <span class="org-string">'#@meta_label  "filename"'</span>
+<span class="org-keyword">for</span> i<span class="org-keyword"> in</span> $<span class="org-variable-name">list</span>
+<span class="org-keyword">do</span>
+    <span class="org-variable-name">dll</span>=$(<span class="org-builtin">echo</span> $<span class="org-variable-name">i</span> | sed <span class="org-string">'/(/ s/("\|")//g'</span>)
+    <span class="org-builtin">echo</span> <span class="org-string">'[name="'</span>$<span class="org-variable-name">dll</span><span class="org-string">'" filename=""]'</span>
+    <span class="org-builtin">echo</span> <span class="org-string">'#config The '</span>$<span class="org-variable-name">dll</span><span class="org-string">' library'</span>
+    <span class="org-builtin">echo</span> <span class="org-string">'autoload : boolean = 1'</span>
+    <span class="org-builtin">echo</span>
+<span class="org-keyword">done</span>
+</pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3-2" class="outline-4">
+<h4 id="sec-2-3-2">Libraries</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+This part set the different libraries to be loaded at runtime. This is needed
+since event data models or algorithms may be defined in other libraries than the
+<code>dpp</code> and inherited libraries. The following table sets a full (and exhaustive)
+list of needed libraries
+</p>
+
+<table id="dll_libraries" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption align="above"><span class="table-number">Table 1:</span> Libraries to be used by modules</caption>
+
+<colgroup>
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">mctools_g4</td>
+</tr>
+
+<tr>
+<td class="left">mctools_bio</td>
+</tr>
+
+<tr>
+<td class="left">sncore</td>
+</tr>
+
+<tr>
+<td class="left">sncore_bio</td>
+</tr>
+
+<tr>
+<td class="left">snreconstruction</td>
+</tr>
+
+<tr>
+<td class="left">snanalysis</td>
+</tr>
+
+<tr>
+<td class="left">snanalysis_bio</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of setups</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "filename"</span>
+[<span class="org-variable-name">name</span>=<span class="org-string">"mctools_g4"</span> <span class="org-variable-name">filename</span>=<span class="org-string">""</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The mctools_g4 library</span>
+<span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
+
+[<span class="org-variable-name">name</span>=<span class="org-string">"mctools_bio"</span> <span class="org-variable-name">filename</span>=<span class="org-string">""</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The mctools_bio library</span>
+<span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
+
+[<span class="org-variable-name">name</span>=<span class="org-string">"sncore"</span> <span class="org-variable-name">filename</span>=<span class="org-string">""</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The sncore library</span>
+<span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
+
+[<span class="org-variable-name">name</span>=<span class="org-string">"sncore_bio"</span> <span class="org-variable-name">filename</span>=<span class="org-string">""</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The sncore_bio library</span>
+<span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
+
+[<span class="org-variable-name">name</span>=<span class="org-string">"snreconstruction"</span> <span class="org-variable-name">filename</span>=<span class="org-string">""</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The snreconstruction library</span>
+<span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
+
+[<span class="org-variable-name">name</span>=<span class="org-string">"snanalysis"</span> <span class="org-variable-name">filename</span>=<span class="org-string">""</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The snanalysis library</span>
+<span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
+
+[<span class="org-variable-name">name</span>=<span class="org-string">"snanalysis_bio"</span> <span class="org-variable-name">filename</span>=<span class="org-string">""</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The snanalysis_bio library</span>
+<span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3"><span class="section-number-2">3</span> Modules</h2>
 <div class="outline-text-2" id="text-3">
@@ -782,7 +897,7 @@ erase_former_SD_bank : <span class="org-variable-name">boolean</span> = 0
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The simulation manager PRNG seed</span>
-manager.seed : <span class="org-variable-name">integer</span> = 2
+manager.seed                  : <span class="org-variable-name">integer</span> = 2
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The vertex generator PRNG seed</span>
 manager.vertex_generator_seed : <span class="org-variable-name">integer</span> = 4
@@ -849,7 +964,9 @@ record. This module adds some information related either to real data (run
 number) or simulated data like <code>genbb</code> weight in case the total energy of primary
 particles has been restricted.
 </p>
+</div>
 
+<ul class="org-ul"><li>General informations<br  /><div class="outline-text-5" id="text-3-3-3-1">
 <div class="org-src-container">
 
 <pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"add_header"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::event_header_utils_module"</span>]
@@ -886,6 +1003,7 @@ The <code>external_properties_prefix</code> allows to filter which properties sh
 stored. If no <code>external_properties_prefix</code> field is defined then all the
 properties are used and serialized.
 </p>
+
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The external properties files to be exported in event_header properties</span>
@@ -896,14 +1014,31 @@ mode.add_header.external_properties_path : string as <span class="org-variable-n
 mode.add_header.external_properties_prefix : <span class="org-variable-name">string</span> = <span class="org-string">"analysis"</span>
 </pre>
 </div>
+</div>
+</li>
+<li>Analysis informations<br  /><div class="outline-text-5" id="text-3-3-3-2">
+<p>
+The following code block allows to &ldquo;tag&rdquo; the current version <i>i.e.</i> getting the
+<code>git</code> branch name, commit chunk
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh" id="vc-status"><span class="org-keyword">if</span> [ -d .git ]; <span class="org-keyword">then</span>
+    <span class="org-variable-name">log</span>+=<span class="org-string">"git "</span>$(git rev-parse --abbrev-ref HEAD)<span class="org-string">" branch - "</span>
+    <span class="org-variable-name">log</span>+=$(<span class="org-variable-name">LC_MESSAGES</span>=en git --no-pager log -1 HEAD --date=short --pretty=format:<span class="org-string">"commit %h - %ad"</span>)
+    <span class="org-builtin">echo</span> -ne $<span class="org-variable-name">log</span>
+<span class="org-keyword">fi</span>
+</pre>
+</div>
 
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The analysis description</span>
-analysis.description : <span class="org-variable-name">string</span> = <span class="org-string">"Study the efficiency of e-/e+ discrimination wrt magnetic field"</span>
+analysis.description : <span class="org-variable-name">string</span> = <span class="org-string">"Sensitivity studies for SuperNEMO demonstrator"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The SuperNEMO magnetic field</span>
-analysis.magnetic_field : <span class="org-variable-name">real</span> = 25.0 <span class="org-comment-delimiter">#</span><span class="org-comment">Gauss</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The version control status</span>
+analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git master branch - commit f32c6a1 - 2013-12-25"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The total number of event simulated</span>
 analysis.total_number_of_event : <span class="org-variable-name">integer</span> = 100000
@@ -916,6 +1051,7 @@ analysis.source_isotope : <span class="org-variable-name">string</span> = <span 
 </pre>
 </div>
 </div>
+</li></ul>
 </div>
 
 <div id="outline-container-sec-3-3-4" class="outline-4">
@@ -1708,7 +1844,7 @@ CAD.use_last_geiger_cell : <span class="org-variable-name">boolean</span> = 0
 <h3 id="sec-3-5"><span class="section-number-3">3.5</span> Analysis chain modules</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
-This section holds most of the chain module so setting &ldquo;to music&rdquo; the different
+This section holds most of the chain module to set &ldquo;to music&rdquo; the different
 modules and tasks. It also contains the different paths given the selection
 requirements. One important point is that module order really matters since a
 module, especially <code>chain_module</code>, needs to know the declaration of all the
@@ -1731,15 +1867,15 @@ modules it contains.
 <div id="outline-container-sec-3-5-2" class="outline-4">
 <h4 id="sec-3-5-2">Analysis chain</h4>
 <div class="outline-text-4" id="text-3-5-2">
-<table id="analysis_chain-:results-none" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption align="above"><span class="table-number">Table 1:</span> Modules used by the analysis process</caption>
+<table id="analysis_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption align="above"><span class="table-number">Table 2:</span> Modules used by the analysis process</caption>
 
 <colgroup>
 <col  class="left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="left">io_output_particle_track_selected</td>
+<td class="left">io_outputselected_track__particle</td>
 </tr>
 
 <tr>
@@ -1751,11 +1887,11 @@ modules it contains.
 </tr>
 
 <tr>
-<td class="left">remove_tracker_clustering_data</td>
+<td class="left">remove_trackerdata__clustering</td>
 </tr>
 
 <tr>
-<td class="left">remove_tracker_trajectory_data</td>
+<td class="left">remove_trackerdata__trajectory</td>
 </tr>
 
 <tr>
@@ -1810,15 +1946,15 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 <div id="outline-container-sec-3-5-4" class="outline-4">
 <h4 id="sec-3-5-4">Particle tracking chain</h4>
 <div class="outline-text-4" id="text-3-5-4">
-<table id="particle_tracking_chain-:results-none" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption align="above"><span class="table-number">Table 2:</span> Modules used by the particle tracking process</caption>
+<table id="particle_tracking_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption align="above"><span class="table-number">Table 3:</span> Modules used by the particle tracking process</caption>
 
 <colgroup>
 <col  class="left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="left">remove_particle_track_data</td>
+<td class="left">remove_particledata__track</td>
 </tr>
 
 <tr>
@@ -1826,11 +1962,11 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 </tr>
 
 <tr>
-<td class="left">io_output_particle_track</td>
+<td class="left">io_outputtrack__particle</td>
 </tr>
 
 <tr>
-<td class="left">process_with_particle_track_cuts</td>
+<td class="left">process_withcuts_track__particle</td>
 </tr>
 </tbody>
 </table>
@@ -1879,15 +2015,15 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 <div id="outline-container-sec-3-5-6" class="outline-4">
 <h4 id="sec-3-5-6">Fitting chain</h4>
 <div class="outline-text-4" id="text-3-5-6">
-<table id="fitting_chain-:results-none" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption align="above"><span class="table-number">Table 3:</span> Modules used by the fitting process</caption>
+<table id="fitting_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption align="above"><span class="table-number">Table 4:</span> Modules used by the fitting process</caption>
 
 <colgroup>
 <col  class="left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="left">remove_tracker_trajectory_data</td>
+<td class="left">remove_trackerdata__trajectory</td>
 </tr>
 
 <tr>
@@ -1895,11 +2031,11 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 </tr>
 
 <tr>
-<td class="left">io_output_tracker_trajectory</td>
+<td class="left">io_outputtrajectory__tracker</td>
 </tr>
 
 <tr>
-<td class="left">process_with_fitting_cuts</td>
+<td class="left">process_withcuts__fitting</td>
 </tr>
 </tbody>
 </table>
@@ -1948,15 +2084,15 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 <div id="outline-container-sec-3-5-8" class="outline-4">
 <h4 id="sec-3-5-8">Clustering chain</h4>
 <div class="outline-text-4" id="text-3-5-8">
-<table id="clustering_chain-:results-none" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption align="above"><span class="table-number">Table 4:</span> Modules used by the clustering process</caption>
+<table id="clustering_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption align="above"><span class="table-number">Table 5:</span> Modules used by the clustering process</caption>
 
 <colgroup>
 <col  class="left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="left">remove_tracker_clustering_data</td>
+<td class="left">remove_trackerdata__clustering</td>
 </tr>
 
 <tr>
@@ -1964,11 +2100,11 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 </tr>
 
 <tr>
-<td class="left">io_output_tracker_clustering</td>
+<td class="left">io_outputclustering__tracker</td>
 </tr>
 
 <tr>
-<td class="left">process_with_clustering_cuts</td>
+<td class="left">process_withcuts__clustering</td>
 </tr>
 </tbody>
 </table>
@@ -2017,8 +2153,8 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 <div id="outline-container-sec-3-5-10" class="outline-4">
 <h4 id="sec-3-5-10">Calibration chain</h4>
 <div class="outline-text-4" id="text-3-5-10">
-<table id="calibration_chain-:results-none" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption align="above"><span class="table-number">Table 5:</span> Modules used by the calibration process</caption>
+<table id="calibration_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption align="above"><span class="table-number">Table 6:</span> Modules used by the calibration process</caption>
 
 <colgroup>
 <col  class="left" />
@@ -2061,8 +2197,8 @@ modules : <span class="org-variable-name">string</span>[4] =   <span class="org-
 <div id="outline-container-sec-3-5-11" class="outline-4">
 <h4 id="sec-3-5-11">Simulation chain</h4>
 <div class="outline-text-4" id="text-3-5-11">
-<table id="simulation_chain-:results-none" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption align="above"><span class="table-number">Table 6:</span> Modules used by the simulation process</caption>
+<table id="simulation_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption align="above"><span class="table-number">Table 7:</span> Modules used by the simulation process</caption>
 
 <colgroup>
 <col  class="left" />
@@ -2095,8 +2231,8 @@ modules : <span class="org-variable-name">string</span>[2] =   <span class="org-
 <div id="outline-container-sec-3-5-12" class="outline-4">
 <h4 id="sec-3-5-12">Full chain (from simulation &rarr; calibration &rarr; reconstruction)</h4>
 <div class="outline-text-4" id="text-3-5-12">
-<table id="full_chain-:results-none" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption align="above"><span class="table-number">Table 7:</span> Full chain processing</caption>
+<table id="full_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption align="above"><span class="table-number">Table 8:</span> Full chain processing</caption>
 
 <colgroup>
 <col  class="left" />
@@ -2111,7 +2247,7 @@ modules : <span class="org-variable-name">string</span>[2] =   <span class="org-
 </tr>
 
 <tr>
-<td class="left">process_with_calibrated_cuts</td>
+<td class="left">process_withcuts__calibrated</td>
 </tr>
 </tbody>
 </table>
@@ -2132,10 +2268,59 @@ modules : <span class="org-variable-name">string</span>[3] =   <span class="org-
 </div>
 </div>
 <div id="outline-container-sec-3-5-13" class="outline-4">
-<h4 id="sec-3-5-13">Miscellaneous</h4>
+<h4 id="sec-3-5-13">Minimum bias chain (from simulation &rarr; calibration &rarr; reconstruction)</h4>
 <div class="outline-text-4" id="text-3-5-13">
-<table id="reformat_data-:results-none" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption align="above"><span class="table-number">Table 8:</span> Reformating data</caption>
+<table id="minimum_bias_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption align="above"><span class="table-number">Table 9:</span> Full chain processing without selection</caption>
+
+<colgroup>
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">simulation_chain</td>
+</tr>
+
+<tr>
+<td class="left">calibration_chain</td>
+</tr>
+
+<tr>
+<td class="left">clustering_chain</td>
+</tr>
+
+<tr>
+<td class="left">fitting_chain</td>
+</tr>
+
+<tr>
+<td class="left">particle_tracking_chain</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"minimum_bias_chain"</span> <span class="org-variable-name">type</span>=<span class="org-string">"dpp::chain_module"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of processing modules to be applied (in this order)</span>
+modules : <span class="org-variable-name">string</span>[5] =   <span class="org-string">"simulation_chain"</span> <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"calibration_chain"</span> <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"clustering_chain"</span> <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"fitting_chain"</span> <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"particle_tracking_chain"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-5-14" class="outline-4">
+<h4 id="sec-3-5-14">Miscellaneous</h4>
+<div class="outline-text-4" id="text-3-5-14">
+<table id="reformat_data" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption align="above"><span class="table-number">Table 10:</span> Reformating data</caption>
 
 <colgroup>
 <col  class="left" />
@@ -2150,7 +2335,7 @@ modules : <span class="org-variable-name">string</span>[3] =   <span class="org-
 </tr>
 
 <tr>
-<td class="left">remove_mc_visu_hits</td>
+<td class="left">remove_mchits__visu</td>
 </tr>
 
 <tr>
@@ -2162,11 +2347,11 @@ modules : <span class="org-variable-name">string</span>[3] =   <span class="org-
 </tr>
 
 <tr>
-<td class="left">remove_tracker_clustering_data</td>
+<td class="left">remove_trackerdata__clustering</td>
 </tr>
 
 <tr>
-<td class="left">remove_tracker_trajectory_data</td>
+<td class="left">remove_trackerdata__trajectory</td>
 </tr>
 </tbody>
 </table>
@@ -2502,8 +2687,8 @@ range_hit_category.min : <span class="org-variable-name">integer</span> = 3
 <p>
 This cuts puts together all the previous declared cuts.
 </p>
-<table id="calibrated_cuts-:results-none" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption align="above"><span class="table-number">Table 9:</span> Multi selection for validating calibration process</caption>
+<table id="calibrated_cuts" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption align="above"><span class="table-number">Table 11:</span> Multi selection for validating calibration process</caption>
 
 <colgroup>
 <col  class="left" />
@@ -2626,15 +2811,15 @@ range_tracker_hit.min : <span class="org-variable-name">integer</span> = 1
 </div>
 </li>
 <li>Multiple cuts<br  /><div class="outline-text-5" id="text-4-3-4-4">
-<table id="tracker_clustering_cuts-:results-none" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption align="above"><span class="table-number">Table 10:</span> Multi-selection for validating tracker clustering process</caption>
+<table id="tracker_clustering_cuts" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption align="above"><span class="table-number">Table 12:</span> Multi-selection for validating tracker clustering process</caption>
 
 <colgroup>
 <col  class="left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="left">has_tracker_clustering_data</td>
+<td class="left">has_trackerdata__clustering</td>
 </tr>
 
 <tr>
@@ -2694,15 +2879,15 @@ has_bank.name : <span class="org-variable-name">string</span> = <span class="org
 </div>
 </li>
 <li>Multiple cuts<br  /><div class="outline-text-5" id="text-4-3-5-2">
-<table id="tracker_trajectory_cuts-:results-none" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption align="above"><span class="table-number">Table 11:</span> Multi-selection for validating tracker trajectory process</caption>
+<table id="tracker_trajectory_cuts" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption align="above"><span class="table-number">Table 13:</span> Multi-selection for validating tracker trajectory process</caption>
 
 <colgroup>
 <col  class="left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="left">has_tracker_trajectory_data</td>
+<td class="left">has_trackerdata__trajectory</td>
 </tr>
 </tbody>
 </table>
@@ -2964,15 +3149,15 @@ parameter.min : <span class="org-variable-name">real</span> = 50.0 <span class="
 </div>
 </li>
 <li>Multiple cuts<br  /><div class="outline-text-5" id="text-4-3-6-9">
-<table id="particle_track_cuts-:results-none" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption align="above"><span class="table-number">Table 12:</span> Multi-selection for validating particle tracking process</caption>
+<table id="particle_track_cuts" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption align="above"><span class="table-number">Table 14:</span> Multi-selection for validating particle tracking process</caption>
 
 <colgroup>
 <col  class="left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="left">has_particle_track_data</td>
+<td class="left">has_particledata__track</td>
 </tr>
 
 <tr>
@@ -2992,7 +3177,7 @@ parameter.min : <span class="org-variable-name">real</span> = 50.0 <span class="
 </tr>
 
 <tr>
-<td class="left">has_vertex_on_foil</td>
+<td class="left">has_vertexfoil__on</td>
 </tr>
 </tbody>
 </table>
@@ -3153,7 +3338,7 @@ been tested under this shells.
 </div>
 </div></div>
 <div id="postamble" class="status">
-File under git version control - commit 6e33c18 - 2013-11-22
+File under git version control - commit f32c6a1 - 2013-12-25
 </div>
 </body>
 </html>

@@ -14,7 +14,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012  Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -247,7 +247,7 @@ build_mapping : <span class="org-variable-name">boolean</span> = 0
 mapping.max_depth : <span class="org-variable-name">integer</span> = 0
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Categories not to be registered in the mapping dictionnary</span>
-mapping.excluded_categories : string [5] = <span class="org-sh-escaped-newline">\</span>
+mapping.excluded_categories : <span class="org-variable-name">string</span>[5] = <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"drift_cell_field_wires_set"</span> <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"drift_cell_field_wire"</span>      <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"drift_cell_base"</span>            <span class="org-sh-escaped-newline">\</span>
@@ -476,13 +476,16 @@ module.
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag to activate the geometry volume/field associations map</span>
-manager.build_geom_map                           : <span class="org-variable-name">boolean</span> = 1
+manager.build_geom_map : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Manager logging priority</span>
+manager.geom_map.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of EM fields associated to some logical volumes</span>
-manager.geom_map.associations.labels             : <span class="org-variable-name">string</span>[1] = <span class="org-string">"sn_module"</span>
+manager.geom_map.associations.labels : <span class="org-variable-name">string</span>[1] = <span class="org-string">"sn_module"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The logical model associated for the label 'tracker'</span>
-manager.geom_map.associations.sn_module.volume     : <span class="org-variable-name">string</span> = <span class="org-string">"module_basic.model.log"</span>
+manager.geom_map.associations.sn_module.volume : <span class="org-variable-name">string</span> = <span class="org-string">"module_basic.model.log"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The EM field associated for the label "tracker"</span>
 manager.geom_map.associations.sn_module.field_name : <span class="org-variable-name">string</span> = <span class="org-string">"B_module"</span>
@@ -579,7 +582,7 @@ locators.module_number : <span class="org-variable-name">integer</span> = 0
 </div>
 </div>
 <div id="postamble" class="status">
-File under git version control - commit 6e33c18 - 2013-11-22
+File under git version control - commit f32c6a1 - 2013-12-25
 </div>
 </body>
 </html>
