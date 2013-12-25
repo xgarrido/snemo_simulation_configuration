@@ -543,6 +543,30 @@ The following code block allows to "tag" the current version /i.e./ getting the
   fi
 #+END_SRC
 
+***** Getting component version                                :noexport:
+:PROPERTIES:
+:TANGLE: no
+:RESULTS: output
+:END:
+The following code block retrieves the version number of a given component
+#+NAME: code-version
+#+HEADERS: :var name="" :var binary=1
+#+BEGIN_SRC sh :noweb yes
+  if [ "$name" != "" ]; then
+      if [ $binary -eq 1 ]; then
+          echo -ne "$($name-config --version)"
+      else
+          cd $($name-config --prefix)/..
+          status=$(LC_MESSAGES=en git svn info)
+          rev=$(echo -e $status | sed -n 's/.*Revision: *\([^ ]*\).*/\1/p')
+          date=$(echo -e $status | sed -n 's/.*Last Changed Date: *\([^ ]*\).*/\1/p')
+          log="svn revision ${rev} - ${date}"
+          echo -ne $log
+      fi
+  fi
+#+END_SRC
+
+***** Properties store
 #+BEGIN_SRC sh :noweb yes
   #@description The analysis description
   analysis.description : string = "Sensitivity studies for SuperNEMO demonstrator"
