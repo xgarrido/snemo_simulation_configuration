@@ -109,7 +109,7 @@ service files.
 #+END_SRC
 
 ** DLL loader
-*** Code generator
+*** Code generator                                               :noexport:
 :PROPERTIES:
 :TANGLE:  no
 :RESULTS: output
@@ -531,11 +531,16 @@ properties are used and serialized.
 :PROPERTIES:
 :TANGLE: snsimulation_header.conf
 :END:
+***** Getting branch status                                    :noexport:
+:PROPERTIES:
+:TANGLE: no
+:RESULTS: output
+:END:
 The following code block allows to "tag" the current version /i.e./ getting the
 =git= branch name, commit chunk
 
 #+NAME: vc-status
-#+BEGIN_SRC sh :tangle no :results output :exports none
+#+BEGIN_SRC sh
   if [ -d .git ]; then
       log+="git "$(git rev-parse --abbrev-ref HEAD)" branch - "
       log+=$(LC_MESSAGES=en git --no-pager log -1 HEAD --date=short --pretty=format:"commit %h - %ad")
@@ -1373,7 +1378,7 @@ software components, including other services or data processing modules (see
 [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Whatisaservice][SN@ilWare FAQ]]).
 
 #+NAME: service_preamble
-#+BEGIN_SRC sh :results none :tangle no
+#+BEGIN_SRC sh :results none :tangle no :exports none
   #@description A sample list of setups
   #@key_label   "name"
   #@meta_label  "type"
