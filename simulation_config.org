@@ -490,7 +490,7 @@ particles has been restricted.
 #+BEGIN_SRC sh
   [name="add_header" type="snemo::analysis::processing::event_header_utils_module"]
 
-  #@description Debug flag
+  #@description Logging priority
   logging.priority : string = "warning"
 
   #@description The processor mode
@@ -885,8 +885,8 @@ by K. Bhardwaj.
 #+BEGIN_SRC sh
   [name="tcp_tracker_clustering" type="snemo::reconstruction::processing::tracker_clustering_module"]
 
-  #@description Debug flag
-  debug : boolean = 0
+  #@description Logging priority
+  logging.priority : string = "warning"
 
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
@@ -1750,7 +1750,7 @@ This cuts puts together all the previous declared cuts.
 |-----------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<multi(cname="basic_tracker_trajectory_cut", "and", 1, tracker_trajectory_cuts, debug=1)>>
+  <<multi(cname="basic_tracker_trajectory_cut", "and", 1, tracker_trajectory_cuts)>>
 #+END_SRC
 
 *** Particle track selection
@@ -1780,8 +1780,8 @@ This cuts puts together all the previous declared cuts.
 #+BEGIN_SRC sh
   [name="has_particle" type="snemo::analysis::cut::basic_particle_track_data_cut"]
 
-  #@description Debug flag
-  debug : boolean = 0
+  #@description Logging priority
+  logging.priority : string = "warning"
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   PTD_label : string = "PTD"
@@ -1793,8 +1793,8 @@ This cuts puts together all the previous declared cuts.
 #+BEGIN_SRC sh
   [name="range_particle" type="snemo::analysis::cut::basic_particle_track_data_cut"]
 
-  #@description Debug flag
-  debug : boolean = 0
+  #@description Logging priority
+  logging.priority : string = "warning"
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   PTD_label : string = "PTD"
@@ -1813,8 +1813,8 @@ This cuts puts together all the previous declared cuts.
 #+BEGIN_SRC sh
   [name="has_associated_calorimeter" type="snemo::analysis::cut::basic_particle_track_data_cut"]
 
-  #@description Debug flag
-  debug : boolean = 0
+  #@description Logging priority
+  logging.priority : string = "warning"
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   PTD_label : string = "PTD"
@@ -1827,8 +1827,8 @@ This cuts puts together all the previous declared cuts.
 #+BEGIN_SRC sh
   [name="range_associated_calorimeters" type="snemo::analysis::cut::basic_particle_track_data_cut"]
 
-  #@description Debug flag
-  debug : boolean = 0
+  #@description Logging priority
+  logging.priority : string = "warning"
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   PTD_label : string = "PTD"
@@ -1847,8 +1847,8 @@ This cuts puts together all the previous declared cuts.
 #+BEGIN_SRC sh
   [name="has_vertex_on_foil" type="snemo::analysis::cut::basic_particle_track_data_cut"]
 
-  #@description Debug flag
-  debug : boolean = 0
+  #@description Logging priority
+  logging.priority : string = "warning"
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   PTD_label : string = "PTD"
@@ -1861,8 +1861,8 @@ This cuts puts together all the previous declared cuts.
 #+BEGIN_SRC sh
 [name="has_negative_charge" type="snemo::analysis::cut::basic_particle_track_data_cut"]
 
-#@description Debug flag
-debug : boolean = 0
+#@description Logging priority
+logging.priority : string = "warning"
 
 #@description The label/name of the 'particle track data' bank (mandatory)
 PTD_label : string = "PTD"
@@ -1877,8 +1877,8 @@ has_charge.type : string = "negative"
 #+BEGIN_SRC sh
 [name="has_positive_charge" type="snemo::analysis::cut::basic_particle_track_data_cut"]
 
-#@description Debug flag
-debug : boolean = 0
+#@description Logging priority
+logging.priority : string = "warning"
 
 #@description The label/name of the 'particle track data' bank (mandatory)
 PTD_label : string = "PTD"
@@ -1893,8 +1893,8 @@ has_charge.type : string = "positive"
 #+BEGIN_SRC sh
 [name="has_undefined_charge" type="snemo::analysis::cut::basic_particle_track_data_cut"]
 
-#@description Debug flag
-debug : boolean = 0
+#@description Logging priority
+logging.priority : string = "warning"
 
 #@description The label/name of the 'particle track data' bank (mandatory)
 PTD_label : string = "PTD"
@@ -1910,8 +1910,8 @@ has_charge.type : string = "undefined"
 #+BEGIN_SRC sh
   [name="chi2_cut" type="snemo::analysis::cut::basic_particle_track_parameter_cut"]
 
-  #@description Debug flag
-  debug : boolean = 0
+  #@description Logging priority
+  logging.priority : string = "warning"
 
   #@description The label/name of the 'particle track data' bank (mandatory)
   PTD_label : string = "PTD"
@@ -1933,8 +1933,8 @@ has_charge.type : string = "undefined"
 #+BEGIN_SRC sh
   [name="deltay_calo_cut" type="snemo::analysis::cut::basic_particle_track_parameter_cut"]
 
-  #@description Debug flag
-  debug : boolean = 0
+  #@description Logging priority
+  logging.priority : string = "warning"
 
   #@description The label/name of the 'particle track data' bank (mandatory)
   PTD_label : string = "PTD"
@@ -1969,9 +1969,9 @@ has_charge.type : string = "undefined"
 | has_associated_calorimeter    |
 | range_associated_calorimeters |
 | has_vertex_on_foil            |
+| has_negative_charge           |
 |-------------------------------|
 # | chi2_cut                      |
-# | has_negative_charge           |
 
 #+BEGIN_SRC sh :noweb yes
   <<multi("particle_track_cut", "and", 6, particle_track_cuts)>>
