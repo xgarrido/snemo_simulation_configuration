@@ -337,6 +337,11 @@ module.
   #@description Logging priority
   logging.priority : string = "warning"
 #+END_SRC
+*** Geometry requirements
+#+BEGIN_SRC sh
+#@description Geometry version requirement (not working with version lower than 2.0)
+geometry.setup_requirement : string[2] = "snemo(>=2)" "snemo::demonstrator(>=2)"
+#+END_SRC
 
 *** Module number
 #+BEGIN_SRC sh
