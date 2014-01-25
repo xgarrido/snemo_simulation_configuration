@@ -1652,8 +1652,8 @@ This cuts puts together all the previous declared cuts.
 |---------------------|
 | has_calibrated_data |
 | has_cd_calorimeter  |
-| has_cd_tracker      |
 | cd_calorimeter_cut  |
+| has_cd_tracker      |
 | cd_tracker_cut      |
 |---------------------|
 
