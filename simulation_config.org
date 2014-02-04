@@ -403,7 +403,13 @@ Here we define some common and useful tasks such as removing data/MC hits.
 #+BEGIN_SRC sh :noweb yes
   <<remove_module(mname="remove_particle_track_data", label="PTD", logging="warning")>>
 #+END_SRC
+*** Dump module
+#+BEGIN_SRC sh
+  [name="dump" type="dpp::dump_module"]
 
+  #@description Output stream
+  output : string = "clog"
+#+END_SRC
 ** Simulation to calibration modules
 :PROPERTIES:
 :TANGLE: s2c_modules.conf
