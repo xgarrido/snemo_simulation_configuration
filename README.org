@@ -1,7 +1,6 @@
-#+TITLE: README
+#+TITLE: SuperNEMO configuration for SN@ilWare
 #+AUTHOR: Xavier Garrido
-
-* README
+#+OPTIONS: toc:nil ^:{}
 
 This repository contains a SN@ilWare configuration to run SuperNEMO
 simulations. The current version is hosted at
@@ -14,7 +13,18 @@ control. You can clone this repository by doing
 
 This will create a directory =snemo_configuration= in the working directory
 containing all the source files needed to configure and to setup SN@ilWare
-programs.
+programs. The repository holds the following files
+
+- [[./simulation_config.org][simulation_config]] :: the main file holding the module/service manager
+     configuration.
+- [[./sngeometry_config.org][sngeometry_config]] :: the configuration of SuperNEMO geometry
+- [[./sng4_manager.org][sng4_manager]] :: the Geant4 simulation configuration
+- [[./step_hit_processor_factory.org][step_hit_processor_factory]] :: the factory of step hit processor in relation
+     with Geant4 step hits
+- [[./sngenbb_manager.org][sngenbb_manager]] :: the generator double beta /aka/ genbb configuration file
+- [[./sngenvertex_manager.org][sngenvertex_manager]] :: the vertex generator configuration
+- [[./snanalysis_manager.org][snanalysis_manager]] :: the analysis module declaration to perform SuperNEMO
+     analysis such as sensitivity measurements
 
 The configuration files are organised using [[http://orgmode.org/worg/org-contrib/babel/index.html][org-babel]] and its ability to execute
 source code. It requires then a recent installation of emacs which bundles
