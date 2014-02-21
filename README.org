@@ -17,7 +17,7 @@ programs. The repository holds the following files
 
 - [[./simulation_config.org][simulation_config]] :: the main file holding the module/service manager
      configuration.
-- [[./sngeometry_config.org][sngeometry_config]] :: the configuration of SuperNEMO geometry
+- [[./sngeometry_manager.org][sngeometry_manager]] :: the configuration of SuperNEMO geometry
 - [[./sng4_manager.org][sng4_manager]] :: the Geant4 simulation configuration
 - [[./step_hit_processor_factory.org][step_hit_processor_factory]] :: the factory of step hit processor in relation
      with Geant4 step hits
