@@ -57,15 +57,6 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="preamble" class="status">
-<a href="simulation_config.html">main</a>
-                   <a href="sngeometry_manager.html">geometry manager</a>
-                   <a href="sng4_manager.html">G4 manager</a>
-                   <a href="sngenbb_manager.html">genbb manager</a>
-                   <a href="sngenvertex_manager.html">vertex manager</a>
-                   <a href="step_hit_processor_factory.html">step hit processors</a>
-                   <a href="snanalysis_manager.html">analysis</a>
-</div>
 <div id="content">
 <h1 class="title">SNG4 Manager Configuration</h1>
 <div id="table-of-contents">
@@ -97,7 +88,7 @@ data. A dedicated manager class addresses all the resources needed to :
 
 <ul class="org-ul">
 <li>describe the geometry (through a geometry manager from the <a href="https://nemo.lpc-caen.in2p3.fr/wiki/sngeometry">sngeometry</a>
-library, a geometry service is also usable)
+  library, a geometry service is also usable)
 </li>
 <li>randomize the primary events to be tracked by Geant4 in the virtual geometry
 model (using the <a href="https://nemo.lpc-caen.in2p3.fr/wiki/genbb_help">genbb_help</a> library)
@@ -226,7 +217,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 <div class="outline-text-4" id="text-2-4-2">
 <p>
 The Geometry Description Markup Language is an application-indepedent geometry
-description format based on XML<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup>. It is used as Geant4 toolkit bindings
+description format based on XML<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. It is used as Geant4 toolkit bindings
 through <code>gemotools</code> converters.
 </p>
 
@@ -717,7 +708,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
 
-<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
 <a href="http://gdml.web.cern.ch/GDML">http://gdml.web.cern.ch/GDML</a>
 </p></div>
 
@@ -725,7 +716,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 </div>
 </div></div>
 <div id="postamble" class="status">
-File under git version control - commit eb74fff - 2013-12-25
+File under git version control - commit 76a697e - 2014-02-21
 </div>
 </body>
 </html>
