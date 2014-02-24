@@ -7,10 +7,6 @@ BATCH = $(EMACS) --batch --no-init-file					\
 		'((sh . t)))"						\
 	--eval "(setq org-confirm-babel-evaluate nil)"
 
-BATCH_DOC = $(BATCH)							\
-	--eval '(org-babel-tangle-file "simulation_publish.org")'	\
-	--eval '(org-babel-load-file "simulation_publish.org")'
-
 GIT_BRANCH = $(shell git branch | grep \* | cut -d' ' -f2)
 
 CCAGE_DIRECTORY = /sps/nemo/scratch/garrido/simulations/snemo_configuration
