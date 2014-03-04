@@ -83,7 +83,7 @@ and the =cluster.time_space= into a unique calorimeter hit.
 
 ** Geiger cells processors
 #+BEGIN_SRC sh
-  [name="gg.hit_processor" type="snemo::core::processing::gg_step_hit_processor"]
+  [name="gg.hit_processor" type="snemo::simulation::gg_step_hit_processor"]
 
   #@config The step hit processor for the Geiger simulated hits
 
