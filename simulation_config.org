@@ -478,14 +478,15 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 **** Event generator
 #+BEGIN_SRC sh
   #@description The event generator PRNG label
-  manager.event_generator_name  : string  = "bb0nu_Se82"
+  manager.event_generator_name  : string  = "Se82.0nubb"
 #+END_SRC
 **** G4 manager
 The full =geant4= configuration can be found in the [[file:./sng4_manager.org][sng4_manager]] file.
 #+BEGIN_SRC sh
   #@description The simulation manager configuration file
   manager.configuration_filename : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sng4_manager.conf"
+      "@falaise:config/snemo/demonstrator/simulation/geant4_control/1.0/manager.conf"
+  #      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sng4_manager.conf"
 #+END_SRC
 
 *** Adding event header
@@ -1436,7 +1437,8 @@ reconstruction ... but all of them will use the same geometry.
 
   #@description Embedded SuperNEMO geometry manager main configuration file
   manager.configuration_file : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngeometry_manager.conf"
+      "@falaise:config/snemo/demonstrator/geometry/3.0/manager.conf"
+  # "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngeometry_manager.conf"
 
   #@description Embedded SuperNEMO geometry manager must build its mapping lookup table
   manager.build_mapping : boolean = 1
