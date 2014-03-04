@@ -75,7 +75,7 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
-  modules.configuration_files : string[6] as path =                                   \
+  modules.configuration_files : string[3] as path =                                   \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/io_modules.conf"       \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/utl_modules.conf"      \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/s2c_modules.conf"      \
@@ -111,22 +111,29 @@ service files.
 ** DLL loader
 *** Code generator                                               :noexport:
 :PROPERTIES:
-:TANGLE:  no
-:RESULTS: output
+:TANGLE:   no
+:RESULTS:  output
 :END:
 This skeleton code ease the declaration of dll loader since it
 receives a table list and builds the corresponding =dlls.conf= file.
 
 #+NAME: dll_loader
-#+HEADERS: :var list=""
+#+HEADERS: :var name="" :var filename=""
 #+BEGIN_SRC sh
   echo '#@description A sample list of setups'
   echo '#@key_label   "name"'
   echo '#@meta_label  "filename"'
-  for i in $list
+  arr_name=(${name})
+  arr_filename=($filename)
+  for ((i=0; i < ${#arr_name[@]}; i++))
   do
-      dll=$(echo $i | sed '/(/ s/("\|")//g')
-      echo '[name="'$dll'" filename=""]'
+      dll=${arr_name[$i]}
+      dllpath=${arr_filename[$i]}
+      if [ "$dllpath" != "none" ]; then
+          echo '[name="'$dll'" filename="'$dllpath'"]'
+      else
+          echo '[name="'$dll'" filename=""]'
+      fi
       echo '#config The '$dll' library'
       echo 'autoload : boolean = 1'
       echo
@@ -143,18 +150,13 @@ list of needed libraries
 
 #+CAPTION: Libraries to be used by modules
 #+TBLNAME: dll_libraries
-|------------------|
-| mctools_g4       |
-| mctools_bio      |
-| sncore           |
-| sncore_bio       |
-| snreconstruction |
-| snanalysis       |
-| snanalysis_bio   |
-|------------------|
+|-----------------------+---------------------------------------------------------------------|
+| Bayeux_mctools_geant4 | $SNAILWARE_PRO_DIR/bayeux/install/lib64/libBayeux_mctools_geant4.so |
+| Falaise               | $SNAILWARE_PRO_DIR/falaise/install/lib64/libFalaise.so              |
+|-----------------------+---------------------------------------------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<dll_loader(dll_libraries[*,0])>>
+  <<dll_loader(dll_libraries[*,0], dll_libraries[*,1])>>
 #+END_SRC
 * Modules
 
@@ -487,6 +489,10 @@ The full =geant4= configuration can be found in the [[file:./sng4_manager.org][s
 #+END_SRC
 
 *** Adding event header
+:PROPERTIES:
+:TANGLE: no
+:END:
+
 After Geant4 simulation, no event header is added and available in the event
 record. This module adds some information related either to real data (run
 number) or simulated data like =genbb= weight in case the total energy of primary
@@ -595,6 +601,9 @@ The following code block retrieves the version number of a given component
   analysis.source_isotope : string = "Se82"
 #+END_SRC
 *** Tracker simulation to calibration data
+:PROPERTIES:
+:TANGLE: no
+:END:
 
 This module converts simulated data into calibrated data for SuperNEMO
 tracker. It is a mock digitization/calibration data module of Monte-Carlo
@@ -676,6 +685,7 @@ and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?doci
 
 *** Calorimeter simulation to calibration data
 :PROPERTIES:
+:TANGLE: no
 :END:
 
 This module converts Monte-Carlo hits into calorimeter hits. Like the previous
@@ -1437,6 +1447,7 @@ reconstruction ... but all of them will use the same geometry.
 
 ** Cuts service
 :PROPERTIES:
+:TANGLE: no
 :END:
 
 The [[https://nemo.lpc-caen.in2p3.fr/wiki/cuts][cuts]] package provides some basic classes and utilities to design, create and
@@ -2025,17 +2036,40 @@ directory.
   export SNAILWARE_SIMULATION_DIR=${PWD}
 #+END_SRC
 
-Running processing pipeline is done by the =dpp_processing= program provided by
-=dpp= library. Its call is pretty simple and only implies to have a module
-manager file. Depending on the module you want to run, several libraries must be
-loaded. For example, if you only want to do simulation, you can run the
-following command
+Since this configuration will run through the executable =bxdpp_processing= from
+Bayeux library and not through =flsimulate+flreconstruct= binaries from Falaise
+library, we should take care of loading the proper libraries. This is
+automatically done with the [[DLL loader]] code where library paths to be used by
+this setup are explicitely set.
+
+Running processing pipeline is done by the =bxdpp_processing= program provided
+by =dpp= library. Its call is pretty simple and only implies to have a module
+manager file. Nevertheless, since we do not rely to Falaise /i.e./ we do not use
+=flsimulate+flreconstruct= we must set different resource paths (geometry,
+materials). This is not user-friendly at all but this is the only way so far.
+
+For example, if you only want to do simulation, you can run the following
+command
 
 #+BEGIN_SRC sh
-  dpp_processing                                                                                        \
-      --module-manager-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/module_manager.conf \
-      --module simulation_chain                                                                         \
-      --load-dll sng4                                                                                   \
+  bxdpp_processing                                                                                          \
+      --module-manager-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/module_manager.conf     \
+      --module simulation                                                                                   \
+      --dlls-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/dlls.conf                         \
+      --datatools::resource_path "falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources" \
+      --max-records 100
+#+END_SRC
+
+An other way to run the previous command without loading the =dlls.conf= file
+will be to temporarly set the =LD_LIBRARY_PATH= variable and to point it to the
+=Falaise= and =Bayeux= libraries path namely
+#+BEGIN_SRC sh
+  LD_LIBRARY_PATH="$SNAILWARE_PRO_DIR/bayeux/install/lib64:$SNAILWARE_PRO_DIR/falaise/install/lib64"        \
+  bxdpp_processing                                                                                          \
+      --module-manager-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/module_manager.conf     \
+      --module simulation                                                                                   \
+      --load-dll Bayeux_mctools_geant4 --load-dll Falaise                                                   \
+      --datatools::resource_path "falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources" \
       --max-records 100
 #+END_SRC
 
