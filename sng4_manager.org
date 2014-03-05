@@ -46,9 +46,6 @@ manager. By the way, some of these options can be overloaded by the
   #@description Logging priority
   logging.priority      : string = "warning"
 
-  #@description Number of events to be simulated (superseded by the pipeline)
-  number_of_events      : integer = 20
-
   #@description Geant4 tracking verbosity flag (from 0 to 10):
   g4_tracking_verbosity : integer = 0
 
@@ -97,7 +94,7 @@ through =gemotools= converters.
 
 #+BEGIN_SRC sh
   #@description Temporary directory for GDML file generation:
-  gdml.tmp_dir         : string as path = "/tmp/${USER}/sng4.d"
+  gdml.tmp_dir         : string as path = "/tmp/${USER}/snemo_demo_g4.d"
 
   #@description Access mode to the GDML schema ("local" or "remote")
   gdml.schema_location : string = "local" # "remote"
@@ -125,58 +122,74 @@ This category defines sensitive detectors where special treatments of Geant4 ste
 must be applied. This can be in direct relation with step hit processors defined above.
 #+BEGIN_SRC sh
   #@description Parameters for the generation of 'sensitive hits' through 'sensitive detectors' :
-  sensitive.detectors : string[4] = "calorimeter.SD" "xcalorimeter.SD" "gveto.SD" "tracker.SD"
+  sensitive.detectors : string[4] = "calorimeter_SD" "xcalorimeter_SD" "gveto_SD" "tracker_SD"
 
-  sensitive.calorimeter.SD.logging.support                 : string  = "warning"
-  sensitive.calorimeter.SD.hits_buffer_capacity            : integer = 200
-  sensitive.calorimeter.SD.record_alpha_quenching          : boolean = 1
-  sensitive.calorimeter.SD.record_track_id                 : boolean = 1
-  sensitive.calorimeter.SD.record_primary_particle         : boolean = 1
-  sensitive.calorimeter.SD.drop_zero_energy_deposit_steps  : boolean = 0
-  sensitive.calorimeter.SD.track_gamma                     : boolean = 1
+  sensitive.calorimeter_SD.logging.support                 : string  = "warning"
+  sensitive.calorimeter_SD.hits_buffer_capacity            : integer = 100
+  sensitive.calorimeter_SD.record_alpha_quenching          : boolean = 1
+  sensitive.calorimeter_SD.record_track_id                 : boolean = 1
+  sensitive.calorimeter_SD.record_primary_particle         : boolean = 1
+  sensitive.calorimeter_SD.drop_zero_energy_deposit_steps  : boolean = 0
+  sensitive.calorimeter_SD.track_gamma                     : boolean = 1
 
-  sensitive.xcalorimeter.SD.logging.support                : string  = "warning"
-  sensitive.xcalorimeter.SD.hits_buffer_capacity           : integer = 200
-  sensitive.xcalorimeter.SD.record_alpha_quenching         : boolean = 1
-  sensitive.xcalorimeter.SD.record_track_id                : boolean = 1
-  sensitive.xcalorimeter.SD.record_primary_particle        : boolean = 1
-  sensitive.xcalorimeter.SD.drop_zero_energy_deposit_steps : boolean = 0
-  sensitive.xcalorimeter.SD.track_gamma                    : boolean = 1
+  sensitive.xcalorimeter_SD.logging.support                : string  = "warning"
+  sensitive.xcalorimeter_SD.hits_buffer_capacity           : integer = 100
+  sensitive.xcalorimeter_SD.record_alpha_quenching         : boolean = 1
+  sensitive.xcalorimeter_SD.record_track_id                : boolean = 1
+  sensitive.xcalorimeter_SD.record_primary_particle        : boolean = 1
+  sensitive.xcalorimeter_SD.drop_zero_energy_deposit_steps : boolean = 0
+  sensitive.xcalorimeter_SD.track_gamma                    : boolean = 1
 
-  sensitive.gveto.SD.logging.support                       : string  = "warning"
-  sensitive.gveto.SD.hits_buffer_capacity                  : integer = 200
-  sensitive.gveto.SD.record_alpha_quenching                : boolean = 1
-  sensitive.gveto.SD.record_track_id                       : boolean = 1
-  sensitive.gveto.SD.record_primary_particle               : boolean = 1
-  sensitive.gveto.SD.drop_zero_energy_deposit_steps        : boolean = 0
-  sensitive.gveto.SD.track_gamma                           : boolean = 1
+  sensitive.gveto_SD.logging.support                       : string  = "warning"
+  sensitive.gveto_SD.hits_buffer_capacity                  : integer = 100
+  sensitive.gveto_SD.record_alpha_quenching                : boolean = 1
+  sensitive.gveto_SD.record_track_id                       : boolean = 1
+  sensitive.gveto_SD.record_primary_particle               : boolean = 1
+  sensitive.gveto_SD.drop_zero_energy_deposit_steps        : boolean = 0
+  sensitive.gveto_SD.track_gamma                           : boolean = 1
 
-  sensitive.tracker.SD.logging.support                     : string  = "warning"
-  sensitive.tracker.SD.hits_buffer_capacity                : integer = 1000
-  sensitive.tracker.SD.record_alpha_quenching              : boolean = 1
-  sensitive.tracker.SD.record_track_id                     : boolean = 1
-  sensitive.tracker.SD.record_primary_particle             : boolean = 1
-  sensitive.tracker.SD.drop_zero_energy_deposit_steps      : boolean = 0
-  sensitive.tracker.SD.track_gamma                         : boolean = 1
+  sensitive.tracker_SD.logging.support                     : string  = "warning"
+  sensitive.tracker_SD.hits_buffer_capacity                : integer = 1000
+  sensitive.tracker_SD.record_alpha_quenching              : boolean = 1
+  sensitive.tracker_SD.record_track_id                     : boolean = 1
+  sensitive.tracker_SD.record_primary_particle             : boolean = 1
+  sensitive.tracker_SD.drop_zero_energy_deposit_steps      : boolean = 0
+  sensitive.tracker_SD.track_gamma                         : boolean = 1
 #+END_SRC
 
 *** Geant4 step hit limits
 The following code defines geometry models where Geant4 steps are size limited.
 #+BEGIN_SRC sh
   #@description List of geometry models with max steps:
-  limits.list_of_volumes : string[3] =  \
-      "source_external_strip.model.log" \
-      "source_internal_strip.model.log" \
+  limits.list_of_volumes : string[7] =         \
+      "source_external_strip.model.log"        \
+      "source_internal_strip.model.log"        \
+      "calorimeter_scin_block_front.model.log" \
+      "calorimeter_scin_block_back.model.log"  \
+      "xwall_scin_block.model.log"             \
+      "gveto_scin_block.model.log"             \
       "drift_cell_core.model.log"
 
-  #@description Max step length inside source pad:
-  limits.max_step.source_external_strip.model.log : real as length = 0.01 mm
+  #@description Max step length inside source strip:
+  limits.max_step.source_external_strip.model.log : real as length = 10 um
 
-  #@description Max step length inside source pad:
-  limits.max_step.source_internal_strip.model.log : real as length = 0.01 mm
+  #@description Max step length inside source strip:
+  limits.max_step.source_internal_strip.model.log : real as length = 10 um
 
-  #@description Max step length inside drift cell tracking volume:
-  limits.max_step.drift_cell_core.model.log : real as length = 5.0 mm
+  #@description Max step length inside front calorimeter scin block:
+  limits.max_step.calorimeter_scin_block_front.model.log : real as length = 500 um
+
+  #@description Max step length inside back calorimeter scin block:
+  limits.max_step.calorimeter_scin_block_back.model.log  : real as length = 500 um
+
+  #@description Max step length inside X-calorimeter scin block:
+  limits.max_step.xwall_scin_block.model.log : real as length = 500 um
+
+  #@description Max step length inside gamma veto scin block:
+  limits.max_step.gveto_scin_block.model.log : real as length = 500 um
+
+  #@description Max step length inside the drift cell volume
+  limits.max_step.drift_cell_core.model.log  : real as length = 5 mm
 #+END_SRC
 
 *** Geant4 regions
@@ -216,7 +229,7 @@ Definition of Geant4 regions.
   magnetic_field.plugin_name        : string = "fields_driver"
 
   #@description Name of the associated fields
-  magnetic_field.associations       : string[1] = "sn_module"
+  magnetic_field.associations       : string[1] = "module"
 
   #@description SetDeltaChord miss distance (mm):
   magnetic_field.miss_distance : real as length = 0.5 mm
@@ -287,7 +300,7 @@ Quite experimental try to set particles used within SuperNEMO "framework".
   #use_bottom_mesons        : boolean = 0
 
   #@description The activation flag for nucleons (default: 1)
-  #use_nucleons             : boolean = 1
+  use_nucleons             : boolean = 1
 
   #@description The activation flag for strange baryons (default: 0)
   #use_strange_baryons      : boolean = 0
@@ -299,7 +312,7 @@ Quite experimental try to set particles used within SuperNEMO "framework".
   #use_bottom_baryons       : boolean = 0
 
   #@description The activation flag for light nuclei (default: 1)
-  #use_light_nuclei         : boolean = 1
+  use_light_nuclei         : boolean = 1
 
   #@description The activation flag for light anti-nuclei (default: 0)
   #use_light_anti_nuclei    : boolean = 0
@@ -312,28 +325,83 @@ Quite experimental try to set particles used within SuperNEMO "framework".
 :PROPERTIES:
 :TANGLE: snem_processes.conf
 :END:
+***** General settings
 #+BEGIN_SRC sh
   #@config Configuration parameters for the electro-magnetic Geant4 physics constructor
 
   #@description Electro-magntox interaction model (value in: "standard", "low_energy", "penelope")
-  #em.model : string = "standard"
+  em.model : string = "standard"
+#+END_SRC
+***** Electrons/positrons
+#+BEGIN_SRC sh
+  #@description The activation flag for electron/positron ionisation (energy loss/delta ray production)
+  em.electron.ionisation           : boolean = 1
 
-  #@description The activation flag for electron/positron energy loss process
-  #em.electron.energy_loss         : boolean = 1
+  #@description The activation flag for electron/positron multiple scatterring process
+  em.electron.multiple_scatterring : boolean = 1
 
-  #@description The activation flag for electron/positron multiple scaterring process
-  #em.electron.multiple_scaterring : boolean = 1
+  #@description The activation flag for electron/positron multiple scatterring process
+  em.electron.multiple_scatterring.use_distance_to_boundary: boolean = 1
+
+  #@description The range factor for electron/positron multiple scatterring process
+  em.electron.multiple_scatterring.range_factor: real = 0.005
 
   #@description The activation flag for electron/positron bremsstrahlung process
-  #em.electron.bremsstrahlung      : boolean = 1
+  em.electron.bremsstrahlung       : boolean = 1
+
+  #@description The activation flag for electron/positron step limiter process
+  em.electron.step_limiter         : boolean = 1
 
   #@description The activation flag for positron pannihilation
-  #em.positron.annihilation        : boolean = 1
+  em.positron.annihilation         : boolean = 1
+#+END_SRC
+***** Gammas
+#+BEGIN_SRC sh
+  #@description The activation flag for Rayleigh scattering
+  em.gamma.rayleigh_scattering  : boolean = 0
 
-  ################
-  # Deexcitation #
-  ################
+  #@description The activation flag for photoelectric effect
+  em.gamma.photo_electric       : boolean = 1
 
+  #@description The activation flag for Compton scattering
+  em.gamma.compton_scattering   : boolean = 1
+
+  #@description The activation flag for gamma conversion
+  em.gamma.conversion           : boolean = 1
+
+  #@description The activation flag for gamma conversion to muons
+  em.gamma.conversion_to_muons  : boolean = 0
+#+END_SRC
+***** Muons
+#+BEGIN_SRC sh
+  #@description The activation flag for muon ionisation
+  em.muon.ionisation           : boolean = 0
+
+  #@description The activation flag for muon multiple scatterring process
+  em.muon.multiple_scatterring : boolean = 0
+
+  #@description The activation flag for muon pair production
+  em.muon.pair_production      : boolean = 0
+
+  #@description The activation flag for muon bremsstrahlung process
+  em.muon.bremsstrahlung       : boolean = 0
+
+  #@description The activation flag for muon step limiter process
+  em.muon.step_limiter         : boolean = 0
+#+END_SRC
+***** Ions
+#+BEGIN_SRC sh
+  #@description The activation flag for ion ionisation
+  em.ion.ionisation           : boolean = 1
+
+  #@description The activation flag for ion multiple scatterring process
+  em.ion.multiple_scatterring : boolean = 1
+
+  #@description The activation flag for ion step limiter process
+  em.ion.step_limiter         : boolean = 1
+#+END_SRC
+***** Deexcitation
+#+BEGIN_SRC sh
   #@description The activation flag for deexcitation fluorescence process
   #em.deexcitation.fluo         : boolean = 0
 
@@ -346,30 +414,26 @@ Quite experimental try to set particles used within SuperNEMO "framework".
   #@description The activation model for PIXE cross-sections
   #em.deexcitation.pixe.model   : string = "Empirical"
 
-  ###########################
-  # Deexcitation per region #
-  ###########################
-
   #@description The regions where to apply some deexcitation process
-  #em.deexcitation.regions    : string[2] = "A" "B"
+  #em.deexcitation.regions : string[2] = "A" "B"
 
   #@description The activation flag for deexcitation fluorescence process in region "A"
-  #em.deexcitation.regions.A.fluo : boolean = 1
+  #em.deexcitation.regions.A.fluo  : boolean = 1
 
   #@description The activation flag for Auger process in region "A"
   #em.deexcitation.regions.A.auger : boolean = 1
 
   #@description The activation flag for PIXE in region "A"
-  #em.deexcitation.regions.A.pixe : boolean = 1
+  #em.deexcitation.regions.A.pixe  : boolean = 1
 
   #@description The activation flag for deexcitation fluorescence process in region "B"
-  #em.deexcitation.regions.B.fluo : boolean = 1
+  #em.deexcitation.regions.B.fluo  : boolean = 1
 
   #@description The activation flag for Auger process in region "B"
   #em.deexcitation.regions.B.auger : boolean = 1
 
   #@description The activation flag for PIXE in region "B"
-  #em.deexcitation.regions.B.pixe : boolean = 1
+  #em.deexcitation.regions.B.pixe  : boolean = 1
 #+END_SRC
 *** Using Geant4 region cuts
 These cuts are related to some production processes and then, define some
