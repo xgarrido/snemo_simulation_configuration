@@ -1437,8 +1437,8 @@ reconstruction ... but all of them will use the same geometry.
 
   #@description Embedded SuperNEMO geometry manager main configuration file
   manager.configuration_file : string as path = \
-      "@falaise:config/snemo/demonstrator/geometry/3.0/manager.conf"
-  # "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngeometry_manager.conf"
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngeometry_manager.conf"
+  # "@falaise:config/snemo/demonstrator/geometry/3.0/manager.conf"
 
   #@description Embedded SuperNEMO geometry manager must build its mapping lookup table
   manager.build_mapping : boolean = 1
