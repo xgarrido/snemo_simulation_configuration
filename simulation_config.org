@@ -2058,7 +2058,7 @@ command
       --module-manager-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/module_manager.conf     \
       --module simulation                                                                                   \
       --dlls-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/dlls.conf                         \
-      --datatools::resource_path "falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources" \
+      --datatools::resource_path="falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources" \
       --max-records 100
 #+END_SRC
 
@@ -2071,7 +2071,7 @@ will be to temporarly set the =LD_LIBRARY_PATH= variable and to point it to the
       --module-manager-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/module_manager.conf     \
       --module simulation                                                                                   \
       --load-dll Bayeux_mctools_geant4 --load-dll Falaise                                                   \
-      --datatools::resource_path "falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources" \
+      --datatools::resource_path="falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources" \
       --max-records 100
 #+END_SRC
 
