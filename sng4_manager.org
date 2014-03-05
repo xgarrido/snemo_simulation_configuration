@@ -472,7 +472,7 @@ minimal step hit size given the detector region.
   #@description Production cut value for region "calorimeter"
   production_cuts.regions.calorimeter.electron : real as length = 1.0 mm
 
- #@description Production cut value for region "tracker"
+  #@description Production cut value for region "tracker"
   production_cuts.regions.tracker.gamma : real as length = 0.5 mm
 
   #@description Production cut value for region "tracker"

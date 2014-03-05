@@ -44,7 +44,7 @@ and the =cluster.time_space= into a unique calorimeter hit.
 
   logging.priority               : string  = "warning"
   hit.category                   : string  = "calo"
-  sensitive.category             : string  = "calorimeter.SD"
+  sensitive.category             : string  = "calorimeter_SD"
   use_private_pool               : boolean = 1
   private_pool_capacity          : integer = 10
 
@@ -62,7 +62,7 @@ and the =cluster.time_space= into a unique calorimeter hit.
 
   logging.priority    : string  = "warning"
   hit.category        : string  = "xcalo"
-  sensitive.category  : string  = "xcalorimeter.SD"
+  sensitive.category  : string  = "xcalorimeter_SD"
   mapping.category    : string  = "xcalo_block"
   cluster.time_range  : real as time   =  1.0 ns
   cluster.space_range : real as length = 10.0 mm
@@ -75,7 +75,7 @@ and the =cluster.time_space= into a unique calorimeter hit.
 
   logging.priority    : string  = "warning"
   hit.category        : string  = "gveto"
-  sensitive.category  : string  = "gveto.SD"
+  sensitive.category  : string  = "gveto_SD"
   mapping.category    : string  = "gveto_block"
   cluster.time_range  : real as time   =  1.0 ns
   cluster.space_range : real as length = 10.0 mm
@@ -89,7 +89,7 @@ and the =cluster.time_space= into a unique calorimeter hit.
 
   logging.priority       : string  = "warning"
   hit.category           : string  = "gg"
-  sensitive.category     : string  = "tracker.SD"
+  sensitive.category     : string  = "tracker_SD"
   mapping.category       : string  = "drift_cell_core"
   rng.seed               : integer = 314159
   rng.id                 : string  = "mt19937"
@@ -108,25 +108,25 @@ and the =cluster.time_space= into a unique calorimeter hit.
   #@config The step hit processor for collecting the calorimeter simulated hits
   logging.priority   : string = "warning"
   hit.category       : string = "__visu.tracks"
-  sensitive.category : string = "calorimeter.SD"
+  sensitive.category : string = "calorimeter_SD"
 
   [name="xcalorimeter.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
   #@config The step hit processor for collecting the calorimeter simulated hits
   logging.priority   : string = "warning"
   hit.category       : string = "__visu.tracks"
-  sensitive.category : string = "xcalorimeter.SD"
+  sensitive.category : string = "xcalorimeter_SD"
 
   [name="gveto.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
   #@config The step hit processor for collecting the calorimeter simulated hits
   logging.priority   : string = "warning"
   hit.category       : string = "__visu.tracks"
-  sensitive.category : string = "gveto.SD"
+  sensitive.category : string = "gveto_SD"
 
   [name="tracker.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
   #@config The step hit processor for collecting the tracker simulated hits
   logging.priority   : string = "warning"
   hit.category       : string = "__visu.tracks"
-  sensitive.category : string = "tracker.SD"
+  sensitive.category : string = "tracker_SD"
 #+END_SRC
 
 *** Enabling all volumes
