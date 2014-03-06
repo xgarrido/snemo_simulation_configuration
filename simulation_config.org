@@ -486,7 +486,6 @@ The full =geant4= configuration can be found in the [[file:./sng4_manager.org][s
   #@description The simulation manager configuration file
   manager.configuration_filename : string as path = \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sng4_manager.conf"
-      #"@falaise:config/snemo/demonstrator/simulation/geant4_control/1.0/manager.conf"
 #+END_SRC
 
 *** Adding event header
