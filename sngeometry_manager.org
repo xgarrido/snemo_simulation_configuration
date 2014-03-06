@@ -158,7 +158,7 @@ example, in [[Material aliases]] section.
 *** Files
 #+BEGIN_SRC sh
   #@description List of files describing the materials
-  materials.files : string[7] as path =                                     \
+  materials.configuration_files : string[7] as path =                       \
       "@materials:data/std_isotopes.def"                                    \
       "@materials:data/std_elements.def"                                    \
       "@materials:data/std_materials.def"                                   \
