@@ -75,13 +75,13 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
-  modules.configuration_files : string[4] as path =                                   \
+  modules.configuration_files : string[6] as path =                                   \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/io_modules.conf"       \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/utl_modules.conf"      \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/s2c_modules.conf"      \
-      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/analysis_modules.conf" \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_modules.conf"  \
-      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/plot_modules.conf"
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/plot_modules.conf"     \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/analysis_modules.conf"
 #+END_SRC
 
 ** Service manager
@@ -150,10 +150,11 @@ list of needed libraries
 
 #+CAPTION: Libraries to be used by modules
 #+TBLNAME: dll_libraries
-|-----------------------+---------------------------------------------------------------------|
-| Bayeux_mctools_geant4 | $SNAILWARE_PRO_DIR/bayeux/install/lib64/libBayeux_mctools_geant4.so |
-| Falaise               | $SNAILWARE_PRO_DIR/falaise/install/lib64/libFalaise.so              |
-|-----------------------+---------------------------------------------------------------------|
+|-----------------------+-----------------------------------------------------------------------------------------------|
+| Bayeux_mctools_geant4 | $SNAILWARE_PRO_DIR/bayeux/install/lib64/libBayeux_mctools_geant4.so                           |
+| Falaise               | $SNAILWARE_PRO_DIR/falaise/install/lib64/libFalaise.so                                        |
+| Falaise_MTC           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_MockTrackerClusterizer.so |
+|-----------------------+-----------------------------------------------------------------------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
   <<dll_loader(dll_libraries[*,0], dll_libraries[*,1])>>
@@ -771,7 +772,7 @@ for the quenching of alpha particles.
 
 This section holds different modules all related to tracker clustering.
 
-**** Basic tracker clustering
+**** Mock tracker clustering
 
 This algorithm is too much simple but it can serve as a comparison point with
 respect to more elaborated algorithms in terms of time processing. It basically
@@ -780,22 +781,28 @@ longitudinal information and then can aggregates track belonging to two
 different particles. Due to over-simplicty, it does not need any parameters !
 
 #+BEGIN_SRC sh
-  [name="btc_tracker_clustering" type="snemo::analysis::processing::basic_tracker_clustering_module"]
+   [name="mock_tracker_clustering" type="snemo::reconstruction::mock_tracker_clustering_module"]
 
-  #@description Logging priority
-  logging.priority : string = "warning"
+   #@description Logging priority
+   logging.priority : string = "warning"
 
-  #@description The label of the Geometry service
-  Geo_label : string  = "Geo"
+   #@description The label of the Geometry service
+   Geo_label : string  = "Geo"
 
-  #@description The label of the 'Calibrated Data' bank
-  CD_label : string  = "CD"
+   #@description The label of the 'Calibrated Data' bank
+   CD_label : string  = "CD"
 
-  #@description The label of the 'Tracker Clustering Data' bank
-  TCD_label : string  = "TCD"
+   #@description The label of the 'Tracker Clustering Data' bank
+   TCD_label : string  = "TCD"
 
-  #@description The ID of the tracker hits clustering algorithm
-  algorithm : string  = "BTC"
+   #@description Maximum layer distance between two neighbour hits
+   MTC.max_layer_distance : integer = 2
+
+   #@description Maximum row distance between two neighbour hits
+   MTC.max_row_distance   : integer = 2
+
+   #@description Maximum row+layer distance between two neighbour hits
+   MTC.max_sum_distance   : integer = 0
 #+END_SRC
 
 **** Cellular Automaton Tracker
@@ -1289,19 +1296,18 @@ modules it contains.
 #+TBLNAME: clustering_chain
 |--------------------------------|
 | remove_tracker_clustering_data |
-| btc_tracker_clustering         |
+| mock_tracker_clustering        |
 | io_output_tracker_clustering   |
 | process_with_clustering_cuts   |
 |--------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("clustering_chain", 4, clustering_chain)>>
+  <<chain_module("clustering_chain", 3, clustering_chain)>>
 #+END_SRC
 
 *** Process after calibration selection
 #+BEGIN_SRC sh :noweb yes
-  # <<if_module("process_with_calibrated_cuts", cut="calibrated_cut", then="clustering_chain", else="io_output_calibrated_non_selected")>>
-  <<if_module("process_with_calibrated_cuts", cut="calibrated_cut", then="io_output_calibrated_selected", else="io_output_calibrated_non_selected")>>
+  <<if_module("process_with_calibrated_cuts", cut="calibrated_cut", then="clustering_chain", else="io_output_calibrated_non_selected")>>
 #+END_SRC
 
 *** Calibration chain
