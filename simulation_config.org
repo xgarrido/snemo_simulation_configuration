@@ -75,12 +75,12 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
-  modules.configuration_files : string[3] as path =                                   \
+  modules.configuration_files : string[4] as path =                                   \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/io_modules.conf"       \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/utl_modules.conf"      \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/s2c_modules.conf"      \
-      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_modules.conf"  \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/analysis_modules.conf" \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_modules.conf"  \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/plot_modules.conf"
 #+END_SRC
 
@@ -601,9 +601,6 @@ The following code block retrieves the version number of a given component
   analysis.source_isotope : string = "Se82"
 #+END_SRC
 *** Tracker simulation to calibration data
-:PROPERTIES:
-:TANGLE: no
-:END:
 
 This module converts simulated data into calibrated data for SuperNEMO
 tracker. It is a mock digitization/calibration data module of Monte-Carlo
@@ -613,7 +610,7 @@ positions. Main references document for this module can be find in DocDb [[http:
 and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=843][#843]].
 
 #+BEGIN_SRC sh
-  [name="tracker_s2c" type="snemo::core::processing::basic_tracker_s2c_module"]
+  [name="tracker_s2c" type="snemo::processing::mock_tracker_s2c_module"]
 #+END_SRC
 
 **** Logging priority
@@ -684,9 +681,6 @@ and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?doci
 #+END_SRC
 
 *** Calorimeter simulation to calibration data
-:PROPERTIES:
-:TANGLE: no
-:END:
 
 This module converts Monte-Carlo hits into calorimeter hits. Like the previous
 [[#tracker_s2c][section]], it is a mock digitization/calibration of simulation hits. It basicaly
@@ -696,7 +690,7 @@ by some experimental energy/time resolution. There is also a special treatments
 for the quenching of alpha particles.
 
 #+BEGIN_SRC sh
-  [name="calorimeter_s2c" type="snemo::core::processing::basic_calorimeter_s2c_module"]
+  [name="calorimeter_s2c" type="snemo::processing::mock_calorimeter_s2c_module"]
 #+END_SRC
 
 **** Logging priority
@@ -1306,21 +1300,22 @@ modules it contains.
 
 *** Process after calibration selection
 #+BEGIN_SRC sh :noweb yes
-  <<if_module("process_with_calibrated_cuts", cut="calibrated_cut", then="clustering_chain", else="io_output_calibrated_non_selected")>>
+  # <<if_module("process_with_calibrated_cuts", cut="calibrated_cut", then="clustering_chain", else="io_output_calibrated_non_selected")>>
+  <<if_module("process_with_calibrated_cuts", cut="calibrated_cut", then="io_output_calibrated_selected", else="io_output_calibrated_non_selected")>>
 #+END_SRC
 
 *** Calibration chain
 #+CAPTION: Modules used by the calibration process
 #+TBLNAME: calibration_chain
 |----------------------|
-| add_header           |
 | tracker_s2c          |
 | calorimeter_s2c      |
 | io_output_calibrated |
 |----------------------|
+#| add_header           |
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("calibration_chain", 4, calibration_chain)>>
+  <<chain_module("calibration_chain", 3, calibration_chain)>>
 #+END_SRC
 
 *** Simulation chain
@@ -1447,9 +1442,6 @@ reconstruction ... but all of them will use the same geometry.
 #+END_SRC
 
 ** Cuts service
-:PROPERTIES:
-:TANGLE: no
-:END:
 
 The [[https://nemo.lpc-caen.in2p3.fr/wiki/cuts][cuts]] package provides some basic classes and utilities to design, create and
 apply selection cuts on arbitrary data models.
@@ -1571,7 +1563,7 @@ This skeleton code allows to check the availability of a data bank.
 
 **** Check calibrated calorimeter availability
 #+BEGIN_SRC sh
-  [name="has_cd_calorimeter" type="snemo::core::cut::calibrated_data_cut"]
+  [name="has_cd_calorimeter" type="snemo::cut::calibrated_data_cut"]
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1595,7 +1587,7 @@ This skeleton code allows to check the availability of a data bank.
 
 **** Select number of calibrated calorimeter hits
 #+BEGIN_SRC sh
-  [name="cd_calorimeter_cut" type="snemo::core::cut::calibrated_data_cut"]
+  [name="cd_calorimeter_cut" type="snemo::cut::calibrated_data_cut"]
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1618,7 +1610,7 @@ This skeleton code allows to check the availability of a data bank.
 
 **** Check calibrated tracker availability
 #+BEGIN_SRC sh
-  [name="has_cd_tracker" type="snemo::core::cut::calibrated_data_cut"]
+  [name="has_cd_tracker" type="snemo::cut::calibrated_data_cut"]
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1642,7 +1634,7 @@ This skeleton code allows to check the availability of a data bank.
 
 **** Select number of calibrated tracker hits
 #+BEGIN_SRC sh
-  [name="cd_tracker_cut" type="snemo::core::cut::calibrated_data_cut"]
+  [name="cd_tracker_cut" type="snemo::cut::calibrated_data_cut"]
 
   #@description Logging priority
   logging.priority : string = "warning"
