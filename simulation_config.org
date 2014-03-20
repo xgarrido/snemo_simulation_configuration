@@ -154,6 +154,8 @@ list of needed libraries
 | Bayeux_mctools_geant4 | $SNAILWARE_PRO_DIR/bayeux/install/lib64/libBayeux_mctools_geant4.so                           |
 | Falaise               | $SNAILWARE_PRO_DIR/falaise/install/lib64/libFalaise.so                                        |
 | Falaise_MTC           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_MockTrackerClusterizer.so |
+| TrackFit              | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libTrackFit.so                       |
+| Falaise_TrackFit      | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_TrackFit.so               |
 |-----------------------+-----------------------------------------------------------------------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
@@ -805,7 +807,7 @@ different particles. Due to over-simplicty, it does not need any parameters !
    MTC.max_sum_distance   : integer = 0
 #+END_SRC
 
-**** Cellular Automaton Tracker
+**** Cellular Automaton Tracker                               :notworking:
 
 This algorithm provides tons of parameters and is based in F. Nova work. A
 somewhat complete overview of CAT main features can be seen in DocDb [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2120][#2120]].
@@ -856,7 +858,7 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
   #CAT.driver.sigma_z_factor : real = 1.
 #+END_SRC
 
-**** SULTAN tracker
+**** SULTAN tracker                                           :notworking:
 
 Federico Nova recently implements a new way to cluster Geiger cells by
 translating their intrinsic parameters namely cell position, drift radius and
@@ -895,7 +897,7 @@ Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/
     #SULTAN.driver.sigma_z_factor : real = 1.
 #+END_SRC
 
-**** Tracker Cluster Path
+**** Tracker Cluster Path                                     :notworking:
 This algorithm has been developped by Warwick group since June 2012 and mainly
 by K. Bhardwaj.
 
@@ -988,8 +990,6 @@ by K. Bhardwaj.
 #+END_SRC
 
 *** Fitting algorithm
-:PROPERTIES:
-:END:
 As the time of writing this document, there is only one algorithm well
 integrated into SN@ilWare pipeline. It is based on [[https://nemo.lpc-caen.in2p3.fr/wiki/trackfit][trackfit]] originally
 developped and tested on NEMO3 data. It is quite an agnostic algorithm in the
@@ -998,7 +998,7 @@ done by GSL minimizer to find the global solution given the model: either helix
 or line models.
 
 #+BEGIN_SRC sh
-  [name="trackfit_tracker_fitting" type="snemo::reconstruction::processing::tracker_fitting_module"]
+  [name="trackfit_tracker_fitting" type="snemo::reconstruction::trackfit_tracker_fitting_module"]
 #+END_SRC
 
 **** General logging
@@ -1031,12 +1031,6 @@ or line models.
   algorithm : string  = "trackfit"
 #+END_SRC
 
-***** Logging priority
-#+BEGIN_SRC sh
-  #@description Logging priority
-  trackfit.logging.priority : string = "error"
-#+END_SRC
-
 ***** Drift time calibration
 For time delayed cluster like alpha particle track, a /a posteriori/ drift time
 calibration has to be done to shift the time origin and then calculates the new
@@ -1045,61 +1039,61 @@ object interface rules defines in =trackfit::i_drift_time_calibration=
 class. Here we use the same model as in Section [[Tracker simulation to calibration data]].
 #+BEGIN_SRC sh
   #@description Use drift time (re)calibration
-  trackfit.drift_time_calibration_label : string = "snemo"
+  drift_time_calibration_label : string = "snemo"
 #+END_SRC
 
 ***** Fit models
 #+BEGIN_SRC sh
   #@description Fit models
-  trackfit.models : string[2] = "helix" "line"
+  fitting_models : string[2] = "helix" "line"
 #+END_SRC
 ***** Line fit parameters
 ****** Guess parameters
 #+BEGIN_SRC sh
   #@description Activate logging messages for line guess driver
-  trackfit.line.guess.logging.priority  : string = "error"
+  line.guess.logging.priority  : string = "error"
 
   #@description Use max radius (cell size) to construct initial guess point (1) or use the effective drift Geiger distance of the hit (0)
-  trackfit.line.guess.use_max_radius    : boolean = 0
+  line.guess.use_max_radius    : boolean = 0
 
   #@description Apply a factor (>0) to the max radius (devel mode)
-  trackfit.line.guess.max_radius_factor : real = 1.0
+  line.guess.max_radius_factor : real = 1.0
 
   #@description Use guess trust (1) or keep all of the guess fits (0) and select later
-  trackfit.line.guess.use_guess_trust   : boolean = 0
+  line.guess.use_guess_trust   : boolean = 0
 
   #@description Mode for trusting a fit guess ("counter", "barycenter")
-  trackfit.line.guess.guess_trust_mode  : string = "counter"
+  line.guess.guess_trust_mode  : string = "counter"
 
   #@description Fit the delayed geiger cluster
-  trackfit.line.guess.fit_delay_cluster : boolean = 1
+  line.guess.fit_delay_cluster : boolean = 1
 #+END_SRC
 
 ****** Fit parameters
 #+BEGIN_SRC sh
   #@description 'Line' fit only guess ("BB", "BT", "TB", "TT")
-  #trackfit.line.only_guess : string[1] = "TT"
+  #line.only_guess : string[1] = "TT"
 
   #@description Store only the N solutions with best line fit
-  #trackfit.line.store_number_of_solutions : integer = 2
+  #line.store_number_of_solutions : integer = 2
 
   #@description Print the status of the fit stepper at each step (devel only)
-  trackfit.line.fit.step_print_status : boolean = 0
+  line.fit.step_print_status : boolean = 0
 
   #@description Plot the 2D view of the fitted data at each step (devel only)
-  trackfit.line.fit.step_draw         : boolean = 0
+  line.fit.step_draw         : boolean = 0
 
   #@description Track fit adds start time as an additionnal parameter to the fit (needs a calibration driver)
-  trackfit.line.fit.fit_start_time    : boolean = 0
+  line.fit.fit_start_time    : boolean = 0
 
   #@description Track fit recomputes the drift distance from drift time (needs a calibration driver)
-  trackfit.line.fit.using_drift_time  : boolean = 0
+  line.fit.using_drift_time  : boolean = 0
 
   #@description Allow a fitted track to begin not tangential to the first hit
-  trackfit.line.fit.using_first       : boolean = 0
+  line.fit.using_first       : boolean = 0
 
   #@description Allow a fitted track to end not tangential to the last hit
-  trackfit.line.fit.using_last        : boolean = 0
+  line.fit.using_last        : boolean = 0
 #+END_SRC
 ***** Helix fit parameters
 ****** Guess parameters
@@ -1283,12 +1277,12 @@ modules it contains.
 |--------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("fitting_chain", 4, fitting_chain)>>
+  <<chain_module("fitting_chain", 3, fitting_chain)>>
 #+END_SRC
 
 *** Process after clustering selection
 #+BEGIN_SRC sh :noweb yes
-  <<if_module("process_with_clustering_cuts", cut="basic_tracker_clustering_cut", then="fitting_chain", else="io_output_tracker_clustering_non_selected")>>
+  <<if_module("process_with_clustering_cuts", cut="tracker_clustering_cut", then="fitting_chain", else="io_output_tracker_clustering_non_selected")>>
 #+END_SRC
 
 *** Clustering chain
@@ -1302,7 +1296,7 @@ modules it contains.
 |--------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("clustering_chain", 3, clustering_chain)>>
+  <<chain_module("clustering_chain", 4, clustering_chain)>>
 #+END_SRC
 
 *** Process after calibration selection
@@ -1693,7 +1687,7 @@ This cuts puts together all the previous declared cuts.
 
 **** Select number of cluster
 #+BEGIN_SRC sh
-  [name="tcd1_cut" type="snemo::analysis::cut::basic_tracker_clustering_data_cut"]
+  [name="cluster_range_cut" type="snemo::cut::tracker_clustering_data_cut"]
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1712,7 +1706,7 @@ This cuts puts together all the previous declared cuts.
 #+END_SRC
 
 **** Select number of hit within a cluster
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :tangle no
   [name="tcd2_cut" type="snemo::analysis::cut::basic_tracker_clustering_data_cut"]
 
   #@description Logging priority
@@ -1736,12 +1730,12 @@ This cuts puts together all the previous declared cuts.
 #+TBLNAME: tracker_clustering_cuts
 |-----------------------------|
 | has_tracker_clustering_data |
-| tcd1_cut                    |
+| cluster_range_cut           |
 | tcd2_cut                    |
 |-----------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<multi(cname="basic_tracker_clustering_cut", "and", 3, tracker_clustering_cuts)>>
+  <<multi(cname="tracker_clustering_cut", "and", 2, tracker_clustering_cuts)>>
 #+END_SRC
 
 *** Tracker trajectory data selection
