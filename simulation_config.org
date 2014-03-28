@@ -1263,7 +1263,7 @@ modules it contains.
 
 *** Process after fitting selection
 #+BEGIN_SRC sh :noweb yes
-   <<if_module("process_with_fitting_cuts", cut="basic_tracker_trajectory_cut", then="particle_tracking_chain", else="io_output_tracker_trajectory_non_selected")>>
+   <<if_module("process_with_fitting_cuts", cut="tracker_trajectory_cut", then="particle_tracking_chain", else="io_output_tracker_trajectory_non_selected")>>
 #+END_SRC
 
 *** Fitting chain
@@ -1760,7 +1760,7 @@ This cuts puts together all the previous declared cuts.
 |-----------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<multi(cname="basic_tracker_trajectory_cut", "and", 1, tracker_trajectory_cuts)>>
+  <<multi(cname="tracker_trajectory_cut", "and", 1, tracker_trajectory_cuts)>>
 #+END_SRC
 
 *** Particle track selection
