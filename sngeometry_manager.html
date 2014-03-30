@@ -9,6 +9,7 @@
 <meta  name="author" content="Xavier Garrido" />
 <link rel="stylesheet" href="css/styles.css">
                <link rel="stylesheet" href="css/org-pygments.css">
+               <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -54,13 +55,24 @@ for the JavaScript code in this tag.
      target.className = elem.cacheClassTarget;
  }
 /*]]>*///-->
+</script><script type="text/javascript">
+function displayTOC() {
+    var first = document.getElementById("text-table-of-contents").innerHTML;
+    if (first != "") {
+        var maincontent = '<a class="button"><i class="fa fa-list"></i></a>'
+        maincontent += "<div>" + first + "</div>";
+        document.getElementById("toc").innerHTML = maincontent;
+    } else {
+        document.getElementById("toc").style.display = "none";
+    }
+   }
 </script>
 </head>
-<body>
+<body onload="displayTOC()"><div id="toc"></div>
 <div id="content">
 <h1 class="title">SNGeometry Manager Configuration</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2></h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1. Introduction</a></li>
@@ -120,7 +132,7 @@ This file holds mainly the paths to geometry files most of them are placed in
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Setup label</span>
-setup_label : <span class="org-variable-name">string</span> = <span class="org-string">"snemo"</span>
+setup_label : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Setup description</span>
 setup_description : <span class="org-variable-name">string</span> = <span class="org-string">"SuperNEMO demonstrator module"</span>
@@ -151,7 +163,7 @@ The geometry factory holds all the files needed for the geometry construction.
 </div>
 
 <div id="outline-container-sec-2-3-1" class="outline-4">
-<h4 id="sec-2-3-1">Logging priority</h4>
+<h4 id="sec-2-3-1"><span class="section-number-4">2.3.1</span> Logging priority</h4>
 <div class="outline-text-4" id="text-2-3-1">
 <div class="org-src-container">
 
@@ -162,34 +174,34 @@ factory.logging.priority : <span class="org-variable-name">string</span> = <span
 </div>
 </div>
 <div id="outline-container-sec-2-3-2" class="outline-4">
-<h4 id="sec-2-3-2">Geometry files</h4>
+<h4 id="sec-2-3-2"><span class="section-number-4">2.3.2</span> Geometry files</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description List of files describing the geometry models</span>
-factory.geom_files : string[22] as <span class="org-variable-name">path</span> =                                                                       <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/source_module/source_calibration.geom"</span>            <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/source_module/source_frame_horizontal_beams.geom"</span> <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/source_module/source_frame_vertical_beams.geom"</span>   <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/source_module/source_strips.geom"</span>                 <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/source_module/source_foil_support.geom"</span>           <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/source_module/source_module.geom"</span>                 <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/tracker_modules/pmt_5inch.geom"</span>                   <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/tracker_modules/xwall_module.geom"</span>                <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/tracker_modules/xwall.geom"</span>                       <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/tracker_modules/gveto_module.geom"</span>                <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/tracker_modules/gveto.geom"</span>                       <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/tracker_modules/tracker_drift_cell_base.geom"</span>     <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/tracker_modules/tracker_drift_cell_nodes.geom"</span>    <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/tracker_modules/tracker_layers.geom"</span>              <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/tracker_modules/tracker_volumes.geom"</span>             <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/tracker_modules/tracker_submodules.geom"</span>          <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/calorimeter_modules/pmt_8inch.geom"</span>               <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/calorimeter_modules/calorimeter_module.geom"</span>      <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/calorimeter_modules/calorimeter_walls.geom"</span>       <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/calorimeter_modules/calorimeter_submodules.geom"</span>  <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/module_0.geom"</span>                                    <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/setup.geom"</span>
+factory.geom_files : string[22] as <span class="org-variable-name">path</span> =                                                                     <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/source_module/source_calibration.geom"</span>            <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/source_module/source_frame_horizontal_beams.geom"</span> <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/source_module/source_frame_vertical_beams.geom"</span>   <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/source_module/source_strips.geom"</span>                 <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/source_module/source_foil_support.geom"</span>           <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/source_module/source_module.geom"</span>                 <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/tracker_modules/pmt_5inch.geom"</span>                   <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/tracker_modules/xwall_module.geom"</span>                <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/tracker_modules/xwall.geom"</span>                       <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/tracker_modules/gveto_module.geom"</span>                <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/tracker_modules/gveto.geom"</span>                       <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/common/geometry/3.0/models/tracker_drift_cell_core.geom"</span>                           <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/common/geometry/3.0/models/tracker_drift_cell.geom"</span>                                <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/tracker_modules/tracker_layers.geom"</span>              <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/tracker_modules/tracker_volumes.geom"</span>             <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/tracker_modules/tracker_submodules.geom"</span>          <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/calorimeter_modules/pmt_8inch.geom"</span>               <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/calorimeter_modules/calorimeter_module.geom"</span>      <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/calorimeter_modules/calorimeter_walls.geom"</span>       <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/calorimeter_modules/calorimeter_submodules.geom"</span>  <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/module_0.geom"</span>                                    <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/setup.geom"</span>
 </pre>
 </div>
 </div>
@@ -199,7 +211,7 @@ factory.geom_files : string[22] as <span class="org-variable-name">path</span> =
 <h3 id="sec-2-4"><span class="section-number-3">2.4</span> ID manager</h3>
 <div class="outline-text-3" id="text-2-4">
 </div><div id="outline-container-sec-2-4-1" class="outline-4">
-<h4 id="sec-2-4-1">Logging priority</h4>
+<h4 id="sec-2-4-1"><span class="section-number-4">2.4.1</span> Logging priority</h4>
 <div class="outline-text-4" id="text-2-4-1">
 <div class="org-src-container">
 
@@ -210,7 +222,7 @@ id_mgr.logging.priority : <span class="org-variable-name">string</span> = <span 
 </div>
 </div>
 <div id="outline-container-sec-2-4-2" class="outline-4">
-<h4 id="sec-2-4-2">Category list</h4>
+<h4 id="sec-2-4-2"><span class="section-number-4">2.4.2</span> Category list</h4>
 <div class="outline-text-4" id="text-2-4-2">
 <p>
 Categories are used to assign a unique id number (integer) to a geometrical
@@ -220,7 +232,7 @@ volume.
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Source file of the geometry categories used by the ID manager</span>
 id_mgr.categories_list : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/setups/snemo/config_3.0/categories.lis"</span>
+    <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/categories.lis"</span>
 </pre>
 </div>
 </div>
@@ -282,7 +294,7 @@ to change the source foil isotope.
 </p>
 </div>
 <div id="outline-container-sec-3-1-1" class="outline-4">
-<h4 id="sec-3-1-1">Plugin declaration</h4>
+<h4 id="sec-3-1-1"><span class="section-number-4">3.1.1</span> Plugin declaration</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <div class="org-src-container">
 
@@ -297,28 +309,48 @@ to change the source foil isotope.
 </div>
 </div>
 <div id="outline-container-sec-3-1-2" class="outline-4">
-<h4 id="sec-3-1-2">Logging priority</h4>
+<h4 id="sec-3-1-2"><span class="section-number-4">3.1.2</span> Logging priority</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Materials manager logging priority</span>
+materials.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 </pre>
 </div>
 </div>
 </div>
 <div id="outline-container-sec-3-1-3" class="outline-4">
-<h4 id="sec-3-1-3">Files</h4>
+<h4 id="sec-3-1-3"><span class="section-number-4">3.1.3</span> Allow overloading of materials</h4>
 <div class="outline-text-4" id="text-3-1-3">
+<p>
+This property allows the overloading of some materials as it is done, for
+example, in <a href="#sec-3-2">3.2</a> section.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag to allow the overloading of materials</span>
+materials.alias_allow_overload : <span class="org-variable-name">boolean</span> = 1
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-1-4" class="outline-4">
+<h4 id="sec-3-1-4"><span class="section-number-4">3.1.4</span> Files</h4>
+<div class="outline-text-4" id="text-3-1-4">
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description List of files describing the materials</span>
-materials.files : string[6] as <span class="org-variable-name">path</span> =                          <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@materials:data/std_isotopes.def"</span>    <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@materials:data/std_elements.def"</span>    <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@materials:data/std_materials.def"</span>   <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/materials/elements.def"</span>  <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNGEOMETRY_DATA_DIR}/resources/materials/materials.def"</span> <span class="org-sh-escaped-newline">\</span>
+materials.configuration_files : string[7] as <span class="org-variable-name">path</span> =                       <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@materials:data/std_isotopes.def"</span>                                    <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@materials:data/std_elements.def"</span>                                    <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@materials:data/std_materials.def"</span>                                   <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/common/geometry/materials/1.0/elements.def"</span>          <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/common/geometry/materials/1.0/materials.def"</span>         <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@falaise:config/common/geometry/materials/1.0/materials_aliases.def"</span> <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/materials_aliases.def"</span>
 </pre>
 </div>
@@ -328,79 +360,21 @@ materials.files : string[6] as <span class="org-variable-name">path</span> =    
 <div id="outline-container-sec-3-2" class="outline-3">
 <h3 id="sec-3-2"><span class="section-number-3">3.2</span> Material aliases</h3>
 <div class="outline-text-3" id="text-3-2">
+<p>
+This piece of code allows user to define or redefine materials aliases. Here for
+example, we locally change the source material without changing anything else.
+</p>
+
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of elements</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
 
-[<span class="org-variable-name">name</span>=<span class="org-string">"vacuum"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for vacuum</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"std::vacuum"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"glass"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for glass</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"std::pyrex"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"tracking_gas"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for tracking gas</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::nemo3_tracking_gas"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"copper"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for metal</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"std::copper"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"iron"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for metal</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"std::iron"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"ENVINET_PS_scintillator"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for X-walls plastic scintillator</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"std::NE110"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"Dubna_PS_scintillator"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for gamma veto plastic scintillator</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"std::NE110"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"PVT_scintillator"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for PVT plastic scintillator</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"std::PVT"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"scin_wrapper"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for plastic scintillator wrapping material</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"std::mylar"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"frame_metal"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for the frames material</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"std::iron"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"wire_metal"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for the wire material</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"std::inox"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"lab_air"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for the air gas in the lab</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::lab_air"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"nitrogen"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for the nitrogen gas</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::nitrogen"</span>
-
 [<span class="org-variable-name">name</span>=<span class="org-string">"bb_source_material"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
+
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for the source</span>
 material : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::se82_source_material"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"RTV"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for the RTV material</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"std::water"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"SBR"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for the SBR material</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"std::water"</span>
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"PFTE"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for the PFTE material</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"std::mylar"</span>
 </pre>
 </div>
 </div>
@@ -413,9 +387,8 @@ material : <span class="org-variable-name">string</span> = <span class="org-stri
 <h3 id="sec-4-1"><span class="section-number-3">4.1</span> Magnetic field plugin</h3>
 <div class="outline-text-3" id="text-4-1">
 </div>
-
 <div id="outline-container-sec-4-1-1" class="outline-4">
-<h4 id="sec-4-1-1">Plugin declaration</h4>
+<h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> Plugin declaration</h4>
 <div class="outline-text-4" id="text-4-1-1">
 <div class="org-src-container">
 
@@ -430,7 +403,7 @@ material : <span class="org-variable-name">string</span> = <span class="org-stri
 </div>
 </div>
 <div id="outline-container-sec-4-1-2" class="outline-4">
-<h4 id="sec-4-1-2">Logging priority</h4>
+<h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> Logging priority</h4>
 <div class="outline-text-4" id="text-4-1-2">
 <div class="org-src-container">
 
@@ -441,7 +414,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 </div>
 </div>
 <div id="outline-container-sec-4-1-3" class="outline-4">
-<h4 id="sec-4-1-3">EM field manager configuration</h4>
+<h4 id="sec-4-1-3"><span class="section-number-4">4.1.3</span> EM field manager configuration</h4>
 <div class="outline-text-4" id="text-4-1-3">
 <div class="org-src-container">
 
@@ -473,13 +446,13 @@ manager.build_geom_map : <span class="org-variable-name">boolean</span> = 1
 manager.geom_map.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of EM fields associated to some logical volumes</span>
-manager.geom_map.associations.labels : <span class="org-variable-name">string</span>[1] = <span class="org-string">"sn_module"</span>
+manager.geom_map.associations.labels : <span class="org-variable-name">string</span>[1] = <span class="org-string">"module"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The logical model associated for the label 'tracker'</span>
-manager.geom_map.associations.sn_module.volume : <span class="org-variable-name">string</span> = <span class="org-string">"module_basic.model.log"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The logical model associated for the label 'module'</span>
+manager.geom_map.associations.module.volume : <span class="org-variable-name">string</span> = <span class="org-string">"module_basic.model.log"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The EM field associated for the label "tracker"</span>
-manager.geom_map.associations.sn_module.field_name : <span class="org-variable-name">string</span> = <span class="org-string">"B_module"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The EM field associated for the label 'module'</span>
+manager.geom_map.associations.module.field_name : <span class="org-variable-name">string</span> = <span class="org-string">"B_module"</span>
 </pre>
 </div>
 </div>
@@ -489,9 +462,8 @@ manager.geom_map.associations.sn_module.field_name : <span class="org-variable-n
 <h3 id="sec-4-2"><span class="section-number-3">4.2</span> Magnetic field drivers</h3>
 <div class="outline-text-3" id="text-4-2">
 </div>
-
 <div id="outline-container-sec-4-2-1" class="outline-4">
-<h4 id="sec-4-2-1">Driver preamble</h4>
+<h4 id="sec-4-2-1"><span class="section-number-4">4.2.1</span> Driver preamble</h4>
 <div class="outline-text-4" id="text-4-2-1">
 <div class="org-src-container">
 
@@ -504,7 +476,7 @@ manager.geom_map.associations.sn_module.field_name : <span class="org-variable-n
 </div>
 </div>
 <div id="outline-container-sec-4-2-2" class="outline-4">
-<h4 id="sec-4-2-2">Constant magnetic field</h4>
+<h4 id="sec-4-2-2"><span class="section-number-4">4.2.2</span> Constant magnetic field</h4>
 <div class="outline-text-4" id="text-4-2-2">
 <div class="org-src-container">
 
@@ -533,7 +505,7 @@ magnetic_field.coordinates : <span class="org-variable-name">real</span>[3] = 0.
 </div>
 
 <div id="outline-container-sec-5-1-1" class="outline-4">
-<h4 id="sec-5-1-1">Plugin declaration</h4>
+<h4 id="sec-5-1-1"><span class="section-number-4">5.1.1</span> Plugin declaration</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <div class="org-src-container">
 
@@ -548,7 +520,7 @@ magnetic_field.coordinates : <span class="org-variable-name">real</span>[3] = 0.
 </div>
 </div>
 <div id="outline-container-sec-5-1-2" class="outline-4">
-<h4 id="sec-5-1-2">Logging priority</h4>
+<h4 id="sec-5-1-2"><span class="section-number-4">5.1.2</span> Logging priority</h4>
 <div class="outline-text-4" id="text-5-1-2">
 <div class="org-src-container">
 
@@ -560,7 +532,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 </div>
 
 <div id="outline-container-sec-5-1-3" class="outline-4">
-<h4 id="sec-5-1-3">Geometry requirements</h4>
+<h4 id="sec-5-1-3"><span class="section-number-4">5.1.3</span> Geometry requirements</h4>
 <div class="outline-text-4" id="text-5-1-3">
 <div class="org-src-container">
 
@@ -571,7 +543,7 @@ geometry.setup_requirement : <span class="org-variable-name">string</span>[2] = 
 </div>
 </div>
 <div id="outline-container-sec-5-1-4" class="outline-4">
-<h4 id="sec-5-1-4">Module number</h4>
+<h4 id="sec-5-1-4"><span class="section-number-4">5.1.4</span> Module number</h4>
 <div class="outline-text-4" id="text-5-1-4">
 <div class="org-src-container">
 
@@ -585,7 +557,7 @@ locators.module_number : <span class="org-variable-name">integer</span> = 0
 </div>
 </div>
 <div id="postamble" class="status">
-File under git version control - commit 76a697e - 2014-02-21
+File under git version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/e66263c42ca97378a86d02cda7fcd22d74fa7721">e66263c</a> - 2014-02-24
 </div>
 </body>
 </html>

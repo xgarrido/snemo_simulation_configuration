@@ -9,6 +9,7 @@
 <meta  name="author" content="Xavier Garrido" />
 <link rel="stylesheet" href="css/styles.css">
                <link rel="stylesheet" href="css/org-pygments.css">
+               <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -54,9 +55,20 @@ for the JavaScript code in this tag.
      target.className = elem.cacheClassTarget;
  }
 /*]]>*///-->
+</script><script type="text/javascript">
+function displayTOC() {
+    var first = document.getElementById("text-table-of-contents").innerHTML;
+    if (first != "") {
+        var maincontent = '<a class="button"><i class="fa fa-list"></i></a>'
+        maincontent += "<div>" + first + "</div>";
+        document.getElementById("toc").innerHTML = maincontent;
+    } else {
+        document.getElementById("toc").style.display = "none";
+    }
+   }
 </script>
 </head>
-<body>
+<body onload="displayTOC()"><div id="toc"></div>
 <div id="content">
 <h1 class="title">SuperNEMO configuration for SN@ilWare</h1>
 <p>
@@ -86,7 +98,7 @@ configuration.
 </dd>
 <dt> <a href="./sng4_manager.html">sng4_manager</a> </dt><dd>the Geant4 simulation configuration
 </dd>
-<dt> <a href="./step_hit_processor_factory.html">step_hitfactory__processor</a> </dt><dd>the factory of step hit processor in relation
+<dt> <a href="./step_hit_processor_factory.html">step_hit_processor_factory</a> </dt><dd>the factory of step hit processor in relation
 with Geant4 step hits
 </dd>
 <dt> <a href="./sngenbb_manager.html">sngenbb_manager</a> </dt><dd>the generator double beta <i>aka</i> genbb configuration file
@@ -102,7 +114,7 @@ analysis such as sensitivity measurements
 The configuration files are organised using <a href="http://orgmode.org/worg/org-contrib/babel/index.html">org-babel</a> and its ability to execute
 source code. It requires then a recent installation of emacs which bundles
 <code>org</code>. Without entering into too much details regarding <code>org-babel</code> abilities,
-the basic idea is to give a &ldquo;literate&rdquo; way to navigate through the different
+the basic idea is to give a "literate" way to navigate through the different
 sections, each of them representing a configuration file. Moreover, using <code>org</code>
 folding/unfolding capability, item can be hide and the user can focus on
 relevant parts.
@@ -113,11 +125,11 @@ To export the different configuration files, you can run <code>org-babel-tangle<
 which will tangle each code block into the given file or use the associated
 Makefile. The author recommends to use the Makefile since the tangling process
 is asynchronous and thus, does not freeze your emacs (<code>org-babel-tangle</code>
-&ldquo;occupies&rdquo; emacs during its execution).
+"occupies" emacs during its execution).
 </p>
 </div>
 <div id="postamble" class="status">
-File under git version control - commit 76a697e - 2014-02-21
+File under git version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/e66263c42ca97378a86d02cda7fcd22d74fa7721">e66263c</a> - 2014-02-24
 </div>
 </body>
 </html>

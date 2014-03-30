@@ -9,6 +9,7 @@
 <meta  name="author" content="Xavier Garrido" />
 <link rel="stylesheet" href="css/styles.css">
                <link rel="stylesheet" href="css/org-pygments.css">
+               <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -54,13 +55,24 @@ for the JavaScript code in this tag.
      target.className = elem.cacheClassTarget;
  }
 /*]]>*///-->
+</script><script type="text/javascript">
+function displayTOC() {
+    var first = document.getElementById("text-table-of-contents").innerHTML;
+    if (first != "") {
+        var maincontent = '<a class="button"><i class="fa fa-list"></i></a>'
+        maincontent += "<div>" + first + "</div>";
+        document.getElementById("toc").innerHTML = maincontent;
+    } else {
+        document.getElementById("toc").style.display = "none";
+    }
+   }
 </script>
 </head>
-<body>
+<body onload="displayTOC()"><div id="toc"></div>
 <div id="content">
 <h1 class="title">SNGenvertex Manager Configuration</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2></h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1. Introduction</a></li>
@@ -161,7 +173,7 @@ Insert preamble
 </div>
 
 <ul class="org-ul">
-<li>Generate vertex in the bulk volume of the wrapper for the main calorimeter&rsquo;s
+<li>Generate vertex in the bulk volume of the wrapper for the main calorimeter's
 scintillator blocks:
 
 <div class="org-src-container">
@@ -183,7 +195,7 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 </div>
 </li>
 
-<li>Generate vertex in the bulk volume of the wrapper for the X-calorimeter&rsquo;s
+<li>Generate vertex in the bulk volume of the wrapper for the X-calorimeter's
 scintillator blocks:
 
 <div class="org-src-container">
@@ -205,7 +217,7 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 </li>
 
 <li>Generate vertex in the bulk volume of the wrapper for the &gamma; veto
-calorimeter&rsquo;s scintillator blocks:
+calorimeter's scintillator blocks:
 
 <div class="org-src-container">
 
@@ -225,7 +237,7 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 </div>
 </li>
 
-<li>Generate vertex from the surface of the main calorimeter&rsquo;s scintillator blocks:
+<li>Generate vertex from the surface of the main calorimeter's scintillator blocks:
 
 <div class="org-src-container">
 
@@ -248,7 +260,7 @@ mode.surface.top  : <span class="org-variable-name">boolean</span> = 1
 </div>
 </li>
 
-<li>Generate vertex from the surface of the X-calorimeter&rsquo;s scintillator blocks:
+<li>Generate vertex from the surface of the X-calorimeter's scintillator blocks:
 
 <div class="org-src-container">
 
@@ -271,7 +283,7 @@ mode.surface.top  : <span class="org-variable-name">boolean</span> = 1
 </div>
 </li>
 
-<li>Generate vertex from the surface of the &gamma; veto&rsquo;s scintillator blocks:
+<li>Generate vertex from the surface of the &gamma; veto's scintillator blocks:
 
 <div class="org-src-container">
 
@@ -397,7 +409,7 @@ mode.surface.top    : <span class="org-variable-name">boolean</span> = 0
 <h3 id="sec-3-3"><span class="section-number-3">3.3</span> Source vertices</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
-Since there are two types of source strips namely &ldquo;internal&rdquo; and &ldquo;external&rdquo; with
+Since there are two types of source strips namely "internal" and "external" with
 different size and then different isotope mass, we first define independent
 vertices for each of this model and then use a <code>genvtx::combined_vg</code> model to
 combine with appropriate weights. These vertices are only available with
@@ -417,7 +429,7 @@ Insert preamble
 </div>
 
 <div id="outline-container-sec-3-3-1" class="outline-4">
-<h4 id="sec-3-3-1">Internal source strips</h4>
+<h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> Internal source strips</h4>
 <div class="outline-text-4" id="text-3-3-1">
 <ul class="org-ul">
 <li>Generate vertex from the bulk volume of the source foil:
@@ -431,7 +443,7 @@ Insert preamble
 logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
-geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo(&gt;=2)"</span>
+geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='source_strip' module={*} strip=[1;34]"</span>
@@ -453,7 +465,7 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
-geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo(&gt;=2)"</span>
+geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='source_strip' module={*} strip=[1;34]"</span>
@@ -473,7 +485,7 @@ mode.surface.front : <span class="org-variable-name">boolean</span> = 1
 </div>
 </div>
 <div id="outline-container-sec-3-3-2" class="outline-4">
-<h4 id="sec-3-3-2">External source strips</h4>
+<h4 id="sec-3-3-2"><span class="section-number-4">3.3.2</span> External source strips</h4>
 <div class="outline-text-4" id="text-3-3-2">
 <ul class="org-ul">
 <li>Generate vertex from the bulk volume of the source foil:
@@ -487,7 +499,7 @@ mode.surface.front : <span class="org-variable-name">boolean</span> = 1
 logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
-geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo(&gt;=2)"</span>
+geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='source_strip' module={*} strip={0;35}"</span>
@@ -509,7 +521,7 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
-geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo(&gt;=2)"</span>
+geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='source_strip' module={*} strip={0;35}"</span>
@@ -529,7 +541,7 @@ mode.surface.front : <span class="org-variable-name">boolean</span> = 1
 </div>
 </div>
 <div id="outline-container-sec-3-3-3" class="outline-4">
-<h4 id="sec-3-3-3">Combined vertex</h4>
+<h4 id="sec-3-3-3"><span class="section-number-4">3.3.3</span> Combined vertex</h4>
 <div class="outline-text-4" id="text-3-3-3">
 <ul class="org-ul">
 <li>Generate vertex from both the bulk volume of all the source foils:
@@ -543,7 +555,7 @@ mode.surface.front : <span class="org-variable-name">boolean</span> = 1
 logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
-geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo(&gt;=2)"</span>
+geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Vertex generator names</span>
 generators : <span class="org-variable-name">string</span>[2]  = <span class="org-string">"source_strips_external_bulk"</span> <span class="org-string">"source_strips_internal_bulk"</span>
@@ -566,7 +578,7 @@ generators.source_strips_internal_bulk.absolute_weight : <span class="org-variab
 logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
-geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo(&gt;=2)"</span>
+geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Vertex generator names</span>
 generators : <span class="org-variable-name">string</span>[2] = <span class="org-sh-escaped-newline">\</span>
@@ -660,7 +672,7 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 </div>
 </div>
 <div id="postamble" class="status">
-File under git version control - commit 76a697e - 2014-02-21
+File under git version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/e66263c42ca97378a86d02cda7fcd22d74fa7721">e66263c</a> - 2014-02-24
 </div>
 </body>
 </html>
