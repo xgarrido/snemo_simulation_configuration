@@ -2072,10 +2072,11 @@ setup [[G4 simulation][in this section]].
 In the same way you can run the calibration chain by doing
 
 #+BEGIN_SRC sh
-  dpp_processing                                                                                        \
-      --module-manager-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/module_manager.conf \
-      --module calibration_chain                                                                        \
-      --load-dll sng4                                                                                   \
+  bxdpp_processing                                                                                          \
+      --module-manager-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/module_manager.conf     \
+      --module calibration                                                                                  \
+      --dlls-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/dlls.conf                         \
+      --datatools::resource_path="falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources" \
       --input-file /tmp/$USER/io_output_simulated.brio
 #+END_SRC
 where file =/tmp/$USER/io_output_simulated.brio= is the one produced by the
