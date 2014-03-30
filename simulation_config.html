@@ -1008,7 +1008,7 @@ mode.add_header.external_properties_prefix : <span class="org-variable-name">str
 analysis.description : <span class="org-variable-name">string</span> = <span class="org-string">"Sensitivity studies for SuperNEMO demonstrator"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The version control status</span>
-analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git new_falaise branch - commit ee6d613 - 2014-03-28"</span>
+analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git new_falaise branch - commit 5687cdc - 2014-03-30"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The total number of event simulated</span>
 analysis.total_number_of_event : <span class="org-variable-name">integer</span> = 100000
@@ -3290,10 +3290,11 @@ In the same way you can run the calibration chain by doing
 
 <div class="org-src-container">
 
-<pre class="src src-sh">dpp_processing                                                                                        <span class="org-sh-escaped-newline">\</span>
-    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/module_manager.conf <span class="org-sh-escaped-newline">\</span>
-    --module calibration_chain                                                                        <span class="org-sh-escaped-newline">\</span>
-    --load-dll sng4                                                                                   <span class="org-sh-escaped-newline">\</span>
+<pre class="src src-sh">bxdpp_processing                                                                                          <span class="org-sh-escaped-newline">\</span>
+    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/module_manager.conf     <span class="org-sh-escaped-newline">\</span>
+    --module calibration                                                                                  <span class="org-sh-escaped-newline">\</span>
+    --dlls-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/dlls.conf                         <span class="org-sh-escaped-newline">\</span>
+    --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources"</span> <span class="org-sh-escaped-newline">\</span>
     --input-file /tmp/$<span class="org-variable-name">USER</span>/io_output_simulated.brio
 </pre>
 </div>
