@@ -124,7 +124,7 @@ must be applied. This can be in direct relation with step hit processors defined
   #@description Parameters for the generation of 'sensitive hits' through 'sensitive detectors' :
   sensitive.detectors : string[4] = "calorimeter_SD" "xcalorimeter_SD" "gveto_SD" "tracker_SD"
 
-  sensitive.calorimeter_SD.logging.support                 : string  = "warning"
+  sensitive.calorimeter_SD.logging.priority                : string  = "warning"
   sensitive.calorimeter_SD.hits_buffer_capacity            : integer = 100
   sensitive.calorimeter_SD.record_alpha_quenching          : boolean = 1
   sensitive.calorimeter_SD.record_track_id                 : boolean = 1
@@ -132,7 +132,7 @@ must be applied. This can be in direct relation with step hit processors defined
   sensitive.calorimeter_SD.drop_zero_energy_deposit_steps  : boolean = 0
   sensitive.calorimeter_SD.track_gamma                     : boolean = 1
 
-  sensitive.xcalorimeter_SD.logging.support                : string  = "warning"
+  sensitive.xcalorimeter_SD.logging.priority               : string  = "warning"
   sensitive.xcalorimeter_SD.hits_buffer_capacity           : integer = 100
   sensitive.xcalorimeter_SD.record_alpha_quenching         : boolean = 1
   sensitive.xcalorimeter_SD.record_track_id                : boolean = 1
@@ -140,7 +140,7 @@ must be applied. This can be in direct relation with step hit processors defined
   sensitive.xcalorimeter_SD.drop_zero_energy_deposit_steps : boolean = 0
   sensitive.xcalorimeter_SD.track_gamma                    : boolean = 1
 
-  sensitive.gveto_SD.logging.support                       : string  = "warning"
+  sensitive.gveto_SD.logging.priority                      : string  = "warning"
   sensitive.gveto_SD.hits_buffer_capacity                  : integer = 100
   sensitive.gveto_SD.record_alpha_quenching                : boolean = 1
   sensitive.gveto_SD.record_track_id                       : boolean = 1
@@ -148,7 +148,7 @@ must be applied. This can be in direct relation with step hit processors defined
   sensitive.gveto_SD.drop_zero_energy_deposit_steps        : boolean = 0
   sensitive.gveto_SD.track_gamma                           : boolean = 1
 
-  sensitive.tracker_SD.logging.support                     : string  = "warning"
+  sensitive.tracker_SD.logging.priority                    : string  = "warning"
   sensitive.tracker_SD.hits_buffer_capacity                : integer = 1000
   sensitive.tracker_SD.record_alpha_quenching              : boolean = 1
   sensitive.tracker_SD.record_track_id                     : boolean = 1
