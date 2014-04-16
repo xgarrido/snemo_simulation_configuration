@@ -21,7 +21,8 @@ programs. The repository holds the following files
 - [[./sng4_manager.org][sng4_manager]] :: the Geant4 simulation configuration
 - [[./step_hit_processor_factory.org][step_hit_processor_factory]] :: the factory of step hit processor in relation
      with Geant4 step hits
-- [[./sngenbb_manager.org][sngenbb_manager]] :: the generator double beta /aka/ genbb configuration file
+- [[./sngenbb_manager.org][sngenbb_manager]] :: the double beta decay generator /aka/ genbb configuration
+     file
 - [[./sngenvertex_manager.org][sngenvertex_manager]] :: the vertex generator configuration
 - [[./snanalysis_manager.org][snanalysis_manager]] :: the analysis module declaration to perform SuperNEMO
      analysis such as sensitivity measurements
