@@ -134,6 +134,7 @@ receives a table list and builds the corresponding =dlls.conf= file.
 #+END_SRC
 *** Libraries
 :PROPERTIES:
+:CUSTOM_ID: sec::dll
 :TANGLE: dlls.conf
 :END:
 This part set the different libraries to be loaded at runtime. This is needed
@@ -2025,17 +2026,20 @@ directory.
   export SNAILWARE_SIMULATION_DIR=${PWD}
 #+END_SRC
 
-Running processing pipeline is done by the =dpp_processing= program provided by
-=dpp= library. Its call is pretty simple and only implies to have a module
-manager file. Depending on the module you want to run, several libraries must be
-loaded. For example, if you only want to do simulation, you can run the
-following command
+Running processing pipeline is done by the =bxdpp_processing= program provided
+by the =dpp= library. Its call is pretty simple and only implies to have a
+module manager file. Loading external libraries such as =libFalaise=, we must
+pass the location of such libraries using the dll configuration done in section
+[[#sec::dll]]. We also have to define where the resource files are using the
+=--datatools:resource_path= command line. For example, if you only want to do
+simulation, you can run the following command
 
 #+BEGIN_SRC sh
-  dpp_processing                                                                                        \
+  bxdpp_processing                                                                                      \
       --module-manager-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/module_manager.conf \
+      --dlls-config           $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/dlls.conf           \
+      --datatools::resource_path@<where your falaise setup files are>                                   \
       --module simulation_chain                                                                         \
-      --load-dll sng4                                                                                   \
       --max-records 100
 #+END_SRC
 
@@ -2043,19 +2047,19 @@ It will launch 100 simulated events using the =simulation_chain= module as
 setup [[G4 simulation][in this section]].
 
 In the same way you can run the calibration chain by doing
-
 #+BEGIN_SRC sh
-  dpp_processing                                                                                        \
+  bxdpp_processing                                                                                      \
       --module-manager-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/module_manager.conf \
+      --dlls-config           $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/dlls.conf           \
+      --datatools::resource_path@<where your falaise setup files are>                                   \
       --module calibration_chain                                                                        \
-      --load-dll sng4                                                                                   \
       --input-file /tmp/$USER/io_output_simulated.brio
 #+END_SRC
-where file =/tmp/$USER/io_output_simulated.brio= is the one produced by the
-=simulation_chain= module as defined and setup [[Simulation output][in this section]].
+where file =/tmp/$USER/io_output_simulated.brio= is the output file produced by
+the =simulation_chain= module as defined and setup [[Simulation output][in this section]].
 
 All the different process steps can then be run using the dedicated module such
-as [[Clustering algorithms][clustering]] or [[Fitting algorithm][fitting]] Geiger cells. The most complete mode is the
+as [[Clustering algorithms][clustering]] or [[Fitting algorithm][fitting]] Geiger tracks. The most complete mode is the
 =full_chain= module where all process are done from simulation \to calibration \to
 track reconstruction.
 
