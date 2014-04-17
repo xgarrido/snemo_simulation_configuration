@@ -152,9 +152,6 @@ manager. By the way, some of these options can be overloaded by the
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority      : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description Number of events to be simulated (superseded by the pipeline)</span>
-number_of_events      : <span class="org-variable-name">integer</span> = 20
-
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geant4 tracking verbosity flag (from 0 to 10):</span>
 g4_tracking_verbosity : <span class="org-variable-name">integer</span> = 0
 
@@ -236,7 +233,7 @@ through <code>gemotools</code> converters.
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Temporary directory for GDML file generation:</span>
-gdml.tmp_dir         : string as <span class="org-variable-name">path</span> = <span class="org-string">"/tmp/${USER}/sng4.d"</span>
+gdml.tmp_dir         : string as <span class="org-variable-name">path</span> = <span class="org-string">"/tmp/${USER}/snemo_demo_g4.d"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Access mode to the GDML schema ("local" or "remote")</span>
 gdml.schema_location : <span class="org-variable-name">string</span> = <span class="org-string">"local"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">"remote"</span>
@@ -276,39 +273,39 @@ must be applied. This can be in direct relation with step hit processors defined
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Parameters for the generation of 'sensitive hits' through 'sensitive detectors' :</span>
-sensitive.detectors : <span class="org-variable-name">string</span>[4] = <span class="org-string">"calorimeter.SD"</span> <span class="org-string">"xcalorimeter.SD"</span> <span class="org-string">"gveto.SD"</span> <span class="org-string">"tracker.SD"</span>
+sensitive.detectors : <span class="org-variable-name">string</span>[4] = <span class="org-string">"calorimeter_SD"</span> <span class="org-string">"xcalorimeter_SD"</span> <span class="org-string">"gveto_SD"</span> <span class="org-string">"tracker_SD"</span>
 
-sensitive.calorimeter.SD.logging.support                 : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
-sensitive.calorimeter.SD.hits_buffer_capacity            : <span class="org-variable-name">integer</span> = 200
-sensitive.calorimeter.SD.record_alpha_quenching          : <span class="org-variable-name">boolean</span> = 1
-sensitive.calorimeter.SD.record_track_id                 : <span class="org-variable-name">boolean</span> = 1
-sensitive.calorimeter.SD.record_primary_particle         : <span class="org-variable-name">boolean</span> = 1
-sensitive.calorimeter.SD.drop_zero_energy_deposit_steps  : <span class="org-variable-name">boolean</span> = 0
-sensitive.calorimeter.SD.track_gamma                     : <span class="org-variable-name">boolean</span> = 1
+sensitive.calorimeter_SD.logging.priority                : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+sensitive.calorimeter_SD.hits_buffer_capacity            : <span class="org-variable-name">integer</span> = 100
+sensitive.calorimeter_SD.record_alpha_quenching          : <span class="org-variable-name">boolean</span> = 1
+sensitive.calorimeter_SD.record_track_id                 : <span class="org-variable-name">boolean</span> = 1
+sensitive.calorimeter_SD.record_primary_particle         : <span class="org-variable-name">boolean</span> = 1
+sensitive.calorimeter_SD.drop_zero_energy_deposit_steps  : <span class="org-variable-name">boolean</span> = 0
+sensitive.calorimeter_SD.track_gamma                     : <span class="org-variable-name">boolean</span> = 1
 
-sensitive.xcalorimeter.SD.logging.support                : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
-sensitive.xcalorimeter.SD.hits_buffer_capacity           : <span class="org-variable-name">integer</span> = 200
-sensitive.xcalorimeter.SD.record_alpha_quenching         : <span class="org-variable-name">boolean</span> = 1
-sensitive.xcalorimeter.SD.record_track_id                : <span class="org-variable-name">boolean</span> = 1
-sensitive.xcalorimeter.SD.record_primary_particle        : <span class="org-variable-name">boolean</span> = 1
-sensitive.xcalorimeter.SD.drop_zero_energy_deposit_steps : <span class="org-variable-name">boolean</span> = 0
-sensitive.xcalorimeter.SD.track_gamma                    : <span class="org-variable-name">boolean</span> = 1
+sensitive.xcalorimeter_SD.logging.priority               : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+sensitive.xcalorimeter_SD.hits_buffer_capacity           : <span class="org-variable-name">integer</span> = 100
+sensitive.xcalorimeter_SD.record_alpha_quenching         : <span class="org-variable-name">boolean</span> = 1
+sensitive.xcalorimeter_SD.record_track_id                : <span class="org-variable-name">boolean</span> = 1
+sensitive.xcalorimeter_SD.record_primary_particle        : <span class="org-variable-name">boolean</span> = 1
+sensitive.xcalorimeter_SD.drop_zero_energy_deposit_steps : <span class="org-variable-name">boolean</span> = 0
+sensitive.xcalorimeter_SD.track_gamma                    : <span class="org-variable-name">boolean</span> = 1
 
-sensitive.gveto.SD.logging.support                       : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
-sensitive.gveto.SD.hits_buffer_capacity                  : <span class="org-variable-name">integer</span> = 200
-sensitive.gveto.SD.record_alpha_quenching                : <span class="org-variable-name">boolean</span> = 1
-sensitive.gveto.SD.record_track_id                       : <span class="org-variable-name">boolean</span> = 1
-sensitive.gveto.SD.record_primary_particle               : <span class="org-variable-name">boolean</span> = 1
-sensitive.gveto.SD.drop_zero_energy_deposit_steps        : <span class="org-variable-name">boolean</span> = 0
-sensitive.gveto.SD.track_gamma                           : <span class="org-variable-name">boolean</span> = 1
+sensitive.gveto_SD.logging.priority                      : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+sensitive.gveto_SD.hits_buffer_capacity                  : <span class="org-variable-name">integer</span> = 100
+sensitive.gveto_SD.record_alpha_quenching                : <span class="org-variable-name">boolean</span> = 1
+sensitive.gveto_SD.record_track_id                       : <span class="org-variable-name">boolean</span> = 1
+sensitive.gveto_SD.record_primary_particle               : <span class="org-variable-name">boolean</span> = 1
+sensitive.gveto_SD.drop_zero_energy_deposit_steps        : <span class="org-variable-name">boolean</span> = 0
+sensitive.gveto_SD.track_gamma                           : <span class="org-variable-name">boolean</span> = 1
 
-sensitive.tracker.SD.logging.support                     : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
-sensitive.tracker.SD.hits_buffer_capacity                : <span class="org-variable-name">integer</span> = 1000
-sensitive.tracker.SD.record_alpha_quenching              : <span class="org-variable-name">boolean</span> = 1
-sensitive.tracker.SD.record_track_id                     : <span class="org-variable-name">boolean</span> = 1
-sensitive.tracker.SD.record_primary_particle             : <span class="org-variable-name">boolean</span> = 1
-sensitive.tracker.SD.drop_zero_energy_deposit_steps      : <span class="org-variable-name">boolean</span> = 0
-sensitive.tracker.SD.track_gamma                         : <span class="org-variable-name">boolean</span> = 1
+sensitive.tracker_SD.logging.priority                    : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
+sensitive.tracker_SD.hits_buffer_capacity                : <span class="org-variable-name">integer</span> = 1000
+sensitive.tracker_SD.record_alpha_quenching              : <span class="org-variable-name">boolean</span> = 1
+sensitive.tracker_SD.record_track_id                     : <span class="org-variable-name">boolean</span> = 1
+sensitive.tracker_SD.record_primary_particle             : <span class="org-variable-name">boolean</span> = 1
+sensitive.tracker_SD.drop_zero_energy_deposit_steps      : <span class="org-variable-name">boolean</span> = 0
+sensitive.tracker_SD.track_gamma                         : <span class="org-variable-name">boolean</span> = 1
 </pre>
 </div>
 </div>
@@ -322,19 +319,35 @@ The following code defines geometry models where Geant4 steps are size limited.
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description List of geometry models with max steps:</span>
-limits.list_of_volumes : <span class="org-variable-name">string</span>[3] =  <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"source_external_strip.model.log"</span> <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"source_internal_strip.model.log"</span> <span class="org-sh-escaped-newline">\</span>
+limits.list_of_volumes : <span class="org-variable-name">string</span>[7] =         <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"source_external_strip.model.log"</span>        <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"source_internal_strip.model.log"</span>        <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"calorimeter_scin_block_front.model.log"</span> <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"calorimeter_scin_block_back.model.log"</span>  <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"xwall_scin_block.model.log"</span>             <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"gveto_scin_block.model.log"</span>             <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"drift_cell_core.model.log"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description Max step length inside source pad:</span>
-limits.max_step.source_external_strip.model.log : real as <span class="org-variable-name">length</span> = 0.01 mm
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Max step length inside source strip:</span>
+limits.max_step.source_external_strip.model.log : real as <span class="org-variable-name">length</span> = 10 um
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description Max step length inside source pad:</span>
-limits.max_step.source_internal_strip.model.log : real as <span class="org-variable-name">length</span> = 0.01 mm
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Max step length inside source strip:</span>
+limits.max_step.source_internal_strip.model.log : real as <span class="org-variable-name">length</span> = 10 um
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description Max step length inside drift cell tracking volume:</span>
-limits.max_step.drift_cell_core.model.log : real as <span class="org-variable-name">length</span> = 5.0 mm
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Max step length inside front calorimeter scin block:</span>
+limits.max_step.calorimeter_scin_block_front.model.log : real as <span class="org-variable-name">length</span> = 500 um
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Max step length inside back calorimeter scin block:</span>
+limits.max_step.calorimeter_scin_block_back.model.log  : real as <span class="org-variable-name">length</span> = 500 um
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Max step length inside X-calorimeter scin block:</span>
+limits.max_step.xwall_scin_block.model.log : real as <span class="org-variable-name">length</span> = 500 um
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Max step length inside gamma veto scin block:</span>
+limits.max_step.gveto_scin_block.model.log : real as <span class="org-variable-name">length</span> = 500 um
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Max step length inside the drift cell volume</span>
+limits.max_step.drift_cell_core.model.log  : real as <span class="org-variable-name">length</span> = 5 mm
 </pre>
 </div>
 </div>
@@ -386,7 +399,7 @@ magnetic_field.logging.priority   : <span class="org-variable-name">string</span
 magnetic_field.plugin_name        : <span class="org-variable-name">string</span> = <span class="org-string">"fields_driver"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Name of the associated fields</span>
-magnetic_field.associations       : <span class="org-variable-name">string</span>[1] = <span class="org-string">"sn_module"</span>
+magnetic_field.associations       : <span class="org-variable-name">string</span>[1] = <span class="org-string">"module"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description SetDeltaChord miss distance (mm):</span>
 magnetic_field.miss_distance : real as <span class="org-variable-name">length</span> = 0.5 mm
@@ -477,7 +490,7 @@ Quite experimental try to set particles used within SuperNEMO "framework".
 <span class="org-comment-delimiter">#</span><span class="org-comment">use_bottom_mesons        : boolean = 0</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for nucleons (default: 1)</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">use_nucleons             : boolean = 1</span>
+use_nucleons             : <span class="org-variable-name">boolean</span> = 1
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for strange baryons (default: 0)</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">use_strange_baryons      : boolean = 0</span>
@@ -489,7 +502,7 @@ Quite experimental try to set particles used within SuperNEMO "framework".
 <span class="org-comment-delimiter">#</span><span class="org-comment">use_bottom_baryons       : boolean = 0</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for light nuclei (default: 1)</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">use_light_nuclei         : boolean = 1</span>
+use_light_nuclei         : <span class="org-variable-name">boolean</span> = 1
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for light anti-nuclei (default: 0)</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">use_light_anti_nuclei    : boolean = 0</span>
@@ -501,30 +514,111 @@ use_generic_ion          : <span class="org-variable-name">boolean</span> = 1
 </div>
 </li>
 <li>EM physics process<br  /><div class="outline-text-5" id="text-2-5-2-2">
+</div>
+<ul class="org-ul"><li>General settings<br  /><div class="outline-text-6" id="text-2-5-2-2-1">
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@config Configuration parameters for the electro-magnetic Geant4 physics constructor</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Electro-magntox interaction model (value in: "standard", "low_energy", "penelope")</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">em.model : string = "standard"</span>
+em.model : <span class="org-variable-name">string</span> = <span class="org-string">"standard"</span>
+</pre>
+</div>
+</div>
+</li>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for electron/positron energy loss process</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">em.electron.energy_loss         : boolean = 1</span>
+<li>Electrons/positrons<br  /><div class="outline-text-6" id="text-2-5-2-2-2">
+<div class="org-src-container">
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for electron/positron multiple scaterring process</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">em.electron.multiple_scaterring : boolean = 1</span>
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for electron/positron ionisation (energy loss/delta ray production)</span>
+em.electron.ionisation           : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for electron/positron multiple scatterring process</span>
+em.electron.multiple_scatterring : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for electron/positron multiple scatterring process</span>
+em.electron.multiple_scatterring.use_distance_to_boundary: <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The range factor for electron/positron multiple scatterring process</span>
+em.electron.multiple_scatterring.range_factor: <span class="org-variable-name">real</span> = 0.005
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for electron/positron bremsstrahlung process</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">em.electron.bremsstrahlung      : boolean = 1</span>
+em.electron.bremsstrahlung       : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for electron/positron step limiter process</span>
+em.electron.step_limiter         : <span class="org-variable-name">boolean</span> = 1
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for positron pannihilation</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">em.positron.annihilation        : boolean = 1</span>
+em.positron.annihilation         : <span class="org-variable-name">boolean</span> = 1
+</pre>
+</div>
+</div>
+</li>
 
-<span class="org-comment-delimiter">################</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Deexcitation #</span>
-<span class="org-comment-delimiter">################</span>
+<li>Gammas<br  /><div class="outline-text-6" id="text-2-5-2-2-3">
+<div class="org-src-container">
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for deexcitation fluorescence process</span>
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for Rayleigh scattering</span>
+em.gamma.rayleigh_scattering  : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for photoelectric effect</span>
+em.gamma.photo_electric       : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for Compton scattering</span>
+em.gamma.compton_scattering   : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for gamma conversion</span>
+em.gamma.conversion           : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for gamma conversion to muons</span>
+em.gamma.conversion_to_muons  : <span class="org-variable-name">boolean</span> = 0
+</pre>
+</div>
+</div>
+</li>
+
+<li>Muons<br  /><div class="outline-text-6" id="text-2-5-2-2-4">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for muon ionisation</span>
+em.muon.ionisation           : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for muon multiple scatterring process</span>
+em.muon.multiple_scatterring : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for muon pair production</span>
+em.muon.pair_production      : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for muon bremsstrahlung process</span>
+em.muon.bremsstrahlung       : <span class="org-variable-name">boolean</span> = 0
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for muon step limiter process</span>
+em.muon.step_limiter         : <span class="org-variable-name">boolean</span> = 0
+</pre>
+</div>
+</div>
+</li>
+
+<li>Ions<br  /><div class="outline-text-6" id="text-2-5-2-2-5">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for ion ionisation</span>
+em.ion.ionisation           : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for ion multiple scatterring process</span>
+em.ion.multiple_scatterring : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for ion step limiter process</span>
+em.ion.step_limiter         : <span class="org-variable-name">boolean</span> = 1
+</pre>
+</div>
+</div>
+</li>
+
+<li>Deexcitation<br  /><div class="outline-text-6" id="text-2-5-2-2-6">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for deexcitation fluorescence process</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.fluo         : boolean = 0</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for Auger process</span>
@@ -536,33 +630,30 @@ use_generic_ion          : <span class="org-variable-name">boolean</span> = 1
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation model for PIXE cross-sections</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.pixe.model   : string = "Empirical"</span>
 
-<span class="org-comment-delimiter">###########################</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Deexcitation per region #</span>
-<span class="org-comment-delimiter">###########################</span>
-
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The regions where to apply some deexcitation process</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions    : string[2] = "A" "B"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions : string[2] = "A" "B"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for deexcitation fluorescence process in region "A"</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.A.fluo : boolean = 1</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.A.fluo  : boolean = 1</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for Auger process in region "A"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.A.auger : boolean = 1</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for PIXE in region "A"</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.A.pixe : boolean = 1</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.A.pixe  : boolean = 1</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for deexcitation fluorescence process in region "B"</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.B.fluo : boolean = 1</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.B.fluo  : boolean = 1</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for Auger process in region "B"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.B.auger : boolean = 1</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The activation flag for PIXE in region "B"</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.B.pixe : boolean = 1</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">em.deexcitation.regions.B.pixe  : boolean = 1</span>
 </pre>
 </div>
 </div>
+</li></ul>
 </li></ul>
 </div>
 
@@ -577,6 +668,12 @@ minimal step hit size given the detector region.
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Activate the use of specific cuts</span>
 using_production_cuts : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The energy low edge for cuts</span>
+production_cuts.low_energy    : real as <span class="org-variable-name">energy</span>  = 1 keV
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The energy high edge for cuts</span>
+production_cuts.high_energy   : real as <span class="org-variable-name">energy</span> = 100 MeV
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The production cut default value</span>
 production_cuts.default_value : real as <span class="org-variable-name">length</span> = 1.0 mm
@@ -597,10 +694,19 @@ production_cuts.proton : real as <span class="org-variable-name">length</span> =
 production_cuts.regions : <span class="org-variable-name">string</span>[3] = <span class="org-string">"calorimeter"</span> <span class="org-string">"tracker"</span> <span class="org-string">"source"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Production cut value for region "calorimeter"</span>
-production_cuts.regions.calorimeter.gamma : real as <span class="org-variable-name">length</span> = 5.0 mm
+production_cuts.regions.calorimeter.gamma : real as <span class="org-variable-name">length</span> = 1.0 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Production cut value for region "calorimeter"</span>
+production_cuts.regions.calorimeter.electron : real as <span class="org-variable-name">length</span> = 1.0 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Production cut value for region "tracker"</span>
+production_cuts.regions.tracker.gamma : real as <span class="org-variable-name">length</span> = 0.5 mm
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Production cut value for region "tracker"</span>
 production_cuts.regions.tracker.electron : real as <span class="org-variable-name">length</span> = 0.5 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Production cut value for region "source"</span>
+production_cuts.regions.source.gamma : real as <span class="org-variable-name">length</span> = 0.05 mm
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Production cut value for region "source"</span>
 production_cuts.regions.source.electron : real as <span class="org-variable-name">length</span> = 0.05 mm

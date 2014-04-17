@@ -209,8 +209,8 @@ modules.configuration_files : string[6] as <span class="org-variable-name">path<
     <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/utl_modules.conf"</span>      <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/s2c_modules.conf"</span>      <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_modules.conf"</span>  <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/analysis_modules.conf"</span> <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/plot_modules.conf"</span>
+    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/plot_modules.conf"</span>     <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/analysis_modules.conf"</span>
 </pre>
 </div>
 </div>
@@ -278,34 +278,33 @@ list of needed libraries
 
 <colgroup>
 <col  class="left" />
+
+<col  class="left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="left">mctools_g4</td>
+<td class="left">Bayeux_mctools_geant4</td>
+<td class="left">$SNAILWARE_PRO_DIR/bayeux/install/lib64/libBayeux_mctools_geant4.so</td>
 </tr>
 
 <tr>
-<td class="left">mctools_bio</td>
+<td class="left">Falaise</td>
+<td class="left">$SNAILWARE_PRO_DIR/falaise/install/lib64/libFalaise.so</td>
 </tr>
 
 <tr>
-<td class="left">sncore</td>
+<td class="left">Falaise_MTC</td>
+<td class="left">$SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_MockTrackerClusterizer.so</td>
 </tr>
 
 <tr>
-<td class="left">sncore_bio</td>
+<td class="left">TrackFit</td>
+<td class="left">$SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libTrackFit.so</td>
 </tr>
 
 <tr>
-<td class="left">snreconstruction</td>
-</tr>
-
-<tr>
-<td class="left">snanalysis</td>
-</tr>
-
-<tr>
-<td class="left">snanalysis_bio</td>
+<td class="left">Falaise_TrackFit</td>
+<td class="left">$SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_TrackFit.so</td>
 </tr>
 </tbody>
 </table>
@@ -315,32 +314,24 @@ list of needed libraries
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of setups</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "filename"</span>
-[<span class="org-variable-name">name</span>=<span class="org-string">"mctools_g4"</span> <span class="org-variable-name">filename</span>=<span class="org-string">""</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">config The mctools_g4 library</span>
+[<span class="org-variable-name">name</span>=<span class="org-string">"Bayeux_mctools_geant4"</span> <span class="org-variable-name">filename</span>=<span class="org-string">"$SNAILWARE_PRO_DIR/bayeux/install/lib64/libBayeux_mctools_geant4.so"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The Bayeux_mctools_geant4 library</span>
 <span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
 
-[<span class="org-variable-name">name</span>=<span class="org-string">"mctools_bio"</span> <span class="org-variable-name">filename</span>=<span class="org-string">""</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">config The mctools_bio library</span>
+[<span class="org-variable-name">name</span>=<span class="org-string">"Falaise"</span> <span class="org-variable-name">filename</span>=<span class="org-string">"$SNAILWARE_PRO_DIR/falaise/install/lib64/libFalaise.so"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The Falaise library</span>
 <span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
 
-[<span class="org-variable-name">name</span>=<span class="org-string">"sncore"</span> <span class="org-variable-name">filename</span>=<span class="org-string">""</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">config The sncore library</span>
+[<span class="org-variable-name">name</span>=<span class="org-string">"Falaise_MTC"</span> <span class="org-variable-name">filename</span>=<span class="org-string">"$SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_MockTrackerClusterizer.so"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The Falaise_MTC library</span>
 <span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
 
-[<span class="org-variable-name">name</span>=<span class="org-string">"sncore_bio"</span> <span class="org-variable-name">filename</span>=<span class="org-string">""</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">config The sncore_bio library</span>
+[<span class="org-variable-name">name</span>=<span class="org-string">"TrackFit"</span> <span class="org-variable-name">filename</span>=<span class="org-string">"$SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libTrackFit.so"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The TrackFit library</span>
 <span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
 
-[<span class="org-variable-name">name</span>=<span class="org-string">"snreconstruction"</span> <span class="org-variable-name">filename</span>=<span class="org-string">""</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">config The snreconstruction library</span>
-<span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"snanalysis"</span> <span class="org-variable-name">filename</span>=<span class="org-string">""</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">config The snanalysis library</span>
-<span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
-
-[<span class="org-variable-name">name</span>=<span class="org-string">"snanalysis_bio"</span> <span class="org-variable-name">filename</span>=<span class="org-string">""</span>]
-<span class="org-comment-delimiter">#</span><span class="org-comment">config The snanalysis_bio library</span>
+[<span class="org-variable-name">name</span>=<span class="org-string">"Falaise_TrackFit"</span> <span class="org-variable-name">filename</span>=<span class="org-string">"$SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_TrackFit.so"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The Falaise_TrackFit library</span>
 <span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
 </pre>
 </div>
@@ -927,7 +918,7 @@ manager.vertex_generator_name : <span class="org-variable-name">string</span>  =
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The event generator PRNG label</span>
-manager.event_generator_name  : <span class="org-variable-name">string</span>  = <span class="org-string">"bb0nu_Se82"</span>
+manager.event_generator_name  : <span class="org-variable-name">string</span>  = <span class="org-string">"Se82.0nubb"</span>
 </pre>
 </div>
 </div>
@@ -1017,7 +1008,7 @@ mode.add_header.external_properties_prefix : <span class="org-variable-name">str
 analysis.description : <span class="org-variable-name">string</span> = <span class="org-string">"Sensitivity studies for SuperNEMO demonstrator"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The version control status</span>
-analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git master branch - commit a2f0252 - 2014-04-16"</span>
+analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git new_falaise branch - commit 8997da5 - 2014-04-16"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The total number of event simulated</span>
 analysis.total_number_of_event : <span class="org-variable-name">integer</span> = 100000
@@ -1048,7 +1039,7 @@ and <a href="http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocume
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"tracker_s2c"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::core::processing::basic_tracker_s2c_module"</span>]
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"tracker_s2c"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::processing::mock_tracker_s2c_module"</span>]
 </pre>
 </div>
 </div>
@@ -1160,7 +1151,7 @@ for the quenching of alpha particles.
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"calorimeter_s2c"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::core::processing::basic_calorimeter_s2c_module"</span>]
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"calorimeter_s2c"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::processing::mock_calorimeter_s2c_module"</span>]
 </pre>
 </div>
 </div>
@@ -1279,7 +1270,7 @@ This section holds different modules all related to tracker clustering.
 </p>
 </div>
 
-<ul class="org-ul"><li>Basic tracker clustering<br  /><div class="outline-text-5" id="text-3-4-2-1">
+<ul class="org-ul"><li>Mock tracker clustering<br  /><div class="outline-text-5" id="text-3-4-2-1">
 <p>
 This algorithm is too much simple but it can serve as a comparison point with
 respect to more elaborated algorithms in terms of time processing. It basically
@@ -1290,7 +1281,7 @@ different particles. Due to over-simplicty, it does not need any parameters !
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"btc_tracker_clustering"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::processing::basic_tracker_clustering_module"</span>]
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"mock_tracker_clustering"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::reconstruction::mock_tracker_clustering_module"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
@@ -1304,13 +1295,19 @@ CD_label : <span class="org-variable-name">string</span>  = <span class="org-str
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Tracker Clustering Data' bank</span>
 TCD_label : <span class="org-variable-name">string</span>  = <span class="org-string">"TCD"</span>
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">@description The ID of the tracker hits clustering algorithm</span>
-algorithm : <span class="org-variable-name">string</span>  = <span class="org-string">"BTC"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Maximum layer distance between two neighbour hits</span>
+MTC.max_layer_distance : <span class="org-variable-name">integer</span> = 2
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Maximum row distance between two neighbour hits</span>
+MTC.max_row_distance   : <span class="org-variable-name">integer</span> = 2
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Maximum row+layer distance between two neighbour hits</span>
+MTC.max_sum_distance   : <span class="org-variable-name">integer</span> = 0
 </pre>
 </div>
 </div>
 </li>
-<li>Cellular Automaton Tracker<br  /><div class="outline-text-5" id="text-3-4-2-2">
+<li>Cellular Automaton Tracker&#xa0;&#xa0;&#xa0;<span class="tag"><span class="notworking">notworking</span></span><br  /><div class="outline-text-5" id="text-3-4-2-2">
 <p>
 This algorithm provides tons of parameters and is based in F. Nova work. A
 somewhat complete overview of CAT main features can be seen in DocDb <a href="http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2120">#2120</a>.
@@ -1365,7 +1362,7 @@ CAT.nofflayers : <span class="org-variable-name">integer</span> = 1
 </div>
 </div>
 </li>
-<li>SULTAN tracker<br  /><div class="outline-text-5" id="text-3-4-2-3">
+<li>SULTAN tracker&#xa0;&#xa0;&#xa0;<span class="tag"><span class="notworking">notworking</span></span><br  /><div class="outline-text-5" id="text-3-4-2-3">
 <p>
 Federico Nova recently implements a new way to cluster Geiger cells by
 translating their intrinsic parameters namely cell position, drift radius and
@@ -1408,7 +1405,7 @@ SULTAN.nofflayers : <span class="org-variable-name">integer</span> = 1
 </div>
 </div>
 </li>
-<li>Tracker Cluster Path<br  /><div class="outline-text-5" id="text-3-4-2-4">
+<li>Tracker Cluster Path&#xa0;&#xa0;&#xa0;<span class="tag"><span class="notworking">notworking</span></span><br  /><div class="outline-text-5" id="text-3-4-2-4">
 <p>
 This algorithm has been developped by Warwick group since June 2012 and mainly
 by K. Bhardwaj.
@@ -1520,7 +1517,7 @@ or line models.
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"trackfit_tracker_fitting"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::reconstruction::processing::tracker_fitting_module"</span>]
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"trackfit_tracker_fitting"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::reconstruction::trackfit_tracker_fitting_module"</span>]
 </pre>
 </div>
 </div>
@@ -1567,16 +1564,7 @@ algorithm : <span class="org-variable-name">string</span>  = <span class="org-st
 </div>
 </div>
 
-<ul class="org-ul"><li>Logging priority<br  /><div class="outline-text-6" id="text-3-4-3-4-1">
-<div class="org-src-container">
-
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-trackfit.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"error"</span>
-</pre>
-</div>
-</div>
-</li>
-<li>Drift time calibration<br  /><div class="outline-text-6" id="text-3-4-3-4-2">
+<ul class="org-ul"><li>Drift time calibration<br  /><div class="outline-text-6" id="text-3-4-3-4-1">
 <p>
 For time delayed cluster like alpha particle track, a <i>a posteriori</i> drift time
 calibration has to be done to shift the time origin and then calculates the new
@@ -1587,78 +1575,78 @@ class. Here we use the same model as in Section <a href="#sec-3-3-4">3.3.4</a>.
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Use drift time (re)calibration</span>
-trackfit.drift_time_calibration_label : <span class="org-variable-name">string</span> = <span class="org-string">"snemo"</span>
+drift_time_calibration_label : <span class="org-variable-name">string</span> = <span class="org-string">"snemo"</span>
 </pre>
 </div>
 </div>
 </li>
-<li>Fit models<br  /><div class="outline-text-6" id="text-3-4-3-4-3">
+<li>Fit models<br  /><div class="outline-text-6" id="text-3-4-3-4-2">
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Fit models</span>
-trackfit.models : <span class="org-variable-name">string</span>[2] = <span class="org-string">"helix"</span> <span class="org-string">"line"</span>
+fitting_models : <span class="org-variable-name">string</span>[2] = <span class="org-string">"helix"</span> <span class="org-string">"line"</span>
 </pre>
 </div>
 </div>
 </li>
 
-<li>Line fit parameters<br  /><ul class="org-ul"><li>Guess parameters<br  /><div class="outline-text-7" id="text-3-4-3-4-4-1">
+<li>Line fit parameters<br  /><ul class="org-ul"><li>Guess parameters<br  /><div class="outline-text-7" id="text-3-4-3-4-3-1">
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Activate logging messages for line guess driver</span>
-trackfit.line.guess.logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"error"</span>
+line.guess.logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"error"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Use max radius (cell size) to construct initial guess point (1) or use the effective drift Geiger distance of the hit (0)</span>
-trackfit.line.guess.use_max_radius    : <span class="org-variable-name">boolean</span> = 0
+line.guess.use_max_radius    : <span class="org-variable-name">boolean</span> = 0
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Apply a factor (&gt;0) to the max radius (devel mode)</span>
-trackfit.line.guess.max_radius_factor : <span class="org-variable-name">real</span> = 1.0
+line.guess.max_radius_factor : <span class="org-variable-name">real</span> = 1.0
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Use guess trust (1) or keep all of the guess fits (0) and select later</span>
-trackfit.line.guess.use_guess_trust   : <span class="org-variable-name">boolean</span> = 0
+line.guess.use_guess_trust   : <span class="org-variable-name">boolean</span> = 0
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Mode for trusting a fit guess ("counter", "barycenter")</span>
-trackfit.line.guess.guess_trust_mode  : <span class="org-variable-name">string</span> = <span class="org-string">"counter"</span>
+line.guess.guess_trust_mode  : <span class="org-variable-name">string</span> = <span class="org-string">"counter"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Fit the delayed geiger cluster</span>
-trackfit.line.guess.fit_delay_cluster : <span class="org-variable-name">boolean</span> = 1
+line.guess.fit_delay_cluster : <span class="org-variable-name">boolean</span> = 1
 </pre>
 </div>
 </div>
 </li>
-<li>Fit parameters<br  /><div class="outline-text-7" id="text-3-4-3-4-4-2">
+<li>Fit parameters<br  /><div class="outline-text-7" id="text-3-4-3-4-3-2">
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description 'Line' fit only guess ("BB", "BT", "TB", "TT")</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">trackfit.line.only_guess : string[1] = "TT"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">line.only_guess : string[1] = "TT"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Store only the N solutions with best line fit</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">trackfit.line.store_number_of_solutions : integer = 2</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">line.store_number_of_solutions : integer = 2</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Print the status of the fit stepper at each step (devel only)</span>
-trackfit.line.fit.step_print_status : <span class="org-variable-name">boolean</span> = 0
+line.fit.step_print_status : <span class="org-variable-name">boolean</span> = 0
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Plot the 2D view of the fitted data at each step (devel only)</span>
-trackfit.line.fit.step_draw         : <span class="org-variable-name">boolean</span> = 0
+line.fit.step_draw         : <span class="org-variable-name">boolean</span> = 0
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Track fit adds start time as an additionnal parameter to the fit (needs a calibration driver)</span>
-trackfit.line.fit.fit_start_time    : <span class="org-variable-name">boolean</span> = 0
+line.fit.fit_start_time    : <span class="org-variable-name">boolean</span> = 0
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Track fit recomputes the drift distance from drift time (needs a calibration driver)</span>
-trackfit.line.fit.using_drift_time  : <span class="org-variable-name">boolean</span> = 0
+line.fit.using_drift_time  : <span class="org-variable-name">boolean</span> = 0
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Allow a fitted track to begin not tangential to the first hit</span>
-trackfit.line.fit.using_first       : <span class="org-variable-name">boolean</span> = 0
+line.fit.using_first       : <span class="org-variable-name">boolean</span> = 0
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Allow a fitted track to end not tangential to the last hit</span>
-trackfit.line.fit.using_last        : <span class="org-variable-name">boolean</span> = 0
+line.fit.using_last        : <span class="org-variable-name">boolean</span> = 0
 </pre>
 </div>
 </div>
 </li></ul>
 </li>
 
-<li>Helix fit parameters<br  /><ul class="org-ul"><li>Guess parameters<br  /><div class="outline-text-7" id="text-3-4-3-4-5-1">
+<li>Helix fit parameters<br  /><ul class="org-ul"><li>Guess parameters<br  /><div class="outline-text-7" id="text-3-4-3-4-4-1">
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Activate logging messages for helix guess driver</span>
@@ -1683,7 +1671,7 @@ trackfit.helix.guess.fit_delay_cluster : <span class="org-variable-name">boolean
 </div>
 </li>
 
-<li>Fit parameters<br  /><div class="outline-text-7" id="text-3-4-3-4-5-2">
+<li>Fit parameters<br  /><div class="outline-text-7" id="text-3-4-3-4-4-2">
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description 'Helix' fit only guess ("BBB", "BBT", "BTB", "BTT", "TBB", "TBT", "TTB", "TTT")</span>
@@ -1981,7 +1969,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 cut_service.label : <span class="org-variable-name">string</span> = <span class="org-string">"Cuts"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The name of the condition cut</span>
-condition_cut : <span class="org-variable-name">string</span> = <span class="org-string">"basic_tracker_trajectory_cut"</span>
+condition_cut : <span class="org-variable-name">string</span> = <span class="org-string">"tracker_trajectory_cut"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The name of the module to be processed when condition is checked</span>
 then_module : <span class="org-variable-name">string</span> = <span class="org-string">"particle_tracking_chain"</span>
@@ -2028,7 +2016,7 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of processing modules to be applied (in this order)</span>
-modules : <span class="org-variable-name">string</span>[4] =   <span class="org-string">"remove_tracker_trajectory_data"</span> <span class="org-sh-escaped-newline">\</span>
+modules : <span class="org-variable-name">string</span>[3] =   <span class="org-string">"remove_tracker_trajectory_data"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"trackfit_tracker_fitting"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"io_output_tracker_trajectory"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"process_with_fitting_cuts"</span>
@@ -2050,7 +2038,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 cut_service.label : <span class="org-variable-name">string</span> = <span class="org-string">"Cuts"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The name of the condition cut</span>
-condition_cut : <span class="org-variable-name">string</span> = <span class="org-string">"basic_tracker_clustering_cut"</span>
+condition_cut : <span class="org-variable-name">string</span> = <span class="org-string">"tracker_clustering_cut"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The name of the module to be processed when condition is checked</span>
 then_module : <span class="org-variable-name">string</span> = <span class="org-string">"fitting_chain"</span>
@@ -2076,7 +2064,7 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 </tr>
 
 <tr>
-<td class="left">btc_tracker_clustering</td>
+<td class="left">mock_tracker_clustering</td>
 </tr>
 
 <tr>
@@ -2098,7 +2086,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of processing modules to be applied (in this order)</span>
 modules : <span class="org-variable-name">string</span>[4] =   <span class="org-string">"remove_tracker_clustering_data"</span> <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"btc_tracker_clustering"</span> <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"mock_tracker_clustering"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"io_output_tracker_clustering"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"process_with_clustering_cuts"</span>
 </pre>
@@ -2141,10 +2129,6 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 </colgroup>
 <tbody>
 <tr>
-<td class="left">add_header</td>
-</tr>
-
-<tr>
 <td class="left">tracker_s2c</td>
 </tr>
 
@@ -2157,6 +2141,9 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 </tr>
 </tbody>
 </table>
+<p>
+#| add_header           |
+</p>
 
 <div class="org-src-container">
 
@@ -2166,8 +2153,7 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of processing modules to be applied (in this order)</span>
-modules : <span class="org-variable-name">string</span>[4] =   <span class="org-string">"add_header"</span> <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"tracker_s2c"</span> <span class="org-sh-escaped-newline">\</span>
+modules : <span class="org-variable-name">string</span>[3] =   <span class="org-string">"tracker_s2c"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"calorimeter_s2c"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"io_output_calibrated"</span>
 </pre>
@@ -2426,6 +2412,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Embedded SuperNEMO geometry manager main configuration file</span>
 manager.configuration_file : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngeometry_manager.conf"</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">"@falaise:config/snemo/demonstrator/geometry/3.0/manager.conf"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Embedded SuperNEMO geometry manager must build its mapping lookup table</span>
 manager.build_mapping : <span class="org-variable-name">boolean</span> = 1
@@ -2548,7 +2535,7 @@ has_bank.name : <span class="org-variable-name">string</span> = <span class="org
 <li>Check calibrated calorimeter availability<br  /><div class="outline-text-5" id="text-4-3-3-2">
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"has_cd_calorimeter"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::core::cut::calibrated_data_cut"</span>]
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"has_cd_calorimeter"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::calibrated_data_cut"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
@@ -2577,7 +2564,7 @@ cut : <span class="org-variable-name">string</span> = <span class="org-string">"
 <li>Select number of calibrated calorimeter hits<br  /><div class="outline-text-5" id="text-4-3-3-3">
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"cd_calorimeter_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::core::cut::calibrated_data_cut"</span>]
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"cd_calorimeter_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::calibrated_data_cut"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
@@ -2603,7 +2590,7 @@ range_hit_category.max : <span class="org-variable-name">integer</span> = 2
 <li>Check calibrated tracker availability<br  /><div class="outline-text-5" id="text-4-3-3-4">
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"has_cd_tracker"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::core::cut::calibrated_data_cut"</span>]
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"has_cd_tracker"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::calibrated_data_cut"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
@@ -2632,7 +2619,7 @@ cut : <span class="org-variable-name">string</span> = <span class="org-string">"
 <li>Select number of calibrated tracker hits<br  /><div class="outline-text-5" id="text-4-3-3-5">
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"cd_tracker_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::core::cut::calibrated_data_cut"</span>]
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"cd_tracker_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::calibrated_data_cut"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
@@ -2739,7 +2726,7 @@ has_bank.name : <span class="org-variable-name">string</span> = <span class="org
 <li>Select number of cluster<br  /><div class="outline-text-5" id="text-4-3-4-2">
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"tcd1_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::cut::basic_tracker_clustering_data_cut"</span>]
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"cluster_range_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::tracker_clustering_data_cut"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
@@ -2795,7 +2782,7 @@ range_tracker_hit.min : <span class="org-variable-name">integer</span> = 1
 </tr>
 
 <tr>
-<td class="left">tcd1_cut</td>
+<td class="left">cluster_range_cut</td>
 </tr>
 
 <tr>
@@ -2806,15 +2793,15 @@ range_tracker_hit.min : <span class="org-variable-name">integer</span> = 1
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"basic_tracker_clustering_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"cuts::multi_and_cut"</span>]
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"tracker_clustering_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"cuts::multi_and_cut"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The cuts to be combined</span>
-cuts : <span class="org-variable-name">string</span>[3] = <span class="org-sh-escaped-newline">\</span>
+cuts : <span class="org-variable-name">string</span>[2] = <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"has_tracker_clustering_data"</span> <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"tcd1_cut"</span> <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"cluster_range_cut"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"tcd2_cut"</span>
 </pre>
 </div>
@@ -2866,7 +2853,7 @@ has_bank.name : <span class="org-variable-name">string</span> = <span class="org
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"basic_tracker_trajectory_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"cuts::multi_and_cut"</span>]
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"tracker_trajectory_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"cuts::multi_and_cut"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
@@ -3244,19 +3231,50 @@ directory.
 </div>
 
 <p>
-Running processing pipeline is done by the <code>dpp_processing</code> program provided by
-<code>dpp</code> library. Its call is pretty simple and only implies to have a module
-manager file. Depending on the module you want to run, several libraries must be
-loaded. For example, if you only want to do simulation, you can run the
-following command
+Since this configuration will run through the executable <code>bxdpp_processing</code> from
+Bayeux library and not through <code>flsimulate+flreconstruct</code> binaries from Falaise
+library, we should take care of loading the proper libraries. This is
+automatically done with the <a href="#sec-2-3">2.3</a> code where library paths to be used by
+this setup are explicitely set.
+</p>
+
+<p>
+Running processing pipeline is done by the <code>bxdpp_processing</code> program provided
+by <code>dpp</code> library. Its call is pretty simple and only implies to have a module
+manager file. Nevertheless, since we do not rely to Falaise <i>i.e.</i> we do not use
+<code>flsimulate+flreconstruct</code> we must set different resource paths (geometry,
+materials). This is not user-friendly at all but this is the only way so far.
+</p>
+
+<p>
+For example, if you only want to do simulation, you can run the following
+command
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">dpp_processing                                                                                        <span class="org-sh-escaped-newline">\</span>
-    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/module_manager.conf <span class="org-sh-escaped-newline">\</span>
-    --module simulation_chain                                                                         <span class="org-sh-escaped-newline">\</span>
-    --load-dll sng4                                                                                   <span class="org-sh-escaped-newline">\</span>
+<pre class="src src-sh">bxdpp_processing                                                                                          <span class="org-sh-escaped-newline">\</span>
+    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/module_manager.conf     <span class="org-sh-escaped-newline">\</span>
+    --module simulation                                                                                   <span class="org-sh-escaped-newline">\</span>
+    --dlls-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/dlls.conf                         <span class="org-sh-escaped-newline">\</span>
+    --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources"</span> <span class="org-sh-escaped-newline">\</span>
+    --max-records 100
+</pre>
+</div>
+
+<p>
+An other way to run the previous command without loading the <code>dlls.conf</code> file
+will be to temporarly set the <code>LD_LIBRARY_PATH</code> variable and to point it to the
+<code>Falaise</code> and <code>Bayeux</code> libraries path namely
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-variable-name">LD_LIBRARY_PATH</span>=<span class="org-string">"$SNAILWARE_PRO_DIR/bayeux/install/lib64:$SNAILWARE_PRO_DIR/falaise/install/lib64"</span>        <span class="org-sh-escaped-newline">\</span>
+bxdpp_processing                                                                                          <span class="org-sh-escaped-newline">\</span>
+    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/module_manager.conf     <span class="org-sh-escaped-newline">\</span>
+    --module simulation                                                                                   <span class="org-sh-escaped-newline">\</span>
+    --load-dll Bayeux_mctools_geant4 --load-dll Falaise                                                   <span class="org-sh-escaped-newline">\</span>
+    --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources"</span> <span class="org-sh-escaped-newline">\</span>
     --max-records 100
 </pre>
 </div>
@@ -3272,10 +3290,11 @@ In the same way you can run the calibration chain by doing
 
 <div class="org-src-container">
 
-<pre class="src src-sh">dpp_processing                                                                                        <span class="org-sh-escaped-newline">\</span>
-    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/module_manager.conf <span class="org-sh-escaped-newline">\</span>
-    --module calibration_chain                                                                        <span class="org-sh-escaped-newline">\</span>
-    --load-dll sng4                                                                                   <span class="org-sh-escaped-newline">\</span>
+<pre class="src src-sh">bxdpp_processing                                                                                          <span class="org-sh-escaped-newline">\</span>
+    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/module_manager.conf     <span class="org-sh-escaped-newline">\</span>
+    --module calibration                                                                                  <span class="org-sh-escaped-newline">\</span>
+    --dlls-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/dlls.conf                         <span class="org-sh-escaped-newline">\</span>
+    --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources"</span> <span class="org-sh-escaped-newline">\</span>
     --input-file /tmp/$<span class="org-variable-name">USER</span>/io_output_simulated.brio
 </pre>
 </div>
