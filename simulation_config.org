@@ -75,12 +75,14 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
-  modules.configuration_files : string[6] as path =                                   \
-      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/io_modules.conf"       \
-      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/utl_modules.conf"      \
-      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/s2c_modules.conf"      \
-      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_modules.conf"  \
-      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/plot_modules.conf"     \
+  modules.configuration_files : string[8] as path =                                             \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/io_modules.conf"                 \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/utl_modules.conf"                \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/simulation_modules.conf"         \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/calibration_modules.conf"        \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_clustering_modules.conf" \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_fitting_modules.conf"    \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/plot_modules.conf"               \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/analysis_modules.conf"
 #+END_SRC
 
@@ -154,6 +156,7 @@ list of needed libraries
 | Bayeux_mctools_geant4 | $SNAILWARE_PRO_DIR/bayeux/install/lib64/libBayeux_mctools_geant4.so                           |
 | Falaise               | $SNAILWARE_PRO_DIR/falaise/install/lib64/libFalaise.so                                        |
 | Falaise_MTC           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_MockTrackerClusterizer.so |
+| Falaise_CAT           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_CAT.so                    |
 | TrackFit              | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libTrackFit.so                       |
 | Falaise_TrackFit      | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_TrackFit.so               |
 |-----------------------+-----------------------------------------------------------------------------------------------|
@@ -415,9 +418,9 @@ Here we define some common and useful tasks such as removing data/MC hits.
   #@description Output stream
   output : string = "clog"
 #+END_SRC
-** Simulation to calibration modules
+** Simulation module
 :PROPERTIES:
-:TANGLE: s2c_modules.conf
+:TANGLE: simulation_modules.conf
 :END:
 *** Insert preamble
 #+BEGIN_SRC sh :noweb yes
@@ -491,7 +494,7 @@ The full =geant4= configuration can be found in the [[file:./sng4_manager.org][s
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sng4_manager.conf"
 #+END_SRC
 
-*** Adding event header
+*** Adding event header                                         :tobefixed:
 :PROPERTIES:
 :TANGLE: no
 :END:
@@ -603,6 +606,15 @@ The following code block retrieves the version number of a given component
   #@description The source isotope
   analysis.source_isotope : string = "Se82"
 #+END_SRC
+** Calibration modules
+:PROPERTIES:
+:TANGLE: calibration_modules.conf
+:END:
+*** Insert preamble
+#+BEGIN_SRC sh :noweb yes
+  <<module_preamble>>
+#+END_SRC
+
 *** Tracker simulation to calibration data
 
 This module converts simulated data into calibrated data for SuperNEMO
@@ -761,9 +773,9 @@ for the quenching of alpha particles.
   gveto.low_threshold  : real = 50  # keV
 #+END_SRC
 
-** Tracker clustering, tracker fitting & particle tracking modules
+** Tracker clustering modules
 :PROPERTIES:
-:TANGLE: tracker_modules.conf
+:TANGLE: tracker_clustering_modules.conf
 :END:
 *** Insert preamble
 #+BEGIN_SRC sh :noweb yes
@@ -867,34 +879,82 @@ Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/
 (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2977][DocDB 2977]] as well as the [[http://www.sciencedirect.com/science/article/pii/S0168900208005780][original paper]]).
 
 #+BEGIN_SRC sh
-    [name="sultan_tracker_clustering" type="snemo::reconstruction::processing::tracker_clustering_module"]
+  [name="sultan_tracker_clustering" type="snemo::reconstruction::sultan_tracker_clustering_module"]
 
-    #@description Logging support
-    logging.priority : string = "trace"
+  #@description Logging support
+  logging.priority : string = "trace"
 
-    #@description The label of the Geometry service
-    Geo_label : string  = "Geo"
+  #@description The label of the Geometry service
+  Geo_label : string  = "Geo"
 
-    #@description The label of the 'Calibrated Data' bank
-    CD_label : string  = "CD"
+  #@description The label of the 'Calibrated Data' bank
+  CD_label : string  = "CD"
 
-    #@description The label of the 'Tracker Clustering Data' bank
-    TCD_label : string  = "TCD"
+  #@description The label of the 'Tracker Clustering Data' bank
+  TCD_label : string  = "TCD"
 
-    #@description The ID of the tracker hits clustering algorithm
-    algorithm : string  = "SULTAN"
+  #@description To be described
+  SULTAN.clusterizer_level  : string  = "normal"
 
-    #@description SULTAN verbosity level
-    SULTAN.level : string = "VVERBOSE"
+  #@description To be described
+  SULTAN.sequentiator_level : string  = "normal"
 
-    #@description SULTAN number of layers to skip
-    SULTAN.nofflayers : integer = 1
+  #@description Force the SULTAN algorithm to consider a 25 gauss magnetic field (temporary trick)
+  SULTAN.magnetic_field     : real    = 25 gauss
 
-    #@description SULTAN param
-    #SULTAN.max_time : real = 5000
+  #@description To be described
+  SULTAN.max_time     : real  = 5000 ms
 
-    #@description SULTAN driver param
-    #SULTAN.driver.sigma_z_factor : real = 1.
+  #@description Use online event display (devel only)
+  SULTAN.print_event_display : boolean = 0
+
+  #@description To be described
+  SULTAN.Emin         : real  = 120 keV
+
+  #@description To be described
+  SULTAN.Emax         : real  = 3.3 MeV
+
+  #@description To be described
+  SULTAN.nsigma_r     : real  = 3.0
+
+  #@description To be described
+  SULTAN.nsigma_z     : real  = 4.0
+
+  #@description To be described
+  SULTAN.nofflayers   : integer = 1
+
+  #@description To be described
+  SULTAN.first_event  : integer = -1
+
+  #@description To be described
+  SULTAN.min_ncells_in_cluster        : integer  = 7
+
+  #@description To be described
+  SULTAN.ncells_between_triplet_min   : integer  = 1
+
+  #@description To be described
+  SULTAN.ncells_between_triplet_range : integer  = 3
+
+  #@description To be described
+  SULTAN.nsigmas                      : real  = 1.0
+
+  #@description To be described
+  SULTAN.sigma_z_factor : real  = 1.0
+
+  #@description Use calorimeter hits information to help clustering
+  SULTAN.process_calo_hits  : boolean = 1
+
+  #@description Clusterize with helix model
+  SULTAN.clusterize_with_helix_model : boolean = 1
+
+  #@description Clusterize with endpoints
+  SULTAN.use_endpoints : boolean = 1
+
+  #@description Clusterize with Legendre transform
+  SULTAN.use_legendre : boolean = 0
+
+  #@description Use clocks to time different parts of the software
+  SULTAN.use_clocks : boolean = 1
 #+END_SRC
 
 **** Tracker Cluster Path                                     :notworking:
@@ -987,6 +1047,15 @@ by K. Bhardwaj.
 
   #@description TCP param
   TCP.point_tolerance : real = 100
+#+END_SRC
+
+** Tracker fitting module
+:PROPERTIES:
+:TANGLE: tracker_fitting_modules.conf
+:END:
+*** Insert preamble
+#+BEGIN_SRC sh :noweb yes
+  <<module_preamble>>
 #+END_SRC
 
 *** Fitting algorithm
@@ -1140,6 +1209,15 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   trackfit.helix.fit.using_last        : boolean = 0
 #+END_SRC
 
+** Particle tracking module                                      :tobefixed:
+:PROPERTIES:
+:TANGLE: no
+:END:
+*** Insert preamble
+#+BEGIN_SRC sh :noweb yes
+  <<module_preamble>>
+#+END_SRC
+
 *** Basic particle tracking
 Given results of the two previous steps i.e. clustering and fitting, the
 trajectories must be interpreted within SuperNEMO detector geometry. The
@@ -1290,7 +1368,7 @@ modules it contains.
 #+TBLNAME: clustering_chain
 |--------------------------------|
 | remove_tracker_clustering_data |
-| mock_tracker_clustering        |
+| sultan_tracker_clustering      |
 | io_output_tracker_clustering   |
 | process_with_clustering_cuts   |
 |--------------------------------|
