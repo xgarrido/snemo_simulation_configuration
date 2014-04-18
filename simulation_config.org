@@ -870,7 +870,7 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
   #CAT.driver.sigma_z_factor : real = 1.
 #+END_SRC
 
-**** SULTAN tracker                                           :notworking:
+**** SULTAN tracker
 
 Federico Nova recently implements a new way to cluster Geiger cells by
 translating their intrinsic parameters namely cell position, drift radius and
@@ -882,7 +882,7 @@ Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/
   [name="sultan_tracker_clustering" type="snemo::reconstruction::sultan_tracker_clustering_module"]
 
   #@description Logging support
-  logging.priority : string = "trace"
+  logging.priority : string = "warning"
 
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
@@ -899,53 +899,53 @@ Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/
   #@description To be described
   SULTAN.sequentiator_level : string  = "normal"
 
+  #@description Use calorimeter hits information to help clustering
+  SULTAN.process_calo_hits : boolean = 1
+
+  #@description Clusterize with helix model
+  SULTAN.clusterize_with_helix_model : boolean = 1
+
   #@description Force the SULTAN algorithm to consider a 25 gauss magnetic field (temporary trick)
-  SULTAN.magnetic_field     : real    = 25 gauss
+  SULTAN.magnetic_field : real = 25 gauss
 
   #@description To be described
-  SULTAN.max_time     : real  = 5000 ms
+  SULTAN.max_time : real = 5000 ms
 
   #@description Use online event display (devel only)
   SULTAN.print_event_display : boolean = 0
 
   #@description To be described
-  SULTAN.Emin         : real  = 120 keV
+  SULTAN.Emin : real  = 120 keV
 
   #@description To be described
-  SULTAN.Emax         : real  = 3.3 MeV
+  SULTAN.Emax : real  = 3.3 MeV
 
   #@description To be described
-  SULTAN.nsigma_r     : real  = 3.0
+  SULTAN.nsigma_r : real  = 3.0
 
   #@description To be described
-  SULTAN.nsigma_z     : real  = 4.0
+  SULTAN.nsigma_z : real  = 4.0
 
   #@description To be described
-  SULTAN.nofflayers   : integer = 1
+  SULTAN.nofflayers : integer = 1
 
   #@description To be described
-  SULTAN.first_event  : integer = -1
+  SULTAN.first_event : integer = -1
 
   #@description To be described
-  SULTAN.min_ncells_in_cluster        : integer  = 7
+  SULTAN.min_ncells_in_cluster : integer = 7
 
   #@description To be described
-  SULTAN.ncells_between_triplet_min   : integer  = 1
+  SULTAN.ncells_between_triplet_min : integer = 1
 
   #@description To be described
-  SULTAN.ncells_between_triplet_range : integer  = 3
+  SULTAN.ncells_between_triplet_range : integer = 3
 
   #@description To be described
-  SULTAN.nsigmas                      : real  = 1.0
+  SULTAN.nsigmas : real  = 1.0
 
   #@description To be described
   SULTAN.sigma_z_factor : real  = 1.0
-
-  #@description Use calorimeter hits information to help clustering
-  SULTAN.process_calo_hits  : boolean = 1
-
-  #@description Clusterize with helix model
-  SULTAN.clusterize_with_helix_model : boolean = 1
 
   #@description Clusterize with endpoints
   SULTAN.use_endpoints : boolean = 1
@@ -954,7 +954,7 @@ Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/
   SULTAN.use_legendre : boolean = 0
 
   #@description Use clocks to time different parts of the software
-  SULTAN.use_clocks : boolean = 1
+  SULTAN.use_clocks : boolean = 0
 #+END_SRC
 
 **** Tracker Cluster Path                                     :notworking:
