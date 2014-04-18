@@ -791,8 +791,8 @@ This section holds different modules all related to tracker clustering.
 This algorithm is too much simple but it can serve as a comparison point with
 respect to more elaborated algorithms in terms of time processing. It basically
 associates geiger cells but considering succesive neighbors. It does not use the
-longitudinal information and then can aggregates track belonging to two
-different particles. Due to over-simplicty, it does not need any parameters !
+longitudinal information and then can badly aggregates track belonging to two
+different particles.
 
 #+BEGIN_SRC sh
    [name="mock_tracker_clustering" type="snemo::reconstruction::mock_tracker_clustering_module"]
