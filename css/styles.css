@@ -410,3 +410,9 @@ footer {
         color:#444;
     }
 }
+.footdef{
+font-size: 10px;
+right: 0;
+position: absolute;
+width:180px;
+}
