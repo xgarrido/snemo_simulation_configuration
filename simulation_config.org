@@ -1368,7 +1368,7 @@ modules it contains.
 #+TBLNAME: clustering_chain
 |--------------------------------|
 | remove_tracker_clustering_data |
-| sultan_tracker_clustering      |
+| mock_tracker_clustering        |
 | io_output_tracker_clustering   |
 | process_with_clustering_cuts   |
 |--------------------------------|
