@@ -56,6 +56,14 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script><script type="text/javascript">
+  function randomLinkColor() {
+      var colors = ['#67ad00', '#D5BC23', '#FF9927', '#FF2D27', '#AB0045', '#B81FC8'];
+      var random_color = colors[Math.floor(Math.random() * colors.length)];
+      var elements = document.querySelectorAll('a');
+      [].slice.call(elements).forEach(function(elem) {
+          //elem.style.color = random_color;
+      });
+  }
   function displayTOC() {
       var first = document.getElementById("text-table-of-contents").innerHTML;
       if (first != "") {
@@ -66,17 +74,12 @@ for the JavaScript code in this tag.
           document.getElementById("toc").style.display = "none";
       }
      }
-  function randomLinkColor() {
-      var colors = ['#ff0000', '#00ff00', '#0000ff'];
-      var random_color = colors[Math.floor(Math.random() * colors.length)];
-      var elements = document.querySelectorAll('a');
-      [].slice.call(elements).forEach(function(elem) {
-          //elem.style.color = random_color;
-      });
-  }
   </script>
 </head>
-<body onload="displayTOC();randomLinkColor();"><div id="toc"></div>
+<body onload="randomLinkColor();displayTOC();"><div id="toc"></div>
+<div id="preamble" class="status">
+<a href="index.html"><i class="fa fa-home"></i></a><br/> <a href="https://github.com/xgarrido/snemo_simulation_configuration"><i class="fa fa-github"></i></a><br/>
+</div>
 <div id="content">
 <h1 class="title">SNG4 Manager Configuration</h1>
 <div id="table-of-contents">
