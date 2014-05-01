@@ -103,9 +103,8 @@ for the JavaScript code in this tag.
 <li><a href="#sec-3-4">3.4. Calibration modules</a></li>
 <li><a href="#sec-3-5">3.5. Tracker clustering modules</a></li>
 <li><a href="#sec-3-6">3.6. Tracker fitting module</a></li>
-<li><a href="#sec-3-7">3.7. Particle tracking module&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tobefixed">tobefixed</span></span></a></li>
+<li><a href="#sec-3-7">3.7. Particle tracking module</a></li>
 <li><a href="#sec-3-8">3.8. Analysis chain modules</a></li>
-<li><a href="#sec-3-9">3.9. Plot modules</a></li>
 </ul>
 </li>
 <li><a href="#sec-4">4. Services</a>
@@ -229,7 +228,7 @@ modules.configuration_files : string[8] as <span class="org-variable-name">path<
     <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/calibration_modules.conf"</span>        <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_clustering_modules.conf"</span> <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_fitting_modules.conf"</span>    <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/plot_modules.conf"</span>               <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/particle_tracking_modules.conf"</span>  <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/analysis_modules.conf"</span>
 </pre>
 </div>
@@ -331,6 +330,16 @@ list of needed libraries
 <td class="left">Falaise_TrackFit</td>
 <td class="left">$SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_TrackFit.so</td>
 </tr>
+
+<tr>
+<td class="left">snanalysis</td>
+<td class="left">$SNANALYSIS_LIB_DIR/libsnanalysis.so</td>
+</tr>
+
+<tr>
+<td class="left">snanalysis_bio</td>
+<td class="left">$SNANALYSIS_LIB_DIR/libsnanalysis_bio.so</td>
+</tr>
 </tbody>
 </table>
 
@@ -361,6 +370,14 @@ list of needed libraries
 
 [<span class="org-variable-name">name</span>=<span class="org-string">"Falaise_TrackFit"</span> <span class="org-variable-name">filename</span>=<span class="org-string">"$SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_TrackFit.so"</span>]
 <span class="org-comment-delimiter">#</span><span class="org-comment">config The Falaise_TrackFit library</span>
+<span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
+
+[<span class="org-variable-name">name</span>=<span class="org-string">"snanalysis"</span> <span class="org-variable-name">filename</span>=<span class="org-string">"$SNANALYSIS_LIB_DIR/libsnanalysis.so"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The snanalysis library</span>
+<span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
+
+[<span class="org-variable-name">name</span>=<span class="org-string">"snanalysis_bio"</span> <span class="org-variable-name">filename</span>=<span class="org-string">"$SNANALYSIS_LIB_DIR/libsnanalysis_bio.so"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The snanalysis_bio library</span>
 <span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
 </pre>
 </div>
@@ -972,7 +989,7 @@ manager.configuration_filename : string as <span class="org-variable-name">path<
 </div>
 
 <div id="outline-container-sec-3-3-3" class="outline-4">
-<h4 id="sec-3-3-3"><span class="section-number-4">3.3.3</span> Adding event header&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tobefixed">tobefixed</span></span></h4>
+<h4 id="sec-3-3-3"><span class="section-number-4">3.3.3</span> Adding event header</h4>
 <div class="outline-text-4" id="text-3-3-3">
 <p>
 After Geant4 simulation, no event header is added and available in the event
@@ -1042,7 +1059,7 @@ mode.add_header.external_properties_prefix : <span class="org-variable-name">str
 analysis.description : <span class="org-variable-name">string</span> = <span class="org-string">"Sensitivity studies for SuperNEMO demonstrator"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The version control status</span>
-analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git new_falaise branch - commit ee2027d - 2014-04-26"</span>
+analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git new_falaise branch - commit b58540d - 2014-05-01"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The total number of event simulated</span>
 analysis.total_number_of_event : <span class="org-variable-name">integer</span> = 100000
@@ -1836,7 +1853,7 @@ trackfit.helix.fit.using_last        : <span class="org-variable-name">boolean</
 </div>
 
 <div id="outline-container-sec-3-7" class="outline-3">
-<h3 id="sec-3-7"><span class="section-number-3">3.7</span> Particle tracking module&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tobefixed">tobefixed</span></span></h3>
+<h3 id="sec-3-7"><span class="section-number-3">3.7</span> Particle tracking module</h3>
 <div class="outline-text-3" id="text-3-7">
 </div>
 <div id="outline-container-sec-3-7-1" class="outline-4">
@@ -1947,7 +1964,7 @@ CCD.charge_from_source : <span class="org-variable-name">boolean</span> = 1
 CAD.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Maximum matching distance for track/calo association</span>
-CAD.matching_tolerance : <span class="org-variable-name">string</span> = <span class="org-string">"100 mm"</span>
+CAD.matching_tolerance : real as <span class="org-variable-name">length</span> = 100 mm
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Use a simpler approach by looking for gieger cells in front of calo (not implemented yet)</span>
 CAD.use_last_geiger_cell : <span class="org-variable-name">boolean</span> = 0
@@ -2100,7 +2117,7 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of processing modules to be applied (in this order)</span>
-modules : <span class="org-variable-name">string</span>[4] =   <span class="org-string">"remove_particle_track_data"</span> <span class="org-sh-escaped-newline">\</span>
+modules : <span class="org-variable-name">string</span>[3] =   <span class="org-string">"remove_particle_track_data"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"basic_particle_tracking"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"io_output_particle_track"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"process_with_particle_track_cuts"</span>
@@ -2171,7 +2188,7 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of processing modules to be applied (in this order)</span>
-modules : <span class="org-variable-name">string</span>[3] =   <span class="org-string">"remove_tracker_trajectory_data"</span> <span class="org-sh-escaped-newline">\</span>
+modules : <span class="org-variable-name">string</span>[4] =   <span class="org-string">"remove_tracker_trajectory_data"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"trackfit_tracker_fitting"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"io_output_tracker_trajectory"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"process_with_fitting_cuts"</span>
@@ -2503,16 +2520,6 @@ modules : <span class="org-variable-name">string</span>[7] =   <span class="org-
 </pre>
 </div>
 </div>
-</div>
-</div>
-
-<div id="outline-container-sec-3-9" class="outline-3">
-<h3 id="sec-3-9"><span class="section-number-3">3.9</span> Plot modules</h3>
-<div class="outline-text-3" id="text-3-9">
-<p>
-The <i>plot</i> modules used for final analysis have been grouped and all placed in
-the <a href="./snanalysis_manager.html">snanalysis_manager</a> file.
-</p>
 </div>
 </div>
 </div>
@@ -3494,8 +3501,8 @@ where file <code>/tmp/$USER/io_output_simulated.brio</code> is the one produced 
 All the different process steps can then be run using the dedicated module such
 as <a href="#sec-3-5-2">clustering</a> or <a href="#sec-3-6-2">fitting</a> Geiger cells. The most complete mode is the
 <code>full_chain</code> module where all process are done from simulation &rarr; calibration &rarr;
-track reconstruction.
-</p>
+track reconstruction<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>.
+ <div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <p class="footpara"> For such processing you will need additional libraries see <a href="#sec-2-3">2.3</a>. </p></div>
 </div>
 </div>
 <div id="footnotes">
@@ -3506,10 +3513,11 @@ track reconstruction.
 
 
 
+
 </div>
 </div></div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/ee2027d01663321566e4ed65a3faeb8f92e0a7d3">ee2027d</a> - 2014-04-26
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/b58540d9229eb997901b2181a9ddde427ee05f03">b58540d</a> - 2014-05-01
 </div>
 </body>
 </html>
