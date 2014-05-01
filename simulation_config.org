@@ -82,7 +82,7 @@ service files.
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/calibration_modules.conf"        \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_clustering_modules.conf" \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_fitting_modules.conf"    \
-      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/plot_modules.conf"               \
+      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/particle_tracking_modules.conf"  \
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/analysis_modules.conf"
 #+END_SRC
 
@@ -159,6 +159,8 @@ list of needed libraries
 | Falaise_CAT           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_CAT.so                    |
 | TrackFit              | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libTrackFit.so                       |
 | Falaise_TrackFit      | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_TrackFit.so               |
+| snanalysis            | $SNANALYSIS_LIB_DIR/libsnanalysis.so                                                          |
+| snanalysis_bio        | $SNANALYSIS_LIB_DIR/libsnanalysis_bio.so                                                      |
 |-----------------------+-----------------------------------------------------------------------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
@@ -494,10 +496,7 @@ The full =geant4= configuration can be found in the [[file:./sng4_manager.org][s
       "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sng4_manager.conf"
 #+END_SRC
 
-*** Adding event header                                         :tobefixed:
-:PROPERTIES:
-:TANGLE: no
-:END:
+*** Adding event header
 
 After Geant4 simulation, no event header is added and available in the event
 record. This module adds some information related either to real data (run
@@ -1209,9 +1208,9 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   trackfit.helix.fit.using_last        : boolean = 0
 #+END_SRC
 
-** Particle tracking module                                      :tobefixed:
+** Particle tracking module
 :PROPERTIES:
-:TANGLE: no
+:TANGLE: particle_tracking_modules.conf
 :END:
 *** Insert preamble
 #+BEGIN_SRC sh :noweb yes
@@ -1284,7 +1283,7 @@ implemented but the particle tracking module will stay unchanged.
   CAD.logging.priority : string = "warning"
 
   #@description Maximum matching distance for track/calo association
-  CAD.matching_tolerance : string = "100 mm"
+  CAD.matching_tolerance : real as length = 100 mm
 
   #@description Use a simpler approach by looking for gieger cells in front of calo (not implemented yet)
   CAD.use_last_geiger_cell : boolean = 0
@@ -1336,7 +1335,7 @@ modules it contains.
 |----------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("particle_tracking_chain", 4, particle_tracking_chain)>>
+  <<chain_module("particle_tracking_chain", 3, particle_tracking_chain)>>
 #+END_SRC
 
 *** Process after fitting selection
@@ -1355,7 +1354,7 @@ modules it contains.
 |--------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("fitting_chain", 3, fitting_chain)>>
+  <<chain_module("fitting_chain", 4, fitting_chain)>>
 #+END_SRC
 
 *** Process after clustering selection
@@ -1452,11 +1451,6 @@ modules it contains.
 #+BEGIN_SRC sh :noweb yes
   <<chain_module("reformat_data", 7, reformat_data)>>
 #+END_SRC
-
-** Plot modules
-
-The /plot/ modules used for final analysis have been grouped and all placed in
-the [[file:./snanalysis_manager.org][snanalysis_manager]] file.
 
 * Services
 :PROPERTIES:
@@ -2163,8 +2157,10 @@ where file =/tmp/$USER/io_output_simulated.brio= is the one produced by the
 All the different process steps can then be run using the dedicated module such
 as [[Clustering algorithms][clustering]] or [[Fitting algorithm][fitting]] Geiger cells. The most complete mode is the
 =full_chain= module where all process are done from simulation \to calibration \to
-track reconstruction.
+track reconstruction[4].
 
 [3] Assuming you are using a recent version of =bash=. With =c-shell= and
 derivatives, =export= is replace by =setenv=. Nevertheless, this setup has never
 been tested under this shells.
+
+[4] For such processing you will need additional libraries see [[DLL loader]].
