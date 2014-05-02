@@ -2118,9 +2118,9 @@ command
 
 #+BEGIN_SRC sh
   bxdpp_processing                                                                                          \
-      --module-manager-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/module_manager.conf     \
+      --module-manager-config $SNAILWARE_SIMULATION_DIR/current/module_manager.conf                         \
       --module simulation                                                                                   \
-      --dlls-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/dlls.conf                         \
+      --dlls-config $SNAILWARE_SIMULATION_DIR/current/dlls.conf                                             \
       --datatools::resource_path="falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources" \
       --max-records 100
 #+END_SRC
@@ -2131,7 +2131,7 @@ will be to temporarly set the =LD_LIBRARY_PATH= variable and to point it to the
 #+BEGIN_SRC sh
   LD_LIBRARY_PATH="$SNAILWARE_PRO_DIR/bayeux/install/lib64:$SNAILWARE_PRO_DIR/falaise/install/lib64"        \
   bxdpp_processing                                                                                          \
-      --module-manager-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/module_manager.conf     \
+      --module-manager-config $SNAILWARE_SIMULATION_DIR/current/module_manager.conf                         \
       --module simulation                                                                                   \
       --load-dll Bayeux_mctools_geant4 --load-dll Falaise                                                   \
       --datatools::resource_path="falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources" \
@@ -2145,9 +2145,9 @@ In the same way you can run the calibration chain by doing
 
 #+BEGIN_SRC sh
   bxdpp_processing                                                                                          \
-      --module-manager-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/module_manager.conf     \
+      --module-manager-config $SNAILWARE_SIMULATION_DIR/current/module_manager.conf                         \
       --module calibration                                                                                  \
-      --dlls-config $SNAILWARE_SIMULATION_DIR/snemo_configuration/current/dlls.conf                         \
+      --dlls-config $SNAILWARE_SIMULATION_DIR/current/dlls.conf                                             \
       --datatools::resource_path="falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources" \
       --input-file /tmp/$USER/io_output_simulated.brio
 #+END_SRC
