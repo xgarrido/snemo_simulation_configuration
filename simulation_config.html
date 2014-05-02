@@ -1059,7 +1059,7 @@ mode.add_header.external_properties_prefix : <span class="org-variable-name">str
 analysis.description : <span class="org-variable-name">string</span> = <span class="org-string">"Sensitivity studies for SuperNEMO demonstrator"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The version control status</span>
-analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git new_falaise branch - commit b58540d - 2014-05-01"</span>
+analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git new_falaise branch - commit 63522be - 2014-05-02"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The total number of event simulated</span>
 analysis.total_number_of_event : <span class="org-variable-name">integer</span> = 100000
@@ -3448,9 +3448,9 @@ command
 <div class="org-src-container">
 
 <pre class="src src-sh">bxdpp_processing                                                                                          <span class="org-sh-escaped-newline">\</span>
-    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/module_manager.conf     <span class="org-sh-escaped-newline">\</span>
+    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/current/module_manager.conf                         <span class="org-sh-escaped-newline">\</span>
     --module simulation                                                                                   <span class="org-sh-escaped-newline">\</span>
-    --dlls-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/dlls.conf                         <span class="org-sh-escaped-newline">\</span>
+    --dlls-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/current/dlls.conf                                             <span class="org-sh-escaped-newline">\</span>
     --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources"</span> <span class="org-sh-escaped-newline">\</span>
     --max-records 100
 </pre>
@@ -3465,7 +3465,7 @@ will be to temporarly set the <code>LD_LIBRARY_PATH</code> variable and to point
 
 <pre class="src src-sh"><span class="org-variable-name">LD_LIBRARY_PATH</span>=<span class="org-string">"$SNAILWARE_PRO_DIR/bayeux/install/lib64:$SNAILWARE_PRO_DIR/falaise/install/lib64"</span>        <span class="org-sh-escaped-newline">\</span>
 bxdpp_processing                                                                                          <span class="org-sh-escaped-newline">\</span>
-    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/module_manager.conf     <span class="org-sh-escaped-newline">\</span>
+    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/current/module_manager.conf                         <span class="org-sh-escaped-newline">\</span>
     --module simulation                                                                                   <span class="org-sh-escaped-newline">\</span>
     --load-dll Bayeux_mctools_geant4 --load-dll Falaise                                                   <span class="org-sh-escaped-newline">\</span>
     --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources"</span> <span class="org-sh-escaped-newline">\</span>
@@ -3485,9 +3485,9 @@ In the same way you can run the calibration chain by doing
 <div class="org-src-container">
 
 <pre class="src src-sh">bxdpp_processing                                                                                          <span class="org-sh-escaped-newline">\</span>
-    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/module_manager.conf     <span class="org-sh-escaped-newline">\</span>
+    --module-manager-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/current/module_manager.conf                         <span class="org-sh-escaped-newline">\</span>
     --module calibration                                                                                  <span class="org-sh-escaped-newline">\</span>
-    --dlls-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/snemo_configuration/current/dlls.conf                         <span class="org-sh-escaped-newline">\</span>
+    --dlls-config $<span class="org-variable-name">SNAILWARE_SIMULATION_DIR</span>/current/dlls.conf                                             <span class="org-sh-escaped-newline">\</span>
     --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources"</span> <span class="org-sh-escaped-newline">\</span>
     --input-file /tmp/$<span class="org-variable-name">USER</span>/io_output_simulated.brio
 </pre>
@@ -3517,7 +3517,7 @@ track reconstruction<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>.
 </div>
 </div></div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/b58540d9229eb997901b2181a9ddde427ee05f03">b58540d</a> - 2014-05-01
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/63522bed65d21494c0e412f72a316e61ada8a7b0">63522be</a> - 2014-05-02
 </div>
 </body>
 </html>
