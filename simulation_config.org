@@ -254,13 +254,10 @@ receives a table list and builds the =chain_module= declaration given its name.
   echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description The list of processing modules to be applied (in this order)'
-  echo -ne 'modules : string['$nmodule'] = '
+  echo 'modules : string['$nmodule'] = \'
   for i in $list
   do
-      echo -ne '  '
-      echo -ne '"'
-      echo -ne $i | sed '/(/ s/("\|")//g'
-      echo -ne '"'
+      echo -n '  "'$(echo $i | sed '/(/ s/("\|")//g')'"'
       if [ $i != $last ]; then echo ' \';fi
   done
 #+END_SRC
@@ -561,7 +558,7 @@ The following code block allows to "tag" the current version /i.e./ getting the
   if [ -d .git ]; then
       log+="git "$(git rev-parse --abbrev-ref HEAD)" branch - "
       log+=$(LC_MESSAGES=en git --no-pager log -1 HEAD --date=short --pretty=format:"commit %h - %ad")
-      echo -ne $log
+      echo -n $log
   fi
 #+END_SRC
 
@@ -576,14 +573,14 @@ The following code block retrieves the version number of a given component
 #+BEGIN_SRC sh :noweb yes
   if [ "$name" != "" ]; then
       if [ $binary -eq 1 ]; then
-          echo -ne "$($name-config --version)"
+          echo -n "$($name-config --version)"
       else
           cd $($name-config --prefix)/..
           status=$(LC_MESSAGES=en git svn info)
           rev=$(echo -e $status | sed -n 's/.*Revision: *\([^ ]*\).*/\1/p')
           date=$(echo -e $status | sed -n 's/.*Last Changed Date: *\([^ ]*\).*/\1/p')
           log="svn revision ${rev} - ${date}"
-          echo -ne $log
+          echo -n $log
       fi
   fi
 #+END_SRC
@@ -1596,14 +1593,10 @@ This skeleton code allows to check the availability of a data bank.
   echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description The cuts to be combined'
-  echo -ne 'cuts : string['$ncut'] = \\'
-  echo
+  echo 'cuts : string['$ncut'] = \'
   for i in $list
   do
-      echo -ne '  '
-      echo -ne '"'
-      echo -ne $i | sed '/(/ s/("\|")//g'
-      echo -ne '"'
+      echo -n '  "'$(echo $i | sed '/(/ s/("\|")//g')'"'
       if [ $i != $last ]; then echo ' \';fi
   done
 #+END_SRC
