@@ -4,7 +4,7 @@ EMACS = emacs
 BATCH = $(EMACS) --batch --no-init-file					\
 	--eval "(require 'org)"						\
 	--eval "(org-babel-do-load-languages 'org-babel-load-languages  \
-		'((sh . t)))"						\
+		'((shell . t)))"						\
 	--eval "(setq org-confirm-babel-evaluate nil)"
 
 GIT_BRANCH = $(shell git branch | grep \* | cut -d' ' -f2)
