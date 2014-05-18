@@ -137,7 +137,6 @@ distribution or following a tabulated energy spectrum.
   randomized_direction   : boolean = 1
 #+END_SRC
 
-
 ** TODO Combined generators
 Combination of several =genbb= generators can be done using
 =genbb::combined_particle_generator= object...

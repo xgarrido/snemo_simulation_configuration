@@ -4,7 +4,7 @@ EMACS = emacs
 BATCH = $(EMACS) --batch --no-init-file					\
 	--eval "(require 'org)"						\
 	--eval "(org-babel-do-load-languages 'org-babel-load-languages  \
-		'((shell . t)))"						\
+		'((shell . t)))"					\
 	--eval "(setq org-confirm-babel-evaluate nil)"
 
 GIT_BRANCH = $(shell git branch | grep \* | cut -d' ' -f2)
@@ -12,7 +12,7 @@ GIT_BRANCH = $(shell git branch | grep \* | cut -d' ' -f2)
 CCAGE_DIRECTORY = /sps/nemo/scratch/garrido/simulations/snemo_configuration
 LAL_DIRECTORY	= /exp/nemo/garrido/workdir/supernemo/simulations/snemo_configuration
 
-FILES  = $(notdir $(shell ls *.org 2> /dev/null | sed -e "s@simulation_publish.org@@g"))
+FILES  = $(notdir $(shell ls *.org 2> /dev/null))
 FILEST = $(FILES:%.org=$(GIT_BRANCH)/.%.tangle)
 
 all: org
