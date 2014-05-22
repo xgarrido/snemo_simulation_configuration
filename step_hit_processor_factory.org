@@ -45,7 +45,7 @@ and the =cluster.time_space= into a unique calorimeter hit.
 
 *** Main wall
 #+BEGIN_SRC sh
-  [name="calorimeter.hit_processor" type="mctools::calorimeter_step_hit_processor"]
+  [name="calorimeter.hit_processor" type="snemo::simulation::calorimeter_step_hit_processor"]
 
   #@config The step hit processor for the calorimeter simulated hits
 
@@ -71,7 +71,7 @@ and the =cluster.time_space= into a unique calorimeter hit.
 
 *** X-wall
 #+BEGIN_SRC sh
-   [name="xcalo.hit_processor" type="mctools::calorimeter_step_hit_processor"]
+   [name="xcalo.hit_processor" type="snemo::simulation::calorimeter_step_hit_processor"]
 
    #@config The step hit processor for the auxiliary calorimeter simulated hits
 
@@ -90,7 +90,7 @@ and the =cluster.time_space= into a unique calorimeter hit.
 #+END_SRC
 *** \gamma veto
 #+BEGIN_SRC sh
-  [name="gveto.hit_processor" type="mctools::calorimeter_step_hit_processor"]
+  [name="gveto.hit_processor" type="snemo::simulation::calorimeter_step_hit_processor"]
 
   #@config The step hit processor for the gamma veto simulated hits
 
