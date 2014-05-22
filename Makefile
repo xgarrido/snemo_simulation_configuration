@@ -36,12 +36,12 @@ tarball: org
 
 push: org
 	@echo "NOTICE: Pushing current configuration to Lyon"
-	@mkdir -p /tmp/ssc.d/ && rm -rf * && cp -r $(GIT_BRANCH)/*.{conf,def,lis} /tmp/ssc.d/. && sed -i -e 's#'`pwd`/$(GIT_BRANCH)'#$(CCAGE_DIRECTORY)/$(GIT_BRANCH)#g' /tmp/ssc.d/*
+	@mkdir -p /tmp/ssc.d/ && rm -rf /tmp/ssc.d/* && cp -r $(GIT_BRANCH)/*.{conf,def,lis} /tmp/ssc.d/. && sed -i -e 's#'`pwd`/$(GIT_BRANCH)'#$(CCAGE_DIRECTORY)/$(GIT_BRANCH)#g' /tmp/ssc.d/*
 	@ssh garrido@ccage.in2p3.fr "mkdir -p $(CCAGE_DIRECTORY)/$(GIT_BRANCH); cd $(CCAGE_DIRECTORY); if [ -L current ]; then rm current; fi; ln -sf $(GIT_BRANCH) current"
 	@rsync -e ssh -avP --delete --recursive --force /tmp/ssc.d/*.{conf,def,lis} garrido@ccage.in2p3.fr:$(CCAGE_DIRECTORY)/$(GIT_BRANCH)/.
 	@echo "NOTICE: Pushing current configuration to LAL"
-	@mkdir -p /tmp/ssc.d/ && rm -rf * && cp -r $(GIT_BRANCH)/*.{conf,def,lis} /tmp/ssc.d/. && sed -i -e 's#'`pwd`/$(GIT_BRANCH)'#$(LAL_DIRECTORY)/$(GIT_BRANCH)#g' /tmp/ssc.d/*
-	@ssh garrido@ccage.in2p3.fr "mkdir -p $(LAL_DIRECTORY)/$(GIT_BRANCH); cd $(LAL_DIRECTORY); if [ -L current ]; then rm current; fi; ln -sf $(GIT_BRANCH) current"
+	@mkdir -p /tmp/ssc.d/ && rm -rf /tmp/ssc.d/* && cp -r $(GIT_BRANCH)/*.{conf,def,lis} /tmp/ssc.d/. && sed -i -e 's#'`pwd`/$(GIT_BRANCH)'#$(LAL_DIRECTORY)/$(GIT_BRANCH)#g' /tmp/ssc.d/*
+	@ssh garrido@lx3.lal.in2p3.fr "mkdir -p $(LAL_DIRECTORY)/$(GIT_BRANCH); cd $(LAL_DIRECTORY); test -L current && rm current; ln -sf $(GIT_BRANCH) current"
 	@rsync -e ssh -avP --delete --recursive --force /tmp/ssc.d/*.{conf,def,lis} garrido@lx3.lal.in2p3.fr:$(LAL_DIRECTORY)/$(GIT_BRANCH)/.
 
 clean:
