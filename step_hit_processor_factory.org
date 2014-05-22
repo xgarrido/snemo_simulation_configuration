@@ -138,6 +138,7 @@ the minimal approach distance to the anode wire.
 #+END_SRC
 
 ** Visualization processors
+
 *** Dedicated step hit processors
 #+BEGIN_SRC sh
   [name="calorimeter.visu.hit_processor" type="mctools::push_all_step_hit_processor"]

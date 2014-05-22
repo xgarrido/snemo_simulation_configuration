@@ -113,9 +113,9 @@ volume.
 
   #@description Configuration files for geometry manager's plugins
   plugins.configuration_files : string[3] as path =                                        \
-      "${SNAILWARE_SIMULATION_DIR}/current/materials_plugin.conf"      \
-      "${SNAILWARE_SIMULATION_DIR}/current/magnetic_field_plugin.conf" \
-      "${SNAILWARE_SIMULATION_DIR}/current/locator_plugin.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/materials_plugin.conf"      \
+      "@SNEMO_SIMULATION_CONFIGURATION@/magnetic_field_plugin.conf" \
+      "@SNEMO_SIMULATION_CONFIGURATION@/locator_plugin.conf"
 #+END_SRC
 
 * Material for SuperNEMO detector
@@ -165,7 +165,7 @@ example, in [[Material aliases]] section.
       "@falaise:config/common/geometry/materials/1.0/elements.def"          \
       "@falaise:config/common/geometry/materials/1.0/materials.def"         \
       "@falaise:config/common/geometry/materials/1.0/materials_aliases.def" \
-      "${SNAILWARE_SIMULATION_DIR}/current/materials_aliases.def"
+      "@SNEMO_SIMULATION_CONFIGURATION@/materials_aliases.def"
 #+END_SRC
 
 ** Material aliases
@@ -219,7 +219,7 @@ example, we locally change the source material without changing anything else.
 
   #@description List of EM fields definitions files
   manager.field_definitions_filenames : string[1] as path = \
-      "${SNAILWARE_SIMULATION_DIR}/current/magnetic_field_drivers.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/magnetic_field_drivers.conf"
 #+END_SRC
 
 EM field defined within =manager.field_definitions_filenames= file can be set

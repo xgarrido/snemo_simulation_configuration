@@ -69,21 +69,21 @@ service files.
 #+BEGIN_SRC sh
   #@description The configuration file of the embedded service manager
   service_manager.configuration : string[1] as path = \
-      "${SNAILWARE_SIMULATION_DIR}/current/service_manager.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/service_manager.conf"
 #+END_SRC
 
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
   modules.configuration_files : string[8] as path =                         \
-      "${SNAILWARE_SIMULATION_DIR}/current/io_modules.conf"                 \
-      "${SNAILWARE_SIMULATION_DIR}/current/utl_modules.conf"                \
-      "${SNAILWARE_SIMULATION_DIR}/current/simulation_modules.conf"         \
-      "${SNAILWARE_SIMULATION_DIR}/current/calibration_modules.conf"        \
-      "${SNAILWARE_SIMULATION_DIR}/current/tracker_clustering_modules.conf" \
-      "${SNAILWARE_SIMULATION_DIR}/current/tracker_fitting_modules.conf"    \
-      "${SNAILWARE_SIMULATION_DIR}/current/particle_tracking_modules.conf"  \
-      "${SNAILWARE_SIMULATION_DIR}/current/analysis_modules.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/io_modules.conf"                 \
+      "@SNEMO_SIMULATION_CONFIGURATION@/utl_modules.conf"                \
+      "@SNEMO_SIMULATION_CONFIGURATION@/simulation_modules.conf"         \
+      "@SNEMO_SIMULATION_CONFIGURATION@/calibration_modules.conf"        \
+      "@SNEMO_SIMULATION_CONFIGURATION@/tracker_clustering_modules.conf" \
+      "@SNEMO_SIMULATION_CONFIGURATION@/tracker_fitting_modules.conf"    \
+      "@SNEMO_SIMULATION_CONFIGURATION@/particle_tracking_modules.conf"  \
+      "@SNEMO_SIMULATION_CONFIGURATION@/analysis_modules.conf"
 #+END_SRC
 
 ** Service manager
@@ -107,7 +107,7 @@ service files.
 #+BEGIN_SRC sh
   #@description The list of files that describe services
   services.configuration_files : string[1] as path = \
-      "${SNAILWARE_SIMULATION_DIR}/current/services.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/services.conf"
 #+END_SRC
 
 ** DLL loader
@@ -490,7 +490,7 @@ The full =geant4= configuration can be found in the [[file:./sng4_manager.org][s
 #+BEGIN_SRC sh
   #@description The simulation manager configuration file
   manager.configuration_filename : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/current/sng4_manager.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/sng4_manager.conf"
 #+END_SRC
 
 *** Adding event header
@@ -535,7 +535,7 @@ properties are used and serialized.
 #+BEGIN_SRC sh
   #@description The external properties files to be exported in event_header properties
   mode.add_header.external_properties_path : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/current/snsimulation_header.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/snsimulation_header.conf"
 
   #@description The external properties prefix to export only properties starting with this prefix
   mode.add_header.external_properties_prefix : string = "analysis"
@@ -1500,7 +1500,7 @@ reconstruction ... but all of them will use the same geometry.
 
   #@description Embedded SuperNEMO geometry manager main configuration file
   manager.configuration_file : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/current/sngeometry_manager.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/sngeometry_manager.conf"
   # "@falaise:config/snemo/demonstrator/geometry/3.0/manager.conf"
 
   #@description Embedded SuperNEMO geometry manager must build its mapping lookup table
@@ -1523,7 +1523,7 @@ apply selection cuts on arbitrary data models.
 
   #@description The main configuration file for the embedded cut manager
   cut_manager.config : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/current/cut_manager.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/cut_manager.conf"
 #+END_SRC
 
 *** Manager
@@ -1543,11 +1543,11 @@ apply selection cuts on arbitrary data models.
 
   #@description A list of files that contains definition of cuts
   cuts.configuration_files : string[5] as path =                            \
-    "${SNAILWARE_SIMULATION_DIR}/current/simulated_data_cuts.conf"          \
-    "${SNAILWARE_SIMULATION_DIR}/current/calibrated_data_cuts.conf"         \
-    "${SNAILWARE_SIMULATION_DIR}/current/tracker_clustering_data_cuts.conf" \
-    "${SNAILWARE_SIMULATION_DIR}/current/tracker_trajectory_data_cuts.conf" \
-    "${SNAILWARE_SIMULATION_DIR}/current/particle_track_data_cuts.conf"
+    "@SNEMO_SIMULATION_CONFIGURATION@/simulated_data_cuts.conf"          \
+    "@SNEMO_SIMULATION_CONFIGURATION@/calibrated_data_cuts.conf"         \
+    "@SNEMO_SIMULATION_CONFIGURATION@/tracker_clustering_data_cuts.conf" \
+    "@SNEMO_SIMULATION_CONFIGURATION@/tracker_trajectory_data_cuts.conf" \
+    "@SNEMO_SIMULATION_CONFIGURATION@/particle_track_data_cuts.conf"
 #+END_SRC
 
 *** Skeleton codes                                               :noexport:
@@ -2072,8 +2072,8 @@ Embedded histograms are declared into a dedicated file defines in
 #+BEGIN_SRC sh
   #@description The main configuration file for the embedded histogram manager
   pool.histo.setups : string[2] as path =                         \
-      "${SNAILWARE_SIMULATION_DIR}/current/basic_histograms.conf" \
-      "${SNAILWARE_SIMULATION_DIR}/current/histogram_templates.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/basic_histograms.conf" \
+      "@SNEMO_SIMULATION_CONFIGURATION@/histogram_templates.conf"
 #+END_SRC
 
 Finally, all histograms created can be stored inside ROOT files or XML archives.
@@ -2085,14 +2085,6 @@ Finally, all histograms created can be stored inside ROOT files or XML archives.
 #+END_SRC
 
 * Running SN@ilWare processing chain
-
-To run and to exploit results from SN@ilWare, you first need to export[3] the
-=SNAILWARE_SIMULATION_DIR= path. Everything is done with respect to this
-directory.
-
-#+BEGIN_SRC sh
-  export SNAILWARE_SIMULATION_DIR=${PWD}
-#+END_SRC
 
 Since this configuration will run through the executable =bxdpp_processing= from
 Bayeux library and not through =flsimulate+flreconstruct= binaries from Falaise
@@ -2110,11 +2102,11 @@ For example, if you only want to do simulation, you can run the following
 command
 
 #+BEGIN_SRC sh
-  bxdpp_processing                                                                                          \
-      --module-manager-config $SNAILWARE_SIMULATION_DIR/current/module_manager.conf                         \
-      --module simulation                                                                                   \
-      --dlls-config $SNAILWARE_SIMULATION_DIR/current/dlls.conf                                             \
-      --datatools::resource_path="falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources" \
+  bxdpp_processing                                                                             \
+      --module-manager-config ./current/module_manager.conf                                    \
+      --module simulation                                                                      \
+      --dlls-config ./current/dlls.conf                                                        \
+      --datatools::resource_path="falaise@<falaise install dir>/share/Falaise-1.0.0/resources" \
       --max-records 100
 #+END_SRC
 
@@ -2122,12 +2114,12 @@ An other way to run the previous command without loading the =dlls.conf= file
 will be to temporarly set the =LD_LIBRARY_PATH= variable and to point it to the
 =Falaise= and =Bayeux= libraries path namely
 #+BEGIN_SRC sh
-  LD_LIBRARY_PATH="$SNAILWARE_PRO_DIR/bayeux/install/lib64:$SNAILWARE_PRO_DIR/falaise/install/lib64"        \
-  bxdpp_processing                                                                                          \
-      --module-manager-config $SNAILWARE_SIMULATION_DIR/current/module_manager.conf                         \
-      --module simulation                                                                                   \
-      --load-dll Bayeux_mctools_geant4 --load-dll Falaise                                                   \
-      --datatools::resource_path="falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources" \
+  LD_LIBRARY_PATH="<bayeux install dir>/bayeux/install/lib64:<falaise install dir>/falaise/install/lib64" \
+  bxdpp_processing                                                                                        \
+      --module-manager-config ./current/module_manager.conf                                               \
+      --module simulation                                                                                 \
+      --load-dll Bayeux_mctools_geant4 --load-dll Falaise                                                 \
+      --datatools::resource_path="falaise@<falaise install dir>/share/Falaise-1.0.0/resources"            \
       --max-records 100
 #+END_SRC
 
@@ -2137,11 +2129,11 @@ setup [[G4 simulation][in this section]].
 In the same way you can run the calibration chain by doing
 
 #+BEGIN_SRC sh
-  bxdpp_processing                                                                                          \
-      --module-manager-config $SNAILWARE_SIMULATION_DIR/current/module_manager.conf                         \
-      --module calibration                                                                                  \
-      --dlls-config $SNAILWARE_SIMULATION_DIR/current/dlls.conf                                             \
-      --datatools::resource_path="falaise@$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources" \
+  bxdpp_processing                                                                             \
+      --module-manager-config ./current/module_manager.conf                                    \
+      --module calibration                                                                     \
+      --dlls-config ./current/dlls.conf                                                        \
+      --datatools::resource_path="falaise@<falaise install dir>/share/Falaise-1.0.0/resources" \
       --input-file /tmp/$USER/io_output_simulated.brio
 #+END_SRC
 where file =/tmp/$USER/io_output_simulated.brio= is the one produced by the

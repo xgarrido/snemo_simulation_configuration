@@ -62,7 +62,7 @@ cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb manager]] file.
 
   #@description Configuration file for the embedded '::genbb::manager'
   manager.config : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/current/sngenbb_manager.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/sngenbb_manager.conf"
 #+END_SRC
 
 ** Vertex generation
@@ -73,7 +73,7 @@ This part basically provides the location of vertex generator implemented by
 
   #@description Main configuration file for the vertex generator manager
   manager.config : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/current/sngenvertex_manager.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/sngenvertex_manager.conf"
 #+END_SRC
 
 ** Detector construction
@@ -114,7 +114,7 @@ SuperNEMO physics.
 
   #@description Configuration file for the step hit processor factory:
   hit_processor_factory.config : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/current/step_hit_processor_manager.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/step_hit_processor_manager.conf"
 #+END_SRC
 
 *** Sensitive detectors
@@ -260,14 +260,14 @@ phycical processes for SuperNEMO.
 
   #@description Configuration file of the physics constructors named 'particles'
   physics_constructors.particles.config : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/current/snparticles.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/snparticles.conf"
 
   #@description Class ID of the physics constructors named 'em'
   physics_constructors.em.id            : string = "mctools::g4::em_physics_constructor"
 
   #@description Configuration file of the physics constructors named 'em'
   physics_constructors.em.config        : string as path = \
-      "${SNAILWARE_SIMULATION_DIR}/current/snem_processes.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/snem_processes.conf"
 #+END_SRC
 
 **** Particle physics constructor
