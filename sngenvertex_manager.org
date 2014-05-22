@@ -23,10 +23,10 @@ are defined in Section [[Vertex configuration]].
 #+BEGIN_SRC sh
   #@description Names of the files configuring the list of registered vertex generators
   vg_list : string[4] as path =                                              \
-    "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/scin_vg.lis"    \
-    "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/tracker_vg.lis" \
-    "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/source_vg.lis"  \
-    "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/hall_vg.lis"
+    "${SNAILWARE_SIMULATION_DIR}/current/scin_vg.lis"    \
+    "${SNAILWARE_SIMULATION_DIR}/current/tracker_vg.lis" \
+    "${SNAILWARE_SIMULATION_DIR}/current/source_vg.lis"  \
+    "${SNAILWARE_SIMULATION_DIR}/current/hall_vg.lis"
 #+END_SRC
 
 * Vertex configuration

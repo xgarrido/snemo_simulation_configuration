@@ -30,7 +30,7 @@ manager.
       "@falaise:config/common/simulation/primary_events/1.0/calibration.def" \
       "@falaise:config/common/simulation/primary_events/1.0/dbd.def"         \
       "@falaise:config/common/simulation/primary_events/1.0/misc.def"        \
-      "${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngenbb_wrappers.conf"
+      "${SNAILWARE_SIMULATION_DIR}/current/sngenbb_wrappers.conf"
 #+END_SRC
 
 * Genbb wrappers
