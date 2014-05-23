@@ -120,7 +120,7 @@ This skeleton code ease the declaration of dll loader since it
 receives a table list and builds the corresponding =dlls.conf= file.
 
 #+NAME: dll_loader
-#+HEADERS: :var name="" :var filename=""
+#+HEADERS: :var name="" :var filename="" :shebang "#!/bin/bash"
 #+BEGIN_SRC sh
   echo '#@description A sample list of setups'
   echo '#@key_label   "name"'
