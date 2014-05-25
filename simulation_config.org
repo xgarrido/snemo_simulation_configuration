@@ -521,6 +521,9 @@ particles has been restricted.
 
   #@description The event weight given by GENBB and used for 'energy_range' mode
   mode.add_header.use_genbb_weight : boolean = 1
+
+  #@description The event label from GENBB settings
+  mode.add_header.use_genbb_label  : boolean = 1
 #+END_SRC
 
 Among the options offered by =event_header_utils_module=, there is a possibility
@@ -595,12 +598,6 @@ The following code block retrieves the version number of a given component
 
   #@description The total number of event simulated
   analysis.total_number_of_event : integer = 100000
-
-  #@description The double beta decay process
-  analysis.decay_process : string = "bb2nu"
-
-  #@description The source isotope
-  analysis.source_isotope : string = "Se82"
 #+END_SRC
 ** Calibration modules
 :PROPERTIES:
@@ -1382,14 +1379,14 @@ modules it contains.
 #+CAPTION: Modules used by the calibration process
 #+TBLNAME: calibration_chain
 |----------------------|
+| add_header           |
 | tracker_s2c          |
 | calorimeter_s2c      |
 | io_output_calibrated |
 |----------------------|
-#| add_header           |
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("calibration_chain", 3, calibration_chain)>>
+  <<chain_module("calibration_chain", 4, calibration_chain)>>
 #+END_SRC
 
 *** Simulation chain
