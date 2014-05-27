@@ -1329,7 +1329,7 @@ modules it contains.
 |----------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("particle_tracking_chain", 3, particle_tracking_chain)>>
+  <<chain_module("particle_tracking_chain", 4, particle_tracking_chain)>>
 #+END_SRC
 
 *** Process after fitting selection

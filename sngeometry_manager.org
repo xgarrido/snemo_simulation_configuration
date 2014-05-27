@@ -112,7 +112,7 @@ volume.
   plugins.force_initialization_at_load : boolean = 0
 
   #@description Configuration files for geometry manager's plugins
-  plugins.configuration_files : string[3] as path =                                        \
+  plugins.configuration_files : string[3] as path =                 \
       "@SNEMO_SIMULATION_CONFIGURATION@/materials_plugin.conf"      \
       "@SNEMO_SIMULATION_CONFIGURATION@/magnetic_field_plugin.conf" \
       "@SNEMO_SIMULATION_CONFIGURATION@/locator_plugin.conf"
@@ -291,8 +291,8 @@ module.
 #+END_SRC
 *** Geometry requirements
 #+BEGIN_SRC sh
-#@description Geometry version requirement (not working with version lower than 2.0)
-geometry.setup_requirement : string[2] = "snemo(>=2)" "snemo::demonstrator(>=2)"
+  #@description Geometry version requirement (not working with version lower than 2.0)
+  geometry.setup_requirement : string[2] = "snemo(>=2)" "snemo::demonstrator(>=2)"
 #+END_SRC
 
 *** Module number
