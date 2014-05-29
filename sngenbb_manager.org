@@ -46,6 +46,16 @@ This section holds the configuration of several =genbb= wrappers.
   #@meta_label  "type"
 #+END_SRC
 
+** 2\nu2\beta isotope with energy cut
+#+BEGIN_SRC sh
+  [name="Se82.2nubb-2MeV" type="genbb::wdecay0"]
+  #@config Two neutrino double beta decay of Se-82, 2nubb [DBD]
+  decay_type      : string  = "DBD"
+  decay_isotope   : string  = "Se82"
+  decay_dbd_level : integer = 0
+  decay_dbd_mode  : integer = 4
+  energy_min      : real as energy = 2.0 MeV
+#+END_SRC
 ** Radioelement wrappers
 This part basically provides additionnal event generator wrappers for
 SuperNEMO.
