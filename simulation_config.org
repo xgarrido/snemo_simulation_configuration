@@ -788,28 +788,42 @@ longitudinal information and then can badly aggregates track belonging to two
 different particles.
 
 #+BEGIN_SRC sh
-   [name="mock_tracker_clustering" type="snemo::reconstruction::mock_tracker_clustering_module"]
+  [name="mock_tracker_clustering" type="snemo::reconstruction::mock_tracker_clustering_module"]
 
-   #@description Logging priority
-   logging.priority : string = "warning"
+  #@description Logging priority
+  logging.priority : string = "warning"
 
-   #@description The label of the Geometry service
-   Geo_label : string  = "Geo"
+  #@description The label of the Geometry service
+  Geo_label : string  = "Geo"
 
-   #@description The label of the 'Calibrated Data' bank
-   CD_label : string  = "CD"
+  #@description The label of the 'Calibrated Data' bank
+  CD_label : string  = "CD"
 
-   #@description The label of the 'Tracker Clustering Data' bank
-   TCD_label : string  = "TCD"
+  #@description The label of the 'Tracker Clustering Data' bank
+  TCD_label : string  = "TCD"
 
-   #@description Maximum layer distance between two neighbour hits
-   MTC.max_layer_distance : integer = 2
+  #@description Tracker Clusterizer logging priority
+  TC.logging.priority : string = "warning"
 
-   #@description Maximum row distance between two neighbour hits
-   MTC.max_row_distance   : integer = 2
+  #@description Maximum layer distance between two neighbour hits
+  MTC.max_layer_distance : integer = 2
 
-   #@description Maximum row+layer distance between two neighbour hits
-   MTC.max_sum_distance   : integer = 0
+  #@description Maximum row distance between two neighbour hits
+  MTC.max_row_distance   : integer = 2
+
+  #@description Maximum row+layer distance between two neighbour hits
+  MTC.max_sum_distance   : integer = 0
+#+END_SRC
+
+We also add an option to not split the tracker chamber when pre clustering is
+done by =TrackerPreClusterizer=. This option is set to true by default but here
+with the =mock_tracker_clustering_module= it does not make sense since cells are
+already ordered by time. So to avoid confusion (especially to avoid double
+tracker clustering solution), we do not ak pre-clustering to split the chamber.
+
+#+BEGIN_SRC sh
+  #@description Tracker pre clusterizer splitting chamber option
+  TPC.split_chamber : boolean = 0
 #+END_SRC
 
 **** Cellular Automaton Tracker                               :notworking:
