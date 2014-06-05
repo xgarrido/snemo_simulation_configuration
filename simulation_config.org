@@ -75,7 +75,7 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
-  modules.configuration_files : string[8] as path =                         \
+  modules.configuration_files : string[8] as path =                      \
       "@SNEMO_SIMULATION_CONFIGURATION@/io_modules.conf"                 \
       "@SNEMO_SIMULATION_CONFIGURATION@/utl_modules.conf"                \
       "@SNEMO_SIMULATION_CONFIGURATION@/simulation_modules.conf"         \
@@ -83,7 +83,7 @@ service files.
       "@SNEMO_SIMULATION_CONFIGURATION@/tracker_clustering_modules.conf" \
       "@SNEMO_SIMULATION_CONFIGURATION@/tracker_fitting_modules.conf"    \
       "@SNEMO_SIMULATION_CONFIGURATION@/particle_tracking_modules.conf"  \
-      "@SNEMO_SIMULATION_CONFIGURATION@/analysis_modules.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/chain_modules.conf"
 #+END_SRC
 
 ** Service manager
@@ -152,16 +152,15 @@ list of needed libraries
 
 #+CAPTION: Libraries to be used by modules
 #+TBLNAME: dll_libraries
-|-----------------------+-----------------------------------------------------------------------------------------------|
-| Bayeux_mctools_geant4 | $SNAILWARE_PRO_DIR/bayeux/install/lib64/libBayeux_mctools_geant4.so                           |
-| Falaise               | $SNAILWARE_PRO_DIR/falaise/install/lib64/libFalaise.so                                        |
-| Falaise_MTC           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_MockTrackerClusterizer.so |
-| Falaise_CAT           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_CAT.so                    |
-| TrackFit              | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libTrackFit.so                       |
-| Falaise_TrackFit      | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_TrackFit.so               |
-| snanalysis            | $SNANALYSIS_LIB_DIR/libsnanalysis.so                                                          |
-| snanalysis_bio        | $SNANALYSIS_LIB_DIR/libsnanalysis_bio.so                                                      |
-|-----------------------+-----------------------------------------------------------------------------------------------|
+|-----------------------+------------------------------------------------------------------------------------------------|
+| Bayeux_mctools_geant4 | $SNAILWARE_PRO_DIR/bayeux/install/lib64/libBayeux_mctools_geant4.so                            |
+| Falaise               | $SNAILWARE_PRO_DIR/falaise/install/lib64/libFalaise.so                                         |
+| Falaise_MTC           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_MockTrackerClusterizer.so  |
+| Falaise_CAT           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_CAT.so                     |
+| TrackFit              | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libTrackFit.so                        |
+| Falaise_TrackFit      | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_TrackFit.so                |
+| Falaise_CPT           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_ChargedParticleTracking.so |
+|-----------------------+------------------------------------------------------------------------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
   <<dll_loader(dll_libraries[*,0], dll_libraries[*,1])>>
@@ -1225,8 +1224,8 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   <<module_preamble>>
 #+END_SRC
 
-*** Basic particle tracking
-Given results of the two previous steps i.e. clustering and fitting, the
+*** Charged particle tracking
+Given results of the two previous steps /i.e./ clustering and fitting, the
 trajectories must be interpreted within SuperNEMO detector geometry. The
 particle tracking translates trajectory into particle tracks and then determines
 the track charge (assuming particle comes from the source foil), it extrapolates
@@ -1234,13 +1233,13 @@ track intersection with calorimeter walls and finally it associates particle
 track with calorimeter blocks.
 
 #+BEGIN_SRC sh
-  [name="basic_particle_tracking" type="snemo::analysis::processing::basic_particle_tracking_module"]
+  [name="charged_particle_tracking" type="snemo::reconstruction::charged_particle_tracking_module"]
 #+END_SRC
 
 **** Logging priority
 #+BEGIN_SRC sh
   #@description Logging flag
-  logging.priority : string = "warning"
+  logging.priority : string = "trace"
 #+END_SRC
 **** Data banks and services labels
 #+BEGIN_SRC sh
@@ -1270,7 +1269,7 @@ implemented but the particle tracking module will stay unchanged.
 ***** Vertex Extrapolation Driver
 #+BEGIN_SRC sh
   #@description Vertex Extrapolation Driver logging priority
-  VED.logging.priority : string = "warning"
+  VED.logging.priority : string = "trace"
 
   #@description Use linear extrapolation (not implemented yet)
   VED.use_linear_extrapolation : boolean = 0
@@ -1296,9 +1295,9 @@ implemented but the particle tracking module will stay unchanged.
   #@description Use a simpler approach by looking for gieger cells in front of calo (not implemented yet)
   CAD.use_last_geiger_cell : boolean = 0
 #+END_SRC
-** Analysis chain modules
+** Chain modules
 :PROPERTIES:
-:TANGLE: analysis_modules.conf
+:TANGLE: chain_modules.conf
 :END:
 This section holds most of the chain module to set "to music" the different
 modules and tasks. It also contains the different paths given the selection
@@ -1337,7 +1336,7 @@ modules it contains.
 #+TBLNAME: particle_tracking_chain
 |----------------------------------|
 | remove_particle_track_data       |
-| basic_particle_tracking          |
+| charged_particle_tracking        |
 | io_output_particle_track         |
 | process_with_particle_track_cuts |
 |----------------------------------|
@@ -1393,14 +1392,14 @@ modules it contains.
 #+CAPTION: Modules used by the calibration process
 #+TBLNAME: calibration_chain
 |----------------------|
-| add_header           |
 | tracker_s2c          |
 | calorimeter_s2c      |
 | io_output_calibrated |
+# | add_header           |
 |----------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("calibration_chain", 4, calibration_chain)>>
+  <<chain_module("calibration_chain", 3, calibration_chain)>>
 #+END_SRC
 
 *** Simulation chain
@@ -1781,9 +1780,9 @@ This cuts puts together all the previous declared cuts.
   range_cluster.max : integer = 4
 #+END_SRC
 
-**** Select number of hit within a cluster
+**** Select number of hit within a cluster                       :notused:
 #+BEGIN_SRC sh :tangle no
-  [name="tcd2_cut" type="snemo::analysis::cut::basic_tracker_clustering_data_cut"]
+  [name="tcd2_cut" type="snemo::analysis::cut::tracker_clustering_data_cut"]
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1807,7 +1806,6 @@ This cuts puts together all the previous declared cuts.
 |-----------------------------|
 | has_tracker_clustering_data |
 | cluster_range_cut           |
-| tcd2_cut                    |
 |-----------------------------|
 
 #+BEGIN_SRC sh :noweb yes
@@ -1849,22 +1847,13 @@ This cuts puts together all the previous declared cuts.
 #+END_SRC
 
 **** Check bank availability
-#+BEGIN_SRC sh
-  [name="has_particle_track_data" type="dpp::utils_cut"]
-
-  #@description Logging priority
-  logging.priority : string = "warning"
-
-  #@description The running mode of this 'utils_cut' instance
-  mode : string = "has_bank"
-
-  #@description The name of the bank to be checked (mandatory)
-  has_bank.descriptions : string[1] = "PTD@snemo::analysis::model::particle_track_data"
+#+BEGIN_SRC sh :noweb yes
+  <<has_bank("has_particle_track_data", bname="PTD")>>
 #+END_SRC
 
 **** Check if particles have been reconstructed
 #+BEGIN_SRC sh
-  [name="has_particle" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+  [name="has_particle" type="snemo::cut::particle_track_data_cut"]
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1877,7 +1866,7 @@ This cuts puts together all the previous declared cuts.
 #+END_SRC
 **** Select number of particles
 #+BEGIN_SRC sh
-  [name="range_particle" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+  [name="range_particle" type="snemo::cut::particle_track_data_cut"]
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1897,7 +1886,7 @@ This cuts puts together all the previous declared cuts.
 
 **** Check association with calorimeter block
 #+BEGIN_SRC sh
-  [name="has_associated_calorimeter" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+  [name="has_associated_calorimeter" type="snemo::cut::particle_track_data_cut"]
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1911,7 +1900,7 @@ This cuts puts together all the previous declared cuts.
 
 **** Select number of associated calorimeter blocks
 #+BEGIN_SRC sh
-  [name="range_associated_calorimeters" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+  [name="range_associated_calorimeters" type="snemo::cut::particle_track_data_cut"]
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1931,7 +1920,7 @@ This cuts puts together all the previous declared cuts.
 
 **** Check if track has foil vertex
 #+BEGIN_SRC sh
-  [name="has_vertex_on_foil" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+  [name="has_vertex_on_foil" type="snemo::cut::particle_track_data_cut"]
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1945,7 +1934,7 @@ This cuts puts together all the previous declared cuts.
 
 **** Select particle charge
 #+BEGIN_SRC sh
-[name="has_negative_charge" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+[name="has_negative_charge" type="snemo::cut::particle_track_data_cut"]
 
 #@description Logging priority
 logging.priority : string = "warning"
@@ -1961,7 +1950,7 @@ has_charge.type : string = "negative"
 #+END_SRC
 
 #+BEGIN_SRC sh
-[name="has_positive_charge" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+[name="has_positive_charge" type="snemo::cut::particle_track_data_cut"]
 
 #@description Logging priority
 logging.priority : string = "warning"
@@ -1977,7 +1966,7 @@ has_charge.type : string = "positive"
 #+END_SRC
 
 #+BEGIN_SRC sh
-[name="has_undefined_charge" type="snemo::analysis::cut::basic_particle_track_data_cut"]
+[name="has_undefined_charge" type="snemo::cut::particle_track_data_cut"]
 
 #@description Logging priority
 logging.priority : string = "warning"
@@ -1992,7 +1981,7 @@ mode.has_charge : boolean = 1
 has_charge.type : string = "undefined"
 #+END_SRC
 
-**** Reconstruction parameters selection
+**** Reconstruction parameters selection                         :notused:
 #+BEGIN_SRC sh
   [name="chi2_cut" type="snemo::analysis::cut::basic_particle_track_parameter_cut"]
 
@@ -2061,40 +2050,7 @@ has_charge.type : string = "undefined"
 
 #+BEGIN_SRC sh :noweb yes
   <<multi("particle_track_cut", "and", 6, particle_track_cuts)>>
-#+END_SRC
-** Histogram service
-
-The histogram service provides an esay way to handle histogram plot from
-different modules (mainly plot modules). It provides a service where 1D or 2D
-histograms can be added to a histogram dictionnary.
-
-#+BEGIN_SRC sh
-  [name="Histo" type="dpp::histogram_service"]
-
-  #@description Logging priority
-  logging.priority : string = "warning"
-
-  #@description The description string of the embedded pool of histograms
-  pool.description : string = "SuperNEMO histograms"
-#+END_SRC
-
-Embedded histograms are declared into a dedicated file defines in
-[[file:snanalysis_manager.org][snanalysis_manager.org]]
-#+BEGIN_SRC sh
-  #@description The main configuration file for the embedded histogram manager
-  pool.histo.setups : string[2] as path =                         \
-      "@SNEMO_SIMULATION_CONFIGURATION@/basic_histograms.conf" \
-      "@SNEMO_SIMULATION_CONFIGURATION@/histogram_templates.conf"
-#+END_SRC
-
-Finally, all histograms created can be stored inside ROOT files or XML archives.
-#+BEGIN_SRC sh
-  #@description The ouput file where to store the histograms
-  output_files : string[2] as path =     \
-      "/tmp/${USER}/snemo.d/histos.root" \
-      "/tmp/${USER}/snemo.d/histos.xml"
-#+END_SRC
-
+  #+END_SRC
 * Running SN@ilWare processing chain
 
 Since this configuration will run through the executable =bxdpp_processing= from
