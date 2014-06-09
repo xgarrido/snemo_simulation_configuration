@@ -160,6 +160,7 @@ list of needed libraries
 | TrackFit              | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libTrackFit.so                        |
 | Falaise_TrackFit      | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_TrackFit.so                |
 | Falaise_CPT           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_ChargedParticleTracking.so |
+| snanalysis            | $SNANALYSIS_LIB_DIR/libsnanalysis.so                                                           |
 |-----------------------+------------------------------------------------------------------------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
@@ -1239,7 +1240,7 @@ track with calorimeter blocks.
 **** Logging priority
 #+BEGIN_SRC sh
   #@description Logging flag
-  logging.priority : string = "trace"
+  logging.priority : string = "warning"
 #+END_SRC
 **** Data banks and services labels
 #+BEGIN_SRC sh
@@ -1269,7 +1270,7 @@ implemented but the particle tracking module will stay unchanged.
 ***** Vertex Extrapolation Driver
 #+BEGIN_SRC sh
   #@description Vertex Extrapolation Driver logging priority
-  VED.logging.priority : string = "trace"
+  VED.logging.priority : string = "warning"
 
   #@description Use linear extrapolation (not implemented yet)
   VED.use_linear_extrapolation : boolean = 0
@@ -1392,14 +1393,14 @@ modules it contains.
 #+CAPTION: Modules used by the calibration process
 #+TBLNAME: calibration_chain
 |----------------------|
+| add_header           |
 | tracker_s2c          |
 | calorimeter_s2c      |
 | io_output_calibrated |
-# | add_header           |
 |----------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("calibration_chain", 3, calibration_chain)>>
+  <<chain_module("calibration_chain", 4, calibration_chain)>>
 #+END_SRC
 
 *** Simulation chain
