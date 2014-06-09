@@ -1761,6 +1761,19 @@ This cuts puts together all the previous declared cuts.
   <<has_bank("has_tracker_clustering_data", bname="TCD")>>
 #+END_SRC
 
+**** Check if clusters have been performed
+#+BEGIN_SRC sh
+  [name="has_cluster" type="snemo::cut::tracker_clustering_data_cut"]
+
+  #@description Logging priority
+  logging.priority : string = "warning"
+
+  #@description The label/name of the 'tracker clustering data' bank (mandatory)
+  TCD_label : string = "TCD"
+
+  #@description Activate the check of clusters presence
+  mode.has_cluster : boolean = 1
+#+END_SRC
 **** Select number of cluster
 #+BEGIN_SRC sh
   [name="cluster_range_cut" type="snemo::cut::tracker_clustering_data_cut"]
@@ -1806,11 +1819,12 @@ This cuts puts together all the previous declared cuts.
 #+TBLNAME: tracker_clustering_cuts
 |-----------------------------|
 | has_tracker_clustering_data |
+| has_cluster                 |
 | cluster_range_cut           |
 |-----------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<multi(cname="tracker_clustering_cut", "and", 2, tracker_clustering_cuts)>>
+  <<multi(cname="tracker_clustering_cut", "and", 3, tracker_clustering_cuts)>>
 #+END_SRC
 
 *** Tracker trajectory data selection
