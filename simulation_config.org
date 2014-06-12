@@ -587,17 +587,31 @@ The following code block retrieves the version number of a given component
       fi
   fi
 #+END_SRC
-
-***** Properties store
+***** Store the current =git= version of the configuration
 #+BEGIN_SRC sh :noweb yes
-  #@description The analysis description
-  analysis.description : string = "Sensitivity studies for SuperNEMO demonstrator"
-
   #@description The version control status
   analysis.vc_status : string = "<<vc-status()>>"
+#+END_SRC
 
+***** Set analysis description
+#+BEGIN_SRC sh
+  #@description The analysis description
+  analysis.description : string = "Sensitivity studies for SuperNEMO demonstrator"
+#+END_SRC
+
+***** Set the total number of event simulated
+#+BEGIN_SRC sh
   #@description The total number of event simulated
   analysis.total_number_of_event : integer = 100000
+#+END_SRC
+
+***** Store the job id
+When simulations are done @ Lyon and send to the Grid Engine, every process get
+a unique job-ID. We store it within the event header in order to get back to the
+simulation setup if needed.
+#+BEGIN_SRC sh
+  #@description The job-ID of the process
+  analysis.jobid : integer = 0
 #+END_SRC
 ** Calibration modules
 :PROPERTIES:
