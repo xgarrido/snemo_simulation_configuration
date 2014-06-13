@@ -2078,7 +2078,7 @@ has_charge.type : string = "undefined"
 # | chi2_cut                      |
 
 #+BEGIN_SRC sh :noweb yes
-  <<multi("particle_track_cut", "and", 6, particle_track_cuts)>>
+  <<multi("particle_track_cut", "and", 7, particle_track_cuts)>>
   #+END_SRC
 * Running SN@ilWare processing chain
 
