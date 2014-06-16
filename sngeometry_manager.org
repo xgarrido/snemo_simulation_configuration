@@ -146,6 +146,17 @@ to change the source foil isotope.
   materials.logging.priority : string = "warning"
 #+END_SRC
 
+*** Use isotope mass database
+Recent [[https://nemo.lpc-caen.in2p3.fr/changeset/14821][release]] of =materials= component changes the default behavior which was
+actually wrong (see fix [[https://nemo.lpc-caen.in2p3.fr/changeset/14824][14824]]). The default configuration is not to use any kind
+of database. To allow the use of [[https://www-nds.iaea.org/amdc/][Atomic Mass Evaluation]] data base, we should
+indicate it to =materials= manager.
+
+#+BEGIN_SRC sh
+  #@description Use AME 2003
+  materials.load_isotope_mass_data : boolean = 1
+#+END_SRC
+
 *** Allow overloading of materials
 This property allows the overloading of some materials as it is done, for
 example, in [[Material aliases]] section.
