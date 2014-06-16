@@ -1445,16 +1445,19 @@ modules it contains.
 *** Minimum bias chain (from simulation \to calibration \to reconstruction)
 #+CAPTION: Full chain processing without selection
 #+TBLNAME: minimum_bias_chain
-|-------------------------|
-| simulation_chain        |
-| calibration_chain       |
-| clustering_chain        |
-| fitting_chain           |
-| particle_tracking_chain |
-|-------------------------|
+|---------------------------|
+| simulation                |
+| add_header                |
+| tracker_s2c               |
+| calorimeter_s2c           |
+| mock_tracker_clustering   |
+| trackfit_tracker_fitting  |
+| charged_particle_tracking |
+| io_output_analysed        |
+|---------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("minimum_bias_chain", 5, minimum_bias_chain)>>
+  <<chain_module("minimum_bias_chain", 8, minimum_bias_chain)>>
 #+END_SRC
 
 *** Miscellaneous
