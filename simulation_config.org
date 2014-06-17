@@ -150,7 +150,7 @@ since event data models or algorithms may be defined in other libraries than the
 =dpp= and inherited libraries. The following table sets a full (and exhaustive)
 list of needed libraries
 
-#+CAPTION: Libraries to be used by modules
+#+CAPTION: *Libraries to be used by modules.*
 #+TBLNAME: dll_libraries
 |-----------------------+------------------------------------------------------------------------------------------------|
 | Bayeux_mctools_geant4 | $SNAILWARE_PRO_DIR/bayeux/install/lib64/libBayeux_mctools_geant4.so                            |
@@ -346,6 +346,12 @@ all I/O files are saved in =/tmp/${USER}/snemo.d= directory.
 #+END_SRC
 
 *** Selection output
+
+- Simulation cuts
+  #+BEGIN_SRC sh :noweb yes
+    <<output_module("io_output_simulated_selected")>>
+    <<output_module("io_output_simulated_non_selected")>>
+  #+END_SRC
 
 - Calibration cuts
   #+BEGIN_SRC sh :noweb yes
@@ -1326,7 +1332,7 @@ modules it contains.
 #+END_SRC
 
 *** Analysis chain
-#+CAPTION: Modules used by the analysis process
+#+CAPTION: *Modules used by the analysis process.*
 #+TBLNAME: analysis_chain
 |-----------------------------------|
 | io_output_particle_track_selected |
@@ -1347,7 +1353,7 @@ modules it contains.
 #+END_SRC
 
 *** Particle tracking chain
-#+CAPTION: Modules used by the particle tracking process
+#+CAPTION: *Modules used by the particle tracking process.*
 #+TBLNAME: particle_tracking_chain
 |----------------------------------|
 | remove_particle_track_data       |
@@ -1366,7 +1372,7 @@ modules it contains.
 #+END_SRC
 
 *** Fitting chain
-#+CAPTION: Modules used by the fitting process
+#+CAPTION: *Modules used by the fitting process.*
 #+TBLNAME: fitting_chain
 |--------------------------------|
 | remove_tracker_trajectory_data |
@@ -1385,7 +1391,7 @@ modules it contains.
 #+END_SRC
 
 *** Clustering chain
-#+CAPTION: Modules used by the clustering process
+#+CAPTION: *Modules used by the clustering process.*
 #+TBLNAME: clustering_chain
 |--------------------------------|
 | remove_tracker_clustering_data |
@@ -1404,46 +1410,51 @@ modules it contains.
 #+END_SRC
 
 *** Calibration chain
-#+CAPTION: Modules used by the calibration process
+#+CAPTION: *Modules used by the calibration process.*
 #+TBLNAME: calibration_chain
-|----------------------|
-| add_header           |
-| tracker_s2c          |
-| calorimeter_s2c      |
-| io_output_calibrated |
-|----------------------|
-
-#+BEGIN_SRC sh :noweb yes
-  <<chain_module("calibration_chain", 4, calibration_chain)>>
-#+END_SRC
-
-*** Simulation chain
-#+CAPTION: Modules used by the simulation process
-#+TBLNAME: simulation_chain
-|---------------------|
-| simulation          |
-| io_output_simulated |
-|---------------------|
-
-#+BEGIN_SRC sh :noweb yes
-  <<chain_module("simulation_chain", 2, simulation_chain)>>
-#+END_SRC
-
-*** Full chain (from simulation \to calibration \to reconstruction)
-#+CAPTION: Full chain processing
-#+TBLNAME: full_chain
 |------------------------------|
-| simulation_chain             |
-| calibration_chain            |
+| add_header                   |
+| tracker_s2c                  |
+| calorimeter_s2c              |
+| io_output_calibrated         |
 | process_with_calibrated_cuts |
 |------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("full_chain", 3, full_chain)>>
+  <<chain_module("calibration_chain", 5, calibration_chain)>>
+#+END_SRC
+
+*** Process after simulation selection
+#+BEGIN_SRC sh :noweb yes
+  <<if_module("process_with_simulated_cuts", cut="simulated_cut", then="calibration_chain", else="io_output_simulated_non_selected")>>
+#+END_SRC
+
+*** Simulation chain
+#+CAPTION: *Modules used by the simulation process.*
+#+TBLNAME: simulation_chain
+|-----------------------------|
+| simulation                  |
+| io_output_simulated         |
+| process_with_simulated_cuts |
+|-----------------------------|
+
+#+BEGIN_SRC sh :noweb yes
+  <<chain_module("simulation_chain", 3, simulation_chain)>>
+#+END_SRC
+
+*** Full chain (from simulation \to calibration \to reconstruction)
+#+CAPTION: *Full chain processing.*
+#+TBLNAME: full_chain
+|-----------------------------|
+| simulation_chain            |
+|-----------------------------|
+
+#+BEGIN_SRC sh :noweb yes
+  <<chain_module("full_chain", 1, full_chain)>>
 #+END_SRC
 
 *** Minimum bias chain (from simulation \to calibration \to reconstruction)
-#+CAPTION: Full chain processing without selection
+#+CAPTION: *Full chain processing without selection.*
 #+TBLNAME: minimum_bias_chain
 |---------------------------|
 | simulation                |
@@ -1461,7 +1472,7 @@ modules it contains.
 #+END_SRC
 
 *** Miscellaneous
-#+CAPTION: Reformating data
+#+CAPTION: *Reformating data.*
 #+TBLNAME: reformat_data
 |--------------------------------|
 | remove_header                  |
@@ -1561,16 +1572,16 @@ apply selection cuts on arbitrary data models.
 
 #+BEGIN_SRC sh
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = "debug"
+
+  #@description Print a final report of cut efficiencies
+  print_report : boolean = 1
 
   #@description Flag to skip the preloading of pre-registered cuts
   factory.no_preload : boolean = 0
 
-  #@description Debug flag of the cuts' factory
-  factory.debug : boolean = 0
-
   #@description A list of files that contains definition of cuts
-  cuts.configuration_files : string[5] as path =                            \
+  cuts.configuration_files : string[5] as path =                         \
     "@SNEMO_SIMULATION_CONFIGURATION@/simulated_data_cuts.conf"          \
     "@SNEMO_SIMULATION_CONFIGURATION@/calibrated_data_cuts.conf"         \
     "@SNEMO_SIMULATION_CONFIGURATION@/tracker_clustering_data_cuts.conf" \
@@ -1595,6 +1606,9 @@ This skeleton code allows to check the availability of a data bank.
 #+BEGIN_SRC sh
   echo '[name="'$cname'" type="dpp::utils_cut"]'
   echo
+  echo '#@description Cut description'
+  echo 'cut.description : string = "Check availabity of '$bname'"'
+  echo
   echo '#@description Logging priority'
   echo 'logging.priority : string = "'$logging'"'
   echo
@@ -1617,6 +1631,9 @@ This skeleton code allows to check the availability of a data bank.
   last=$(echo ${list} | sed -e 's/^.* //')
   echo '[name="'$cname'" type="cuts::multi_'$mode'_cut"]'
   echo
+  echo '#@description Cut description'
+  echo 'cut.description : string = "Multi-'$mode' cut"'
+  echo
   echo '#@description Logging priority'
   echo 'logging.priority : string = "'$logging'"'
   echo
@@ -1636,8 +1653,23 @@ This skeleton code allows to check the availability of a data bank.
 
 #+BEGIN_SRC sh :noweb yes
   <<service_preamble>>
-  <<has_bank("has_event_header",   bname="EH")>>
+#+END_SRC
+
+**** Check bank availability
+#+BEGIN_SRC sh :noweb yes
   <<has_bank("has_simulated_data", bname="SD")>>
+#+END_SRC
+
+**** Multiple cuts
+This cuts puts together all the previous declared cuts.
+#+CAPTION: *Multi selection for validating simulation process.*
+#+TBLNAME: simulated_cuts
+|--------------------|
+| has_simulated_data |
+|--------------------|
+
+#+BEGIN_SRC sh :noweb yes
+  <<multi(cname="simulated_cut", "and", 1, simulated_cuts)>>
 #+END_SRC
 
 *** Calibrated data selection
@@ -1750,7 +1782,7 @@ This skeleton code allows to check the availability of a data bank.
 
 **** Multiple cuts
 This cuts puts together all the previous declared cuts.
-#+CAPTION: Multi selection for validating calibration process
+#+CAPTION: *Multi selection for validating calibration process.*
 #+TBLNAME: calibrated_cuts
 |---------------------|
 | has_calibrated_data |
@@ -1832,7 +1864,7 @@ This cuts puts together all the previous declared cuts.
 #+END_SRC
 
 **** Multiple cuts
-#+CAPTION: Multi-selection for validating tracker clustering process
+#+CAPTION: *Multi-selection for validating tracker clustering process.*
 #+TBLNAME: tracker_clustering_cuts
 |-----------------------------|
 | has_tracker_clustering_data |
@@ -1859,7 +1891,7 @@ This cuts puts together all the previous declared cuts.
 #+END_SRC
 
 **** Multiple cuts
-#+CAPTION: Multi-selection for validating tracker trajectory process
+#+CAPTION: *Multi-selection for validating tracker trajectory process.*
 #+TBLNAME: tracker_trajectory_cuts
 |-----------------------------|
 | has_tracker_trajectory_data |
@@ -2067,7 +2099,7 @@ has_charge.type : string = "undefined"
 #+END_SRC
 
 **** Multiple cuts
-#+CAPTION: Multi-selection for validating particle tracking process
+#+CAPTION: *Multi-selection for validating particle tracking process.*
 #+TBLNAME: particle_track_cuts
 |-------------------------------|
 | has_particle_track_data       |
