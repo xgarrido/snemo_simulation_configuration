@@ -9,7 +9,7 @@
 <meta  name="author" content="Xavier Garrido" />
 <link rel="stylesheet" href="css/styles.css" />
                <link rel="stylesheet" href="css/org-pygments.css" />
-               <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" />
+               <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -57,7 +57,7 @@ for the JavaScript code in this tag.
 /*]]>*///-->
 </script><script type="text/javascript">
   function randomLinkColor() {
-      var colors = ['#67ad00', '#D5BC23', '#FF9927', '#FF2D27', '#AB0045', '#B81FC8'];
+      var colors = ['#f1c40f','#e74c3c','#3399cc','#e67e22','#67ad00','#8e44ad','#1abc9c','#003399'];
       var random_color = colors[Math.floor(Math.random() * colors.length)];
       var elements = document.querySelectorAll('a');
       [].slice.call(elements).forEach(function(elem) {
@@ -79,7 +79,7 @@ for the JavaScript code in this tag.
 </head>
 <body onload="randomLinkColor();displayTOC();"><div id="toc"></div>
 <div id="preamble" class="status">
-<a href="index.html"><i class="fa fa-home"></i></a><br/> <a href="https://github.com/xgarrido/snemo_simulation_configuration"><i class="fa fa-github"></i></a><br/>
+<a href="index.html"><i class="fa fa-home"></i></a><br/> <a href="https://github.com/xgarrido/snemo_simulation_configuration"><i class="fa fa-github"></i></a><br/> 
 </div>
 <div id="content">
 <h1 class="title">SNGenbb Manager Configuration</h1>
@@ -95,9 +95,10 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#sec-3">3. Genbb wrappers</a>
 <ul>
-<li><a href="#sec-3-1">3.1. Radioelement wrappers</a></li>
-<li><a href="#sec-3-2">3.2. Single particle generator</a></li>
-<li><a href="#sec-3-3">3.3. <span class="todo TODO">TODO</span> Combined generators</a></li>
+<li><a href="#sec-3-1">3.1. 2&nu;2&beta; isotope with energy cut</a></li>
+<li><a href="#sec-3-2">3.2. Radioelement wrappers</a></li>
+<li><a href="#sec-3-3">3.3. Single particle generator</a></li>
+<li><a href="#sec-3-4">3.4. <span class="todo TODO">TODO</span> Combined generators</a></li>
 </ul>
 </li>
 </ul>
@@ -142,7 +143,7 @@ generators.configuration_files : string[5] as <span class="org-variable-name">pa
     <span class="org-string">"@falaise:config/common/simulation/primary_events/1.0/calibration.def"</span> <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@falaise:config/common/simulation/primary_events/1.0/dbd.def"</span>         <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@falaise:config/common/simulation/primary_events/1.0/misc.def"</span>        <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngenbb_wrappers.conf"</span>
+    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/sngenbb_wrappers.conf"</span>
 </pre>
 </div>
 </div>
@@ -166,17 +167,33 @@ This section holds the configuration of several <code>genbb</code> wrappers.
 </div>
 
 <div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Radioelement wrappers</h3>
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 2&nu;2&beta; isotope with energy cut</h3>
 <div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"Se82.2nubb-2MeV"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::wdecay0"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Two neutrino double beta decay of Se-82, 2nubb [DBD]</span>
+decay_type      : <span class="org-variable-name">string</span>  = <span class="org-string">"DBD"</span>
+decay_isotope   : <span class="org-variable-name">string</span>  = <span class="org-string">"Se82"</span>
+decay_dbd_level : <span class="org-variable-name">integer</span> = 0
+decay_dbd_mode  : <span class="org-variable-name">integer</span> = 4
+energy_min      : real as <span class="org-variable-name">energy</span> = 2.0 MeV
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Radioelement wrappers</h3>
+<div class="outline-text-3" id="text-3-2">
 <p>
 This part basically provides additionnal event generator wrappers for
 SuperNEMO.
 </p>
 </div>
 
-<div id="outline-container-sec-3-1-1" class="outline-4">
-<h4 id="sec-3-1-1"><span class="section-number-4">3.1.1</span> &nbsp;<sup>214</sup>Pb &beta;&beta;0&nu;</h4>
-<div class="outline-text-4" id="text-3-1-1">
+<div id="outline-container-sec-3-2-1" class="outline-4">
+<h4 id="sec-3-2-1"><span class="section-number-4">3.2.1</span> &nbsp;<sup>214</sup>Pb &beta;&beta;0&nu;</h4>
+<div class="outline-text-4" id="text-3-2-1">
 <p>
 Following a <a href="http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2946">talk</a> given by Vladimir Treytak during Bratislava collaboration
 meeting, 2013,&nbsp;<sup>214</sup>Pb is also a 2&beta; emitter
@@ -195,9 +212,9 @@ decay_dbd_mode  : <span class="org-variable-name">integer</span> = 1
 </div>
 </div>
 
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Single particle generator</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Single particle generator</h3>
+<div class="outline-text-3" id="text-3-3">
 <p>
 Here, single particle can be generated using different energy distribution : fix
 energy, flat energy distribution given energy limits, gaussian energy
@@ -205,9 +222,9 @@ distribution or following a tabulated energy spectrum.
 </p>
 </div>
 
-<div id="outline-container-sec-3-2-1" class="outline-4">
-<h4 id="sec-3-2-1"><span class="section-number-4">3.2.1</span> Single electron with flat energy distribution</h4>
-<div class="outline-text-4" id="text-3-2-1">
+<div id="outline-container-sec-3-3-1" class="outline-4">
+<h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> Single electron with flat energy distribution</h4>
+<div class="outline-text-4" id="text-3-3-1">
 <div class="org-src-container">
 
 <pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"electron_0-3MeV_flat"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::single_particle_generator"</span>]
@@ -246,9 +263,49 @@ randomized_direction   : <span class="org-variable-name">boolean</span> = 1
 </div>
 </div>
 
-<div id="outline-container-sec-3-2-2" class="outline-4">
-<h4 id="sec-3-2-2"><span class="section-number-4">3.2.2</span> Single gamma with flat energy distribution</h4>
-<div class="outline-text-4" id="text-3-2-2">
+<div id="outline-container-sec-3-3-2" class="outline-4">
+<h4 id="sec-3-3-2"><span class="section-number-4">3.3.2</span> Single electron with conic emission</h4>
+<div class="outline-text-4" id="text-3-3-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"electron_10deg_cone"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::single_particle_generator"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Seed for the embedded random number generator:</span>
+seed                  : <span class="org-variable-name">integer</span> = 314159
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generated particle ("electron", "positron", "gamma", "alpha"):</span>
+particle_name         : <span class="org-variable-name">string</span> = <span class="org-string">"electron"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):</span>
+mode          : <span class="org-variable-name">string</span> = <span class="org-string">"monokinetic"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Direction of the emitted particle</span>
+emission_direction : <span class="org-variable-name">string</span> = <span class="org-string">"cone"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The emission cone axis (values: "+x", "-x", "+y", "-y", "+z", "-z", "30.0 45.0 degree")</span>
+cone.axis : <span class="org-variable-name">string</span> = <span class="org-string">"-z"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The default implicit angle unit</span>
+angle_unit : <span class="org-variable-name">string</span> = <span class="org-string">"degree"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The minimum emission angle (cone)</span>
+cone.min_angle : real as <span class="org-variable-name">angle</span> = 0 degree
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The maximum emission angle (cone)</span>
+cone.max_angle : real as <span class="org-variable-name">angle</span> = 10 degree
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The kinetic energy of the generated particle</span>
+energy        : real as <span class="org-variable-name">energy</span> = 3000 keV
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3-3" class="outline-4">
+<h4 id="sec-3-3-3"><span class="section-number-4">3.3.3</span> Single gamma with flat energy distribution</h4>
+<div class="outline-text-4" id="text-3-3-3">
 <div class="org-src-container">
 
 <pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"gamma_0-3MeV_flat"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::single_particle_generator"</span>]
@@ -288,10 +345,9 @@ randomized_direction   : <span class="org-variable-name">boolean</span> = 1
 </div>
 </div>
 
-
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> <span class="todo TODO">TODO</span> Combined generators</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> <span class="todo TODO">TODO</span> Combined generators</h3>
+<div class="outline-text-3" id="text-3-4">
 <p>
 Combination of several <code>genbb</code> generators can be done using
 <code>genbb::combined_particle_generator</code> object&#x2026;
@@ -301,7 +357,7 @@ Combination of several <code>genbb</code> generators can be done using
 </div>
 </div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/63522bed65d21494c0e412f72a316e61ada8a7b0">63522be</a> - 2014-05-02
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/165a7f5d9e26a57231e64b8a9e36e993104a0e92">165a7f5</a> - 2014-06-17
 </div>
 </body>
 </html>

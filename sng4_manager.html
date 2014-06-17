@@ -9,7 +9,7 @@
 <meta  name="author" content="Xavier Garrido" />
 <link rel="stylesheet" href="css/styles.css" />
                <link rel="stylesheet" href="css/org-pygments.css" />
-               <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" />
+               <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -57,7 +57,7 @@ for the JavaScript code in this tag.
 /*]]>*///-->
 </script><script type="text/javascript">
   function randomLinkColor() {
-      var colors = ['#67ad00', '#D5BC23', '#FF9927', '#FF2D27', '#AB0045', '#B81FC8'];
+      var colors = ['#f1c40f','#e74c3c','#3399cc','#e67e22','#67ad00','#8e44ad','#1abc9c','#003399'];
       var random_color = colors[Math.floor(Math.random() * colors.length)];
       var elements = document.querySelectorAll('a');
       [].slice.call(elements).forEach(function(elem) {
@@ -79,7 +79,7 @@ for the JavaScript code in this tag.
 </head>
 <body onload="randomLinkColor();displayTOC();"><div id="toc"></div>
 <div id="preamble" class="status">
-<a href="index.html"><i class="fa fa-home"></i></a><br/> <a href="https://github.com/xgarrido/snemo_simulation_configuration"><i class="fa fa-github"></i></a><br/>
+<a href="index.html"><i class="fa fa-home"></i></a><br/> <a href="https://github.com/xgarrido/snemo_simulation_configuration"><i class="fa fa-github"></i></a><br/> 
 </div>
 <div id="content">
 <h1 class="title">SNG4 Manager Configuration</h1>
@@ -189,7 +189,7 @@ cosmic muon generator. See <a href="sngenbb_manager.html">sngenbb manager</a> fi
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration file for the embedded '::genbb::manager'</span>
 manager.config : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngenbb_manager.conf"</span>
+    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/sngenbb_manager.conf"</span>
 </pre>
 </div>
 </div>
@@ -208,7 +208,7 @@ This part basically provides the location of vertex generator implemented by
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Main configuration file for the vertex generator manager</span>
 manager.config : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/sngenvertex_manager.conf"</span>
+    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/sngenvertex_manager.conf"</span>
 </pre>
 </div>
 </div>
@@ -245,7 +245,8 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 The Geometry Description Markup Language is an application-indepedent geometry
 description format based on XML<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. It is used as Geant4 toolkit bindings
 through <code>gemotools</code> converters.
- <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara"> <a href="http://gdml.web.cern.ch/GDML">http://gdml.web.cern.ch/GDML</a> </p></div>
+ <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara"> <a href="http://gdml.web.cern.ch/GDML">http://gdml.web.cern.ch/GDML</a> </p><br/></div>
+</p>
 
 <div class="org-src-container">
 
@@ -276,7 +277,7 @@ hit_processor_factory.logging.priority : <span class="org-variable-name">string<
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration file for the step hit processor factory:</span>
 hit_processor_factory.config : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/step_hit_processor_manager.conf"</span>
+    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/step_hit_processor_manager.conf"</span>
 </pre>
 </div>
 </div>
@@ -472,14 +473,14 @@ physics_constructors.particles.id     : <span class="org-variable-name">string</
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration file of the physics constructors named 'particles'</span>
 physics_constructors.particles.config : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/snparticles.conf"</span>
+    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/snparticles.conf"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Class ID of the physics constructors named 'em'</span>
 physics_constructors.em.id            : <span class="org-variable-name">string</span> = <span class="org-string">"mctools::g4::em_physics_constructor"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration file of the physics constructors named 'em'</span>
 physics_constructors.em.config        : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/snem_processes.conf"</span>
+    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/snem_processes.conf"</span>
 </pre>
 </div>
 </div>
@@ -854,7 +855,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 </div>
 </div></div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/63522bed65d21494c0e412f72a316e61ada8a7b0">63522be</a> - 2014-05-02
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/165a7f5d9e26a57231e64b8a9e36e993104a0e92">165a7f5</a> - 2014-06-17
 </div>
 </body>
 </html>

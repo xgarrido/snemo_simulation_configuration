@@ -9,7 +9,7 @@
 <meta  name="author" content="Xavier Garrido" />
 <link rel="stylesheet" href="css/styles.css" />
                <link rel="stylesheet" href="css/org-pygments.css" />
-               <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" />
+               <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -57,7 +57,7 @@ for the JavaScript code in this tag.
 /*]]>*///-->
 </script><script type="text/javascript">
   function randomLinkColor() {
-      var colors = ['#67ad00', '#D5BC23', '#FF9927', '#FF2D27', '#AB0045', '#B81FC8'];
+      var colors = ['#f1c40f','#e74c3c','#3399cc','#e67e22','#67ad00','#8e44ad','#1abc9c','#003399'];
       var random_color = colors[Math.floor(Math.random() * colors.length)];
       var elements = document.querySelectorAll('a');
       [].slice.call(elements).forEach(function(elem) {
@@ -79,7 +79,7 @@ for the JavaScript code in this tag.
 </head>
 <body onload="randomLinkColor();displayTOC();"><div id="toc"></div>
 <div id="preamble" class="status">
-<a href="index.html"><i class="fa fa-home"></i></a><br/> <a href="https://github.com/xgarrido/snemo_simulation_configuration"><i class="fa fa-github"></i></a><br/>
+<a href="index.html"><i class="fa fa-home"></i></a><br/> <a href="https://github.com/xgarrido/snemo_simulation_configuration"><i class="fa fa-github"></i></a><br/> 
 </div>
 <div id="content">
 <h1 class="title">SNGeometry Manager Configuration</h1>
@@ -292,10 +292,10 @@ plugins.factory_no_preload : <span class="org-variable-name">boolean</span> = 0
 plugins.force_initialization_at_load : <span class="org-variable-name">boolean</span> = 0
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration files for geometry manager's plugins</span>
-plugins.configuration_files : string[3] as <span class="org-variable-name">path</span> =                                        <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/materials_plugin.conf"</span>      <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/magnetic_field_plugin.conf"</span> <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/locator_plugin.conf"</span>
+plugins.configuration_files : string[3] as <span class="org-variable-name">path</span> =                 <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/materials_plugin.conf"</span>      <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/magnetic_field_plugin.conf"</span> <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/locator_plugin.conf"</span>
 </pre>
 </div>
 </div>
@@ -346,8 +346,27 @@ materials.logging.priority : <span class="org-variable-name">string</span> = <sp
 </div>
 
 <div id="outline-container-sec-3-1-3" class="outline-4">
-<h4 id="sec-3-1-3"><span class="section-number-4">3.1.3</span> Allow overloading of materials</h4>
+<h4 id="sec-3-1-3"><span class="section-number-4">3.1.3</span> Use isotope mass database</h4>
 <div class="outline-text-4" id="text-3-1-3">
+<p>
+Recent <a href="https://nemo.lpc-caen.in2p3.fr/changeset/14821">release</a> of <code>materials</code> component changes the default behavior which was
+actually wrong (see fix <a href="https://nemo.lpc-caen.in2p3.fr/changeset/14824">14824</a>). The default configuration is not to use any kind
+of database. To allow the use of <a href="https://www-nds.iaea.org/amdc/">Atomic Mass Evaluation</a> data base, we should
+indicate it to <code>materials</code> manager.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Use AME 2003</span>
+materials.load_isotope_mass_data : <span class="org-variable-name">boolean</span> = 1
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1-4" class="outline-4">
+<h4 id="sec-3-1-4"><span class="section-number-4">3.1.4</span> Allow overloading of materials</h4>
+<div class="outline-text-4" id="text-3-1-4">
 <p>
 This property allows the overloading of some materials as it is done, for
 example, in <a href="#sec-3-2">3.2</a> section.
@@ -362,9 +381,9 @@ materials.alias_allow_overload : <span class="org-variable-name">boolean</span> 
 </div>
 </div>
 
-<div id="outline-container-sec-3-1-4" class="outline-4">
-<h4 id="sec-3-1-4"><span class="section-number-4">3.1.4</span> Files</h4>
-<div class="outline-text-4" id="text-3-1-4">
+<div id="outline-container-sec-3-1-5" class="outline-4">
+<h4 id="sec-3-1-5"><span class="section-number-4">3.1.5</span> Files</h4>
+<div class="outline-text-4" id="text-3-1-5">
 <div class="org-src-container">
 
 <pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description List of files describing the materials</span>
@@ -375,7 +394,7 @@ materials.configuration_files : string[7] as <span class="org-variable-name">pat
     <span class="org-string">"@falaise:config/common/geometry/materials/1.0/elements.def"</span>          <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@falaise:config/common/geometry/materials/1.0/materials.def"</span>         <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@falaise:config/common/geometry/materials/1.0/materials_aliases.def"</span> <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/materials_aliases.def"</span>
+    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/materials_aliases.def"</span>
 </pre>
 </div>
 </div>
@@ -454,7 +473,7 @@ manager.services.geometry : <span class="org-variable-name">string</span> = <spa
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description List of EM fields definitions files</span>
 manager.field_definitions_filenames : string[1] as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"${SNAILWARE_SIMULATION_DIR}/snemo_configuration/current/magnetic_field_drivers.conf"</span>
+    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/magnetic_field_drivers.conf"</span>
 </pre>
 </div>
 
@@ -587,7 +606,7 @@ locators.module_number : <span class="org-variable-name">integer</span> = 0
 </div>
 </div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/63522bed65d21494c0e412f72a316e61ada8a7b0">63522be</a> - 2014-05-02
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/165a7f5d9e26a57231e64b8a9e36e993104a0e92">165a7f5</a> - 2014-06-17
 </div>
 </body>
 </html>
