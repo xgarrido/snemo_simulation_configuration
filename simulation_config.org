@@ -489,7 +489,7 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 **** Event generator
 #+BEGIN_SRC sh
   #@description The event generator PRNG label
-  manager.event_generator_name  : string  = "Se82.0nubb"
+  manager.event_generator_name  : string  = "electron_monokinetic"
 #+END_SRC
 **** G4 manager
 The full =geant4= configuration can be found in the [[file:./sng4_manager.org][sng4_manager]] file.
@@ -1565,14 +1565,14 @@ apply selection cuts on arbitrary data models.
       "@SNEMO_SIMULATION_CONFIGURATION@/cut_manager.conf"
 #+END_SRC
 
-*** Manager
+*** Manager configuration
 :PROPERTIES:
 :TANGLE: cut_manager.conf
 :END:
 
 #+BEGIN_SRC sh
   #@description Logging priority
-  logging.priority : string = "debug"
+  logging.priority : string = "warning"
 
   #@description Print a final report of cut efficiencies
   print_report : boolean = 1
@@ -1690,6 +1690,9 @@ This cuts puts together all the previous declared cuts.
 #+BEGIN_SRC sh
   [name="has_cd_calorimeter" type="snemo::cut::calibrated_data_cut"]
 
+  #@description Cut description
+  cut.description : string = "Select calibrated calorimeter hit"
+
   #@description Logging priority
   logging.priority : string = "warning"
 
@@ -1714,6 +1717,9 @@ This cuts puts together all the previous declared cuts.
 #+BEGIN_SRC sh
   [name="cd_calorimeter_cut" type="snemo::cut::calibrated_data_cut"]
 
+  #@description Cut description
+  cut.description : string = "Select a given number of calibrated calorimeter hits"
+
   #@description Logging priority
   logging.priority : string = "warning"
 
@@ -1727,15 +1733,18 @@ This cuts puts together all the previous declared cuts.
   range_hit_category.category : string = "calorimeter"
 
   #@description Minimal number of calibrated hits in the choosen category
-  range_hit_category.min : integer = 2
+  range_hit_category.min : integer = 1
 
   #@description Maximal number of calibrated hits in the choosen category
-  range_hit_category.max : integer = 2
+  range_hit_category.max : integer = 1
 #+END_SRC
 
 **** Check calibrated tracker availability
 #+BEGIN_SRC sh
   [name="has_cd_tracker" type="snemo::cut::calibrated_data_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select calibrated tracker hit"
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1760,6 +1769,9 @@ This cuts puts together all the previous declared cuts.
 **** Select number of calibrated tracker hits
 #+BEGIN_SRC sh
   [name="cd_tracker_cut" type="snemo::cut::calibrated_data_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select a given number of calibrated tracker hits"
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1814,6 +1826,9 @@ This cuts puts together all the previous declared cuts.
 #+BEGIN_SRC sh
   [name="has_cluster" type="snemo::cut::tracker_clustering_data_cut"]
 
+  #@description Cut description
+  cut.description : string = "Select a tracker cluster"
+
   #@description Logging priority
   logging.priority : string = "warning"
 
@@ -1827,6 +1842,9 @@ This cuts puts together all the previous declared cuts.
 #+BEGIN_SRC sh
   [name="cluster_range_cut" type="snemo::cut::tracker_clustering_data_cut"]
 
+  #@description Cut description
+  cut.description : string = "Select a given number of tracker clusters"
+
   #@description Logging priority
   logging.priority : string = "warning"
 
@@ -1837,10 +1855,10 @@ This cuts puts together all the previous declared cuts.
   mode.range_cluster : boolean = 1
 
   #@description Minimal number of clusters
-  range_cluster.min : integer = 2
+  range_cluster.min : integer = 1
 
   #@description Maximal number of clusters
-  range_cluster.max : integer = 4
+  range_cluster.max : integer = 1
 #+END_SRC
 
 **** Select number of hit within a cluster                       :notused:
@@ -1919,6 +1937,9 @@ This cuts puts together all the previous declared cuts.
 #+BEGIN_SRC sh
   [name="has_particle" type="snemo::cut::particle_track_data_cut"]
 
+  #@description Cut description
+  cut.description : string = "Select reconstructed particle"
+
   #@description Logging priority
   logging.priority : string = "warning"
 
@@ -1932,6 +1953,9 @@ This cuts puts together all the previous declared cuts.
 #+BEGIN_SRC sh
   [name="range_particle" type="snemo::cut::particle_track_data_cut"]
 
+  #@description Cut description
+  cut.description : string = "Select a number of particle tracks"
+
   #@description Logging priority
   logging.priority : string = "warning"
 
@@ -1941,16 +1965,19 @@ This cuts puts together all the previous declared cuts.
   #@description Activate the check for multiplicity of particles trajectories
   mode.range_particles : boolean = 1
 
-  #@description Minimal number of particle trajectories in the choosen category
-  range_particles.min : integer = 2
+  #@description Minimal number of particle track
+  range_particles.min : integer = 1
 
-  #@description Maximal number of particle trajectories in the choosen category
-  range_particles.max : integer = 2
+  #@description Maximal number of particle track
+  range_particles.max : integer = 1
 #+END_SRC
 
 **** Check association with calorimeter block
 #+BEGIN_SRC sh
   [name="has_associated_calorimeter" type="snemo::cut::particle_track_data_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select association particle/calorimeter"
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1965,6 +1992,9 @@ This cuts puts together all the previous declared cuts.
 **** Select number of associated calorimeter blocks
 #+BEGIN_SRC sh
   [name="range_associated_calorimeters" type="snemo::cut::particle_track_data_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select a number of associated calorimeter to one particle"
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1986,6 +2016,9 @@ This cuts puts together all the previous declared cuts.
 #+BEGIN_SRC sh
   [name="has_vertex_on_foil" type="snemo::cut::particle_track_data_cut"]
 
+  #@description Cut description
+  cut.description : string = "Select particle with vertex on the source foil"
+
   #@description Logging priority
   logging.priority : string = "warning"
 
@@ -1998,51 +2031,60 @@ This cuts puts together all the previous declared cuts.
 
 **** Select particle charge
 #+BEGIN_SRC sh
-[name="has_negative_charge" type="snemo::cut::particle_track_data_cut"]
+  [name="has_negative_charge" type="snemo::cut::particle_track_data_cut"]
 
-#@description Logging priority
-logging.priority : string = "warning"
+  #@description Cut description
+  cut.description : string = "Select only negative charge particle"
 
-#@description The label/name of the 'particle track data' bank (mandatory)
-PTD_label : string = "PTD"
+  #@description Logging priority
+  logging.priority : string = "warning"
 
-#@description Activate the check for a special boolean (flag) property
-mode.has_charge : boolean = 1
+  #@description The label/name of the 'particle track data' bank (mandatory)
+  PTD_label : string = "PTD"
 
-#@description Name of the MC hit category to be checked
-has_charge.type : string = "negative"
+  #@description Activate the check for a special boolean (flag) property
+  mode.has_charge : boolean = 1
+
+  #@description Name of the MC hit category to be checked
+  has_charge.type : string = "negative"
 #+END_SRC
 
 #+BEGIN_SRC sh
-[name="has_positive_charge" type="snemo::cut::particle_track_data_cut"]
+  [name="has_positive_charge" type="snemo::cut::particle_track_data_cut"]
 
-#@description Logging priority
-logging.priority : string = "warning"
+  #@description Cut description
+  cut.description : string = "Select only positive charge particle"
 
-#@description The label/name of the 'particle track data' bank (mandatory)
-PTD_label : string = "PTD"
+  #@description Logging priority
+  logging.priority : string = "warning"
 
-#@description Activate the check for a special boolean (flag) property
-mode.has_charge : boolean = 1
+  #@description The label/name of the 'particle track data' bank (mandatory)
+  PTD_label : string = "PTD"
 
-#@description Name of the MC hit category to be checked
-has_charge.type : string = "positive"
+  #@description Activate the check for a special boolean (flag) property
+  mode.has_charge : boolean = 1
+
+  #@description Name of the MC hit category to be checked
+  has_charge.type : string = "positive"
 #+END_SRC
 
 #+BEGIN_SRC sh
-[name="has_undefined_charge" type="snemo::cut::particle_track_data_cut"]
+  [name="has_undefined_charge" type="snemo::cut::particle_track_data_cut"]
 
-#@description Logging priority
-logging.priority : string = "warning"
+  #@description Cut description
+  cut.description : string = "Select only undefined charge particle"
 
-#@description The label/name of the 'particle track data' bank (mandatory)
-PTD_label : string = "PTD"
+  #@description Logging priority
+  logging.priority : string = "warning"
 
-#@description Activate the check for a special boolean (flag) property
-mode.has_charge : boolean = 1
+  #@description The label/name of the 'particle track data' bank (mandatory)
+  PTD_label : string = "PTD"
 
-#@description Name of the MC hit category to be checked
-has_charge.type : string = "undefined"
+  #@description Activate the check for a special boolean (flag) property
+  mode.has_charge : boolean = 1
+
+  #@description Name of the MC hit category to be checked
+  has_charge.type : string = "undefined"
 #+END_SRC
 
 **** Reconstruction parameters selection                         :notused:
@@ -2110,11 +2152,10 @@ has_charge.type : string = "undefined"
 | has_vertex_on_foil            |
 | has_negative_charge           |
 |-------------------------------|
-# | chi2_cut                      |
 
 #+BEGIN_SRC sh :noweb yes
   <<multi("particle_track_cut", "and", 7, particle_track_cuts)>>
-  #+END_SRC
+#+END_SRC
 * Running SN@ilWare processing chain
 
 Since this configuration will run through the executable =bxdpp_processing= from
