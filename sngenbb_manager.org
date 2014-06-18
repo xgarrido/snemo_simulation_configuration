@@ -72,10 +72,29 @@ meeting, 2013,\nbsp^{214}Pb is also a 2\beta emitter
   decay_dbd_mode  : integer = 1
 #+END_SRC
 
-** Single particle generator
+** Single particle generators
 Here, single particle can be generated using different energy distribution : fix
 energy, flat energy distribution given energy limits, gaussian energy
 distribution or following a tabulated energy spectrum.
+
+*** Single monokinetic electron
+#+BEGIN_SRC sh
+  [name="electron_monokinetic" type="genbb::single_particle_generator"]
+
+  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+
+  #@description Generated particle ("electron", "positron", "gamma", "alpha"):
+  particle_name : string = "electron"
+
+  #@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):
+  mode : string = "monokinetic"
+
+  #@description Value of the particle energy
+  energy : real as energy = 1000. keV
+
+  #@description Flag for random emission
+  randomized_direction : boolean = 1
+#+END_SRC
 
 *** Single electron with flat energy distribution
 #+BEGIN_SRC sh
@@ -83,49 +102,61 @@ distribution or following a tabulated energy spectrum.
 
   #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
 
-  #@description Seed for the embedded random number generator:
-  seed                  : integer = 314159
-
   #@description Generated particle ("electron", "positron", "gamma", "alpha"):
-  particle_name         : string = "electron"
+  particle_name : string = "electron"
 
   #@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):
-  mode                  : string = "energy_range"
+  mode : string = "energy_range"
 
-  ### Only for "energy_range" mode:
-  min_energy            : real   = 0000.
-  max_energy            : real   = 3000.
-  energy_unit           : string = "keV"
+  #@description Minimal energy value
+  min_energy : real as energy =    0. keV
 
-  ### Only for "gaussian_energy" mode:
-  #mean_energy           : real   = 1000.
-  #sigma_energy          : real   =  100.
-  #energy_unit           : string = "keV"
-
-  ### Only for "monokinetic" mode:
-  #energy                : real   = 5500.
-  #energy_unit           : string = "keV"
+  #@description Maximal energy value
+  max_energy : real as energy = 3000. keV
 
   ### Only for "spectrum" mode:
   #spectrum.data_file    : string = "${SNGENBB_DATA_DIR}/testing/data/sample_tabulated_energy_spectrum.data"
 
-  randomized_direction   : boolean = 1
+  #@description Flag for random emission
+  randomized_direction : boolean = 1
+#+END_SRC
+
+*** Single electron with gaussian energy distribution
+#+BEGIN_SRC sh
+  [name="electron_gaussian_energy" type="genbb::single_particle_generator"]
+
+  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+
+  #@description Generated particle ("electron", "positron", "gamma", "alpha"):
+  particle_name : string = "electron"
+
+  #@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):
+  mode : string = "energy_range"
+
+  #@description Mean energy for the gaussian distribution
+  mean_energy : real as energy = 1000. keV
+
+  #@description Sigma value for the gaussian distribution
+  sigma_energy : real as energy =  100. keV
+
+  ### Only for "spectrum" mode:
+  #spectrum.data_file    : string = "${SNGENBB_DATA_DIR}/testing/data/sample_tabulated_energy_spectrum.data"
+
+  #@description Flag for random emission
+  randomized_direction : boolean = 1
 #+END_SRC
 
 *** Single electron with conic emission
 #+BEGIN_SRC sh
-  [name="electron_10deg_cone" type="genbb::single_particle_generator"]
+  [name="electron_monokinetic_with_cone" type="genbb::single_particle_generator"]
 
   #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
 
-  #@description Seed for the embedded random number generator:
-  seed                  : integer = 314159
-
   #@description Generated particle ("electron", "positron", "gamma", "alpha"):
-  particle_name         : string = "electron"
+  particle_name : string = "electron"
 
   #@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):
-  mode          : string = "monokinetic"
+  mode : string = "monokinetic"
 
   #@description Direction of the emitted particle
   emission_direction : string = "cone"
@@ -143,7 +174,7 @@ distribution or following a tabulated energy spectrum.
   cone.max_angle : real as angle = 10 degree
 
   #@description The kinetic energy of the generated particle
-  energy        : real as energy = 3000 keV
+  energy : real as energy = 3000 keV
 #+END_SRC
 
 *** Single gamma with flat energy distribution
