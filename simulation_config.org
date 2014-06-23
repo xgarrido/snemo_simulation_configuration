@@ -489,7 +489,7 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 **** Event generator
 #+BEGIN_SRC sh
   #@description The event generator PRNG label
-  manager.event_generator_name  : string  = "electron_monokinetic"
+  manager.event_generator_name  : string  = "Se82.0nubb"
 #+END_SRC
 **** G4 manager
 The full =geant4= configuration can be found in the [[file:./sng4_manager.org][sng4_manager]] file.
@@ -1733,10 +1733,10 @@ This cuts puts together all the previous declared cuts.
   range_hit_category.category : string = "calorimeter"
 
   #@description Minimal number of calibrated hits in the choosen category
-  range_hit_category.min : integer = 1
+  range_hit_category.min : integer = 2
 
   #@description Maximal number of calibrated hits in the choosen category
-  range_hit_category.max : integer = 1
+  range_hit_category.max : integer = 2
 #+END_SRC
 
 **** Check calibrated tracker availability
@@ -1855,10 +1855,10 @@ This cuts puts together all the previous declared cuts.
   mode.range_cluster : boolean = 1
 
   #@description Minimal number of clusters
-  range_cluster.min : integer = 1
+  range_cluster.min : integer = 2
 
   #@description Maximal number of clusters
-  range_cluster.max : integer = 1
+  range_cluster.max : integer = 4
 #+END_SRC
 
 **** Select number of hit within a cluster                       :notused:
@@ -1966,10 +1966,10 @@ This cuts puts together all the previous declared cuts.
   mode.range_particles : boolean = 1
 
   #@description Minimal number of particle track
-  range_particles.min : integer = 1
+  range_particles.min : integer = 2
 
   #@description Maximal number of particle track
-  range_particles.max : integer = 1
+  range_particles.max : integer = 2
 #+END_SRC
 
 **** Check association with calorimeter block
