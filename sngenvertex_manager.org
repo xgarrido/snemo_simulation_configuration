@@ -163,7 +163,7 @@ Insert preamble
 
     #@description Surface mode box top face activation
     mode.surface.top  : boolean = 1
-  #+END_SRC
+    #+END_SRC
 ** Tracker vertices
 :PROPERTIES:
 :TANGLE: tracker_vg.lis
@@ -175,6 +175,8 @@ Insert preamble
   #@key_label   "name"
   #@meta_label  "type"
 #+END_SRC
+
+*** Vertices on tracker wires
 
 - Generate vertex from the bulk volume of the anode wires:
 
@@ -244,6 +246,65 @@ Insert preamble
     #@description Surface mode box top face activation
     mode.surface.top    : boolean = 0
   #+END_SRC
+
+*** Vertices within tracker volumes (wires included)
+
+Geometrical model are not identical wrt. the source foil /i.e./ the /front/ part
+($x>0$) is different to the /back/ part ($x<0$) due to numbering scheme
+difference. To generate vertices in these volumes we must define two independent
+vertex generators and then combined them. In such case, the weight must be the
+same since the gaz volume should be equal.
+
+**** Back tracker volume
+#+BEGIN_SRC sh
+  [name="tracker_back_submodule_bulk" type="genvtx::box_model_vg"]
+
+  #@config Vertex generation from the tracker back submodule volume
+
+  #@description Logging priority
+  logging.priority  : string = "warning"
+
+  #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
+  origin : string = "category='tracker_submodule' side={0}"
+
+  #@description Generation mode ("surface" or "bulk")
+  mode   : string = "bulk"
+#+END_SRC
+
+**** Front tracker volume
+#+BEGIN_SRC sh
+  [name="tracker_front_submodule_bulk" type="genvtx::box_model_vg"]
+
+  #@config Vertex generation from the tracker front submodule volume
+
+  #@description Logging priority
+  logging.priority  : string = "warning"
+
+  #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
+  origin : string = "category='tracker_submodule' side={1}"
+
+  #@description Generation mode ("surface" or "bulk")
+  mode   : string = "bulk"
+#+END_SRC
+**** Combined vertex
+#+BEGIN_SRC sh
+  [name="tracker_submodules_bulk" type="genvtx::combined_vg"]
+
+  #@config Vertex generation from the bulk volume of the tracker volumes
+
+  #@description Logging priority
+  logging.priority  : string = "warning"
+
+  #@description Geometry version requirement (not working with version lower than 2.0)
+  geometry.setup_requirement : string = "snemo::demonstrator(>=3)"
+
+  #@description Vertex generator names
+  generators : string[2]  = "tracker_front_submodule_bulk" "tracker_back_submodule_bulk"
+
+  #@description Absolute weight of different generators
+  generators.tracker_front_submodule_bulk.absolute_weight : real = 1.0
+  generators.tracker_back_submodule_bulk.absolute_weight  : real = 1.0
+#+END_SRC
 ** Source vertices
 :PROPERTIES:
 :TANGLE: source_vg.lis
@@ -371,8 +432,8 @@ Insert preamble
     generators : string[2]  = "source_strips_external_bulk" "source_strips_internal_bulk"
 
     #@description Absolute weight of different generators
-    generators.source_strips_external_bulk.absolute_weight : real  = 0.054
-    generators.source_strips_internal_bulk.absolute_weight : real  = 1.0
+    generators.source_strips_external_bulk.absolute_weight : real = 0.054
+    generators.source_strips_internal_bulk.absolute_weight : real = 1.0
   #+END_SRC
 
 - Generate vertex from the surface of all the source foils:
