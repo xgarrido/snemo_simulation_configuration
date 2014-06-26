@@ -248,49 +248,115 @@ Insert preamble
   #+END_SRC
 
 *** Vertices within tracker volumes (wires included)
+**** Generator using category list
+This vertex generator is quite classical in the way that it uses the category
+file list and especially, the =drift_cell_core= category. This means that
+vertices are going to be generated in the cell core, wires included, but not
+inside the gap between foil and first tracker layer as well as not within the
+gap between the main calorimeter walls and the last tracker layer. In order to
+get a full coverage of tracker gaz, you may have a look to the
 
-Geometrical model are not identical wrt. the source foil /i.e./ the /front/ part
-($x>0$) is different to the /back/ part ($x<0$) due to numbering scheme
-difference. To generate vertices in these volumes we must define two independent
-vertex generators and then combined them. In such case, the weight must be the
-same since the gaz volume should be equal.
+#+BEGIN_SRC sh :tangle no
+  [name="tracker_drift_cell_bulk" type="genvtx::box_model_vg"]
 
-**** Back tracker volume
-#+BEGIN_SRC sh
-  [name="tracker_back_submodule_bulk" type="genvtx::box_model_vg"]
-
-  #@config Vertex generation from the tracker back submodule volume
-
-  #@description Logging priority
-  logging.priority  : string = "warning"
-
-  #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
-  origin : string = "category='tracker_submodule' side={0}"
-
-  #@description Generation mode ("surface" or "bulk")
-  mode   : string = "bulk"
-#+END_SRC
-
-**** Front tracker volume
-#+BEGIN_SRC sh
-  [name="tracker_front_submodule_bulk" type="genvtx::box_model_vg"]
-
-  #@config Vertex generation from the tracker front submodule volume
+  #@config Vertex generation from the core of Geiger cell
 
   #@description Logging priority
   logging.priority  : string = "warning"
 
   #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
-  origin : string = "category='tracker_submodule' side={1}"
+  origin : string = "category='drift_cell_core' module={*} side={*} layer={*} row={*}"
 
   #@description Generation mode ("surface" or "bulk")
   mode   : string = "bulk"
 #+END_SRC
-**** Combined vertex
-#+BEGIN_SRC sh
-  [name="tracker_submodules_bulk" type="genvtx::combined_vg"]
 
-  #@config Vertex generation from the bulk volume of the tracker volumes
+**** Vertex generator using hardcoded geometry position
+The following vertex generator defines a box which dimensions are hardcoded by
+following the dimensions between source foil and calroimeter walls. This means
+that any change in the geometry setup like an increase of source foil thickness
+will need to update this box dimensions. Nevertheless, this vertex generator
+allows to shoot events from the full tracker volumes so basically where tracker
+gaz will remain.
+
+To calculate the box size and the box placement, the following dimensions have
+been used :
+- tracker volume is a box of 405\times5008\times3030 mm,
+- the source core model has a thickness of 58 mm,
+- the source foil thickness is 167 µm.
+
+#+BEGIN_SRC sh
+  [name="tracker_volume_box" type="genvtx::box_vg"]
+
+  #@config Vertex generation from the tracker gaz
+
+  #@description Logging priority
+  logging.priority  : string = "warning"
+
+  #@description Generation mode ("surface" or "bulk")
+  mode   : string = "bulk"
+
+  #@description Box x size
+  box.x : real as length =  433.9165 mm
+
+  #@description Box y size
+  box.y : real as length = 5008.0 mm
+
+  #@description Box z size
+  box.z : real as length = 3030.0 mm
+#+END_SRC
+
+Then we defines 2 placement : one for the front part ($x>0$) of the tracker and
+another one for the back part ($x<0$).
+
+#+BEGIN_SRC sh
+  [name="tracker_front_volume_bulk" type="genvtx::placement_vg"]
+
+  #@config Vertex generation from the front tracker volume
+
+  #@description Logging priority
+  logging.priority  : string = "warning"
+
+  #@description Vertex generator name to place
+  vertex_generator.name : string = "tracker_volume_box"
+
+  #@description Placement along x-axis
+  placement.x : real as length = 217.04175 mm
+
+  #@description Placement along y-axis
+  placement.y : real as length = 0.0 mm
+
+  #@description Placement along z-axis
+  placement.z : real as length = 0.0 mm
+#+END_SRC
+
+#+BEGIN_SRC sh
+  [name="tracker_back_volume_bulk" type="genvtx::placement_vg"]
+
+  #@config Vertex generation from the front tracker volume
+
+  #@description Logging priority
+  logging.priority  : string = "warning"
+
+  #@description Vertex generator name to place
+  vertex_generator.name : string = "tracker_volume_box"
+
+  #@description Placement along x-axis
+  placement.x : real as length = -217.04175 mm
+
+  #@description Placement along y-axis
+  placement.y : real as length = 0.0 mm
+
+  #@description Placement along z-axis
+  placement.z : real as length = 0.0 mm
+#+END_SRC
+
+We finally define a combined vertex generator in order to mix the two previous
+vertex generators:
+#+BEGIN_SRC sh
+  [name="tracker_volume_bulk" type="genvtx::combined_vg"]
+
+  #@config Vertex generation from the bulk volume of the tracker
 
   #@description Logging priority
   logging.priority  : string = "warning"
@@ -299,12 +365,14 @@ same since the gaz volume should be equal.
   geometry.setup_requirement : string = "snemo::demonstrator(>=3)"
 
   #@description Vertex generator names
-  generators : string[2]  = "tracker_front_submodule_bulk" "tracker_back_submodule_bulk"
+  generators : string[2]  = "tracker_front_volume_bulk" "tracker_back_volume_bulk"
 
   #@description Absolute weight of different generators
-  generators.tracker_front_submodule_bulk.absolute_weight : real = 1.0
-  generators.tracker_back_submodule_bulk.absolute_weight  : real = 1.0
+  generators.tracker_front_volume_bulk.absolute_weight : real = 1.0
+  generators.tracker_back_volume_bulk.absolute_weight  : real = 1.0
 #+END_SRC
+
+
 ** Source vertices
 :PROPERTIES:
 :TANGLE: source_vg.lis
