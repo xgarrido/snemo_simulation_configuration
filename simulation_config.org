@@ -835,66 +835,51 @@ different particles.
   MTC.max_sum_distance   : integer = 0
 #+END_SRC
 
-We also add an option to not split the tracker chamber when pre clustering is
-done by =TrackerPreClusterizer=. This option is set to true by default but here
-with the =mock_tracker_clustering_module= it does not make sense since cells are
-already ordered by time. So to avoid confusion (especially to avoid double
-tracker clustering solution), we do not ak pre-clustering to split the chamber.
+# We also add an option to not split the tracker chamber when pre clustering is
+# done by =TrackerPreClusterizer=. This option is set to true by default but here
+# with the =mock_tracker_clustering_module= it does not make sense since cells are
+# already ordered by time. So to avoid confusion (especially to avoid double
+# tracker clustering solution), we do not ak pre-clustering to split the chamber.
 
-#+BEGIN_SRC sh
-  #@description Tracker pre clusterizer splitting chamber option
-  TPC.split_chamber : boolean = 0
-#+END_SRC
+# #+BEGIN_SRC sh
+#   #@description Tracker pre clusterizer splitting chamber option
+#   TPC.split_chamber : boolean = 0
+# #+END_SRC
 
-**** Cellular Automaton Tracker                               :notworking:
+**** Cellular Automaton Tracker
 
 This algorithm provides tons of parameters and is based in F. Nova work. A
 somewhat complete overview of CAT main features can be seen in DocDb [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2120][#2120]].
 
 #+BEGIN_SRC sh
-  [name="cat_tracker_clustering" type="snemo::reconstruction::processing::tracker_clustering_module"]
+   [name="cat_tracker_clustering" type="snemo::reconstruction::cat_tracker_clustering_module"]
 
-  #@description Logging support
-  logging.priority : string = "warning"
+   #@description Logging support
+   logging.priority : string = "warning"
 
-  #@description The label of the Geometry service
-  Geo_label : string  = "Geo"
+   #@description The label of the Geometry service
+   Geo_label : string  = "Geo"
 
-  #@description The label of the 'Calibrated Data' bank
-  CD_label : string  = "CD"
+   #@description The label of the 'Calibrated Data' bank
+   CD_label : string  = "CD"
 
-  #@description The label of the 'Tracker Clustering Data' bank
-  TCD_label : string  = "TCD"
+   #@description The label of the 'Tracker Clustering Data' bank
+   TCD_label : string  = "TCD"
 
-  #@description The ID of the tracker hits clustering algorithm
-  algorithm : string  = "CAT"
+   #@description Activation of the clustering of prompt hits
+   TPC.processing_prompt_hits : boolean = 1
 
-  #@description Activation of the clustering of prompt hits
-  TPC.processing_prompt_hits : boolean = 1
+   #@description Activation of the clustering of delayed hits
+   TPC.processing_delayed_hits : boolean = 0
 
-  #@description Activation of the clustering of delayed hits
-  TPC.processing_delayed_hits : boolean = 1
+   # #@description The time width of the window for collecting candidate clusters of delayed hits (in microsecond)
+   # TPC.delayed_hit_cluster_time : real = 10.0 # microsec
 
-  #@description The time width of the window for collecting candidate clusters of delayed hits (in microsecond)
-  TPC.delayed_hit_cluster_time : real = 10.0 # microsec
+   #@description Activation of the clustering of delayed hits
+   TPC.split_chamber : boolean = 0
 
-  #@description Activation of the clustering of delayed hits
-  TPC.split_chamber : boolean = 0
-
-  #@description CAT verbosity level
-  CAT.level : string = "NORMAL"
-
-  #@description CAT param
-  CAT.ratio : real = 10.
-
-  #@description CAT number of layers to skip
-  CAT.nofflayers : integer = 1
-
-  #@description CAT param
-  #CAT.max_time : real = 5000
-
-  #@description CAT driver param
-  #CAT.driver.sigma_z_factor : real = 1.
+   #@description Force the CAT algorithm to consider a 25 gauss magnetic field (temporary trick)
+   CAT.magnetic_field : real = 25 gauss
 #+END_SRC
 
 **** SULTAN tracker
