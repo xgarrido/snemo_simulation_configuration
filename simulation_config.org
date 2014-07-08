@@ -763,7 +763,7 @@ for the quenching of alpha particles.
 **** Scintillator relaxation time for time resolution
 #+BEGIN_SRC sh
   #@description Time resolution parameters
-  scintillator_relaxation_time : real = 6.0 # ns
+  scintillator_relaxation_time : real as time = 6.0 ns
 #+END_SRC
 
 **** Energy resolutions
