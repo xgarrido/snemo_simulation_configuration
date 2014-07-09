@@ -1957,12 +1957,12 @@ This cuts puts together all the previous declared cuts.
   range_particles.max : integer = 2
 #+END_SRC
 
-**** Check association with calorimeter block
+**** Check association with calorimeter hits
 #+BEGIN_SRC sh
-  [name="has_associated_calorimeter" type="snemo::cut::particle_track_data_cut"]
+  [name="has_associated_calorimeter_hits" type="snemo::cut::particle_track_data_cut"]
 
   #@description Cut description
-  cut.description : string = "Select association particle/calorimeter"
+  cut.description : string = "Select association particle/calorimeter hits"
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1970,16 +1970,16 @@ This cuts puts together all the previous declared cuts.
   #@description The label/name of the 'calibrated data' bank (mandatory)
   PTD_label : string = "PTD"
 
-  #@description Activate the check for association between track and calorimeter
-  mode.has_associated_calorimeters : boolean = 1
+  #@description Activate the check for association between track and calorimeter hits
+  mode.has_associated_calorimeter_hits : boolean = 1
 #+END_SRC
 
-**** Select number of associated calorimeter blocks
+**** Select number of associated calorimeter hits
 #+BEGIN_SRC sh
-  [name="range_associated_calorimeters" type="snemo::cut::particle_track_data_cut"]
+  [name="range_associated_calorimeter_hits" type="snemo::cut::particle_track_data_cut"]
 
   #@description Cut description
-  cut.description : string = "Select a number of associated calorimeter to one particle"
+  cut.description : string = "Select a number of associated calorimeter hits to one particle"
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1987,14 +1987,14 @@ This cuts puts together all the previous declared cuts.
   #@description The label/name of the 'calibrated data' bank (mandatory)
   PTD_label : string = "PTD"
 
-  #@description Activate the check for multiplicity of associated calorimeters
-  mode.range_associated_calorimeters : boolean = 1
+  #@description Activate the check for multiplicity of associated calorimeter hits
+  mode.range_associated_calorimeter_hits : boolean = 1
 
-  #@description Minimal number of associated calorimeters in the choosen category
-  range_associated_calorimeters.min : integer = 1
+  #@description Minimal number of associated calorimeter hits in the choosen category
+  range_associated_calorimeter_hits.min : integer = 1
 
-  #@description Maximal number of associated calorimeters in the choosen category
-  #range_associated_calorimeters.max : integer = 1
+  #@description Maximal number of associated calorimeter hits in the choosen category
+  #range_associated_calorimeter_hits.max : integer = 1
 #+END_SRC
 
 **** Check if track has foil vertex
@@ -2128,15 +2128,15 @@ This cuts puts together all the previous declared cuts.
 **** Multiple cuts
 #+CAPTION: *Multi-selection for validating particle tracking process.*
 #+TBLNAME: particle_track_cuts
-|-------------------------------|
-| has_particle_track_data       |
-| has_particle                  |
-| range_particle                |
-| has_associated_calorimeter    |
-| range_associated_calorimeters |
-| has_vertex_on_foil            |
-| has_negative_charge           |
-|-------------------------------|
+|-----------------------------------|
+| has_particle_track_data           |
+| has_particle                      |
+| range_particle                    |
+| has_associated_calorimeter_hits   |
+| range_associated_calorimeter_hits |
+| has_vertex_on_foil                |
+| has_negative_charge               |
+|-----------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
   <<multi("particle_track_cut", "and", 7, particle_track_cuts)>>
