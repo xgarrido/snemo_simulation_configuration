@@ -485,7 +485,9 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 #+BEGIN_SRC sh
   #@description The vertex generator PRNG label
   manager.vertex_generator_name : string  = "source_strips_bulk"
+  #manager.vertex_generator_name : string  = "tracker_drift_cell_bulk"
 #+END_SRC
+
 **** Event generator
 #+BEGIN_SRC sh
   #@description The event generator PRNG label
@@ -852,34 +854,34 @@ This algorithm provides tons of parameters and is based in F. Nova work. A
 somewhat complete overview of CAT main features can be seen in DocDb [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2120][#2120]].
 
 #+BEGIN_SRC sh
-   [name="cat_tracker_clustering" type="snemo::reconstruction::cat_tracker_clustering_module"]
+  [name="cat_tracker_clustering" type="snemo::reconstruction::cat_tracker_clustering_module"]
 
-   #@description Logging support
-   logging.priority : string = "warning"
+  #@description Logging support
+  logging.priority : string = "warning"
 
-   #@description The label of the Geometry service
-   Geo_label : string  = "Geo"
+  #@description The label of the Geometry service
+  Geo_label : string  = "Geo"
 
-   #@description The label of the 'Calibrated Data' bank
-   CD_label : string  = "CD"
+  #@description The label of the 'Calibrated Data' bank
+  CD_label : string  = "CD"
 
-   #@description The label of the 'Tracker Clustering Data' bank
-   TCD_label : string  = "TCD"
+  #@description The label of the 'Tracker Clustering Data' bank
+  TCD_label : string  = "TCD"
 
-   #@description Activation of the clustering of prompt hits
-   TPC.processing_prompt_hits : boolean = 1
+  #@description Activation of the clustering of prompt hits
+  TPC.processing_prompt_hits : boolean = 1
 
-   #@description Activation of the clustering of delayed hits
-   TPC.processing_delayed_hits : boolean = 0
+  #@description Activation of the clustering of delayed hits
+  TPC.processing_delayed_hits : boolean = 0
 
-   # #@description The time width of the window for collecting candidate clusters of delayed hits (in microsecond)
-   # TPC.delayed_hit_cluster_time : real = 10.0 # microsec
+  # #@description The time width of the window for collecting candidate clusters of delayed hits (in microsecond)
+  # TPC.delayed_hit_cluster_time : real = 10.0 # microsec
 
-   #@description Activation of the clustering of delayed hits
-   TPC.split_chamber : boolean = 0
+  #@description Activation of the clustering of delayed hits
+  TPC.split_chamber : boolean = 0
 
-   #@description Force the CAT algorithm to consider a 25 gauss magnetic field (temporary trick)
-   CAT.magnetic_field : real = 25 gauss
+  # #@description Force the CAT algorithm to consider a 25 gauss magnetic field (temporary trick)
+  # CAT.magnetic_field : real = 25 gauss
 #+END_SRC
 
 **** SULTAN tracker
@@ -905,68 +907,80 @@ Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/
   #@description The label of the 'Tracker Clustering Data' bank
   TCD_label : string  = "TCD"
 
-  #@description To be described
-  SULTAN.clusterizer_level  : string  = "normal"
+  #@description Activation of the clustering of prompt hits
+  TPC.processing_prompt_hits : boolean = 1
 
-  #@description To be described
-  SULTAN.sequentiator_level : string  = "normal"
+  #@description Activation of the clustering of delayed hits
+  TPC.processing_delayed_hits : boolean = 0
 
-  #@description Use calorimeter hits information to help clustering
-  SULTAN.process_calo_hits : boolean = 1
+  # #@description The time width of the window for collecting candidate clusters of delayed hits (in microsecond)
+  # TPC.delayed_hit_cluster_time : real = 10.0 # microsec
 
-  #@description Clusterize with helix model
-  SULTAN.clusterize_with_helix_model : boolean = 1
+  #@description Activation of the clustering of delayed hits
+  TPC.split_chamber : boolean = 0
 
-  #@description Force the SULTAN algorithm to consider a 25 gauss magnetic field (temporary trick)
-  SULTAN.magnetic_field : real = 25 gauss
+  # #@description To be described
+  # SULTAN.clusterizer_level  : string  = "normal"
 
-  #@description To be described
-  SULTAN.max_time : real = 5000 ms
+  # #@description To be described
+  # SULTAN.sequentiator_level : string  = "normal"
 
-  #@description Use online event display (devel only)
-  SULTAN.print_event_display : boolean = 0
+  # #@description Use calorimeter hits information to help clustering
+  # SULTAN.process_calo_hits : boolean = 1
 
-  #@description To be described
-  SULTAN.Emin : real  = 120 keV
+  # #@description Clusterize with helix model
+  # SULTAN.clusterize_with_helix_model : boolean = 1
 
-  #@description To be described
-  SULTAN.Emax : real  = 3.3 MeV
+  # #@description Force the SULTAN algorithm to consider a 25 gauss magnetic field (temporary trick)
+  # SULTAN.magnetic_field : real = 25 gauss
 
-  #@description To be described
-  SULTAN.nsigma_r : real  = 3.0
+  # #@description To be described
+  # SULTAN.max_time : real = 5000 ms
 
-  #@description To be described
-  SULTAN.nsigma_z : real  = 4.0
+  # #@description Use online event display (devel only)
+  # SULTAN.print_event_display : boolean = 0
 
-  #@description To be described
-  SULTAN.nofflayers : integer = 1
+  # #@description To be described
+  # SULTAN.Emin : real  = 120 keV
 
-  #@description To be described
-  SULTAN.first_event : integer = -1
+  # #@description To be described
+  # SULTAN.Emax : real  = 3.3 MeV
 
-  #@description To be described
-  SULTAN.min_ncells_in_cluster : integer = 7
+  # #@description To be described
+  # SULTAN.nsigma_r : real  = 3.0
 
-  #@description To be described
-  SULTAN.ncells_between_triplet_min : integer = 1
+  # #@description To be described
+  # SULTAN.nsigma_z : real  = 4.0
 
-  #@description To be described
-  SULTAN.ncells_between_triplet_range : integer = 3
+  # #@description To be described
+  # SULTAN.nofflayers : integer = 1
 
-  #@description To be described
-  SULTAN.nsigmas : real  = 1.0
+  # #@description To be described
+  # SULTAN.first_event : integer = -1
 
-  #@description To be described
-  SULTAN.sigma_z_factor : real  = 1.0
+  # #@description To be described
+  # SULTAN.min_ncells_in_cluster : integer = 7
 
-  #@description Clusterize with endpoints
-  SULTAN.use_endpoints : boolean = 1
+  # #@description To be described
+  # SULTAN.ncells_between_triplet_min : integer = 1
 
-  #@description Clusterize with Legendre transform
-  SULTAN.use_legendre : boolean = 0
+  # #@description To be described
+  # SULTAN.ncells_between_triplet_range : integer = 3
 
-  #@description Use clocks to time different parts of the software
-  SULTAN.use_clocks : boolean = 0
+  # #@description To be described
+  # SULTAN.nsigmas : real  = 1.0
+
+  # #@description To be described
+  # SULTAN.sigma_z_factor : real  = 1.0
+
+  # #@description Clusterize with endpoints
+  # SULTAN.use_endpoints : boolean = 1
+
+  # #@description Clusterize with Legendre transform
+  # SULTAN.use_legendre : boolean = 0
+
+  # #@description Use clocks to time different parts of the software
+  # SULTAN.use_clocks : boolean = 0
 #+END_SRC
 
 **** Tracker Cluster Path                                     :notworking:
@@ -1126,7 +1140,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
 ***** Fit models
 #+BEGIN_SRC sh
   #@description Fit models
-  fitting_models : string[2] = "helix" "line"
+  fitting_models : string[2] = "line" "helix"
 #+END_SRC
 ***** Line fit parameters
 ****** Guess parameters
@@ -1380,7 +1394,7 @@ modules it contains.
 #+TBLNAME: clustering_chain
 |--------------------------------|
 | remove_tracker_clustering_data |
-| mock_tracker_clustering        |
+| cat_tracker_clustering         |
 | io_output_tracker_clustering   |
 | process_with_clustering_cuts   |
 |--------------------------------|
@@ -1812,7 +1826,7 @@ This cuts puts together all the previous declared cuts.
   [name="has_cluster" type="snemo::cut::tracker_clustering_data_cut"]
 
   #@description Cut description
-  cut.description : string = "Select a tracker cluster"
+  cut.description : string = "Check tracker cluster presence"
 
   #@description Logging priority
   logging.priority : string = "warning"
@@ -1866,6 +1880,75 @@ This cuts puts together all the previous declared cuts.
   # range_tracker_hit.max : integer = 100000
 #+END_SRC
 
+**** "Selecting" unclustered hits
+We define a serie of cut to remove event with too much unclustered hits. We
+first define a cut to check is there is some unclustered hits. If yes, then we
+ask tracker cluster solution to have more than 4 unclustered hits. Finally,
+since we want to remove thess events, we build a =nor_cut= to keep
+***** Check if unclustered hits remain
+#+BEGIN_SRC sh
+  [name="has_unclustered_hits" type="snemo::cut::tracker_clustering_data_cut"]
+
+  #@description Cut description
+  cut.description : string = "Check unclustered hits presence"
+
+  #@description Logging priority
+  logging.priority : string = "warning"
+
+  #@description The label/name of the 'tracker clustering data' bank (mandatory)
+  TCD_label : string = "TCD"
+
+  #@description Activate the check of unclustered hits
+  mode.has_unclustered_hits : boolean = 1
+#+END_SRC
+***** Select number of unclustered hits
+#+BEGIN_SRC sh
+  [name="unclustered_hits_range_cut" type="snemo::cut::tracker_clustering_data_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select a given number of unclustered hits"
+
+  #@description Logging priority
+  logging.priority : string = "warning"
+
+  #@description The label/name of the 'tracker clustering data' bank (mandatory)
+  TCD_label : string = "TCD"
+
+  #@description Activate the check for multiplicity of unclustered hits
+  mode.range_unclustered_hits : boolean = 1
+
+  #@description Minimal number of unclustured hits
+  range_unclustered_hits.min : integer = 4
+#+END_SRC
+
+***** No unclustered hits nor large number of unclustered hits
+#+CAPTION: *Multi-selection for getting unclustering hits.*
+#+TBLNAME: unclustered_hits_cuts
+|----------------------------|
+| has_unclustered_hits       |
+| unclustered_hits_range_cut |
+|----------------------------|
+
+#+BEGIN_SRC sh :noweb yes
+  <<multi(cname="range_unclustered_hits", "and", 2, unclustered_hits_cuts)>>
+#+END_SRC
+
+Now that we have selected tracker clustering solution with large number of
+unclustered hits, use the negation of this cut to keep event with low number of
+unclustered hits.
+#+BEGIN_SRC sh
+  [name="!range_unclustered_hits" type="cuts::not_cut"]
+
+  #@description Cut description
+  cut.description : string = "Remove event with large number of unclustered hits"
+
+  #@description Logging priority
+  logging.priority : string = "warning"
+
+  #@description  The name of the cut to be negated
+  cut : string = "range_unclustered_hits"
+#+END_SRC
+
 **** Multiple cuts
 #+CAPTION: *Multi-selection for validating tracker clustering process.*
 #+TBLNAME: tracker_clustering_cuts
@@ -1873,10 +1956,11 @@ This cuts puts together all the previous declared cuts.
 | has_tracker_clustering_data |
 | has_cluster                 |
 | cluster_range_cut           |
+| !range_unclustered_hits     |
 |-----------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<multi(cname="tracker_clustering_cut", "and", 3, tracker_clustering_cuts)>>
+  <<multi(cname="tracker_clustering_cut", "and", 4, tracker_clustering_cuts)>>
 #+END_SRC
 
 *** Tracker trajectory data selection
