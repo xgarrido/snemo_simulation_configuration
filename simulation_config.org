@@ -1668,7 +1668,7 @@ This skeleton code allows to check the availability of a data bank.
   cut.description : string = "Select event with a bremsstrahlung production"
 
   #@description Logging priority
-  logging.priority : string = "trace"
+  logging.priority : string = "error"
 
   #@description The label/name of the 'simulated data' bank (mandatory)
   SD_label : string = "SD"
