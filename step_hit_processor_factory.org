@@ -199,20 +199,24 @@ the minimal approach distance to the anode wire.
   #@description The name of the sensitive MC hits that must be processed to fill the output hit category
   sensitive.category   : string  = "__all.volumes.SD"
   geometry.volumes.all : boolean = 1
-  geometry.volumes.excluded : string[2] = "field_wire.model.log" "anode_wire.model.log"
+  geometry.volumes.excluded : string[4] = "field_wire.model.log" "anode_wire.model.log" \
+      "source_external_strip.model.log" "source_internal_strip.model.log"
 #+END_SRC
 
 *** Special visual step hit processors
 **** Source hits
-#+BEGIN_SRC sh :tangle no
+#+BEGIN_SRC sh
   [name="source.visu.hit_processor" type="mctools::push_all_step_hit_processor"]
   #@config The step hit processor for collecting simulated hits within source strip
   logging.priority   : string    = "warning"
   hit.category       : string    = "__visu.tracks"
   sensitive.category : string    = "__source.SD"
-  geometry.volumes   : string[2] = \
-                     "source_external_strip.model.log" \
-                     "source_internal_strip.model.log"
+  sensitive.record_creator_process  : boolean = 1
+  sensitive.record_creator_category : boolean = 1
+  visu.highlighted_hits             : boolean = 1
+  geometry.volumes   : string[2] =      \
+      "source_external_strip.model.log" \
+      "source_internal_strip.model.log"
 #+END_SRC
 **** Wires hits
 #+BEGIN_SRC sh

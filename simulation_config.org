@@ -1659,16 +1659,50 @@ This skeleton code allows to check the availability of a data bank.
   <<has_bank("has_simulated_data", bname="SD")>>
 #+END_SRC
 
+**** Select events with special physical process
+***** \gamma bremsstrahlung
+#+BEGIN_SRC sh
+  [name="has_bremsstrahlung" type="snemo::cut::simulated_data_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select event with a bremsstrahlung production"
+
+  #@description Logging priority
+  logging.priority : string = "trace"
+
+  #@description The label/name of the 'simulated data' bank (mandatory)
+  SD_label : string = "SD"
+
+  #@description The running mode of this 'simulated_data_cut' instance
+  mode.has_hit_property : boolean = 1
+
+  #@description The category to be checked (mandatory)
+  has_hit_property.category : string = "__visu.tracks"
+
+  #@description The property key (mandatory)
+  has_hit_property.keys : string[2] = \
+      "track.creator_process"         \
+      "track.creator_category"
+
+  #@description The logic operation to applied ('and/or')
+  has_hit_property.logic : string = "and"
+
+  #@description The property values (mandatory)
+  has_hit_property.track.creator_process.values  : string[1] = "eBrem"
+  has_hit_property.track.creator_category.values : string[1] = "__source.SD"
+#+END_SRC
+
 **** Multiple cuts
 This cuts puts together all the previous declared cuts.
 #+CAPTION: *Multi selection for validating simulation process.*
 #+TBLNAME: simulated_cuts
 |--------------------|
 | has_simulated_data |
+| has_bremsstrahlung |
 |--------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<multi(cname="simulated_cut", "and", 1, simulated_cuts)>>
+  <<multi(cname="simulated_cut", "and", 2, simulated_cuts)>>
 #+END_SRC
 
 *** Calibrated data selection
@@ -2035,10 +2069,10 @@ unclustered hits.
   mode.range_particles : boolean = 1
 
   #@description Minimal number of particle track
-  range_particles.min : integer = 2
+  range_particles.min : integer = 1
 
   #@description Maximal number of particle track
-  range_particles.max : integer = 2
+  range_particles.max : integer = 1
 #+END_SRC
 
 **** Check association with calorimeter hits
