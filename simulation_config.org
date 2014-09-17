@@ -877,7 +877,7 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
   # #@description The time width of the window for collecting candidate clusters of delayed hits (in microsecond)
   # TPC.delayed_hit_cluster_time : real = 10.0 # microsec
 
-  #@description Activation of the clustering of delayed hits
+  #@description Pre-clusterizer processing separately both sides of the tracking chamber
   TPC.split_chamber : boolean = 0
 
   # #@description Force the CAT algorithm to consider a 25 gauss magnetic field (temporary trick)
