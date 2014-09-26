@@ -75,10 +75,11 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
-  modules.configuration_files : string[8] as path =                      \
+  modules.configuration_files : string[9] as path =                      \
       "@SNEMO_SIMULATION_CONFIGURATION@/io_modules.conf"                 \
       "@SNEMO_SIMULATION_CONFIGURATION@/utl_modules.conf"                \
       "@SNEMO_SIMULATION_CONFIGURATION@/simulation_modules.conf"         \
+      "@SNEMO_SIMULATION_CONFIGURATION@/event_header_modules.conf"       \
       "@SNEMO_SIMULATION_CONFIGURATION@/calibration_modules.conf"        \
       "@SNEMO_SIMULATION_CONFIGURATION@/tracker_clustering_modules.conf" \
       "@SNEMO_SIMULATION_CONFIGURATION@/tracker_fitting_modules.conf"    \
@@ -501,14 +502,22 @@ The full =geant4= configuration can be found in the [[file:./sng4_manager.org][s
       "@SNEMO_SIMULATION_CONFIGURATION@/sng4_manager.conf"
 #+END_SRC
 
-*** Adding event header
+** Event header module
+:PROPERTIES:
+:TANGLE: event_header_modules.conf
+:END:
 
 After Geant4 simulation, no event header is added and available in the event
 record. This module adds some information related either to real data (run
 number) or simulated data like =genbb= weight in case the total energy of primary
 particles has been restricted.
 
-**** General informations
+*** Insert preamble
+#+BEGIN_SRC sh :noweb yes
+  <<module_preamble>>
+#+END_SRC
+
+*** General informations
 #+BEGIN_SRC sh
   [name="add_header" type="snemo::analysis::processing::event_header_utils_module"]
 
@@ -552,11 +561,11 @@ properties are used and serialized.
   mode.add_header.external_properties_prefix : string = "analysis"
 #+END_SRC
 
-**** Analysis informations
+*** Analysis informations
 :PROPERTIES:
 :TANGLE: snsimulation_header.conf
 :END:
-***** Getting branch status                                    :noexport:
+**** Getting branch status                                      :noexport:
 :PROPERTIES:
 :TANGLE: no
 :RESULTS: output
@@ -573,7 +582,7 @@ The following code block allows to "tag" the current version /i.e./ getting the
   fi
 #+END_SRC
 
-***** Getting component version                                :noexport:
+**** Getting component version                                  :noexport:
 :PROPERTIES:
 :TANGLE: no
 :RESULTS: output
@@ -595,25 +604,31 @@ The following code block retrieves the version number of a given component
       fi
   fi
 #+END_SRC
-***** Store the current =git= version of the configuration
+**** Store the current =git= version of the configuration
 #+BEGIN_SRC sh :noweb yes
   #@description The version control status
   analysis.vc_status : string = "<<vc-status()>>"
 #+END_SRC
 
-***** Set analysis description
+**** Set analysis description
 #+BEGIN_SRC sh
   #@description The analysis description
   analysis.description : string = "Sensitivity studies for SuperNEMO demonstrator"
 #+END_SRC
 
-***** Set the total number of event simulated
+**** Set the total number of event simulated
 #+BEGIN_SRC sh
   #@description The total number of event simulated
   analysis.total_number_of_event : integer = 100000
 #+END_SRC
 
-***** Store the job id
+**** Set the geometrical origin of the vertex
+#+BEGIN_SRC sh
+  #@description Origin of the vertices
+  analysis.vertex_origin : string = "foil"
+#+END_SRC
+
+**** Store the job id
 When simulations are done @ Lyon and send to the Grid Engine, every process get
 a unique job-ID. We store it within the event header in order to get back to the
 simulation setup if needed.
@@ -621,6 +636,30 @@ simulation setup if needed.
   #@description The job-ID of the process
   analysis.jobid : integer = 0
 #+END_SRC
+*** Update informations
+#+BEGIN_SRC sh
+  [name="update_header" type="snemo::analysis::processing::event_header_utils_module"]
+
+  #@description Logging priority
+  logging.priority : string = "warning"
+
+  #@description The processor mode
+  mode : string = "add_header"
+
+  #@description The label of the 'Event Header' bank
+  mode.add_header.bank_label : string = "EH"
+
+  #@description Update flag
+  mode.add_header.update : boolean = 1
+
+  #@description The external properties files to be exported in event_header properties
+  mode.add_header.external_properties_path : string as path = \
+      "@SNEMO_SIMULATION_CONFIGURATION@/snsimulation_header.conf"
+
+  #@description The external properties prefix to export only properties starting with this prefix
+  mode.add_header.external_properties_prefix : string = "analysis"
+#+END_SRC
+
 ** Calibration modules
 :PROPERTIES:
 :TANGLE: calibration_modules.conf
