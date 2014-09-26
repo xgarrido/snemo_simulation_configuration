@@ -810,21 +810,21 @@ for the quenching of alpha particles.
 **** Energy resolutions
 #+BEGIN_SRC sh
   #@description Optical lines resolutions (FWHM @ 1 MeV)
-  calo.resolution  : real = 0.08
-  xcalo.resolution : real = 0.12
-  gveto.resolution : real = 0.15
+  calo.energy.resolution  : real = 0.08
+  xcalo.energy.resolution : real = 0.12
+  gveto.energy.resolution : real = 0.15
 #+END_SRC
 
 **** Energy thresholds
 #+BEGIN_SRC sh
   #@description Optical lines trigger thresholds
-  calo.high_threshold  : real = 150 # keV
-  xcalo.high_threshold : real = 150 # keV
-  gveto.high_threshold : real = 150 # keV
+  calo.energy.high_threshold  : real as energy = 150 keV
+  xcalo.energy.high_threshold : real as energy = 150 keV
+  gveto.energy.high_threshold : real as energy = 150 keV
 
-  calo.low_threshold   : real = 50  # keV
-  xcalo.low_threshold  : real = 50  # keV
-  gveto.low_threshold  : real = 50  # keV
+  calo.energy.low_threshold   : real as energy = 50  keV
+  xcalo.energy.low_threshold  : real as energy = 50  keV
+  gveto.energy.low_threshold  : real as energy = 50  keV
 #+END_SRC
 
 ** Tracker clustering modules
