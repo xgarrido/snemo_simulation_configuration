@@ -768,7 +768,7 @@ for the quenching of alpha particles.
   logging.priority : string = "warning"
 #+END_SRC
 
-**** Data bank labels and hit category
+**** Data bank labels
 #+BEGIN_SRC sh
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
@@ -781,9 +781,6 @@ for the quenching of alpha particles.
 
   #@description The label of the 'Calibrated Data' bank
   CD_label : string  = "CD"
-
-  #@description The categories of hits to be processed as calorimeter hits
-  hit_categories  : string[3]  = "calo" "xcalo" "gveto"
 #+END_SRC
 **** Random generator
 #+BEGIN_SRC sh
@@ -792,22 +789,35 @@ for the quenching of alpha particles.
   random.seed : integer = 12345
 #+END_SRC
 
-**** Alpha quenching parameters
+**** Activate \alpha quenching
 #+BEGIN_SRC sh
   #@description Alpha quenching boolean
   alpha_quenching : boolean = 1
-
+#+END_SRC
+**** Calorimeter regimes
+***** Hit categories
+#+BEGIN_SRC sh
+  #@description The categories of hits to be processed as calorimeter hits
+  hit_categories  : string[3]  = "calo" "xcalo" "gveto"
+#+END_SRC
+***** \alpha quenching parameters
+We do not use these parameters
+#+BEGIN_SRC sh
   #@description Alpha quenching parameters
-  alpha_quenching_parameters : real[3] = 77.4 0.639 2.34
+  calo.alpha_quenching_parameters  : real[3] = 77.4 0.639 2.34
+  xcalo.alpha_quenching_parameters : real[3] = 77.4 0.639 2.34
+  gveto.alpha_quenching_parameters : real[3] = 77.4 0.639 2.34
 #+END_SRC
 
-**** Scintillator relaxation time for time resolution
+***** Scintillator relaxation time for time resolution
 #+BEGIN_SRC sh
   #@description Time resolution parameters
-  scintillator_relaxation_time : real as time = 6.0 ns
+  calo.scintillator_relaxation_time  : real as time = 6.0 ns
+  xcalo.scintillator_relaxation_time : real as time = 6.0 ns
+  gveto.scintillator_relaxation_time : real as time = 6.0 ns
 #+END_SRC
 
-**** Energy resolutions
+***** Energy resolutions
 #+BEGIN_SRC sh
   #@description Optical lines resolutions (FWHM @ 1 MeV)
   calo.energy.resolution  : real = 0.08
@@ -815,7 +825,7 @@ for the quenching of alpha particles.
   gveto.energy.resolution : real = 0.15
 #+END_SRC
 
-**** Energy thresholds
+***** Energy thresholds
 #+BEGIN_SRC sh
   #@description Optical lines trigger thresholds
   calo.energy.high_threshold  : real as energy = 150 keV
