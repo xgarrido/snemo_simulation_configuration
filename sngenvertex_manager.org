@@ -271,9 +271,9 @@ file list and especially, the =drift_cell_core= category. This means that
 vertices are going to be generated in the cell core, wires included, but not
 inside the gap between foil and first tracker layer as well as not within the
 gap between the main calorimeter walls and the last tracker layer. In order to
-get a full coverage of tracker gaz, you may have a look to the
+get a full coverage of tracker gaz, you may have a look to the next section.
 
-#+BEGIN_SRC sh :tangle no
+#+BEGIN_SRC sh
   [name="tracker_drift_cell_bulk" type="genvtx::box_model_vg"]
 
   #@config Vertex generation from the core of Geiger cell
@@ -387,6 +387,78 @@ vertex generators:
   #@description Absolute weight of different generators
   generators.tracker_front_volume_bulk.absolute_weight : real = 1.0
   generators.tracker_back_volume_bulk.absolute_weight  : real = 1.0
+#+END_SRC
+
+**** Vertex generator with validator
+
+We finally use a rejection method based on changes from
+https://nemo.lpc-caen.in2p3.fr/changeset/15140/genvtx/trunk. The idea is to
+shoot vertex within SuperNEMO module and then reject the ones not inside
+=tracking_gas=.
+
+#+BEGIN_SRC sh
+  [name="tracker_gas_bulk" type="genvtx::box_model_vg"]
+
+  #@config Vertex generation from 'tracking_gas' material
+
+  #@description Logging priority
+  logging.priority  : string = "warning"
+
+  #@description Geometry version requirement (not working with version lower than 3.0)
+  geometry.setup_requirement : string = "snemo::demonstrator(>=3)"
+
+  #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
+  origin : string = "category='module' module={*}"
+
+  #@description Generation mode ("surface" or "bulk")
+  mode   : string = "bulk"
+#+END_SRC
+
+***** Vertex validation
+Here starts the validation configuration. We first add a support to vertex
+validation
+#+BEGIN_SRC sh
+  #@description Vertex validation support
+  vertex_validation_support : boolean = 1
+#+END_SRC
+we define the logging level
+#+BEGIN_SRC sh
+  #@description Maximum number of tries for the rejection method
+  validation.logging.priority : string = "warning"
+#+END_SRC
+and we activate it
+#+BEGIN_SRC sh
+  #@description Vertex validation activation
+  validation.activation : boolean = 1
+#+END_SRC
+
+We also defines the maximum number of tries for the rejection process; above this
+number the vertex generator throws an error.
+#+BEGIN_SRC sh
+  #@description Maximum number of tries for the rejection method
+  validation.maximum_number_of_tries : integer = 1000
+#+END_SRC
+
+We finally define the validation id which refers to the =cut= identifiant with
+which the validator is registered. Here we want to only keep vertex within the
+=tracking_gas= material so we use a =in_materials_vertex_validator=
+#+BEGIN_SRC sh
+  #@description Vertex validation id
+  validation.validator_id : string = "genvtx::in_materials_vertex_validator"
+#+END_SRC
+and we define the set of materials to be used
+#+BEGIN_SRC sh
+  #@description List of materials to be used
+  validation.validator_params.materials.ref : string[1] = "tracking_gas"
+#+END_SRC
+
+We can also set the logging priority and the maximum depth to look inside
+#+BEGIN_SRC sh
+  # #@description Logging level for validator
+  # validation.validator_params.max_depth : integer = 100
+
+  #@description Logging level for validator
+  validation.validator_params.logging.priority : string = "warning"
 #+END_SRC
 
 ** Source vertices
