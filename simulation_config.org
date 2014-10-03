@@ -2103,7 +2103,7 @@ unclustered hits.
   PTD_label : string = "PTD"
 
   #@description Activate the check for association between track and calorimeter hits
-  mode.has_associated_calorimeter_hits : boolean = 1
+  mode.particle_has_associated_calorimeter_hits : boolean = 1
 #+END_SRC
 
 **** Select number of associated calorimeter hits
@@ -2120,13 +2120,13 @@ unclustered hits.
   PTD_label : string = "PTD"
 
   #@description Activate the check for multiplicity of associated calorimeter hits
-  mode.range_associated_calorimeter_hits : boolean = 1
+  mode.particle_range_associated_calorimeter_hits : boolean = 1
 
   #@description Minimal number of associated calorimeter hits in the choosen category
-  range_associated_calorimeter_hits.min : integer = 1
+  particle_range_associated_calorimeter_hits.min : integer = 1
 
   #@description Maximal number of associated calorimeter hits in the choosen category
-  #range_associated_calorimeter_hits.max : integer = 1
+  #particle_range_associated_calorimeter_hits.max : integer = 1
 #+END_SRC
 
 **** Check if track has foil vertex
@@ -2143,7 +2143,7 @@ unclustered hits.
   PTD_label : string = "PTD"
 
   #@description Activate the check for vertex extrapolation on source foil
-  mode.has_vertex_on_foil : boolean = 1
+  mode.particle_has_vertex_on_foil : boolean = 1
 #+END_SRC
 
 **** Select particle charge
@@ -2160,10 +2160,10 @@ unclustered hits.
   PTD_label : string = "PTD"
 
   #@description Activate the check for a special boolean (flag) property
-  mode.has_charge : boolean = 1
+  mode.particle_has_charge : boolean = 1
 
   #@description Name of the MC hit category to be checked
-  has_charge.type : string = "negative"
+  particle_has_charge.type : string = "negative"
 #+END_SRC
 
 #+BEGIN_SRC sh
@@ -2179,10 +2179,10 @@ unclustered hits.
   PTD_label : string = "PTD"
 
   #@description Activate the check for a special boolean (flag) property
-  mode.has_charge : boolean = 1
+  mode.particle_has_charge : boolean = 1
 
   #@description Name of the MC hit category to be checked
-  has_charge.type : string = "positive"
+  particle_has_charge.type : string = "positive"
 #+END_SRC
 
 #+BEGIN_SRC sh
@@ -2198,12 +2198,36 @@ unclustered hits.
   PTD_label : string = "PTD"
 
   #@description Activate the check for a special boolean (flag) property
-  mode.has_charge : boolean = 1
+  mode.particle_has_charge : boolean = 1
 
   #@description Name of the MC hit category to be checked
-  has_charge.type : string = "undefined"
+  particle_has_charge.type : string = "undefined"
 #+END_SRC
 
+**** No isolated calorimeter hits
+Remove event with non associated calorimeters hits.
+#+BEGIN_SRC sh
+  [name="has_non_associated_calorimeter_hits" type="snemo::cut::particle_track_data_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select event with non associated calorimeter hits"
+
+  #@description Logging priority
+  logging.priority : string = "warning"
+
+  #@description The label/name of the 'particle track data' bank (mandatory)
+  PTD_label : string = "PTD"
+
+  #@description Activate the check for non associated calorimeter hits
+  mode.has_non_associated_calorimeter_hits : boolean = 1
+#+END_SRC
+
+#+BEGIN_SRC sh
+  [name="!has_non_associated_calorimeter_hits" type="cuts::not_cut"]
+
+  #@description The cut to be negated (mandatory)
+  cut : string = "has_non_associated_calorimeter_hits"
+#+END_SRC
 **** Reconstruction parameters selection                         :notused:
 #+BEGIN_SRC sh
   [name="chi2_cut" type="snemo::analysis::cut::basic_particle_track_parameter_cut"]
@@ -2260,18 +2284,19 @@ unclustered hits.
 **** Multiple cuts
 #+CAPTION: *Multi-selection for validating particle tracking process.*
 #+TBLNAME: particle_track_cuts
-|-----------------------------------|
-| has_particle_track_data           |
-| has_particle                      |
-| range_particle                    |
-| has_associated_calorimeter_hits   |
-| range_associated_calorimeter_hits |
-| has_vertex_on_foil                |
-| has_negative_charge               |
-|-----------------------------------|
+|--------------------------------------|
+| has_particle_track_data              |
+| has_particle                         |
+| range_particle                       |
+| has_associated_calorimeter_hits      |
+| range_associated_calorimeter_hits    |
+| has_vertex_on_foil                   |
+| has_negative_charge                  |
+| !has_non_associated_calorimeter_hits |
+|--------------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<multi("particle_track_cut", "and", 7, particle_track_cuts)>>
+  <<multi("particle_track_cut", "and", 8, particle_track_cuts)>>
 #+END_SRC
 * Running SN@ilWare processing chain
 
