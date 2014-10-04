@@ -56,11 +56,23 @@ This section holds the configuration of several =genbb= wrappers.
   decay_dbd_mode  : integer = 4
   energy_min      : real as energy = 2.0 MeV
 #+END_SRC
+** \nbsp^{222}Rn in the tracking chamber
+Here, we use the same definition as =Bi214_Po214= that can be find in
+=@falaise:config/common/simulation/primary_events/1.0/background.def=. We just
+change the =genbb= label to distinguish the\nbsp^{214}Bi events generated in the
+source foil to the ones generated in the tracking chamber.
+
+#+BEGIN_SRC sh
+  [name="Rn222" type="genbb::wdecay0"]
+  #@config Bi-214/Po-214 decay in the tracker [background]
+  decay_type      : string  = "background"
+  decay_isotope   : string  = "Bi214+Po214"
+#+END_SRC
 ** Radioelement wrappers
 This part basically provides additionnal event generator wrappers for
 SuperNEMO.
 
-*** \nbsp^{214}Pb \beta\beta0\nu
+*** \nbsp^{214}Pb \beta\beta0n\nu
 Following a [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2946][talk]] given by Vladimir Treytak during Bratislava collaboration
 meeting, 2013,\nbsp^{214}Pb is also a 2\beta emitter
 #+BEGIN_SRC sh
