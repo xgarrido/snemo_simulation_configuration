@@ -618,7 +618,7 @@ The following code block retrieves the version number of a given component
 **** Set the total number of event simulated
 #+BEGIN_SRC sh
   #@description The total number of event simulated
-  analysis.total_number_of_event : integer = 100000
+  analysis.total_number_of_event : real = 1e5
 #+END_SRC
 
 **** Set the geometrical origin of the vertex
