@@ -715,10 +715,10 @@ and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?doci
 **** Geiger cells dimensions
 #+BEGIN_SRC sh
   #@description Drift cell effective/active diameter
-  cell_diameter : real = 44.0   # mm
+  cell_diameter : real as length = 44.0 mm
 
   #@description Drift cell effective/active length
-  cell_length   : real = 2900.0 # mm
+  cell_length : real as length = 2900.0 mm
 #+END_SRC
 
 **** Anode/cathode efficiencies
@@ -732,21 +732,21 @@ and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?doci
 **** Plasma longitudinal speed
 #+BEGIN_SRC sh
   #@description plasma longitudinal speed
-  plasma_longitudinal_speed : real = 5.0 # cm/us
+  plasma_longitudinal_speed : real as speed = 5.0 cm/us
 #+END_SRC
 
 **** Longitudinal & transerve reconstruction parameters
 #+BEGIN_SRC sh
   #@description Error on reconstructed longitudinal position (from a plot by Irina)
-  sigma_z                  : real = 1.0     # cm (to be confirmed)
+  sigma_z : real as length = 1.0 cm # (to be confirmed)
 
   #@description Error on reconstructed longitudinal position when one cathode signal is missing
-  sigma_z_missing_cathode  : real = 5.0     # cm (to be confirmed)
+  sigma_z_missing_cathode  : real as length = 5.0 cm # (to be confirmed)
 
   #@description Error on reconstructed horizontal position (parameters of a fit of data by Irina)
-  sigma_r_a  : real = 0.425   # mm
-  sigma_r_b  : real = 0.0083  # dimensionless
-  sigma_r_r0 : real = 12.25   # mm
+  sigma_r_a  : real as length = 0.425 mm
+  sigma_r_b  : real = 0.0083
+  sigma_r_r0 : real as length = 12.25 mm
 #+END_SRC
 
 **** Delayed drift time threshold
