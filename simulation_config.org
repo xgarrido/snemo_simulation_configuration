@@ -674,7 +674,7 @@ This module converts simulated data into calibrated data for SuperNEMO
 tracker. It is a mock digitization/calibration data module of Monte-Carlo
 hits. It applies some anode/cathode efficiencies as well as calibration and
 smearing curves to translate times into longitudinal and transerve
-positions. Main references document for this module can be find in DocDb [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=786][#786]]
+positions. Main reference documents for this module can be find in DocDb [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=786][#786]]
 and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=843][#843]].
 
 #+BEGIN_SRC sh
@@ -749,6 +749,10 @@ and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?doci
   sigma_r_r0 : real = 12.25   # mm
 #+END_SRC
 
+**** Delayed drift time threshold
+#+BEGIN_SRC sh
+  delayed_drift_time_threshold : real as time = 20 us
+#+END_SRC
 *** Calorimeter simulation to calibration data
 
 This module converts Monte-Carlo hits into calorimeter hits. Like the previous
