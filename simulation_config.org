@@ -1839,20 +1839,48 @@ This cuts puts together all the previous declared cuts.
   #range_hit_category.max : integer = 1
 #+END_SRC
 
+**** Remove delayed calibrated tracker hits
+#+BEGIN_SRC sh
+  [name="has_delayed_tracker_hit" type="snemo::cut::calibrated_data_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select delayed calibrated tracker hit"
+
+  #@description Logging priority
+  logging.priority : string = "warning"
+
+  #@description The label/name of the 'calibrated data' bank (mandatory)
+  CD_label : string = "CD"
+
+  #@description Activate the check for special traits of tracker hit
+  mode.tracker_hit_has_traits : boolean = 1
+
+  #@description Traits bit name to look for
+  tracker_hit_has_traits.bits_name : string[1] = "delayed"
+#+END_SRC
+
+#+BEGIN_SRC sh
+  [name="!has_delayed_tracker_hit" type="cuts::not_cut"]
+
+  #@description The cut to be negated (mandatory)
+  cut : string = "has_delayed_tracker_hit"
+#+END_SRC
+
 **** Multiple cuts
 This cuts puts together all the previous declared cuts.
 #+CAPTION: *Multi selection for validating calibration process.*
 #+TBLNAME: calibrated_cuts
-|---------------------|
-| has_calibrated_data |
-| has_cd_calorimeter  |
-| cd_calorimeter_cut  |
-| has_cd_tracker      |
-| cd_tracker_cut      |
-|---------------------|
+|--------------------------|
+| has_calibrated_data      |
+| has_cd_calorimeter       |
+| cd_calorimeter_cut       |
+| has_cd_tracker           |
+| cd_tracker_cut           |
+| !has_delayed_tracker_hit |
+|--------------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<multi(cname="calibrated_cut", "and", 5, calibrated_cuts)>>
+  <<multi(cname="calibrated_cut", "and", 6, calibrated_cuts)>>
 #+END_SRC
 
 *** Tracker clustering data selection
