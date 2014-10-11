@@ -751,6 +751,7 @@ and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?doci
 
 **** Delayed drift time threshold
 #+BEGIN_SRC sh
+  #@description Time threshold to tag Geiger cells as delayed
   delayed_drift_time_threshold : real as time = 20 us
 #+END_SRC
 *** Calorimeter simulation to calibration data
