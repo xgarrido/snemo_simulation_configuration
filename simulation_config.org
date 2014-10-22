@@ -1858,11 +1858,11 @@ This cuts puts together all the previous declared cuts.
   #@description The label/name of the 'calibrated data' bank (mandatory)
   CD_label : string = "CD"
 
-  #@description Activate the check for special traits of tracker hit
-  mode.tracker_hit_has_traits : boolean = 1
+  #@description Activate the check for delayed trait bit
+  mode.tracker_hit_is_delayed : boolean = 1
 
-  #@description Traits bit name to look for
-  tracker_hit_has_traits.bits_name : string[1] = "delayed"
+  #@description Delayed time of the tracker hit
+  tracker_hit_is_delayed.delay_time : real as time = 15 us
 #+END_SRC
 
 #+BEGIN_SRC sh
