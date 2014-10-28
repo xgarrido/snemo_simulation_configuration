@@ -159,11 +159,35 @@ Insert preamble
     origin : string = "category='gveto_wrapper' module={*} side={*} wall={*} column={*}"
 
     #@description Generation mode ("surface" or "bulk")
-    mode   : string = "surface"
+    mode : string = "surface"
 
     #@description Surface mode box top face activation
-    mode.surface.top  : boolean = 1
-    #+END_SRC
+    mode.surface.top : boolean = 1
+  #+END_SRC
+
+- Generate vertex in the PMT glass
+
+  #+BEGIN_SRC sh
+    [name="pmt_glass_bulk" type="genvtx::polycone_model_vg"]
+
+    #@config Vertex generation from the bulk of the PMT glass wrapper
+
+    #@description Logging priority
+    logging.priority : string = "trace"
+
+    #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
+    origin : string = "category='calorimeter_pmt_glass' module={*} side={*} column={*} row={*}"
+
+    #@description Generation mode ("surface" or "bulk")
+    mode : string = "bulk"
+
+    #@description Generation within polycone material
+    mode.bulk.body : boolean = 1
+
+    #@description Generate vertex on all polycone frustrum
+    polycone.all_frustrum : boolean = 1
+  #+END_SRC
+
 ** Tracker vertices
 :PROPERTIES:
 :TANGLE: tracker_vg.lis
