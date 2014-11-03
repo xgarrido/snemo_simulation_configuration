@@ -173,7 +173,7 @@ Insert preamble
     #@config Vertex generation from the bulk of the PMT glass wrapper
 
     #@description Logging priority
-    logging.priority : string = "trace"
+    logging.priority : string = "warning"
 
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     origin : string = "category='calorimeter_pmt_glass' module={*} side={*} column={*} row={*}"
