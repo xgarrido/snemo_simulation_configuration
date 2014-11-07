@@ -196,10 +196,10 @@ The following code defines geometry models where Geant4 steps are size limited.
 Definition of Geant4 regions.
 #+BEGIN_SRC sh
   #@description Flag to use G4 regions
-  using_regions       : boolean = 1
+  using_regions : boolean = 1
 
   #@description List of regions
-  regions             : string[3] = "calorimeter" "tracker" "source"
+  regions : string[3] = "calorimeter" "tracker" "source"
 
   #@description List of attached volumes/models for 'calorimeter' region
   regions.calorimeter.volumes : string[4] =    \
@@ -209,27 +209,27 @@ Definition of Geant4 regions.
       "xwall_scin_block.model.log"
 
   #@description List of attached volumes/models for 'tracker' region
-  regions.tracker.volumes     : string[1] = "drift_cell_core.model.log"
+  regions.tracker.volumes : string[1] = "drift_cell_core.model.log"
 
   #@description List of attached volumes/models for 'source' region
-  regions.source.volumes      : string[2] =    \
-      "source_external_strip.model.log"        \
+  regions.source.volumes : string[2] =  \
+      "source_external_strip.model.log" \
       "source_internal_strip.model.log"
 #+END_SRC
 
 *** Magnetic field
 #+BEGIN_SRC sh
   #@description Flag to use magnetic field
-  using_magnetic_field              : boolean = 1
+  using_magnetic_field : boolean = 1
 
   #@description Logging priority threshold of the embedded Geant4 magnetic fields
-  magnetic_field.logging.priority   : string = "warning"
+  magnetic_field.logging.priority : string = "warning"
 
   #@description Name of the magnetic field geometry plugin
-  magnetic_field.plugin_name        : string = "fields_driver"
+  magnetic_field.plugin_name : string = "fields_driver"
 
   #@description Name of the associated fields
-  magnetic_field.associations       : string[1] = "module"
+  magnetic_field.associations : string[1] = "module"
 
   #@description SetDeltaChord miss distance (mm):
   magnetic_field.miss_distance : real as length = 0.5 mm
