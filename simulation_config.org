@@ -75,7 +75,7 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC sh
   #@description The configuration files for modules
-  modules.configuration_files : string[9] as path =                      \
+  modules.configuration_files : string[10] as path =                     \
       "@SNEMO_SIMULATION_CONFIGURATION@/io_modules.conf"                 \
       "@SNEMO_SIMULATION_CONFIGURATION@/utl_modules.conf"                \
       "@SNEMO_SIMULATION_CONFIGURATION@/simulation_modules.conf"         \
@@ -84,6 +84,7 @@ service files.
       "@SNEMO_SIMULATION_CONFIGURATION@/tracker_clustering_modules.conf" \
       "@SNEMO_SIMULATION_CONFIGURATION@/tracker_fitting_modules.conf"    \
       "@SNEMO_SIMULATION_CONFIGURATION@/particle_tracking_modules.conf"  \
+      "@SNEMO_SIMULATION_CONFIGURATION@/gamma_tracking_modules.conf"     \
       "@SNEMO_SIMULATION_CONFIGURATION@/chain_modules.conf"
 #+END_SRC
 
@@ -161,6 +162,8 @@ list of needed libraries
 | TrackFit              | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libTrackFit.so                        |
 | Falaise_TrackFit      | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_TrackFit.so                |
 | Falaise_CPT           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_ChargedParticleTracking.so |
+| GammaTracking         | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libGammaTracking.so                   |
+| Falaise_GammaTracking | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_GammaTracking.so           |
 |-----------------------+------------------------------------------------------------------------------------------------|
 
 #+BEGIN_SRC sh :noweb yes
@@ -1367,6 +1370,40 @@ implemented but the particle tracking module will stay unchanged.
   #@description Use a simpler approach by looking for gieger cells in front of calo (not implemented yet)
   CAD.use_last_geiger_cell : boolean = 0
 #+END_SRC
+** \gamma tracking module
+:PROPERTIES:
+:TANGLE: gamma_tracking_modules.conf
+:END:
+*** Insert preamble
+#+BEGIN_SRC sh :noweb yes
+  <<module_preamble>>
+#+END_SRC
+
+*** \gamma tracking
+
+#+BEGIN_SRC sh
+  [name="gamma_tracking" type="snemo::reconstruction::gamma_tracking_module"]
+#+END_SRC
+
+**** Logging priority
+#+BEGIN_SRC sh
+  #@description Logging flag
+  logging.priority : string = "trace"
+#+END_SRC
+**** Data banks and services labels
+#+BEGIN_SRC sh
+  #@description The label of the Geometry service
+  Geo_label : string  = "Geo"
+
+  #@description The label of the 'Particle Track Data' bank
+  PTD_label : string  = "PTD"
+#+END_SRC
+**** Drivers
+#+BEGIN_SRC sh
+  #@description List of drivers to be used (see description below)
+  gamma_tracking : string = "GT"
+#+END_SRC
+
 ** Chain modules
 :PROPERTIES:
 :TANGLE: chain_modules.conf
@@ -1398,9 +1435,20 @@ modules it contains.
   <<chain_module("analysis_chain", 6, analysis_chain)>>
 #+END_SRC
 
+*** \gamma tracking chain
+#+CAPTION: *Modules used by the \gamma tracking process.*
+#+TBLNAME: gamma_tracking_chain
+|----------------|
+| gamma_tracking |
+|----------------|
+
+#+BEGIN_SRC sh :noweb yes
+  <<chain_module("gamma_tracking_chain", 1, gamma_tracking_chain)>>
+#+END_SRC
+
 *** Process after selecting particle track
 #+BEGIN_SRC sh :noweb yes
-   <<if_module("process_with_particle_track_cuts", cut="particle_track_cut", then="analysis_chain", else="io_output_particle_track_non_selected")>>
+   <<if_module("process_with_particle_track_cuts", cut="particle_track_cut", then="gamma_tracking_chain", else="io_output_particle_track_non_selected")>>
 #+END_SRC
 
 *** Particle tracking chain
