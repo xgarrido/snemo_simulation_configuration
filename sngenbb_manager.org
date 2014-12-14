@@ -105,7 +105,7 @@ distribution or following a tabulated energy spectrum.
   energy : real as energy = 1000. keV
 
   #@description Flag for random emission
-  randomized_direction : boolean = 1
+  emission_direction : string = "randomized"
 #+END_SRC
 
 *** Single electron with flat energy distribution
@@ -130,7 +130,7 @@ distribution or following a tabulated energy spectrum.
   #spectrum.data_file    : string = "${SNGENBB_DATA_DIR}/testing/data/sample_tabulated_energy_spectrum.data"
 
   #@description Flag for random emission
-  randomized_direction : boolean = 1
+  emission_direction : string = "randomized"
 #+END_SRC
 
 *** Single electron with gaussian energy distribution
@@ -155,7 +155,7 @@ distribution or following a tabulated energy spectrum.
   #spectrum.data_file    : string = "${SNGENBB_DATA_DIR}/testing/data/sample_tabulated_energy_spectrum.data"
 
   #@description Flag for random emission
-  randomized_direction : boolean = 1
+  emission_direction : string = "randomized"
 #+END_SRC
 
 *** Single electron with conic emission
