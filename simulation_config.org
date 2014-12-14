@@ -343,6 +343,11 @@ all I/O files are saved in =/tmp/${USER}/snemo.d= directory.
   <<output_module("io_output_particle_track")>>
 #+END_SRC
 
+*** \gamma track output
+#+BEGIN_SRC sh :noweb yes
+  <<output_module("io_output_gamma_track")>>
+#+END_SRC
+
 *** Analysis output
 #+BEGIN_SRC sh :noweb yes
   <<output_module("io_output_analysed")>>
@@ -1395,13 +1400,22 @@ implemented but the particle tracking module will stay unchanged.
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
 
+  #@description The label of the 'Calibrated Data' bank
+  CD_label : string  = "CD"
+
   #@description The label of the 'Particle Track Data' bank
   PTD_label : string  = "PTD"
 #+END_SRC
-**** Drivers
+**** Driver
 #+BEGIN_SRC sh
   #@description List of drivers to be used (see description below)
-  gamma_tracking : string = "GT"
+  driver : string = "GT"
+#+END_SRC
+**** \gamma tracking setup
+***** Logging priority
+#+BEGIN_SRC sh
+  #@description Logging flag
+  gt.logging.priority : string = "trace"
 #+END_SRC
 
 ** Chain modules
@@ -1438,12 +1452,13 @@ modules it contains.
 *** \gamma tracking chain
 #+CAPTION: *Modules used by the \gamma tracking process.*
 #+TBLNAME: gamma_tracking_chain
-|----------------|
-| gamma_tracking |
-|----------------|
+|-----------------------|
+| gamma_tracking        |
+| io_output_gamma_track |
+|-----------------------|
 
 #+BEGIN_SRC sh :noweb yes
-  <<chain_module("gamma_tracking_chain", 1, gamma_tracking_chain)>>
+  <<chain_module("gamma_tracking_chain", 2, gamma_tracking_chain)>>
 #+END_SRC
 
 *** Process after selecting particle track
