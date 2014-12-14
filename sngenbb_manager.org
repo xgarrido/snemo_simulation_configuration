@@ -189,41 +189,103 @@ distribution or following a tabulated energy spectrum.
   energy : real as energy = 3000 keV
 #+END_SRC
 
+*** Single gamma with monokinetic energy
+#+BEGIN_SRC sh
+  [name="gamma_monokinetic" type="genbb::single_particle_generator"]
+
+  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+
+  #@description Generated particle ("electron", "positron", "gamma", "alpha"):
+  particle_name : string = "gamma"
+
+  #@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):
+  mode : string = "monokinetic"
+
+  #@description Value of the particle energy
+  energy : real as energy = 1000. keV
+
+  #@description Flag for random emission
+  emission_direction : string = "randomized"
+#+END_SRC
 *** Single gamma with flat energy distribution
 #+BEGIN_SRC sh
   [name="gamma_0-3MeV_flat" type="genbb::single_particle_generator"]
 
   #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
 
-  #@description Seed for the embedded random number generator:
-  seed                  : integer = 314159
-
   #@description Generated particle ("electron", "positron", "gamma", "alpha"):
-  particle_name         : string = "gamma"
+  particle_name : string = "gamma"
+
+  #@description Flag for random emission
+  emission_direction : string = "randomized"
 
   #@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):
-  mode                  : string = "energy_range"
+  mode : string = "energy_range"
 
-  ### Only for "energy_range" mode:
-  min_energy            : real   = 1000.
-  max_energy            : real   = 1000.
-  energy_unit           : string = "keV"
+  #@description Minimal value of the particle energy
+  min_energy : real as energy = 0. MeV
 
-  ### Only for "gaussian_energy" mode:
-  #mean_energy           : real   = 1000.
-  #sigma_energy          : real   =  100.
-  #energy_unit           : string = "keV"
-
-  ### Only for "monokinetic" mode:
-  #energy                : real   = 5500.
-  #energy_unit           : string = "keV"
-
-  ### Only for "spectrum" mode:
-  #spectrum.data_file    : string = "${SNGENBB_DATA_DIR}/testing/data/sample_tabulated_energy_spectrum.data"
-
-  randomized_direction   : boolean = 1
+  #@description Maximal value of the particle energy
+  max_energy : real as energy = 3. MeV
 #+END_SRC
 
-** TODO Combined generators
+*** Multi-\gamma-rays
+
+#+BEGIN_SRC sh
+  [name="multi_gamma_rays" type="genbb::single_particle_generator"]
+
+  #@config Parameters for the generation of multiple gamma rays
+
+  #@description Generated particle ("electron", "positron", "gamma", "alpha"):
+  particle_name : string = "gamma"
+
+  #@description Flag for random emission
+  emission_direction : string = "randomized"
+
+  #@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):
+  mode : string = "multi_rays"
+
+  #@description Energy unit
+  energy_unit : string = "keV"
+
+  #@description Particle energies
+  multi_rays.energies : real[9] as energy = 53.161, 79.6139, 80.9971, 160.613, 223.234, 276.398, 302.853, 356.017, 383.851
+
+  #@description Particle relative probabilities
+  multi_rays.probabilities : real[9] = 0.02199, 0.0262, 0.0406, 0.00645, 0.00450, 0.07164, 0.1833, 0.6205, 0.0894
+#+END_SRC
+
+** Combined generators
 Combination of several =genbb= generators can be done using
 =genbb::combined_particle_generator= object...
+
+*** Simultaneous \gamma-rays
+#+BEGIN_SRC sh
+  [name="multi_particles" type="genbb::combined_particle_generator"]
+
+  #@config A model that generates several particles  at the same time
+
+  #@description Logging priority
+  logging.priority : string = "warning"
+
+  #@description The mode ("timing", "plain_probability" or "activity")
+  mode : string = "time"
+
+  #@description The list of particle generators that compose the combo
+  generators.labels : string[2] = \
+                    "gamma1"      \
+                    "gamma2"
+
+  #@description The name of the generator associated the "gamma1" contribution
+  generators.gamma1.name : string = "gamma_monokinetic"
+
+  #@description The probability associated to the "gamma1" contribution
+  generators.gamma1.time : real as time = 0 ns
+
+  #@description The name of the generator associated the "gamma2" contribution
+  generators.gamma2.name : string = "gamma_monokinetic"
+
+  #@description The probability  associated to the "gamma2" contribution
+  generators.gamma2.time : real as time = 0 ns
+
+#+END_SRC
