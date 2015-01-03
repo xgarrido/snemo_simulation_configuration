@@ -11,7 +11,7 @@ current version is hosted at
 [[https://github.com/xgarrido/snemo_simulation_configuration]] under =git= version
 control. You can clone this repository by doing
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   git clone https://github.com/xgarrido/snemo_simulation_configuration snemo_configuration
 #+END_SRC
 
@@ -54,7 +54,7 @@ This file is the main and central piece of code for loading all modules/services
 needed by =dpp_processing= binary. It provides links to module files and
 service files.
 *** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Module manager logging priority
   logging.priority : string = "warning"
 
@@ -66,14 +66,14 @@ service files.
 #+END_SRC
 
 *** Service manager configuration
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The configuration file of the embedded service manager
   service_manager.configuration : string[1] as path = \
       "@SNEMO_SIMULATION_CONFIGURATION@/service_manager.conf"
 #+END_SRC
 
 *** Configuration files for modules
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The configuration files for modules
   modules.configuration_files : string[10] as path =                     \
       "@SNEMO_SIMULATION_CONFIGURATION@/io_modules.conf"                 \
@@ -93,12 +93,12 @@ service files.
 :TANGLE: service_manager.conf
 :END:
 *** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Service manager logging priority
   logging.priority : string = "warning"
 #+END_SRC
 *** Name & description
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The name of the service manager
   name : string = "sn_service_manager"
 
@@ -106,7 +106,7 @@ service files.
   description : string = "A SuperNEMO service manager"
 #+END_SRC
 *** List of service files
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The list of files that describe services
   services.configuration_files : string[1] as path = \
       "@SNEMO_SIMULATION_CONFIGURATION@/services.conf"
@@ -123,7 +123,7 @@ receives a table list and builds the corresponding =dlls.conf= file.
 
 #+NAME: dll_loader
 #+HEADERS: :var name="" :var filename="" :shebang "#!/bin/bash"
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   echo '#@description A sample list of setups'
   echo '#@key_label   "name"'
   echo '#@meta_label  "filename"'
@@ -166,7 +166,7 @@ list of needed libraries
 | Falaise_GammaTracking | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_GammaTracking.so           |
 |-----------------------+------------------------------------------------------------------------------------------------|
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<dll_loader(dll_libraries[*,0], dll_libraries[*,1])>>
 #+END_SRC
 * Modules
@@ -202,7 +202,7 @@ module. It also defines the output directory where to store each output steps.
 
 #+NAME: output_module
 #+HEADERS: :var mname="" :var logging="warning" :var ofilename=""
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   IO_OUTPUT_DIRECTORY="/tmp/\${USER}/snemo.d"
   if [ ! -d ${IO_OUTPUT_DIRECTORY} ]; then
       mkdir -p $(eval "echo ${IO_OUTPUT_DIRECTORY}")
@@ -230,7 +230,7 @@ module. It also defines the output directory where to store each output steps.
 
 #+NAME: remove_module
 #+HEADERS: :var mname="" :var mode="remove_banks" :var label="" :var logging="warning"
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   echo '[name="'$mname'" type="dpp::utils_module"]'
   echo
   echo '#@description Logging priority'
@@ -248,9 +248,9 @@ This skeleton code ease the declaration of =chain_module= processor since it
 receives a table list and builds the =chain_module= declaration given its name.
 
 #+NAME: chain_module
-#+HEADERS: :var mname="" :var nmodule=0 :var list="" :var logging="warning"
-#+BEGIN_SRC sh
-  last=$(echo ${list} | sed -e 's/^.* //')
+#+HEADERS: :var mname="" :var nmodule=0 :var list="module1 module2 module3" :var logging="warning"
+#+BEGIN_SRC shell
+  vlist=(${=list})
   echo '[name="'$mname'" type="dpp::chain_module"]'
   echo
   echo '#@description Logging priority'
@@ -258,10 +258,10 @@ receives a table list and builds the =chain_module= declaration given its name.
   echo
   echo '#@description The list of processing modules to be applied (in this order)'
   echo 'modules : string['$nmodule'] = \'
-  for i in $list
+  for i in $vlist
   do
-      echo -n '  "'$(echo $i | sed '/(/ s/("\|")//g')'"'
-      if [ $i != $last ]; then echo ' \';fi
+      echo -n \"$i\"
+      if [ $i != $vlist[-1] ]; then echo ' \';fi
   done
 #+END_SRC
 
@@ -270,7 +270,7 @@ This skeleton code is a template to declare =if_module= processor.
 
 #+NAME: if_module
 #+HEADERS: :var mname="" :var cut="" :var then="" :var else="" :var logging="warning"
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   echo '[name="'$mname'" type="dpp::if_module"]'
   echo
   echo '#@description Logging priority'
@@ -299,7 +299,7 @@ anything else). The module code block should then use the =:noweb yes= option to
 expand the =module_preamble= code.
 
 #+NAME: module_preamble
-#+BEGIN_SRC sh :results none :tangle no
+#+BEGIN_SRC shell :results none :tangle no
   #@description A sample list of setups
   #@key_label   "name"
   #@meta_label  "type"
@@ -314,73 +314,68 @@ This section defines some I/O output modules to store data record. By default,
 all I/O files are saved in =/tmp/${USER}/snemo.d= directory.
 
 *** Insert preamble
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<module_preamble>>
 #+END_SRC
 
 *** Simulation output
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<output_module("io_output_simulated")>>
 #+END_SRC
 
 *** Calibration output
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<output_module("io_output_calibrated")>>
 #+END_SRC
 
 *** Tracker clustering output
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<output_module("io_output_tracker_clustering")>>
 #+END_SRC
 
 *** Tracker trajectory output
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<output_module("io_output_tracker_trajectory")>>
 #+END_SRC
 
 *** Particle track output
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<output_module("io_output_particle_track")>>
 #+END_SRC
 
-*** \gamma track output
-#+BEGIN_SRC sh :noweb yes
-  <<output_module("io_output_gamma_track")>>
-#+END_SRC
-
 *** Analysis output
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<output_module("io_output_analysed")>>
 #+END_SRC
 
 *** Selection output
 
 - Simulation cuts
-  #+BEGIN_SRC sh :noweb yes
+  #+BEGIN_SRC shell :noweb yes
     <<output_module("io_output_simulated_selected")>>
     <<output_module("io_output_simulated_non_selected")>>
   #+END_SRC
 
 - Calibration cuts
-  #+BEGIN_SRC sh :noweb yes
+  #+BEGIN_SRC shell :noweb yes
     <<output_module("io_output_calibrated_selected")>>
     <<output_module("io_output_calibrated_non_selected")>>
   #+END_SRC
 
 - Tracking cuts
-  #+BEGIN_SRC sh :noweb yes
+  #+BEGIN_SRC shell :noweb yes
     <<output_module("io_output_tracker_clustering_selected")>>
     <<output_module("io_output_tracker_clustering_non_selected")>>
   #+END_SRC
 
 - Fitting cuts
-  #+BEGIN_SRC sh :noweb yes
+  #+BEGIN_SRC shell :noweb yes
     <<output_module("io_output_tracker_trajectory_selected")>>
     <<output_module("io_output_tracker_trajectory_non_selected")>>
   #+END_SRC
 
 - Particle track cuts
-  #+BEGIN_SRC sh :noweb yes
+  #+BEGIN_SRC shell :noweb yes
     <<output_module("io_output_particle_track_selected")>>
     <<output_module("io_output_particle_track_non_selected")>>
   #+END_SRC
@@ -393,38 +388,38 @@ all I/O files are saved in =/tmp/${USER}/snemo.d= directory.
 Here we define some common and useful tasks such as removing data/MC hits.
 
 *** Insert preamble
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<module_preamble>>
 #+END_SRC
 
 *** Remove event header
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<remove_module(mname="remove_header", label="EH", logging="warning")>>
 #+END_SRC
 
 *** Remove simulated data bank
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<remove_module(mname="remove_simulated_data", label="SD", logging="warning")>>
 #+END_SRC
 *** Remove calibrated data bank
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<remove_module(mname="remove_calibrated_data", label="CD", logging="warning")>>
 #+END_SRC
 
 *** Remove tracker clustering data bank
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<remove_module(mname="remove_tracker_clustering_data", label="TCD", logging="warning")>>
 #+END_SRC
 *** Remove tracker trajectory data bank
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<remove_module(mname="remove_tracker_trajectory_data", label="TTD", logging="warning")>>
 #+END_SRC
 *** Remove particle track data bank
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<remove_module(mname="remove_particle_track_data", label="PTD", logging="warning")>>
 #+END_SRC
 *** Dump module
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="dump" type="dpp::dump_module"]
 
   #@description Output stream
@@ -435,19 +430,19 @@ Here we define some common and useful tasks such as removing data/MC hits.
 :TANGLE: simulation_modules.conf
 :END:
 *** Insert preamble
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<module_preamble>>
 #+END_SRC
 
 *** G4 simulation
 A processor that populate the event record =simulated data= bank with Geant4
 output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carloproduction][SN@ilWare FAQ]]).
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="simulation" type="mctools::g4::simulation_module"]
 #+END_SRC
 
 **** Logging flag
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging priority
   logging.priority : string = "warning"
 
@@ -455,7 +450,7 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
   manager.logging.priority : string = "warning"
 #+END_SRC
 **** Bank & service labels
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The Geometry Service label
   Geo_label : string = "Geo"
 
@@ -466,7 +461,7 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
   erase_former_SD_bank : boolean = 0
 #+END_SRC
 **** Seed values
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The simulation manager PRNG seed
   manager.seed                  : integer = 2
 
@@ -489,19 +484,23 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
   manager.prng_states_save_modulo : integer = 10
 #+END_SRC
 **** Vertex generator
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The vertex generator PRNG label
   manager.vertex_generator_name : string  = "source_strips_bulk"
+  #manager.vertex_generator_name : string  = "pmt_glass_bulk"
 #+END_SRC
 
 **** Event generator
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The event generator PRNG label
-  manager.event_generator_name  : string  = "Se82.0nubb"
+  #manager.event_generator_name  : string  = "Se82.0nubb"
+  #manager.event_generator_name  : string  = "Bi214_Po214"
+  manager.event_generator_name  : string  = "Tl208"
+  #manager.event_generator_name  : string = "multi_particles"
 #+END_SRC
 **** G4 manager
 The full =geant4= configuration can be found in the [[file:./sng4_manager.org][sng4_manager]] file.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The simulation manager configuration file
   manager.configuration_filename : string as path = \
       "@SNEMO_SIMULATION_CONFIGURATION@/sng4_manager.conf"
@@ -518,12 +517,12 @@ number) or simulated data like =genbb= weight in case the total energy of primar
 particles has been restricted.
 
 *** Insert preamble
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<module_preamble>>
 #+END_SRC
 
 *** General informations
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="add_header" type="snemo::processing::event_header_utils_module"]
 
   #@description Logging priority
@@ -557,7 +556,7 @@ The =external_properties_prefix= allows to filter which properties should be
 stored. If no =external_properties_prefix= field is defined then all the
 properties are used and serialized.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The external properties files to be exported in event_header properties
   add_header.external_properties_path : string as path = \
       "@SNEMO_SIMULATION_CONFIGURATION@/snsimulation_header.conf"
@@ -579,7 +578,7 @@ The following code block allows to "tag" the current version /i.e./ getting the
 =git= branch name, commit chunk
 
 #+NAME: vc-status
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   if [ -d .git ]; then
       log+="git "$(git rev-parse --abbrev-ref HEAD)" branch - "
       log+=$(LC_MESSAGES=en git --no-pager log -1 HEAD --date=short --pretty=format:"commit %h - %ad")
@@ -595,7 +594,7 @@ The following code block allows to "tag" the current version /i.e./ getting the
 The following code block retrieves the version number of a given component
 #+NAME: code-version
 #+HEADERS: :var name="" :var binary=1
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   if [ "$name" != "" ]; then
       if [ $binary -eq 1 ]; then
           echo -n "$($name-config --version)"
@@ -610,25 +609,25 @@ The following code block retrieves the version number of a given component
   fi
 #+END_SRC
 **** Store the current =git= version of the configuration
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   #@description The version control status
   analysis.vc_status : string = "<<vc-status()>>"
 #+END_SRC
 
 **** Set analysis description
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The analysis description
   analysis.description : string = "Sensitivity studies for SuperNEMO demonstrator"
 #+END_SRC
 
 **** Set the total number of event simulated
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The total number of event simulated
   analysis.total_number_of_event : real = 1e5
 #+END_SRC
 
 **** Set the geometrical origin of the vertex
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Origin of the vertices
   analysis.vertex_origin : string = "foil"
 #+END_SRC
@@ -637,12 +636,12 @@ The following code block retrieves the version number of a given component
 When simulations are done @ Lyon and send to the Grid Engine, every process get
 a unique job-ID. We store it within the event header in order to get back to the
 simulation setup if needed.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The job-ID of the process
   analysis.jobid : integer = 0
 #+END_SRC
 *** Update informations
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="update_header" type="snemo::processing::event_header_utils_module"]
 
   #@description Logging priority
@@ -670,7 +669,7 @@ simulation setup if needed.
 :TANGLE: calibration_modules.conf
 :END:
 *** Insert preamble
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<module_preamble>>
 #+END_SRC
 
@@ -683,18 +682,18 @@ smearing curves to translate times into longitudinal and transerve
 positions. Main reference documents for this module can be find in DocDb [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=786][#786]]
 and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=843][#843]].
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="tracker_s2c" type="snemo::processing::mock_tracker_s2c_module"]
 #+END_SRC
 
 **** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging priority
   logging.priority : string = "warning"
 #+END_SRC
 
 **** Data bank labels and hit category
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
 
@@ -712,14 +711,14 @@ and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?doci
 #+END_SRC
 
 **** Random generator
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Pseudo-random numbers generator setup
   random.id   : string  = "mt19937"
   random.seed : integer = 12345
 #+END_SRC
 
 **** Geiger cells dimensions
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Drift cell effective/active diameter
   cell_diameter : real as length = 44.0 mm
 
@@ -728,7 +727,7 @@ and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?doci
 #+END_SRC
 
 **** Anode/cathode efficiencies
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description anode efficiency
   base_anode_efficiency   : real = 1.0
 
@@ -736,13 +735,13 @@ and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?doci
   base_cathode_efficiency : real = 1.0
 #+END_SRC
 **** Plasma longitudinal speed
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description plasma longitudinal speed
   plasma_longitudinal_speed : real as velocity = 5.0 cm/us
 #+END_SRC
 
 **** Longitudinal & transerve reconstruction parameters
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Error on reconstructed longitudinal position (from a plot by Irina)
   sigma_z : real as length = 1.0 cm # (to be confirmed)
 
@@ -756,7 +755,7 @@ and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?doci
 #+END_SRC
 
 **** Delayed drift time threshold
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   # #@description Time threshold to tag Geiger cells as delayed
   # delayed_drift_time_threshold : real as time = 10 us
 #+END_SRC
@@ -769,18 +768,18 @@ the time of the first energy deposit and finally, it smears the energy and time
 by some experimental energy/time resolution. There is also a special treatments
 for the quenching of alpha particles.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="calorimeter_s2c" type="snemo::processing::mock_calorimeter_s2c_module"]
 #+END_SRC
 
 **** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging priority
   logging.priority : string = "warning"
 #+END_SRC
 
 **** Data bank labels
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
 
@@ -794,26 +793,26 @@ for the quenching of alpha particles.
   CD_label : string  = "CD"
 #+END_SRC
 **** Random generator
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Pseudo-random numbers generator setup
   random.id   : string  = "mt19937"
   random.seed : integer = 12345
 #+END_SRC
 
 **** Activate \alpha quenching
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Alpha quenching boolean
   alpha_quenching : boolean = 1
 #+END_SRC
 **** Calorimeter regimes
 ***** Hit categories
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The categories of hits to be processed as calorimeter hits
   hit_categories  : string[3]  = "calo" "xcalo" "gveto"
 #+END_SRC
 ***** \alpha quenching parameters
 We do not use these parameters
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Alpha quenching parameters
   calo.alpha_quenching_parameters  : real[3] = 77.4 0.639 2.34
   xcalo.alpha_quenching_parameters : real[3] = 77.4 0.639 2.34
@@ -821,7 +820,7 @@ We do not use these parameters
 #+END_SRC
 
 ***** Scintillator relaxation time for time resolution
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Time resolution parameters
   calo.scintillator_relaxation_time  : real as time = 6.0 ns
   xcalo.scintillator_relaxation_time : real as time = 6.0 ns
@@ -829,7 +828,7 @@ We do not use these parameters
 #+END_SRC
 
 ***** Energy resolutions
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Optical lines resolutions (FWHM @ 1 MeV)
   calo.energy.resolution  : real = 0.08
   xcalo.energy.resolution : real = 0.12
@@ -837,15 +836,15 @@ We do not use these parameters
 #+END_SRC
 
 ***** Energy thresholds
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Optical lines trigger thresholds
   calo.energy.high_threshold  : real as energy = 150 keV
   xcalo.energy.high_threshold : real as energy = 150 keV
   gveto.energy.high_threshold : real as energy = 150 keV
 
-  calo.energy.low_threshold   : real as energy = 50  keV
-  xcalo.energy.low_threshold  : real as energy = 50  keV
-  gveto.energy.low_threshold  : real as energy = 50  keV
+  calo.energy.low_threshold   : real as energy = 50 keV
+  xcalo.energy.low_threshold  : real as energy = 50 keV
+  gveto.energy.low_threshold  : real as energy = 50 keV
 #+END_SRC
 
 ** Tracker clustering modules
@@ -853,7 +852,7 @@ We do not use these parameters
 :TANGLE: tracker_clustering_modules.conf
 :END:
 *** Insert preamble
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<module_preamble>>
 #+END_SRC
 
@@ -869,7 +868,7 @@ associates geiger cells but considering succesive neighbors. It does not use the
 longitudinal information and then can badly aggregates track belonging to two
 different particles.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="mock_tracker_clustering" type="snemo::reconstruction::mock_tracker_clustering_module"]
 
   #@description Logging priority
@@ -903,7 +902,7 @@ different particles.
 # already ordered by time. So to avoid confusion (especially to avoid double
 # tracker clustering solution), we do not ak pre-clustering to split the chamber.
 
-# #+BEGIN_SRC sh
+# #+BEGIN_SRC shell
 #   #@description Tracker pre clusterizer splitting chamber option
 #   TPC.split_chamber : boolean = 0
 # #+END_SRC
@@ -913,7 +912,7 @@ different particles.
 This algorithm provides tons of parameters and is based in F. Nova work. A
 somewhat complete overview of CAT main features can be seen in DocDb [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2120][#2120]].
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="cat_tracker_clustering" type="snemo::reconstruction::cat_tracker_clustering_module"]
 
   #@description Logging support
@@ -952,7 +951,7 @@ azimuthal position in Legendre phase space. The idea was originally suggested by
 Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2556][DocDB 2256]]) and Federico added the ability to fit helix
 (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2977][DocDB 2977]] as well as the [[http://www.sciencedirect.com/science/article/pii/S0168900208005780][original paper]]).
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="sultan_tracker_clustering" type="snemo::reconstruction::sultan_tracker_clustering_module"]
 
   #@description Logging support
@@ -1047,7 +1046,7 @@ Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/
 This algorithm has been developped by Warwick group since June 2012 and mainly
 by K. Bhardwaj.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="tcp_tracker_clustering" type="snemo::reconstruction::processing::tracker_clustering_module"]
 
   #@description Logging priority
@@ -1140,7 +1139,7 @@ by K. Bhardwaj.
 :TANGLE: tracker_fitting_modules.conf
 :END:
 *** Insert preamble
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<module_preamble>>
 #+END_SRC
 
@@ -1152,18 +1151,18 @@ sense that it only asked for cells position and drift radius. Fitting process is
 done by GSL minimizer to find the global solution given the model: either helix
 or line models.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="trackfit_tracker_fitting" type="snemo::reconstruction::trackfit_tracker_fitting_module"]
 #+END_SRC
 
 **** General logging
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging priority
   logging.priority : string = "warning"
 #+END_SRC
 
 **** Data bank & services labels
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
 
@@ -1175,13 +1174,13 @@ or line models.
 #+END_SRC
 
 **** General options
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The maximum number of fits to be saved (0 means all will be kept)
   maximum_number_of_fits : integer = 0
 #+END_SRC
 
 **** Trackfit algorithm
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The ID of the tracker fitting algorithm
   algorithm : string  = "trackfit"
 #+END_SRC
@@ -1192,19 +1191,19 @@ calibration has to be done to shift the time origin and then calculates the new
 cell radius. The =drift_time_calibration= can be anything if it respects some
 object interface rules defines in =trackfit::i_drift_time_calibration=
 class. Here we use the same model as in Section [[Tracker simulation to calibration data]].
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Use drift time (re)calibration
   drift_time_calibration_label : string = "snemo"
 #+END_SRC
 
 ***** Fit models
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Fit models
   fitting_models : string[2] = "line" "helix"
 #+END_SRC
 ***** Line fit parameters
 ****** Guess parameters
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Activate logging messages for line guess driver
   line.guess.logging.priority  : string = "error"
 
@@ -1225,7 +1224,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
 #+END_SRC
 
 ****** Fit parameters
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description 'Line' fit only guess ("BB", "BT", "TB", "TT")
   #line.only_guess : string[1] = "TT"
 
@@ -1252,7 +1251,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
 #+END_SRC
 ***** Helix fit parameters
 ****** Guess parameters
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Activate logging messages for helix guess driver
   trackfit.helix.guess.logging.priority  : string = "error"
 
@@ -1272,7 +1271,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   trackfit.helix.guess.fit_delay_cluster : boolean = 0
 #+END_SRC
 ****** Fit parameters
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description 'Helix' fit only guess ("BBB", "BBT", "BTB", "BTT", "TBB", "TBT", "TTB", "TTT")
   #trackfit.helix.only_guess : string[1] = "TTT"
 
@@ -1300,7 +1299,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
 :TANGLE: particle_tracking_modules.conf
 :END:
 *** Insert preamble
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<module_preamble>>
 #+END_SRC
 
@@ -1312,17 +1311,17 @@ the track charge (assuming particle comes from the source foil), it extrapolates
 track intersection with calorimeter walls and finally it associates particle
 track with calorimeter blocks.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="charged_particle_tracking" type="snemo::reconstruction::charged_particle_tracking_module"]
 #+END_SRC
 
 **** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging flag
   logging.priority : string = "warning"
 #+END_SRC
 **** Data banks and services labels
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
 
@@ -1341,13 +1340,13 @@ having a dedicated tasks such as to compute track charge or to associate
 particle track with calorimeter block. The way to perform these "actions" is
 then decorelated with the pipeline execution. Other algorithms can be
 implemented but the particle tracking module will stay unchanged.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description List of drivers to be used (see description below)
   drivers : string[3] = "VED" "CCD" "CAD"
 #+END_SRC
 
 ***** Vertex Extrapolation Driver
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Vertex Extrapolation Driver logging priority
   VED.logging.priority : string = "warning"
 
@@ -1356,7 +1355,7 @@ implemented but the particle tracking module will stay unchanged.
 #+END_SRC
 
 ***** Charge Computation Driver
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Charge Computation Driver logging priority
   CCD.logging.priority : string = "warning"
 
@@ -1365,7 +1364,7 @@ implemented but the particle tracking module will stay unchanged.
 #+END_SRC
 
 ***** Calorimeter Association Driver
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Calorimeter Association Driver logging priority
   CAD.logging.priority : string = "warning"
 
@@ -1380,23 +1379,23 @@ implemented but the particle tracking module will stay unchanged.
 :TANGLE: gamma_tracking_modules.conf
 :END:
 *** Insert preamble
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<module_preamble>>
 #+END_SRC
 
 *** \gamma tracking
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="gamma_tracking" type="snemo::reconstruction::gamma_tracking_module"]
 #+END_SRC
 
 **** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging flag
-  logging.priority : string = "trace"
+  logging.priority : string = "warning"
 #+END_SRC
 **** Data banks and services labels
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
 
@@ -1407,17 +1406,37 @@ implemented but the particle tracking module will stay unchanged.
   PTD_label : string  = "PTD"
 #+END_SRC
 **** Driver
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description List of drivers to be used (see description below)
   driver : string = "GT"
 #+END_SRC
 **** \gamma tracking setup
 ***** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging flag
-  gt.logging.priority : string = "trace"
+  gt.logging.priority : string = "warning"
+#+END_SRC
+***** Minimal probability
+The following value sets the minimal TOF probability to accept a pair of
+calorimeters.
+#+BEGIN_SRC shell
+  #@description Minimal TOF probability
+  gt.minimal_probability : real = 1e-5
+#+END_SRC
+***** Use probability rather than gamma number
+The =absolute= variable forces the gamma tracking algorithm to choose the
+calorimeter assocation in the base of the best probability and not in relation
+with the number of gammas.
+#+BEGIN_SRC shell
+  #@description Prefer probability rather than size of gamma tracked
+  gt.use_absolute : boolean = 0
 #+END_SRC
 
+***** Maximum size of the gamma tracked
+#+BEGIN_SRC shell
+  #@description Maximum size of a gamma tracked
+  gt.maximal_gamma_size : integer = 0
+#+END_SRC
 ** Chain modules
 :PROPERTIES:
 :TANGLE: chain_modules.conf
@@ -1429,7 +1448,7 @@ module, especially =chain_module=, needs to know the declaration of all the
 modules it contains.
 
 *** Insert preamble
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<module_preamble>>
 #+END_SRC
 
@@ -1445,25 +1464,13 @@ modules it contains.
 | io_output_analysed                |
 |-----------------------------------|
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<chain_module("analysis_chain", 6, analysis_chain)>>
 #+END_SRC
 
-*** \gamma tracking chain
-#+CAPTION: *Modules used by the \gamma tracking process.*
-#+TBLNAME: gamma_tracking_chain
-|-----------------------|
-| gamma_tracking        |
-| io_output_gamma_track |
-|-----------------------|
-
-#+BEGIN_SRC sh :noweb yes
-  <<chain_module("gamma_tracking_chain", 2, gamma_tracking_chain)>>
-#+END_SRC
-
 *** Process after selecting particle track
-#+BEGIN_SRC sh :noweb yes
-   <<if_module("process_with_particle_track_cuts", cut="particle_track_cut", then="gamma_tracking_chain", else="io_output_particle_track_non_selected")>>
+#+BEGIN_SRC shell :noweb yes
+   <<if_module("process_with_particle_track_cuts", cut="particle_track_cut", then="analysis_chain", else="io_output_particle_track_non_selected")>>
 #+END_SRC
 
 *** Particle tracking chain
@@ -1472,16 +1479,17 @@ modules it contains.
 |----------------------------------|
 | remove_particle_track_data       |
 | charged_particle_tracking        |
+| gamma_tracking                   |
 | io_output_particle_track         |
 | process_with_particle_track_cuts |
 |----------------------------------|
 
-#+BEGIN_SRC sh :noweb yes
-  <<chain_module("particle_tracking_chain", 4, particle_tracking_chain)>>
+#+BEGIN_SRC shell :noweb yes
+  <<chain_module("particle_tracking_chain", 5, particle_tracking_chain)>>
 #+END_SRC
 
 *** Process after fitting selection
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
    <<if_module("process_with_fitting_cuts", cut="tracker_trajectory_cut", then="particle_tracking_chain", else="io_output_tracker_trajectory_non_selected")>>
 #+END_SRC
 
@@ -1495,12 +1503,12 @@ modules it contains.
 | process_with_fitting_cuts      |
 |--------------------------------|
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<chain_module("fitting_chain", 4, fitting_chain)>>
 #+END_SRC
 
 *** Process after clustering selection
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<if_module("process_with_clustering_cuts", cut="tracker_clustering_cut", then="fitting_chain", else="io_output_tracker_clustering_non_selected")>>
 #+END_SRC
 
@@ -1514,12 +1522,12 @@ modules it contains.
 | process_with_clustering_cuts   |
 |--------------------------------|
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<chain_module("clustering_chain", 4, clustering_chain)>>
 #+END_SRC
 
 *** Process after calibration selection
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<if_module("process_with_calibrated_cuts", cut="calibrated_cut", then="clustering_chain", else="io_output_calibrated_non_selected")>>
 #+END_SRC
 
@@ -1534,12 +1542,12 @@ modules it contains.
 | process_with_calibrated_cuts |
 |------------------------------|
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<chain_module("calibration_chain", 5, calibration_chain)>>
 #+END_SRC
 
 *** Process after simulation selection
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<if_module("process_with_simulated_cuts", cut="simulated_cut", then="calibration_chain", else="io_output_simulated_non_selected")>>
 #+END_SRC
 
@@ -1552,7 +1560,7 @@ modules it contains.
 | process_with_simulated_cuts |
 |-----------------------------|
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<chain_module("simulation_chain", 3, simulation_chain)>>
 #+END_SRC
 
@@ -1563,7 +1571,7 @@ modules it contains.
 | simulation_chain            |
 |-----------------------------|
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<chain_module("full_chain", 1, full_chain)>>
 #+END_SRC
 
@@ -1581,7 +1589,7 @@ modules it contains.
 | io_output_analysed        |
 |---------------------------|
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<chain_module("minimum_bias_chain", 8, minimum_bias_chain)>>
 #+END_SRC
 
@@ -1598,7 +1606,7 @@ modules it contains.
 | remove_tracker_trajectory_data |
 |--------------------------------|
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<chain_module("reformat_data", 7, reformat_data)>>
 #+END_SRC
 
@@ -1611,18 +1619,18 @@ software components, including other services or data processing modules (see
 [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Whatisaservice][SN@ilWare FAQ]]).
 
 #+NAME: service_preamble
-#+BEGIN_SRC sh :results none :tangle no :exports none
+#+BEGIN_SRC shell :results none :tangle no :exports none
   #@description A sample list of setups
   #@key_label   "name"
   #@meta_label  "type"
 #+END_SRC
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<service_preamble>>
 #+END_SRC
 
 ** Context service
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="Ctx" type="dpp::context_service"]
 
   #@description Logging priority
@@ -1645,7 +1653,7 @@ geometry and material construction of the detector. This service, only declared
 here, can be used by several operations like calibration, particle track
 reconstruction ... but all of them will use the same geometry.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="Geo" type="geomtools::geometry_service"]
 
   #@description Logging priority
@@ -1668,7 +1676,7 @@ reconstruction ... but all of them will use the same geometry.
 The [[https://nemo.lpc-caen.in2p3.fr/wiki/cuts][cuts]] package provides some basic classes and utilities to design, create and
 apply selection cuts on arbitrary data models.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="Cuts" type="cuts::cut_service"]
 
   #@description Logging priority
@@ -1684,7 +1692,7 @@ apply selection cuts on arbitrary data models.
 :TANGLE: cut_manager.conf
 :END:
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging priority
   logging.priority : string = "warning"
 
@@ -1717,7 +1725,7 @@ This skeleton code allows to check the availability of a data bank.
 
 #+NAME: has_bank
 #+HEADERS: :var cname="" :var mode="has_bank" :var bname="" :var btype="" :var logging="warning"
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   echo '[name="'$cname'" type="dpp::utils_cut"]'
   echo
   echo '#@description Cut description'
@@ -1740,9 +1748,9 @@ This skeleton code allows to check the availability of a data bank.
 
 **** Skeleton code for =multi= cuts
 #+NAME: multi
-#+HEADERS: :var cname="" :var mode="and" :var ncut=0 :var list="" :var logging="warning"
-#+BEGIN_SRC sh
-  last=$(echo ${list} | sed -e 's/^.* //')
+#+HEADERS: :var cname="" :var mode="and" :var ncut=0 :var list="cut1 cut2 cut3" :var logging="warning"
+#+BEGIN_SRC shell
+  vlist=(${=list})
   echo '[name="'$cname'" type="cuts::multi_'$mode'_cut"]'
   echo
   echo '#@description Cut description'
@@ -1753,10 +1761,10 @@ This skeleton code allows to check the availability of a data bank.
   echo
   echo '#@description The cuts to be combined'
   echo 'cuts : string['$ncut'] = \'
-  for i in $list
+  for i in $vlist
   do
-      echo -n '  "'$(echo $i | sed '/(/ s/("\|")//g')'"'
-      if [ $i != $last ]; then echo ' \';fi
+      echo -n $i
+      if [ $i != $vlist[-1] ]; then echo ' \';fi
   done
 #+END_SRC
 
@@ -1765,12 +1773,12 @@ This skeleton code allows to check the availability of a data bank.
 :TANGLE: simulated_data_cuts.conf
 :END:
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<service_preamble>>
 #+END_SRC
 
 **** Check bank availability
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<has_bank("has_simulated_data", bname="SD")>>
 #+END_SRC
 
@@ -1782,7 +1790,7 @@ This cuts puts together all the previous declared cuts.
 | has_simulated_data |
 |--------------------|
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<multi(cname="simulated_cut", "and", 1, simulated_cuts)>>
 #+END_SRC
 
@@ -1791,17 +1799,17 @@ This cuts puts together all the previous declared cuts.
 :TANGLE: calibrated_data_cuts.conf
 :END:
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<service_preamble>>
 #+END_SRC
 
 **** Check bank availability
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<has_bank("has_calibrated_data", bname="CD")>>
 #+END_SRC
 
 **** Check calibrated calorimeter availability
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="has_cd_calorimeter" type="snemo::cut::calibrated_data_cut"]
 
   #@description Cut description
@@ -1820,7 +1828,7 @@ This cuts puts together all the previous declared cuts.
   has_hit_category.category : string = "calorimeter"
 #+END_SRC
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="!has_cd_calorimeter" type="cuts::not_cut"]
 
   #@description The cut to be negated (mandatory)
@@ -1828,7 +1836,7 @@ This cuts puts together all the previous declared cuts.
 #+END_SRC
 
 **** Select number of calibrated calorimeter hits
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="cd_calorimeter_cut" type="snemo::cut::calibrated_data_cut"]
 
   #@description Cut description
@@ -1854,7 +1862,7 @@ This cuts puts together all the previous declared cuts.
 #+END_SRC
 
 **** Check calibrated tracker availability
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="has_cd_tracker" type="snemo::cut::calibrated_data_cut"]
 
   #@description Cut description
@@ -1873,7 +1881,7 @@ This cuts puts together all the previous declared cuts.
   has_hit_category.category : string = "tracker"
 #+END_SRC
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="!has_cd_tracker" type="cuts::not_cut"]
 
   #@description The cut to be negated (mandatory)
@@ -1881,7 +1889,7 @@ This cuts puts together all the previous declared cuts.
 #+END_SRC
 
 **** Select number of calibrated tracker hits
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="cd_tracker_cut" type="snemo::cut::calibrated_data_cut"]
 
   #@description Cut description
@@ -1907,7 +1915,7 @@ This cuts puts together all the previous declared cuts.
 #+END_SRC
 
 **** Remove delayed calibrated tracker hits
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="has_delayed_tracker_hit" type="snemo::cut::calibrated_data_cut"]
 
   #@description Cut description
@@ -1926,7 +1934,7 @@ This cuts puts together all the previous declared cuts.
   tracker_hit_is_delayed.delay_time : real as time = 15 us
 #+END_SRC
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="!has_delayed_tracker_hit" type="cuts::not_cut"]
 
   #@description The cut to be negated (mandatory)
@@ -1946,8 +1954,8 @@ This cuts puts together all the previous declared cuts.
 | !has_delayed_tracker_hit |
 |--------------------------|
 
-#+BEGIN_SRC sh :noweb yes
-  <<multi(cname="calibrated_cut", "and", 6, calibrated_cuts)>>
+#+BEGIN_SRC shell :noweb yes
+  <<multi(cname="calibrated_cut", "and", 1, calibrated_cuts)>>
 #+END_SRC
 
 *** Tracker clustering data selection
@@ -1955,17 +1963,17 @@ This cuts puts together all the previous declared cuts.
 :TANGLE: tracker_clustering_data_cuts.conf
 :END:
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<service_preamble>>
 #+END_SRC
 
 **** Check bank availability
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<has_bank("has_tracker_clustering_data", bname="TCD")>>
 #+END_SRC
 
 **** Check if clusters have been performed
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="has_cluster" type="snemo::cut::tracker_clustering_data_cut"]
 
   #@description Cut description
@@ -1981,7 +1989,7 @@ This cuts puts together all the previous declared cuts.
   mode.has_cluster : boolean = 1
 #+END_SRC
 **** Select number of cluster
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="cluster_range_cut" type="snemo::cut::tracker_clustering_data_cut"]
 
   #@description Cut description
@@ -2004,7 +2012,7 @@ This cuts puts together all the previous declared cuts.
 #+END_SRC
 
 **** Select number of hit within a cluster                       :notused:
-#+BEGIN_SRC sh :tangle no
+#+BEGIN_SRC shell :tangle no
   [name="tcd2_cut" type="snemo::analysis::cut::tracker_clustering_data_cut"]
 
   #@description Logging priority
@@ -2029,7 +2037,7 @@ first define a cut to check is there is some unclustered hits. If yes, then we
 ask tracker cluster solution to have more than 4 unclustered hits. Finally,
 since we want to remove thess events, we build a =nor_cut= to keep
 ***** Check if unclustered hits remain
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="has_unclustered_hits" type="snemo::cut::tracker_clustering_data_cut"]
 
   #@description Cut description
@@ -2045,7 +2053,7 @@ since we want to remove thess events, we build a =nor_cut= to keep
   mode.has_unclustered_hits : boolean = 1
 #+END_SRC
 ***** Select number of unclustered hits
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="unclustered_hits_range_cut" type="snemo::cut::tracker_clustering_data_cut"]
 
   #@description Cut description
@@ -2072,14 +2080,14 @@ since we want to remove thess events, we build a =nor_cut= to keep
 | unclustered_hits_range_cut |
 |----------------------------|
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<multi(cname="range_unclustered_hits", "and", 2, unclustered_hits_cuts)>>
 #+END_SRC
 
 Now that we have selected tracker clustering solution with large number of
 unclustered hits, use the negation of this cut to keep event with low number of
 unclustered hits.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="!range_unclustered_hits" type="cuts::not_cut"]
 
   #@description Cut description
@@ -2102,8 +2110,8 @@ unclustered hits.
 | !range_unclustered_hits     |
 |-----------------------------|
 
-#+BEGIN_SRC sh :noweb yes
-  <<multi(cname="tracker_clustering_cut", "and", 4, tracker_clustering_cuts)>>
+#+BEGIN_SRC shell :noweb yes
+  <<multi(cname="tracker_clustering_cut", "and", 1, tracker_clustering_cuts)>>
 #+END_SRC
 
 *** Tracker trajectory data selection
@@ -2111,12 +2119,12 @@ unclustered hits.
 :TANGLE: tracker_trajectory_data_cuts.conf
 :END:
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<service_preamble>>
 #+END_SRC
 
 **** Check bank availability
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<has_bank("has_tracker_trajectory_data", bname="TTD")>>
 #+END_SRC
 
@@ -2127,7 +2135,7 @@ unclustered hits.
 | has_tracker_trajectory_data |
 |-----------------------------|
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<multi(cname="tracker_trajectory_cut", "and", 1, tracker_trajectory_cuts)>>
 #+END_SRC
 
@@ -2136,17 +2144,17 @@ unclustered hits.
 :TANGLE: particle_track_data_cuts.conf
 :END:
 
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<service_preamble>>
 #+END_SRC
 
 **** Check bank availability
-#+BEGIN_SRC sh :noweb yes
+#+BEGIN_SRC shell :noweb yes
   <<has_bank("has_particle_track_data", bname="PTD")>>
 #+END_SRC
 
 **** Check if particles have been reconstructed
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="has_particle" type="snemo::cut::particle_track_data_cut"]
 
   #@description Cut description
@@ -2162,7 +2170,7 @@ unclustered hits.
   mode.has_particles : boolean = 1
 #+END_SRC
 **** Select number of particles
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="range_particle" type="snemo::cut::particle_track_data_cut"]
 
   #@description Cut description
@@ -2178,14 +2186,14 @@ unclustered hits.
   mode.range_particles : boolean = 1
 
   #@description Minimal number of particle track
-  range_particles.min : integer = 2
+  range_particles.min : integer = 1
 
-  #@description Maximal number of particle track
-  range_particles.max : integer = 2
+  # #@description Maximal number of particle track
+  # range_particles.max : integer = 2
 #+END_SRC
 
 **** Check association with calorimeter hits
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="has_associated_calorimeter_hits" type="snemo::cut::particle_track_data_cut"]
 
   #@description Cut description
@@ -2202,7 +2210,7 @@ unclustered hits.
 #+END_SRC
 
 **** Select number of associated calorimeter hits
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="range_associated_calorimeter_hits" type="snemo::cut::particle_track_data_cut"]
 
   #@description Cut description
@@ -2225,7 +2233,7 @@ unclustered hits.
 #+END_SRC
 
 **** Check if track has foil vertex
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="has_vertex_on_foil" type="snemo::cut::particle_track_data_cut"]
 
   #@description Cut description
@@ -2242,7 +2250,7 @@ unclustered hits.
 #+END_SRC
 
 **** Select particle charge
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="has_negative_charge" type="snemo::cut::particle_track_data_cut"]
 
   #@description Cut description
@@ -2261,7 +2269,7 @@ unclustered hits.
   particle_has_charge.type : string = "negative"
 #+END_SRC
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="has_positive_charge" type="snemo::cut::particle_track_data_cut"]
 
   #@description Cut description
@@ -2280,7 +2288,7 @@ unclustered hits.
   particle_has_charge.type : string = "positive"
 #+END_SRC
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="has_undefined_charge" type="snemo::cut::particle_track_data_cut"]
 
   #@description Cut description
@@ -2301,7 +2309,7 @@ unclustered hits.
 
 **** No isolated calorimeter hits
 Remove event with non associated calorimeters hits.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="has_non_associated_calorimeter_hits" type="snemo::cut::particle_track_data_cut"]
 
   #@description Cut description
@@ -2317,14 +2325,14 @@ Remove event with non associated calorimeters hits.
   mode.has_non_associated_calorimeter_hits : boolean = 1
 #+END_SRC
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="!has_non_associated_calorimeter_hits" type="cuts::not_cut"]
 
   #@description The cut to be negated (mandatory)
   cut : string = "has_non_associated_calorimeter_hits"
 #+END_SRC
 **** Reconstruction parameters selection                         :notused:
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="chi2_cut" type="snemo::analysis::cut::basic_particle_track_parameter_cut"]
 
   #@description Logging priority
@@ -2347,7 +2355,7 @@ Remove event with non associated calorimeters hits.
   parameter.max : real = 1000.0
 #+END_SRC
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="deltay_calo_cut" type="snemo::analysis::cut::basic_particle_track_parameter_cut"]
 
   #@description Logging priority
@@ -2390,8 +2398,8 @@ Remove event with non associated calorimeters hits.
 | !has_non_associated_calorimeter_hits |
 |--------------------------------------|
 
-#+BEGIN_SRC sh :noweb yes
-  <<multi("particle_track_cut", "and", 8, particle_track_cuts)>>
+#+BEGIN_SRC shell :noweb yes
+  <<multi("particle_track_cut", "and", 7, particle_track_cuts)>>
 #+END_SRC
 * Running SN@ilWare processing chain
 
@@ -2410,7 +2418,7 @@ materials). This is not user-friendly at all but this is the only way so far.
 For example, if you only want to do simulation, you can run the following
 command
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   bxdpp_processing                                                                             \
       --module-manager-config ./current/module_manager.conf                                    \
       --module simulation                                                                      \
@@ -2422,7 +2430,7 @@ command
 An other way to run the previous command without loading the =dlls.conf= file
 will be to temporarly set the =LD_LIBRARY_PATH= variable and to point it to the
 =Falaise= and =Bayeux= libraries path namely
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   LD_LIBRARY_PATH="<bayeux install dir>/bayeux/install/lib64:<falaise install dir>/falaise/install/lib64" \
   bxdpp_processing                                                                                        \
       --module-manager-config ./current/module_manager.conf                                               \
@@ -2437,7 +2445,7 @@ setup [[G4 simulation][in this section]].
 
 In the same way you can run the calibration chain by doing
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   bxdpp_processing                                                                             \
       --module-manager-config ./current/module_manager.conf                                    \
       --module calibration                                                                     \

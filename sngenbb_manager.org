@@ -18,7 +18,7 @@ More details concerning the use of =genbb= can be found in [[https://nemo.lpc-ca
 ** Genbb manager configuration
 Here, general options such as verbosity, debug flags are passed to =genbb=
 manager.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@config Main configuration parameters for the genbb manager
 
   #@description Logging priority
@@ -40,14 +40,14 @@ manager.
 
 This section holds the configuration of several =genbb= wrappers.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description A sample list of setups
   #@key_label   "name"
   #@meta_label  "type"
 #+END_SRC
 
 ** 2\nu2\beta isotope with energy cut
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="Se82.2nubb-2MeV" type="genbb::wdecay0"]
   #@config Two neutrino double beta decay of Se-82, 2nubb [DBD]
   decay_type      : string  = "DBD"
@@ -56,13 +56,23 @@ This section holds the configuration of several =genbb= wrappers.
   decay_dbd_mode  : integer = 4
   energy_min      : real as energy = 2.0 MeV
 #+END_SRC
+** \nbsp^{96}Zr excited state
+#+BEGIN_SRC shell
+  [name="Zr96.2nubb" type="genbb::wdecay0"]
+  #@config Two neutrino double beta decay of Zr-96, 2nubb [DBD]
+  decay_type      : string  = "DBD"
+  decay_isotope   : string  = "Zr96"
+  decay_dbd_level : integer = 2
+  decay_dbd_mode  : integer = 4 # 2nubb
+#+END_SRC
+
 ** \nbsp^{222}Rn in the tracking chamber
 Here, we use the same definition as =Bi214_Po214= that can be find in
 =@falaise:config/common/simulation/primary_events/1.0/background.def=. We just
 change the =genbb= label to distinguish the\nbsp^{214}Bi events generated in the
 source foil to the ones generated in the tracking chamber.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="Rn222" type="genbb::wdecay0"]
   #@config Bi-214/Po-214 decay in the tracker [background]
   decay_type      : string  = "background"
@@ -75,7 +85,7 @@ SuperNEMO.
 *** \nbsp^{214}Pb 0\nu\beta\beta
 Following a [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2946][talk]] given by Vladimir Treytak during Bratislava collaboration
 meeting, 2013,\nbsp^{214}Pb is also a 2\beta emitter
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="Pb214.0nubb" type="genbb::wdecay0"]
   #@config Neutrinoless double beta decay of Pb-214 [DBD]
   decay_type      : string  = "DBD"
@@ -90,7 +100,7 @@ energy, flat energy distribution given energy limits, gaussian energy
 distribution or following a tabulated energy spectrum.
 
 *** Single monokinetic electron
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="electron_monokinetic" type="genbb::single_particle_generator"]
 
   #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
@@ -109,7 +119,7 @@ distribution or following a tabulated energy spectrum.
 #+END_SRC
 
 *** Single electron with flat energy distribution
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="electron_0-3MeV_flat" type="genbb::single_particle_generator"]
 
   #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
@@ -134,7 +144,7 @@ distribution or following a tabulated energy spectrum.
 #+END_SRC
 
 *** Single electron with gaussian energy distribution
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="electron_gaussian_energy" type="genbb::single_particle_generator"]
 
   #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
@@ -159,7 +169,7 @@ distribution or following a tabulated energy spectrum.
 #+END_SRC
 
 *** Single electron with conic emission
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="electron_monokinetic_with_cone" type="genbb::single_particle_generator"]
 
   #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
@@ -190,7 +200,7 @@ distribution or following a tabulated energy spectrum.
 #+END_SRC
 
 *** Single gamma with monokinetic energy
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="gamma_monokinetic" type="genbb::single_particle_generator"]
 
   #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
@@ -202,13 +212,13 @@ distribution or following a tabulated energy spectrum.
   mode : string = "monokinetic"
 
   #@description Value of the particle energy
-  energy : real as energy = 1000. keV
+  energy : real as energy = 500. keV
 
   #@description Flag for random emission
   emission_direction : string = "randomized"
 #+END_SRC
 *** Single gamma with flat energy distribution
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="gamma_0-3MeV_flat" type="genbb::single_particle_generator"]
 
   #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
@@ -231,7 +241,7 @@ distribution or following a tabulated energy spectrum.
 
 *** Multi-\gamma-rays
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="multi_gamma_rays" type="genbb::single_particle_generator"]
 
   #@config Parameters for the generation of multiple gamma rays
@@ -249,10 +259,10 @@ distribution or following a tabulated energy spectrum.
   energy_unit : string = "keV"
 
   #@description Particle energies
-  multi_rays.energies : real[9] as energy = 53.161, 79.6139, 80.9971, 160.613, 223.234, 276.398, 302.853, 356.017, 383.851
+  multi_rays.energies : real[9] in keV = 53.161 79.6139 80.9971 160.613 223.234 276.398 302.853 356.017 383.851
 
   #@description Particle relative probabilities
-  multi_rays.probabilities : real[9] = 0.02199, 0.0262, 0.0406, 0.00645, 0.00450, 0.07164, 0.1833, 0.6205, 0.0894
+  multi_rays.probabilities : real[9] = 0.02199 0.0262 0.0406 0.00645 0.00450 0.07164 0.1833 0.6205 0.0894
 #+END_SRC
 
 ** Combined generators
@@ -260,7 +270,7 @@ Combination of several =genbb= generators can be done using
 =genbb::combined_particle_generator= object...
 
 *** Simultaneous \gamma-rays
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="multi_particles" type="genbb::combined_particle_generator"]
 
   #@config A model that generates several particles  at the same time
@@ -268,24 +278,33 @@ Combination of several =genbb= generators can be done using
   #@description Logging priority
   logging.priority : string = "warning"
 
+  #@description Assign unique generation id
+  assign_generation_ids : boolean = 1
+
   #@description The mode ("timing", "plain_probability" or "activity")
   mode : string = "time"
 
   #@description The list of particle generators that compose the combo
-  generators.labels : string[2] = \
+  generators.labels : string[3] = \
                     "gamma1"      \
-                    "gamma2"
+                    "gamma1"      \
+                    "gamma1"
 
   #@description The name of the generator associated the "gamma1" contribution
   generators.gamma1.name : string = "gamma_monokinetic"
 
-  #@description The probability associated to the "gamma1" contribution
-  generators.gamma1.time : real as time = 0 ns
+  #@description The time mode associated to the "gamma1" contribution
+  generators.gamma1.time_mode : string = "fixed"
+
+  #@description The shift time associated to the "gamma1" contribution
+  generators.gamma1.fixed_time : real as time = 0 ns
 
   #@description The name of the generator associated the "gamma2" contribution
   generators.gamma2.name : string = "gamma_monokinetic"
 
-  #@description The probability  associated to the "gamma2" contribution
-  generators.gamma2.time : real as time = 0 ns
+  #@description The time mode associated to the "gamma2" contribution
+  generators.gamma2.time_mode : string = "fixed"
 
+  #@description The shift time associated to the "gamma2" contribution
+  generators.gamma2.fixed_time : real as time = 0 ns
 #+END_SRC

@@ -30,7 +30,7 @@ manager. Each relevant part is split into a unique item which ease the
 navigation as well as the configuration. The most *important* code block is the
 next one which allows the reading of this file by =datatools::properties= object.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description A sample list of setups for Geant4
   #@key_label   "name"
   #@meta_label  ""
@@ -40,7 +40,7 @@ next one which allows the reading of this file by =datatools::properties= object
 Here, general options such as verbosity, debug flags are passed to sng4
 manager. By the way, some of these options can be overloaded by the
 =sng4_module= which configuration can be changed in [[file:simulation_config.org][the main simulation file]].
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="manager"]
 
   #@description Logging priority
@@ -57,7 +57,7 @@ manager. By the way, some of these options can be overloaded by the
 The following code holds the =genbb= manager to give access to several primary
 generators from neutrinoless double beta decay, to\nbsp^{214}Bi/^{208}Tl contamination or
 cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb manager]] file.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="event_generator"]
 
   #@description Configuration file for the embedded '::genbb::manager'
@@ -68,7 +68,7 @@ cosmic muon generator. See [[file:sngenbb_manager.org][sngenbb manager]] file.
 ** Vertex generation
 This part basically provides the location of vertex generator implemented by
 [[https://nemo.lpc-caen.in2p3.fr/wiki/genvtx][genvtx]]. See [[file:sngenvertex_manager.org][sngenvertex manager]] file.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="vertex_generator"]
 
   #@description Main configuration file for the vertex generator manager
@@ -78,11 +78,11 @@ This part basically provides the location of vertex generator implemented by
 
 ** Detector construction
 Main configuration file for the detector construction user object.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="detector_construction"]
 #+END_SRC
 *** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging priority
   logging.priority : string = "warning"
 #+END_SRC
@@ -92,7 +92,7 @@ The Geometry Description Markup Language is an application-indepedent geometry
 description format based on XML[1]. It is used as Geant4 toolkit bindings
 through =gemotools= converters.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Temporary directory for GDML file generation:
   gdml.tmp_dir         : string as path = "/tmp/${USER}/snemo_demo_g4.d"
 
@@ -108,7 +108,7 @@ through =gemotools= converters.
 *** Step hit processors
 Step hit processors are used to convert Geant4 steps into detector hits for
 SuperNEMO physics.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging support for step hit processor factory
   hit_processor_factory.logging.priority : string = "warning"
 
@@ -120,7 +120,7 @@ SuperNEMO physics.
 *** Sensitive detectors
 This category defines sensitive detectors where special treatments of Geant4 steps
 must be applied. This can be in direct relation with step hit processors defined above.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Parameters for the generation of 'sensitive hits' through 'sensitive detectors' :
   sensitive.detectors : string[4] = "calorimeter_SD" "xcalorimeter_SD" "gveto_SD" "tracker_SD"
 
@@ -159,7 +159,7 @@ must be applied. This can be in direct relation with step hit processors defined
 
 *** Geant4 step hit limits
 The following code defines geometry models where Geant4 steps are size limited.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description List of geometry models with max steps:
   limits.list_of_volumes : string[7] =         \
       "source_external_strip.model.log"        \
@@ -194,7 +194,7 @@ The following code defines geometry models where Geant4 steps are size limited.
 
 *** Geant4 regions
 Definition of Geant4 regions.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Flag to use G4 regions
   using_regions : boolean = 1
 
@@ -218,7 +218,7 @@ Definition of Geant4 regions.
 #+END_SRC
 
 *** Magnetic field
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Flag to use magnetic field
   using_magnetic_field : boolean = 1
 
@@ -240,18 +240,18 @@ In the development of a Geant4-based application, it is the user's
 responsibility to decide which physics processes are required, and then to
 include them in the physics list. The next lines are just aliases to relevant
 phycical processes for SuperNEMO.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="physics_list"]
 #+END_SRC
 
 *** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging priority
   logging.priority : string = "warning"
 #+END_SRC
 
 *** SuperNEMO physics plugins
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description List of physics constructors
   physics_constructors.names : string[2] = "particles" "em"
 
@@ -275,7 +275,7 @@ phycical processes for SuperNEMO.
 :TANGLE: snparticles.conf
 :END:
 Quite experimental try to set particles used within SuperNEMO "framework".
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@config Configuration parameters for the particles Geant4 physics constructor
 
   #@description The activation flag for geantinos (neutral and charged, default: 0)
@@ -326,14 +326,14 @@ Quite experimental try to set particles used within SuperNEMO "framework".
 :TANGLE: snem_processes.conf
 :END:
 ***** General settings
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@config Configuration parameters for the electro-magnetic Geant4 physics constructor
 
   #@description Electro-magntox interaction model (value in: "standard", "low_energy", "penelope")
   em.model : string = "standard"
 #+END_SRC
 ***** Electrons/positrons
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The activation flag for electron/positron ionisation (energy loss/delta ray production)
   em.electron.ionisation           : boolean = 1
 
@@ -356,7 +356,7 @@ Quite experimental try to set particles used within SuperNEMO "framework".
   em.positron.annihilation         : boolean = 1
 #+END_SRC
 ***** Gammas
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The activation flag for Rayleigh scattering
   em.gamma.rayleigh_scattering  : boolean = 0
 
@@ -373,7 +373,7 @@ Quite experimental try to set particles used within SuperNEMO "framework".
   em.gamma.conversion_to_muons  : boolean = 0
 #+END_SRC
 ***** Muons
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The activation flag for muon ionisation
   em.muon.ionisation           : boolean = 0
 
@@ -390,7 +390,7 @@ Quite experimental try to set particles used within SuperNEMO "framework".
   em.muon.step_limiter         : boolean = 0
 #+END_SRC
 ***** Ions
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The activation flag for ion ionisation
   em.ion.ionisation           : boolean = 1
 
@@ -401,7 +401,7 @@ Quite experimental try to set particles used within SuperNEMO "framework".
   em.ion.step_limiter         : boolean = 1
 #+END_SRC
 ***** Deexcitation
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The activation flag for deexcitation fluorescence process
   #em.deexcitation.fluo         : boolean = 0
 
@@ -438,7 +438,7 @@ Quite experimental try to set particles used within SuperNEMO "framework".
 *** Using Geant4 region cuts
 These cuts are related to some production processes and then, define some
 minimal step hit size given the detector region.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Activate the use of specific cuts
   using_production_cuts : boolean = 1
 
@@ -490,7 +490,7 @@ The last part of the configuration concerned Geant4 actions but do not hold a
 lot of options.
 
 *** Run action
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="run_action"]
 
   #@description Logging priority :
@@ -504,7 +504,7 @@ lot of options.
 #+END_SRC
 
 *** Event action
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="event_action"]
 
   #@description Logging priority :
@@ -512,7 +512,7 @@ lot of options.
 #+END_SRC
 
 *** Primary generator action
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="primary_generator_action"]
 
   #@config Configuration of the primary generator action
@@ -521,7 +521,7 @@ lot of options.
   logging.priority : string = "warning"
 #+END_SRC
 *** Tracking action
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="tracking_action"]
 
   #@description Logging priority :
@@ -529,7 +529,7 @@ lot of options.
 #+END_SRC
 
 *** Stepping action
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="stepping_action"]
 
   #@description Logging priority :
@@ -537,7 +537,7 @@ lot of options.
 #+END_SRC
 
 *** Stacking action
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="stacking_action"]
 
   #@description Logging priority :

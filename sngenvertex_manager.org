@@ -12,7 +12,7 @@ This file holds some vertex generators related to SuperNEMO detector geometry.
 :END:
 
 ** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging priority
   logging.priority : string = "warning"
 #+END_SRC
@@ -20,7 +20,7 @@ This file holds some vertex generators related to SuperNEMO detector geometry.
 ** Vertices list of files
 The following code defines the location of several vertices files. All of them
 are defined in Section [[Vertex configuration]].
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Names of the files configuring the list of registered vertex generators
   vg_list : string[4] as path =                                              \
     "@SNEMO_SIMULATION_CONFIGURATION@/scin_vg.lis"    \
@@ -44,7 +44,7 @@ This section defines several vertices configuration :
 :END:
 
 Insert preamble
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description A list of vertex generators
   #@key_label   "name"
   #@meta_label  "type"
@@ -53,7 +53,7 @@ Insert preamble
 - Generate vertex in the bulk volume of the wrapper for the main calorimeter's
   scintillator blocks:
 
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="calo_wrapper_bulk" type="genvtx::box_model_vg"]
 
     #@config Vertex generation from the bulk of the main calorimeter wrapper
@@ -72,7 +72,7 @@ Insert preamble
 - Generate vertex in the bulk volume of the wrapper for the X-calorimeter's
   scintillator blocks:
 
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="xcalo_wrapper_bulk" type="genvtx::box_model_vg"]
 
     #@config Vertex generation from the bulk of the X-wall calorimeter wrapper
@@ -90,7 +90,7 @@ Insert preamble
 - Generate vertex in the bulk volume of the wrapper for the \gamma veto
   calorimeter's scintillator blocks:
 
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="gveto_wrapper_bulk" type="genvtx::box_model_vg"]
 
     #@config Vertex generation from the bulk of the gamma veto wrapper
@@ -107,7 +107,7 @@ Insert preamble
 
 - Generate vertex from the surface of the main calorimeter's scintillator blocks:
 
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="calo_wrapper_surface" type="genvtx::box_model_vg"]
 
     #@config Vertex generation from the surface of the main calorimeter wrapper
@@ -127,7 +127,7 @@ Insert preamble
 
 - Generate vertex from the surface of the X-calorimeter's scintillator blocks:
 
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="xcalo_wrapper_surface" type="genvtx::box_model_vg"]
 
     #@config Vertex generation from the surface of the X-wall calorimeter wrapper
@@ -147,7 +147,7 @@ Insert preamble
 
 - Generate vertex from the surface of the \gamma veto's scintillator blocks:
 
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="gveto_wrapper_surface" type="genvtx::box_model_vg"]
 
     #@config Vertex generation from the surface of the gamma veto wrapper
@@ -167,7 +167,7 @@ Insert preamble
 
 - Generate vertex in the PMT glass
 
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="pmt_glass_bulk" type="genvtx::polycone_model_vg"]
 
     #@config Vertex generation from the bulk of the PMT glass wrapper
@@ -194,7 +194,7 @@ Insert preamble
 :END:
 
 Insert preamble
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description A list of vertex generators
   #@key_label   "name"
   #@meta_label  "type"
@@ -204,7 +204,7 @@ Insert preamble
 
 - Generate vertex from the bulk volume of the anode wires:
 
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="anode_wire_bulk" type="genvtx::cylinder_model_vg"]
 
     #@config Vertex generation from the bulk volume of the anode wires
@@ -221,7 +221,7 @@ Insert preamble
 
 - Generate vertex on the surface of the anode wires:
 
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="anode_wire_surface" type="genvtx::cylinder_model_vg"]
 
     #@config Vertex generation from the surface of the anode wires
@@ -247,7 +247,7 @@ Insert preamble
 
 - Generate vertex on the surface of the field wires:
 
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="field_wire_surface" type="genvtx::cylinder_model_vg"]
 
     #@config Vertex generation from the surface of the field wires
@@ -273,7 +273,7 @@ Insert preamble
 
 - Generate vertex from the bulk volume of the field wires:
 
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="field_wire_bulk" type="genvtx::cylinder_model_vg"]
 
     #@config Vertex generation from the bulk volume of the anode wires
@@ -297,7 +297,7 @@ inside the gap between foil and first tracker layer as well as not within the
 gap between the main calorimeter walls and the last tracker layer. In order to
 get a full coverage of tracker gaz, you may have a look to the next section.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="tracker_drift_cell_bulk" type="genvtx::box_model_vg"]
 
   #@config Vertex generation from the core of Geiger cell
@@ -326,7 +326,7 @@ been used :
 - the source core model has a thickness of 58 mm,
 - the source foil thickness is 167 µm.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="tracker_volume_box" type="genvtx::box_vg"]
 
   #@config Vertex generation from the tracker gaz
@@ -350,7 +350,7 @@ been used :
 Then we define 2 placements : one for the front part ($x>0$) of the tracker and
 another one for the back part ($x<0$).
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="tracker_front_volume_bulk" type="genvtx::placement_vg"]
 
   #@config Vertex generation from the front tracker volume
@@ -371,7 +371,7 @@ another one for the back part ($x<0$).
   placement.z : real as length = 0.0 mm
 #+END_SRC
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="tracker_back_volume_bulk" type="genvtx::placement_vg"]
 
   #@config Vertex generation from the front tracker volume
@@ -394,7 +394,7 @@ another one for the back part ($x<0$).
 
 We finally define a combined vertex generator in order to mix the two previous
 vertex generators:
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="tracker_volume_bulk" type="genvtx::combined_vg"]
 
   #@config Vertex generation from the bulk volume of the tracker
@@ -420,7 +420,7 @@ https://nemo.lpc-caen.in2p3.fr/changeset/15140/genvtx/trunk. The idea is to
 shoot vertex within SuperNEMO module and then reject the ones not inside
 =tracking_gas=.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="tracker_gas_bulk" type="genvtx::box_model_vg"]
 
   #@config Vertex generation from 'tracking_gas' material
@@ -441,24 +441,24 @@ shoot vertex within SuperNEMO module and then reject the ones not inside
 ***** Vertex validation
 Here starts the validation configuration. We first add a support to vertex
 validation
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Vertex validation support
   vertex_validation_support : boolean = 1
 #+END_SRC
 we define the logging level
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Maximum number of tries for the rejection method
   validation.logging.priority : string = "warning"
 #+END_SRC
 and we activate it
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Vertex validation activation
   validation.activation : boolean = 1
 #+END_SRC
 
 We also defines the maximum number of tries for the rejection process; above this
 number the vertex generator throws an error.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Maximum number of tries for the rejection method
   validation.maximum_number_of_tries : integer = 1000
 #+END_SRC
@@ -466,18 +466,18 @@ number the vertex generator throws an error.
 We finally define the validation id which refers to the =cut= identifiant with
 which the validator is registered. Here we want to only keep vertex within the
 =tracking_gas= material so we use a =in_materials_vertex_validator=
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Vertex validation id
   validation.validator_id : string = "genvtx::in_materials_vertex_validator"
 #+END_SRC
 and we define the set of materials to be used
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description List of materials to be used
   validation.validator_params.materials.ref : string[1] = "tracking_gas"
 #+END_SRC
 
 We can also set the logging priority and the maximum depth to look inside
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   # #@description Logging level for validator
   # validation.validator_params.max_depth : integer = 100
 
@@ -497,7 +497,7 @@ combine with appropriate weights. These vertices are only available with
 SuperNEMO geometry version greater than 2.0.
 
 Insert preamble
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description A list of vertex generators
   #@key_label   "name"
   #@meta_label  "type"
@@ -505,7 +505,7 @@ Insert preamble
 
 *** Internal source strips
 - Generate vertex from the bulk volume of the source foil:
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="source_strips_internal_bulk" type="genvtx::box_model_vg"]
 
     #@config Vertex generation from the bulk volume of the inner source strips
@@ -524,7 +524,7 @@ Insert preamble
   #+END_SRC
 
 - Generate vertex from the surface of the source foil:
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="source_strips_internal_surface" type="genvtx::box_model_vg"]
 
     #@config Vertex generation from the surface of the inner source strips
@@ -551,7 +551,7 @@ Insert preamble
 *** External source strips
 
 - Generate vertex from the bulk volume of the source foil:
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="source_strips_external_bulk" type="genvtx::box_model_vg"]
 
     #@config Vertex generation from the bulk volume of the outer source strips
@@ -570,7 +570,7 @@ Insert preamble
   #+END_SRC
 
 - Generate vertex from the surface of the source foil:
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="source_strips_external_surface" type="genvtx::box_model_vg"]
 
     #@config Vertex generation from the surface of the outer source strips
@@ -597,7 +597,7 @@ Insert preamble
 *** Combined vertex
 
 - Generate vertex from both the bulk volume of all the source foils:
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="source_strips_bulk" type="genvtx::combined_vg"]
 
     #@config Vertex generation from the bulk volume of the source strips
@@ -617,7 +617,7 @@ Insert preamble
   #+END_SRC
 
 - Generate vertex from the surface of all the source foils:
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="source_strips_surface" type="genvtx::combined_vg"]
 
     #@config Vertex generation from the surface of the source strips
@@ -643,14 +643,14 @@ Insert preamble
 :END:
 
 Insert preamble
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description A list of vertex generators
   #@key_label   "name"
   #@meta_label  "type"
 #+END_SRC
 
 - Generate vertex from the surface of the hall walls
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="experimental_hall_surface" type="genvtx::box_model_vg"]
 
     #@config Vertex generation from the surface of the experimental hall
@@ -684,7 +684,7 @@ Insert preamble
   #+END_SRC
 
 - Generate vertex from the volume of the hall
-  #+BEGIN_SRC sh
+  #+BEGIN_SRC shell
     [name="experimental_hall_bulk" type="genvtx::box_model_vg"]
 
     #@config Vertex generation from the volume of the experimental hall

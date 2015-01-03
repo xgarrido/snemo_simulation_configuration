@@ -16,7 +16,7 @@ This file holds mainly the paths to geometry files most of them are placed in
 :END:
 
 ** Setup label, description and version
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Setup label
   setup_label : string = "snemo::demonstrator"
 
@@ -28,7 +28,7 @@ This file holds mainly the paths to geometry files most of them are placed in
 #+END_SRC
 
 ** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging priority
   logging.priority : string = "warning"
 #+END_SRC
@@ -37,13 +37,13 @@ This file holds mainly the paths to geometry files most of them are placed in
 The geometry factory holds all the files needed for the geometry construction.
 
 *** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging priority of the embedded geometry model factory
   factory.logging.priority : string = "warning"
 #+END_SRC
 
 *** Geometry files
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description List of files describing the geometry models
   factory.geom_files : string[22] as path =                                                                     \
       "@falaise:config/snemo/demonstrator/geometry/3.0/models/source_module/source_calibration.geom"            \
@@ -72,7 +72,7 @@ The geometry factory holds all the files needed for the geometry construction.
 
 ** ID manager
 *** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging flag of the embedded ID manager
   id_mgr.logging.priority : string = "warning"
 #+END_SRC
@@ -80,14 +80,14 @@ The geometry factory holds all the files needed for the geometry construction.
 *** Category list
 Categories are used to assign a unique id number (integer) to a geometrical
 volume.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Source file of the geometry categories used by the ID manager
   id_mgr.categories_list : string as path = \
       "@falaise:config/snemo/demonstrator/geometry/3.0/categories.lis"
 #+END_SRC
 
 ** Mapping configuration
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Build the embedded mapping dictionnary
   build_mapping : boolean = 0
 
@@ -104,7 +104,7 @@ volume.
 #+END_SRC
 
 ** Plugins configuration
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Plugins factory preload from system registration (default=0)
   plugins.factory_no_preload : boolean = 0
 
@@ -128,7 +128,7 @@ We use the definitions of isotopes, elements and materials from the installed
 materials library. Here the =materials_aliases= definition are locally defined
 to change the source foil isotope.
 *** Plugin declaration
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The geometry manager plugin for materials
 
   #@key_label  "name"
@@ -138,7 +138,7 @@ to change the source foil isotope.
 #+END_SRC
 
 *** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging priority
   logging.priority : string = "warning"
 
@@ -152,7 +152,7 @@ actually wrong (see fix [[https://nemo.lpc-caen.in2p3.fr/changeset/14824][14824]
 of database. To allow the use of [[https://www-nds.iaea.org/amdc/][Atomic Mass Evaluation]] data base, we should
 indicate it to =materials= manager.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Use AME 2003
   materials.load_isotope_mass_data : boolean = 1
 #+END_SRC
@@ -161,13 +161,13 @@ indicate it to =materials= manager.
 This property allows the overloading of some materials as it is done, for
 example, in [[Material aliases]] section.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Flag to allow the overloading of materials
   materials.alias_allow_overload : boolean = 1
 #+END_SRC
 
 *** Files
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description List of files describing the materials
   materials.configuration_files : string[7] as path =                       \
       "@materials:data/std_isotopes.def"                                    \
@@ -187,7 +187,7 @@ example, in [[Material aliases]] section.
 This piece of code allows user to define or redefine materials aliases. Here for
 example, we locally change the source material without changing anything else.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description A sample list of elements
   #@key_label   "name"
   #@meta_label  "type"
@@ -205,7 +205,7 @@ example, we locally change the source material without changing anything else.
 :TANGLE: magnetic_field_plugin.conf
 :END:
 *** Plugin declaration
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The geometry manager plugin for emfield
 
   #@key_label  "name"
@@ -215,13 +215,13 @@ example, we locally change the source material without changing anything else.
 #+END_SRC
 
 *** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging priority
   logging.priority : string = "warning"
 #+END_SRC
 
 *** EM field manager configuration
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Manager logging priority
   manager.logging.priority : string = "warning"
 
@@ -238,7 +238,7 @@ independently and at the same time for different G4 volumes. This association
 between volumes and field is done by the =geom_map= object of =emfield=
 component. For SuperNEMO, constant magnetic field is defined inside demonstrator
 module.
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Flag to activate the geometry volume/field associations map
   manager.build_geom_map : boolean = 1
 
@@ -260,7 +260,7 @@ module.
 :TANGLE: magnetic_field_drivers.conf
 :END:
 *** Driver preamble
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Definition parameters for some electro-magnetic fields
 
   #@key_label   "name"
@@ -268,7 +268,7 @@ module.
 #+END_SRC
 
 *** Constant magnetic field
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   [name="B_module" type="emfield::uniform_magnetic_field"]
 
   #@config Configuration parameters for the magnetic field of SuperNEMO
@@ -286,7 +286,7 @@ module.
 :END:
 
 *** Plugin declaration
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description The geometry manager plugin for locators
 
   #@key_label  "name"
@@ -296,18 +296,18 @@ module.
 #+END_SRC
 
 *** Logging priority
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Logging priority
   logging.priority : string = "warning"
 #+END_SRC
 *** Geometry requirements
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description Geometry version requirement (not working with version lower than 2.0)
   geometry.setup_requirement : string[2] = "snemo(>=2)" "snemo::demonstrator(>=2)"
 #+END_SRC
 
 *** Module number
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell
   #@description SuperNEMO module number
   locators.module_number : integer = 0
 #+END_SRC
