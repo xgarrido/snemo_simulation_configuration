@@ -1763,7 +1763,7 @@ This skeleton code allows to check the availability of a data bank.
   echo 'cuts : string['$ncut'] = \'
   for i in $vlist
   do
-      echo -n $i
+      echo -n \"$i\"
       if [ $i != $vlist[-1] ]; then echo ' \';fi
   done
 #+END_SRC
