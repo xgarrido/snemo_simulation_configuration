@@ -136,9 +136,6 @@ distribution or following a tabulated energy spectrum.
   #@description Maximal energy value
   max_energy : real as energy = 3000. keV
 
-  ### Only for "spectrum" mode:
-  #spectrum.data_file    : string = "${SNGENBB_DATA_DIR}/testing/data/sample_tabulated_energy_spectrum.data"
-
   #@description Flag for random emission
   emission_direction : string = "randomized"
 #+END_SRC
@@ -160,9 +157,6 @@ distribution or following a tabulated energy spectrum.
 
   #@description Sigma value for the gaussian distribution
   sigma_energy : real as energy =  100. keV
-
-  ### Only for "spectrum" mode:
-  #spectrum.data_file    : string = "${SNGENBB_DATA_DIR}/testing/data/sample_tabulated_energy_spectrum.data"
 
   #@description Flag for random emission
   emission_direction : string = "randomized"
