@@ -2331,7 +2331,7 @@ Remove event with non associated calorimeters hits.
   #@description The cut to be negated (mandatory)
   cut : string = "has_non_associated_calorimeter_hits"
 #+END_SRC
-**** Reconstruction parameters selection                         :notused:
+**** Reconstruction parameters selection             :deprecated:noexport:
 #+BEGIN_SRC shell
   [name="chi2_cut" type="snemo::analysis::cut::basic_particle_track_parameter_cut"]
 
