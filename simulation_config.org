@@ -947,6 +947,9 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
 
   # #@description Force the CAT algorithm to consider a 25 gauss magnetic field (temporary trick)
   # CAT.magnetic_field : real = 25 gauss
+
+  #@description Use calorimeter hits information to help clustering
+  CAT.process_calo_hits : boolean = 1
 #+END_SRC
 
 **** SULTAN tracker
@@ -984,14 +987,8 @@ Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/
   #@description Activation of the clustering of delayed hits
   TPC.split_chamber : boolean = 0
 
-  # #@description To be described
-  # SULTAN.clusterizer_level  : string  = "normal"
-
-  # #@description To be described
-  # SULTAN.sequentiator_level : string  = "normal"
-
-  # #@description Use calorimeter hits information to help clustering
-  # SULTAN.process_calo_hits : boolean = 1
+  #@description Use calorimeter hits information to help clustering
+  SULTAN.process_calo_hits : boolean = 1
 
   # #@description Clusterize with helix model
   # SULTAN.clusterize_with_helix_model : boolean = 1
@@ -1300,7 +1297,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   trackfit.helix.fit.using_last        : boolean = 0
 #+END_SRC
 
-** Particle tracking module
+** Charged particle tracking module
 :PROPERTIES:
 :TANGLE: particle_tracking_modules.conf
 :END:
@@ -1420,14 +1417,14 @@ implemented but the particle tracking module will stay unchanged.
 ***** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  gt.logging.priority : string = "warning"
+  GT.logging.priority : string = "warning"
 #+END_SRC
 ***** Minimal probability
 The following value sets the minimal TOF probability to accept a pair of
 calorimeters.
 #+BEGIN_SRC shell
   #@description Minimal TOF probability
-  gt.minimal_probability : real = 1e-5
+  GT.minimal_probability : real = 1e-5
 #+END_SRC
 ***** Use probability rather than gamma number
 The =absolute= variable forces the gamma tracking algorithm to choose the
@@ -1435,13 +1432,13 @@ calorimeter assocation in the base of the best probability and not in relation
 with the number of gammas.
 #+BEGIN_SRC shell
   #@description Prefer probability rather than size of gamma tracked
-  gt.use_absolute : boolean = 0
+  GT.use_absolute : boolean = 0
 #+END_SRC
 
 ***** Maximum size of the gamma tracked
 #+BEGIN_SRC shell
   #@description Maximum size of a gamma tracked
-  gt.maximal_gamma_size : integer = 0
+  GT.maximal_gamma_size : integer = 0
 #+END_SRC
 ** Chain modules
 :PROPERTIES:
@@ -1597,11 +1594,12 @@ modules it contains.
 | mock_tracker_clustering   |
 | trackfit_tracker_fitting  |
 | charged_particle_tracking |
+| gamma_tracking            |
 | io_output_analysed        |
 |---------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<chain_module("minimum_bias_chain", 8, minimum_bias_chain)>>
+  <<chain_module("minimum_bias_chain", 9, minimum_bias_chain)>>
 #+END_SRC
 
 *** Miscellaneous
@@ -2001,7 +1999,7 @@ This cuts puts together all the previous declared cuts.
 |--------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi(cname="calibrated_cut", "and", 1, calibrated_cuts)>>
+  <<multi(cname="calibrated_cut", "and", 6, calibrated_cuts)>>
 #+END_SRC
 
 *** Tracker clustering data selection
@@ -2157,7 +2155,7 @@ unclustered hits.
 |-----------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi(cname="tracker_clustering_cut", "and", 1, tracker_clustering_cuts)>>
+  <<multi(cname="tracker_clustering_cut", "and", 4, tracker_clustering_cuts)>>
 #+END_SRC
 
 *** Tracker trajectory data selection
@@ -2445,7 +2443,7 @@ Remove event with non associated calorimeters hits.
 |--------------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("particle_track_cut", "and", 7, particle_track_cuts)>>
+  <<multi("particle_track_cut", "and", 8, particle_track_cuts)>>
 #+END_SRC
 * Running SN@ilWare processing chain
 
