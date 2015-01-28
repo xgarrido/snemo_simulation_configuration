@@ -350,6 +350,12 @@ all I/O files are saved in =/tmp/${USER}/snemo.d= directory.
 
 *** Selection output
 
+- Event header cuts
+  #+BEGIN_SRC shell :noweb yes
+    <<output_module("io_output_header_selected")>>
+    <<output_module("io_output_header_non_selected")>>
+  #+END_SRC
+
 - Simulation cuts
   #+BEGIN_SRC shell :noweb yes
     <<output_module("io_output_simulated_selected")>>
@@ -1452,6 +1458,11 @@ modules it contains.
   <<module_preamble>>
 #+END_SRC
 
+*** Process after event header selection
+#+BEGIN_SRC shell :noweb yes
+  <<if_module("process_with_event_header_cuts", cut="list_of_ids_cut", then="io_output_header_selected", else="io_output_header_non_selected")>>
+#+END_SRC
+
 *** Analysis chain
 #+CAPTION: *Modules used by the analysis process.*
 #+TBLNAME: analysis_chain
@@ -1703,7 +1714,8 @@ apply selection cuts on arbitrary data models.
   factory.no_preload : boolean = 0
 
   #@description A list of files that contains definition of cuts
-  cuts.configuration_files : string[5] as path =                         \
+  cuts.configuration_files : string[6] as path =                         \
+    "@SNEMO_SIMULATION_CONFIGURATION@/event_header_cuts.conf"            \
     "@SNEMO_SIMULATION_CONFIGURATION@/simulated_data_cuts.conf"          \
     "@SNEMO_SIMULATION_CONFIGURATION@/calibrated_data_cuts.conf"         \
     "@SNEMO_SIMULATION_CONFIGURATION@/tracker_clustering_data_cuts.conf" \
@@ -1766,6 +1778,40 @@ This skeleton code allows to check the availability of a data bank.
       echo -n \"$i\"
       if [ $i != $vlist[-1] ]; then echo ' \';fi
   done
+#+END_SRC
+
+*** Event header cut
+:PROPERTIES:
+:TANGLE: event_header_cuts.conf
+:END:
+
+#+BEGIN_SRC shell :noweb yes
+  <<service_preamble>>
+#+END_SRC
+
+**** List of event id
+
+#+BEGIN_SRC shell :tangle test.lis
+0 50
+#+END_SRC
+
+#+BEGIN_SRC shell
+  [name="list_of_ids_cut" type="snemo::cut::event_header_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select event following a list of event ids"
+
+  #@description Logging priority
+  logging.priority : string = "debug"
+
+  #@description The label/name of the event header' bank (mandatory)
+  EH_label : string = "EH"
+
+  #@description Activate list of event ids mode
+  mode.list_of_event_ids : boolean = 1
+
+  #@description Filename with event id
+  list_of_event_ids.file : string as path = "./test.lis"
 #+END_SRC
 
 *** Simulated data selection
