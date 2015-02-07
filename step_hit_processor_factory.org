@@ -149,7 +149,7 @@ the minimal approach distance to the anode wire.
   #@description Logging flag
   logging.priority   : string = "warning"
   #@description The category of output hit associated to this processor
-  hit.category       : string = "__visu.tracks"
+  hit.category       : string = "__visu.tracks.calo"
   #@description The name of the sensitive MC hits that must be processed to fill the output hit category
   sensitive.category : string = "calorimeter_SD"
 
@@ -160,7 +160,7 @@ the minimal approach distance to the anode wire.
   #@description Logging flag
   logging.priority   : string = "warning"
   #@description The category of output hit associated to this processor
-  hit.category       : string = "__visu.tracks"
+  hit.category       : string = "__visu.tracks.calo"
   #@description The name of the sensitive MC hits that must be processed to fill the output hit category
   sensitive.category : string = "xcalorimeter_SD"
 
@@ -171,7 +171,7 @@ the minimal approach distance to the anode wire.
   #@description Logging flag
   logging.priority   : string = "warning"
   #@description The category of output hit associated to this processor
-  hit.category       : string = "__visu.tracks"
+  hit.category       : string = "__visu.tracks.calo"
   #@description The name of the sensitive MC hits that must be processed to fill the output hit category
   sensitive.category : string = "gveto_SD"
 
