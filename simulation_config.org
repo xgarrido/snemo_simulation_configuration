@@ -154,17 +154,18 @@ list of needed libraries
 
 #+CAPTION: *Libraries to be used by modules.*
 #+TBLNAME: dll_libraries
-|-----------------------+------------------------------------------------------------------------------------------------|
-| Bayeux_mctools_geant4 | $SNAILWARE_PRO_DIR/bayeux/install/lib64/libBayeux_mctools_geant4.so                            |
-| Falaise               | $SNAILWARE_PRO_DIR/falaise/install/lib64/libFalaise.so                                         |
-| Falaise_MTC           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_MockTrackerClusterizer.so  |
-| Falaise_CAT           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_CAT.so                     |
-| TrackFit              | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libTrackFit.so                        |
-| Falaise_TrackFit      | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_TrackFit.so                |
-| Falaise_CPT           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_ChargedParticleTracking.so |
-| GammaTracking         | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libGammaTracking.so                   |
-| Falaise_GammaTracking | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_GammaTracking.so           |
-|-----------------------+------------------------------------------------------------------------------------------------|
+|-------------------------+------------------------------------------------------------------------------------------------|
+| Bayeux_mctools_geant4   | $SNAILWARE_PRO_DIR/bayeux/install/lib64/libBayeux_mctools_geant4.so                            |
+| Falaise                 | $SNAILWARE_PRO_DIR/falaise/install/lib64/libFalaise.so                                         |
+| Falaise_MTC             | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_MockTrackerClusterizer.so  |
+| Falaise_CAT             | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_CAT.so                     |
+| TrackFit                | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libTrackFit.so                        |
+| Falaise_TrackFit        | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_TrackFit.so                |
+| Falaise_CPT             | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_ChargedParticleTracking.so |
+| GammaTracking           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libGammaTracking.so                   |
+| Falaise_GammaTracking   | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_GammaTracking.so           |
+| Falaise_GammaClustering | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_GammaClustering.so         |
+|-------------------------+------------------------------------------------------------------------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
   <<dll_loader(dll_libraries[*,0], dll_libraries[*,1])>>
@@ -1384,6 +1385,36 @@ implemented but the particle tracking module will stay unchanged.
 *** Insert preamble
 #+BEGIN_SRC shell :noweb yes
   <<module_preamble>>
+#+END_SRC
+
+*** \gamma clustering
+
+#+BEGIN_SRC shell
+  [name="gamma_clustering" type="snemo::reconstruction::gamma_clustering_module"]
+#+END_SRC
+
+**** Logging priority
+#+BEGIN_SRC shell
+  #@description Logging flag
+  logging.priority : string = "trace"
+#+END_SRC
+
+**** Data banks and services labels
+#+BEGIN_SRC shell
+  #@description The label of the Geometry service
+  Geo_label : string  = "Geo"
+
+  #@description The label of the 'Particle Track Data' bank
+  PTD_label : string  = "PTD"
+#+END_SRC
+
+**** Cluster properties
+#+BEGIN_SRC shell
+  #@description The time spread between calorimeter hits within a cluster
+  cluster.time_range : real as time = 2.5 ns
+
+  #@description The geometrical condition to cluster calorimeter hits ("side", "diagonal", "first", "second")
+  cluster.grid_mask : string = "first"
 #+END_SRC
 
 *** \gamma tracking
