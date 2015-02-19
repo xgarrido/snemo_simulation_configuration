@@ -500,10 +500,11 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 **** Event generator
 #+BEGIN_SRC shell
   #@description The event generator PRNG label
-  #manager.event_generator_name  : string  = "Se82.0nubb"
+  manager.event_generator_name  : string  = "Se82.0nubb"
   #manager.event_generator_name  : string  = "Bi214_Po214"
-  manager.event_generator_name  : string  = "Tl208"
+  #manager.event_generator_name  : string  = "Tl208"
   #manager.event_generator_name  : string = "multi_particles"
+  #manager.event_generator_name  : string = "electron_monokinetic"
 #+END_SRC
 **** G4 manager
 The full =geant4= configuration can be found in the [[file:./sng4_manager.org][sng4_manager]] file.
@@ -1396,7 +1397,7 @@ implemented but the particle tracking module will stay unchanged.
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  logging.priority : string = "trace"
+  logging.priority : string = "warning"
 #+END_SRC
 
 **** Data banks and services labels
@@ -1518,13 +1519,14 @@ modules it contains.
 |----------------------------------|
 | remove_particle_track_data       |
 | charged_particle_tracking        |
+| gamma_clustering                 |
 | gamma_tracking                   |
 | io_output_particle_track         |
 | process_with_particle_track_cuts |
 |----------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<chain_module("particle_tracking_chain", 5, particle_tracking_chain)>>
+  <<chain_module("particle_tracking_chain", 6, particle_tracking_chain)>>
 #+END_SRC
 
 *** Process after fitting selection
@@ -1818,10 +1820,10 @@ This skeleton code allows to check the availability of a data bank.
   <<service_preamble>>
 #+END_SRC
 
-**** List of event id
+**** List of event ids
 
 #+BEGIN_SRC shell :tangle test.lis
-0 50
+0_50
 #+END_SRC
 
 #+BEGIN_SRC shell
@@ -2460,8 +2462,9 @@ Remove event with non associated calorimeters hits.
 #+END_SRC
 
 **** Multiple cuts
+***** 2\beta selection
 #+CAPTION: *Multi-selection for validating particle tracking process.*
-#+TBLNAME: particle_track_cuts
+#+TBLNAME: 2beta_particle_track_cuts
 |--------------------------------------|
 | has_particle_track_data              |
 | has_particle                         |
@@ -2474,7 +2477,7 @@ Remove event with non associated calorimeters hits.
 |--------------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("particle_track_cut", "and", 8, particle_track_cuts)>>
+  <<multi("particle_track_cut", "and", 8, 2beta_particle_track_cuts)>>
 #+END_SRC
 * Running SN@ilWare processing chain
 
