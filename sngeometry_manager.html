@@ -79,7 +79,7 @@ for the JavaScript code in this tag.
 </head>
 <body onload="randomLinkColor();displayTOC();"><div id="toc"></div>
 <div id="preamble" class="status">
-<a href="index.html"><i class="fa fa-home"></i></a><br/> <a href="https://github.com/xgarrido/snemo_simulation_configuration"><i class="fa fa-github"></i></a><br/> 
+ <a href="https://github.com/xgarrido/snemo_simulation_configuration"><i class="fa fa-github"></i></a><br/> 
 </div>
 <div id="content">
 <h1 class="title">SNGeometry Manager Configuration</h1>
@@ -144,7 +144,7 @@ This file holds mainly the paths to geometry files most of them are placed in
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Setup label</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Setup label</span>
 setup_label : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Setup description</span>
@@ -162,7 +162,7 @@ setup_version : <span class="org-variable-name">string</span> = <span class="org
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 </pre>
 </div>
@@ -182,7 +182,7 @@ The geometry factory holds all the files needed for the geometry construction.
 <div class="outline-text-4" id="text-2-3-1">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority of the embedded geometry model factory</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority of the embedded geometry model factory</span>
 factory.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 </pre>
 </div>
@@ -194,7 +194,7 @@ factory.logging.priority : <span class="org-variable-name">string</span> = <span
 <div class="outline-text-4" id="text-2-3-2">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description List of files describing the geometry models</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description List of files describing the geometry models</span>
 factory.geom_files : string[22] as <span class="org-variable-name">path</span> =                                                                     <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/source_module/source_calibration.geom"</span>            <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/models/source_module/source_frame_horizontal_beams.geom"</span> <span class="org-sh-escaped-newline">\</span>
@@ -232,7 +232,7 @@ factory.geom_files : string[22] as <span class="org-variable-name">path</span> =
 <div class="outline-text-4" id="text-2-4-1">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging flag of the embedded ID manager</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging flag of the embedded ID manager</span>
 id_mgr.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 </pre>
 </div>
@@ -248,7 +248,7 @@ volume.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Source file of the geometry categories used by the ID manager</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Source file of the geometry categories used by the ID manager</span>
 id_mgr.categories_list : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@falaise:config/snemo/demonstrator/geometry/3.0/categories.lis"</span>
 </pre>
@@ -262,7 +262,7 @@ id_mgr.categories_list : string as <span class="org-variable-name">path</span> =
 <div class="outline-text-3" id="text-2-5">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Build the embedded mapping dictionnary</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Build the embedded mapping dictionnary</span>
 build_mapping : <span class="org-variable-name">boolean</span> = 0
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Max depth of the mapping: no items to be mapped</span>
@@ -285,7 +285,7 @@ mapping.excluded_categories : <span class="org-variable-name">string</span>[5] =
 <div class="outline-text-3" id="text-2-6">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Plugins factory preload from system registration (default=0)</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Plugins factory preload from system registration (default=0)</span>
 plugins.factory_no_preload : <span class="org-variable-name">boolean</span> = 0
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Plugins initialization at load (default=0)</span>
@@ -319,7 +319,7 @@ to change the source foil isotope.
 <div class="outline-text-4" id="text-3-1-1">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The geometry manager plugin for materials</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The geometry manager plugin for materials</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@key_label  "name"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label "type"</span>
@@ -335,7 +335,7 @@ to change the source foil isotope.
 <div class="outline-text-4" id="text-3-1-2">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Materials manager logging priority</span>
@@ -357,7 +357,7 @@ indicate it to <code>materials</code> manager.
 
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Use AME 2003</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Use AME 2003</span>
 materials.load_isotope_mass_data : <span class="org-variable-name">boolean</span> = 1
 </pre>
 </div>
@@ -374,7 +374,7 @@ example, in <a href="#sec-3-2">3.2</a> section.
 
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag to allow the overloading of materials</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag to allow the overloading of materials</span>
 materials.alias_allow_overload : <span class="org-variable-name">boolean</span> = 1
 </pre>
 </div>
@@ -386,7 +386,7 @@ materials.alias_allow_overload : <span class="org-variable-name">boolean</span> 
 <div class="outline-text-4" id="text-3-1-5">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description List of files describing the materials</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description List of files describing the materials</span>
 materials.configuration_files : string[7] as <span class="org-variable-name">path</span> =                       <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@materials:data/std_isotopes.def"</span>                                    <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@materials:data/std_elements.def"</span>                                    <span class="org-sh-escaped-newline">\</span>
@@ -411,7 +411,7 @@ example, we locally change the source material without changing anything else.
 
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of elements</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of elements</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
 
@@ -437,7 +437,7 @@ material : <span class="org-variable-name">string</span> = <span class="org-stri
 <div class="outline-text-4" id="text-4-1-1">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The geometry manager plugin for emfield</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The geometry manager plugin for emfield</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@key_label  "name"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label "type"</span>
@@ -453,7 +453,7 @@ material : <span class="org-variable-name">string</span> = <span class="org-stri
 <div class="outline-text-4" id="text-4-1-2">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 </pre>
 </div>
@@ -465,7 +465,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 <div class="outline-text-4" id="text-4-1-3">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Manager logging priority</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Manager logging priority</span>
 manager.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The name of the geometry service</span>
@@ -486,7 +486,7 @@ module.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag to activate the geometry volume/field associations map</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag to activate the geometry volume/field associations map</span>
 manager.build_geom_map : <span class="org-variable-name">boolean</span> = 1
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Manager logging priority</span>
@@ -500,6 +500,7 @@ manager.geom_map.associations.module.volume : <span class="org-variable-name">st
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The EM field associated for the label 'module'</span>
 manager.geom_map.associations.module.field_name : <span class="org-variable-name">string</span> = <span class="org-string">"B_module"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">manager.geom_map.associations.module.field_name : string = "Bz_polynomial"</span>
 </pre>
 </div>
 </div>
@@ -515,7 +516,7 @@ manager.geom_map.associations.module.field_name : <span class="org-variable-name
 <div class="outline-text-4" id="text-4-2-1">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Definition parameters for some electro-magnetic fields</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Definition parameters for some electro-magnetic fields</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
@@ -529,9 +530,12 @@ manager.geom_map.associations.module.field_name : <span class="org-variable-name
 <div class="outline-text-4" id="text-4-2-2">
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"B_module"</span> <span class="org-variable-name">type</span>=<span class="org-string">"emfield::uniform_magnetic_field"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"B_module"</span> <span class="org-variable-name">type</span>=<span class="org-string">"emfield::uniform_magnetic_field"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Configuration parameters for the magnetic field of SuperNEMO</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging flag</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Default implicit magnetic field unit</span>
 magnetic_field.unit        : <span class="org-variable-name">string</span>  = <span class="org-string">"gauss"</span>
@@ -542,8 +546,42 @@ magnetic_field.coordinates : <span class="org-variable-name">real</span>[3] = 0.
 </div>
 </div>
 </div>
+
+<div id="outline-container-sec-4-2-3" class="outline-4">
+<h4 id="sec-4-2-3"><span class="section-number-4">4.2.3</span> Polynomial magnetic field</h4>
+<div class="outline-text-4" id="text-4-2-3">
+<p>
+To take into account effects from the calorimeter magnetic shielding as shown in
+<a href="http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=3552">DocDB 3552</a>, we made a variable magnetic field inside tracker
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"Bz_polynomial"</span> <span class="org-variable-name">type</span>=<span class="org-string">"emfield::polynomial_magnetic_field"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Configuration parameters for a variable magnetic field</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging flag</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Default implicit magnetic field unit</span>
+magnetic_field.unit : <span class="org-variable-name">string</span> = <span class="org-string">"gauss"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Bz field polynomial degree</span>
+magnetic_field.Bz.x.polynomial_degree : <span class="org-variable-name">integer</span> = 3
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Bz x-parameters</span>
+magnetic_field.Bz.x.polynomial_parameters : <span class="org-variable-name">real</span>[3] = 25.0 0.0 -8e-5
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Bz field space limits</span>
+magnetic_field.Bz.x.limits : real[2] as <span class="org-variable-name">length</span> = -500 +500 mm
+</pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-sec-5" class="outline-2">
 <h2 id="sec-5"><span class="section-number-2">5</span> Locators for SuperNEMO detector</h2>
 <div class="outline-text-2" id="text-5">
@@ -557,7 +595,7 @@ magnetic_field.coordinates : <span class="org-variable-name">real</span>[3] = 0.
 <div class="outline-text-4" id="text-5-1-1">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The geometry manager plugin for locators</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The geometry manager plugin for locators</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@key_label  "name"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label "type"</span>
@@ -573,7 +611,7 @@ magnetic_field.coordinates : <span class="org-variable-name">real</span>[3] = 0.
 <div class="outline-text-4" id="text-5-1-2">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 </pre>
 </div>
@@ -584,7 +622,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 <div class="outline-text-4" id="text-5-1-3">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
 geometry.setup_requirement : <span class="org-variable-name">string</span>[2] = <span class="org-string">"snemo(&gt;=2)"</span> <span class="org-string">"snemo::demonstrator(&gt;=2)"</span>
 </pre>
 </div>
@@ -596,7 +634,7 @@ geometry.setup_requirement : <span class="org-variable-name">string</span>[2] = 
 <div class="outline-text-4" id="text-5-1-4">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description SuperNEMO module number</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description SuperNEMO module number</span>
 locators.module_number : <span class="org-variable-name">integer</span> = 0
 </pre>
 </div>
@@ -606,7 +644,7 @@ locators.module_number : <span class="org-variable-name">integer</span> = 0
 </div>
 </div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/165a7f5d9e26a57231e64b8a9e36e993104a0e92">165a7f5</a> - 2014-06-17
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/7c2ea958e9e9e387a3f5da7fb70af945439b30dd">7c2ea95</a> - 2015-02-28
 </div>
 </body>
 </html>

@@ -79,7 +79,7 @@ for the JavaScript code in this tag.
 </head>
 <body onload="randomLinkColor();displayTOC();"><div id="toc"></div>
 <div id="preamble" class="status">
-<a href="index.html"><i class="fa fa-home"></i></a><br/> <a href="https://github.com/xgarrido/snemo_simulation_configuration"><i class="fa fa-github"></i></a><br/> 
+ <a href="https://github.com/xgarrido/snemo_simulation_configuration"><i class="fa fa-github"></i></a><br/> 
 </div>
 <div id="content">
 <h1 class="title">SNGenvertex Manager Configuration</h1>
@@ -125,7 +125,7 @@ This file holds some vertex generators related to SuperNEMO detector geometry.
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 </pre>
 </div>
@@ -141,7 +141,7 @@ are defined in Section <a href="#sec-3">3</a>.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Names of the files configuring the list of registered vertex generators</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Names of the files configuring the list of registered vertex generators</span>
 vg_list : string[4] as <span class="org-variable-name">path</span> =                                              <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/scin_vg.lis"</span>    <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/tracker_vg.lis"</span> <span class="org-sh-escaped-newline">\</span>
@@ -161,15 +161,11 @@ This section defines several vertices configuration :
 </p>
 <ul class="org-ul">
 <li><a href="#sec-3-1">Scintillator vertices</a>: to generate external events coming from calorimeter
-walls,
-</li>
+walls,</li>
 <li><a href="#sec-3-2">Tracker vertices</a>: to generate events from the internal drift chamber either on
-wires surface or inside gas tracking,
-</li>
-<li><a href="#sec-3-2">Source vertices</a>: to produce 2&beta; events or to simulate source contamination.
-</li>
-<li><a href="#sec-3-4">External vertices</a>: to generate events from outside the detector like neutrons
-</li>
+wires surface or inside gas tracking,</li>
+<li><a href="#sec-3-2">Source vertices</a>: to produce 2&beta; events or to simulate source contamination.</li>
+<li><a href="#sec-3-4">External vertices</a>: to generate events from outside the detector like neutrons</li>
 </ul>
 </div>
 
@@ -181,19 +177,21 @@ Insert preamble
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A list of vertex generators</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A list of vertex generators</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
 </pre>
 </div>
 
 <ul class="org-ul">
-<li>Generate vertex in the bulk volume of the wrapper for the main calorimeter's
+<li><p>
+Generate vertex in the bulk volume of the wrapper for the main calorimeter's
 scintillator blocks:
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"calo_wrapper_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"calo_wrapper_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk of the main calorimeter wrapper</span>
 
@@ -207,15 +205,16 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 </pre>
-</div>
-</li>
+</div></li>
 
-<li>Generate vertex in the bulk volume of the wrapper for the X-calorimeter's
+<li><p>
+Generate vertex in the bulk volume of the wrapper for the X-calorimeter's
 scintillator blocks:
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"xcalo_wrapper_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"xcalo_wrapper_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk of the X-wall calorimeter wrapper</span>
 
@@ -228,15 +227,16 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 </pre>
-</div>
-</li>
+</div></li>
 
-<li>Generate vertex in the bulk volume of the wrapper for the &gamma; veto
+<li><p>
+Generate vertex in the bulk volume of the wrapper for the &gamma; veto
 calorimeter's scintillator blocks:
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"gveto_wrapper_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"gveto_wrapper_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk of the gamma veto wrapper</span>
 
@@ -249,14 +249,15 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 </pre>
-</div>
-</li>
+</div></li>
 
-<li>Generate vertex from the surface of the main calorimeter's scintillator blocks:
+<li><p>
+Generate vertex from the surface of the main calorimeter's scintillator blocks:
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"calo_wrapper_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"calo_wrapper_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the main calorimeter wrapper</span>
 
@@ -272,14 +273,15 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box top face activation</span>
 mode.surface.top  : <span class="org-variable-name">boolean</span> = 1
 </pre>
-</div>
-</li>
+</div></li>
 
-<li>Generate vertex from the surface of the X-calorimeter's scintillator blocks:
+<li><p>
+Generate vertex from the surface of the X-calorimeter's scintillator blocks:
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"xcalo_wrapper_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"xcalo_wrapper_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the X-wall calorimeter wrapper</span>
 
@@ -295,14 +297,15 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box top face activation</span>
 mode.surface.top  : <span class="org-variable-name">boolean</span> = 1
 </pre>
-</div>
-</li>
+</div></li>
 
-<li>Generate vertex from the surface of the &gamma; veto's scintillator blocks:
+<li><p>
+Generate vertex from the surface of the &gamma; veto's scintillator blocks:
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"gveto_wrapper_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"gveto_wrapper_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the gamma veto wrapper</span>
 
@@ -313,16 +316,43 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='gveto_wrapper' module={*} side={*} wall={*} column={*}"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
-mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
+mode : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box top face activation</span>
-mode.surface.top  : <span class="org-variable-name">boolean</span> = 1
+mode.surface.top : <span class="org-variable-name">boolean</span> = 1
 </pre>
-</div>
-</li>
+</div></li>
+
+<li><p>
+Generate vertex in the PMT glass
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"pmt_glass_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::polycone_model_vg"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk of the PMT glass wrapper</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='calorimeter_pmt_glass' module={*} side={*} column={*} row={*}"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation within polycone material</span>
+mode.bulk.body : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generate vertex on all polycone frustrum</span>
+polycone.all_frustrum : <span class="org-variable-name">boolean</span> = 1
+</pre>
+</div></li>
 </ul>
 </div>
 </div>
+
 <div id="outline-container-sec-3-2" class="outline-3">
 <h3 id="sec-3-2"><span class="section-number-3">3.2</span> Tracker vertices</h3>
 <div class="outline-text-3" id="text-3-2">
@@ -331,18 +361,24 @@ Insert preamble
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A list of vertex generators</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A list of vertex generators</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
 </pre>
 </div>
+</div>
 
+<div id="outline-container-sec-3-2-1" class="outline-4">
+<h4 id="sec-3-2-1"><span class="section-number-4">3.2.1</span> Vertices on tracker wires</h4>
+<div class="outline-text-4" id="text-3-2-1">
 <ul class="org-ul">
-<li>Generate vertex from the bulk volume of the anode wires:
+<li><p>
+Generate vertex from the bulk volume of the anode wires:
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"anode_wire_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::cylinder_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"anode_wire_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::cylinder_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk volume of the anode wires</span>
 
@@ -355,14 +391,15 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 </pre>
-</div>
-</li>
+</div></li>
 
-<li>Generate vertex on the surface of the anode wires:
+<li><p>
+Generate vertex on the surface of the anode wires:
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"anode_wire_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::cylinder_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"anode_wire_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::cylinder_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the anode wires</span>
 
@@ -384,14 +421,15 @@ mode.surface.bottom : <span class="org-variable-name">boolean</span> = 0
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box top face activation</span>
 mode.surface.top    : <span class="org-variable-name">boolean</span> = 0
 </pre>
-</div>
-</li>
+</div></li>
 
-<li>Generate vertex on the surface of the field wires:
+<li><p>
+Generate vertex on the surface of the field wires:
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"field_wire_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::cylinder_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"field_wire_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::cylinder_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the field wires</span>
 
@@ -413,11 +451,290 @@ mode.surface.bottom : <span class="org-variable-name">boolean</span> = 0
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box top face activation</span>
 mode.surface.top    : <span class="org-variable-name">boolean</span> = 0
 </pre>
-</div>
-</li>
+</div></li>
+
+<li><p>
+Generate vertex from the bulk volume of the field wires:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"field_wire_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::cylinder_model_vg"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk volume of the anode wires</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='drift_cell_field_wire' module={*} side={*} layer={*} row={*}"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
+</pre>
+</div></li>
 </ul>
 </div>
 </div>
+
+<div id="outline-container-sec-3-2-2" class="outline-4">
+<h4 id="sec-3-2-2"><span class="section-number-4">3.2.2</span> Vertices within tracker volumes (wires included)</h4>
+<div class="outline-text-4" id="text-3-2-2">
+</div><ul class="org-ul"><li><a id="unnumbered-1"></a>Generator using category list<br  /><div class="outline-text-5" id="text-unnumbered-1">
+<p>
+This vertex generator is quite classical in the way that it uses the category
+file list and especially, the <code>drift_cell_core</code> category. This means that
+vertices are going to be generated in the cell core, wires included, but not
+inside the gap between foil and first tracker layer as well as not within the
+gap between the main calorimeter walls and the last tracker layer. In order to
+get a full coverage of tracker gaz, you may have a look to the next section.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"tracker_drift_cell_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the core of Geiger cell</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='drift_cell_core' module={*} side={*} layer={*} row={*}"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
+</pre>
+</div>
+</div></li>
+
+<li><a id="unnumbered-2"></a>Vertex generator using hardcoded geometry position<br  /><div class="outline-text-5" id="text-unnumbered-2">
+<p>
+The following vertex generator defines a box which dimensions are hardcoded by
+following the dimensions between source foil and calroimeter walls. This means
+that any change in the geometry setup like an increase of source foil thickness
+will need to update this box dimensions. Nevertheless, this vertex generator
+allows to shoot events from the full tracker volumes so basically where tracker
+gaz will remain.
+</p>
+
+<p>
+To calculate the box size and the box placement, the following dimensions have
+been used :
+</p>
+<ul class="org-ul">
+<li>tracker volume is a box of 405&times;5008&times;3030 mm,</li>
+<li>the source core model has a thickness of 58 mm,</li>
+<li>the source foil thickness is 167 µm.</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"tracker_volume_box"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_vg"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the tracker gaz</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Box x size</span>
+box.x : real as <span class="org-variable-name">length</span> =  433.9165 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Box y size</span>
+box.y : real as <span class="org-variable-name">length</span> = 5008.0 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Box z size</span>
+box.z : real as <span class="org-variable-name">length</span> = 3030.0 mm
+</pre>
+</div>
+
+<p>
+Then we define 2 placements : one for the front part ($x&gt;0$) of the tracker and
+another one for the back part ($x&lt;0$).
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"tracker_front_volume_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::placement_vg"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the front tracker volume</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Vertex generator name to place</span>
+vertex_generator.name : <span class="org-variable-name">string</span> = <span class="org-string">"tracker_volume_box"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Placement along x-axis</span>
+placement.x : real as <span class="org-variable-name">length</span> = 217.04175 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Placement along y-axis</span>
+placement.y : real as <span class="org-variable-name">length</span> = 0.0 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Placement along z-axis</span>
+placement.z : real as <span class="org-variable-name">length</span> = 0.0 mm
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"tracker_back_volume_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::placement_vg"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the front tracker volume</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Vertex generator name to place</span>
+vertex_generator.name : <span class="org-variable-name">string</span> = <span class="org-string">"tracker_volume_box"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Placement along x-axis</span>
+placement.x : real as <span class="org-variable-name">length</span> = -217.04175 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Placement along y-axis</span>
+placement.y : real as <span class="org-variable-name">length</span> = 0.0 mm
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Placement along z-axis</span>
+placement.z : real as <span class="org-variable-name">length</span> = 0.0 mm
+</pre>
+</div>
+
+<p>
+We finally define a combined vertex generator in order to mix the two previous
+vertex generators:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"tracker_volume_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::combined_vg"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk volume of the tracker</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
+geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Vertex generator names</span>
+generators : <span class="org-variable-name">string</span>[2]  = <span class="org-string">"tracker_front_volume_bulk"</span> <span class="org-string">"tracker_back_volume_bulk"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Absolute weight of different generators</span>
+generators.tracker_front_volume_bulk.absolute_weight : <span class="org-variable-name">real</span> = 1.0
+generators.tracker_back_volume_bulk.absolute_weight  : <span class="org-variable-name">real</span> = 1.0
+</pre>
+</div>
+</div></li>
+
+<li><a id="unnumbered-3"></a>Vertex generator with validator<br  /><div class="outline-text-5" id="text-unnumbered-3">
+<p>
+We finally use a rejection method based on changes from
+<a href="https://nemo.lpc-caen.in2p3.fr/changeset/15140/genvtx/trunk">https://nemo.lpc-caen.in2p3.fr/changeset/15140/genvtx/trunk</a>. The idea is to
+shoot vertex within SuperNEMO module and then reject the ones not inside
+<code>tracking_gas</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"tracker_gas_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from 'tracking_gas' material</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 3.0)</span>
+geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
+origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='module' module={*}"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
+mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
+</pre>
+</div>
+</div>
+
+<ul class="org-ul"><li><a id="unnumbered-4"></a>Vertex validation<br  /><div class="outline-text-6" id="text-unnumbered-4">
+<p>
+Here starts the validation configuration. We first add a support to vertex
+validation
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Vertex validation support</span>
+vertex_validation_support : <span class="org-variable-name">boolean</span> = 1
+</pre>
+</div>
+<p>
+we define the logging level
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Maximum number of tries for the rejection method</span>
+validation.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+</pre>
+</div>
+<p>
+and we activate it
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Vertex validation activation</span>
+validation.activation : <span class="org-variable-name">boolean</span> = 1
+</pre>
+</div>
+
+<p>
+We also defines the maximum number of tries for the rejection process; above this
+number the vertex generator throws an error.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Maximum number of tries for the rejection method</span>
+validation.maximum_number_of_tries : <span class="org-variable-name">integer</span> = 1000
+</pre>
+</div>
+
+<p>
+We finally define the validation id which refers to the <code>cut</code> identifiant with
+which the validator is registered. Here we want to only keep vertex within the
+<code>tracking_gas</code> material so we use a <code>in_materials_vertex_validator</code>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Vertex validation id</span>
+validation.validator_id : <span class="org-variable-name">string</span> = <span class="org-string">"genvtx::in_materials_vertex_validator"</span>
+</pre>
+</div>
+<p>
+and we define the set of materials to be used
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description List of materials to be used</span>
+validation.validator_params.materials.ref : <span class="org-variable-name">string</span>[1] = <span class="org-string">"tracking_gas"</span>
+</pre>
+</div>
+
+<p>
+We can also set the logging priority and the maximum depth to look inside
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter"># </span><span class="org-comment">#@description Logging level for validator</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">validation.validator_params.max_depth : integer = 100</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging level for validator</span>
+validation.validator_params.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+</pre>
+</div>
+</div></li></ul></li></ul>
+</div>
+</div>
+
 <div id="outline-container-sec-3-3" class="outline-3">
 <h3 id="sec-3-3"><span class="section-number-3">3.3</span> Source vertices</h3>
 <div class="outline-text-3" id="text-3-3">
@@ -434,7 +751,7 @@ Insert preamble
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A list of vertex generators</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A list of vertex generators</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
 </pre>
@@ -445,10 +762,12 @@ Insert preamble
 <h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> Internal source strips</h4>
 <div class="outline-text-4" id="text-3-3-1">
 <ul class="org-ul">
-<li>Generate vertex from the bulk volume of the source foil:
+<li><p>
+Generate vertex from the bulk volume of the source foil:
+</p>
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"source_strips_internal_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"source_strips_internal_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk volume of the inner source strips</span>
 
@@ -464,13 +783,14 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 </pre>
-</div>
-</li>
+</div></li>
 
-<li>Generate vertex from the surface of the source foil:
+<li><p>
+Generate vertex from the surface of the source foil:
+</p>
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"source_strips_internal_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"source_strips_internal_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the inner source strips</span>
 
@@ -492,8 +812,7 @@ mode.surface.back  : <span class="org-variable-name">boolean</span> = 1
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box front face activation</span>
 mode.surface.front : <span class="org-variable-name">boolean</span> = 1
 </pre>
-</div>
-</li>
+</div></li>
 </ul>
 </div>
 </div>
@@ -502,10 +821,12 @@ mode.surface.front : <span class="org-variable-name">boolean</span> = 1
 <h4 id="sec-3-3-2"><span class="section-number-4">3.3.2</span> External source strips</h4>
 <div class="outline-text-4" id="text-3-3-2">
 <ul class="org-ul">
-<li>Generate vertex from the bulk volume of the source foil:
+<li><p>
+Generate vertex from the bulk volume of the source foil:
+</p>
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"source_strips_external_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"source_strips_external_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk volume of the outer source strips</span>
 
@@ -521,13 +842,14 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 </pre>
-</div>
-</li>
+</div></li>
 
-<li>Generate vertex from the surface of the source foil:
+<li><p>
+Generate vertex from the surface of the source foil:
+</p>
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"source_strips_external_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"source_strips_external_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the outer source strips</span>
 
@@ -549,8 +871,7 @@ mode.surface.back  : <span class="org-variable-name">boolean</span> = 1
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box front face activation</span>
 mode.surface.front : <span class="org-variable-name">boolean</span> = 1
 </pre>
-</div>
-</li>
+</div></li>
 </ul>
 </div>
 </div>
@@ -559,10 +880,12 @@ mode.surface.front : <span class="org-variable-name">boolean</span> = 1
 <h4 id="sec-3-3-3"><span class="section-number-4">3.3.3</span> Combined vertex</h4>
 <div class="outline-text-4" id="text-3-3-3">
 <ul class="org-ul">
-<li>Generate vertex from both the bulk volume of all the source foils:
+<li><p>
+Generate vertex from both the bulk volume of all the source foils:
+</p>
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"source_strips_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::combined_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"source_strips_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::combined_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk volume of the source strips</span>
 
@@ -576,16 +899,17 @@ geometry.setup_requirement : <span class="org-variable-name">string</span> = <sp
 generators : <span class="org-variable-name">string</span>[2]  = <span class="org-string">"source_strips_external_bulk"</span> <span class="org-string">"source_strips_internal_bulk"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Absolute weight of different generators</span>
-generators.source_strips_external_bulk.absolute_weight : <span class="org-variable-name">real</span>  = 0.054
-generators.source_strips_internal_bulk.absolute_weight : <span class="org-variable-name">real</span>  = 1.0
+generators.source_strips_external_bulk.absolute_weight : <span class="org-variable-name">real</span> = 0.054
+generators.source_strips_internal_bulk.absolute_weight : <span class="org-variable-name">real</span> = 1.0
 </pre>
-</div>
-</li>
+</div></li>
 
-<li>Generate vertex from the surface of all the source foils:
+<li><p>
+Generate vertex from the surface of all the source foils:
+</p>
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"source_strips_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::combined_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"source_strips_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::combined_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the source strips</span>
 
@@ -604,8 +928,7 @@ generators : <span class="org-variable-name">string</span>[2] = <span class="org
 generators.source_strips_external_surface.absolute_weight : <span class="org-variable-name">real</span>  = 0.054
 generators.source_strips_internal_surface.absolute_weight : <span class="org-variable-name">real</span>  = 1.0
 </pre>
-</div>
-</li>
+</div></li>
 </ul>
 </div>
 </div>
@@ -618,17 +941,19 @@ Insert preamble
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A list of vertex generators</span>
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A list of vertex generators</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
 </pre>
 </div>
 
 <ul class="org-ul">
-<li>Generate vertex from the surface of the hall walls
+<li><p>
+Generate vertex from the surface of the hall walls
+</p>
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"experimental_hall_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"experimental_hall_surface"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the experimental hall</span>
 
@@ -659,13 +984,14 @@ mode.surface.left   : <span class="org-variable-name">boolean</span> = 1
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box right face activation</span>
 mode.surface.right  : <span class="org-variable-name">boolean</span> = 1
 </pre>
-</div>
-</li>
+</div></li>
 
-<li>Generate vertex from the volume of the hall
+<li><p>
+Generate vertex from the volume of the hall
+</p>
 <div class="org-src-container">
 
-<pre class="src src-sh">[<span class="org-variable-name">name</span>=<span class="org-string">"experimental_hall_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"experimental_hall_bulk"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genvtx::box_model_vg"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the volume of the experimental hall</span>
 
@@ -678,15 +1004,14 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 </pre>
-</div>
-</li>
+</div></li>
 </ul>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/165a7f5d9e26a57231e64b8a9e36e993104a0e92">165a7f5</a> - 2014-06-17
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/7c2ea958e9e9e387a3f5da7fb70af945439b30dd">7c2ea95</a> - 2015-02-28
 </div>
 </body>
 </html>
