@@ -500,10 +500,10 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 **** Event generator
 #+BEGIN_SRC shell
   #@description The event generator PRNG label
-  manager.event_generator_name  : string  = "Se82.0nubb"
+  #manager.event_generator_name  : string  = "Se82.0nubb"
   #manager.event_generator_name  : string  = "Bi214_Po214"
   #manager.event_generator_name  : string  = "Tl208"
-  #manager.event_generator_name  : string = "multi_particles"
+  manager.event_generator_name  : string = "multi_particles"
   #manager.event_generator_name  : string = "electron_monokinetic"
 #+END_SRC
 **** G4 manager
@@ -1427,7 +1427,7 @@ implemented but the particle tracking module will stay unchanged.
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  logging.priority : string = "warning"
+  logging.priority : string = "trace"
 #+END_SRC
 **** Data banks and services labels
 #+BEGIN_SRC shell
@@ -1449,7 +1449,7 @@ implemented but the particle tracking module will stay unchanged.
 ***** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  GT.logging.priority : string = "warning"
+  GT.logging.priority : string = "trace"
 #+END_SRC
 ***** Minimal probability
 The following value sets the minimal TOF probability to accept a pair of
@@ -1627,7 +1627,7 @@ modules it contains.
 | mock_tracker_clustering   |
 | trackfit_tracker_fitting  |
 | charged_particle_tracking |
-| gamma_tracking            |
+| gamma_clustering          |
 | io_output_analysed        |
 |---------------------------|
 
@@ -2462,9 +2462,9 @@ Remove event with non associated calorimeters hits.
 #+END_SRC
 
 **** Multiple cuts
-***** 2\beta selection
+
 #+CAPTION: *Multi-selection for validating particle tracking process.*
-#+TBLNAME: 2beta_particle_track_cuts
+#+TBLNAME: particle_track_cuts
 |--------------------------------------|
 | has_particle_track_data              |
 | has_particle                         |
@@ -2477,8 +2477,62 @@ Remove event with non associated calorimeters hits.
 |--------------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("particle_track_cut", "and", 8, 2beta_particle_track_cuts)>>
+  <<multi("particle_track_cut", "and", 8, particle_track_cuts)>>
 #+END_SRC
+
+*** Topology selection
+:PROPERTIES:
+:TANGLE: topology_cuts.conf
+:END:
+
+The following selections define some basic "standard" topological cuts such as :
+- 2 electrons,
+- 1 electron,
+- 1 electron, $n$ gammas,
+- 2 electron, $n$ gammas,
+- 1 electron, 1 alpha particle
+and maybe more in the future.
+
+**** Insert preamble
+
+#+BEGIN_SRC shell :noweb yes
+  <<service_preamble>>
+#+END_SRC
+
+**** Skeleton codes                                             :noexport:
+:PROPERTIES:
+:TANGLE: no
+:RESULTS: output
+:END:
+
+Skeleton codes to automate declarations of cut.
+
+***** Topology cut
+#+NAME: topology_cut
+#+HEADERS: :var cname="" :var logging="warning" :var topology="2e"
+#+BEGIN_SRC shell
+  echo '[name="'$cname'" type="snemo::cut::particle_track_data_cut"]'
+  echo
+  echo '#@description Cut description'
+  echo 'cut.description : string = "Select number of particles"'
+  echo
+  echo '#@description Logging priority'
+  echo 'logging.priority : string = "'$logging'"'
+  echo
+  echo '#@description Activate the check for topology event'
+  echo 'mode.topology : boolean = 1'
+  echo
+  echo '#@description Topology label'
+  echo 'topology.labels : string[1] = "'${topology}'"'
+#+END_SRC
+**** 2\beta selection
+
+Define "standard" cuts for 2\beta events.
+
+#+BEGIN_SRC shell :noweb yes
+  <<topology_cut(cname="only_2e_topology", topology="2e")>>
+#+END_SRC
+
 * Running SN@ilWare processing chain
 
 Since this configuration will run through the executable =bxdpp_processing= from

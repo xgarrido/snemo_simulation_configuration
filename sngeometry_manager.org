@@ -253,6 +253,7 @@ module.
 
   #@description The EM field associated for the label 'module'
   manager.geom_map.associations.module.field_name : string = "B_module"
+  #manager.geom_map.associations.module.field_name : string = "Bz_polynomial"
 #+END_SRC
 
 ** Magnetic field drivers
@@ -273,12 +274,41 @@ module.
 
   #@config Configuration parameters for the magnetic field of SuperNEMO
 
+  #@description Logging flag
+  logging.priority : string = "warning"
+
   #@description Default implicit magnetic field unit
   magnetic_field.unit        : string  = "gauss"
 
   #@description Coordinates of the static magnetic field (Bx, By, Bz)
   magnetic_field.coordinates : real[3] = 0.0 0.0 25.0
 #+END_SRC
+
+*** Polynomial magnetic field
+To take into account effects from the calorimeter magnetic shielding as shown in
+[[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=3552][DocDB 3552]], we made a variable magnetic field inside tracker
+
+#+BEGIN_SRC shell
+  [name="Bz_polynomial" type="emfield::polynomial_magnetic_field"]
+
+  #@config Configuration parameters for a variable magnetic field
+
+  #@description Logging flag
+  logging.priority : string = "warning"
+
+  #@description Default implicit magnetic field unit
+  magnetic_field.unit : string = "gauss"
+
+  #@description Bz field polynomial degree
+  magnetic_field.Bz.x.polynomial_degree : integer = 3
+
+  #@description Bz x-parameters
+  magnetic_field.Bz.x.polynomial_parameters : real[3] = 25.0 0.0 -8e-5
+
+  #@description Bz field space limits
+  magnetic_field.Bz.x.limits : real[2] as length = -500 +500 mm
+#+END_SRC
+
 * Locators for SuperNEMO detector
 ** Locator driver
 :PROPERTIES:
