@@ -952,6 +952,9 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
 
   #@description Use calorimeter hits information to help clustering
   CAT.process_calo_hits : boolean = 1
+
+  #@description Store CAT results as data properties
+  CAT.store_result_as_properties : boolean = 0
 #+END_SRC
 
 **** SULTAN tracker
@@ -1624,7 +1627,7 @@ modules it contains.
 | add_header                |
 | tracker_s2c               |
 | calorimeter_s2c           |
-| mock_tracker_clustering   |
+| cat_tracker_clustering    |
 | trackfit_tracker_fitting  |
 | charged_particle_tracking |
 | gamma_clustering          |
