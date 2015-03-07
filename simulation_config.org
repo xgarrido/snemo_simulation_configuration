@@ -947,6 +947,9 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
   #@description Pre-clusterizer processing separately both sides of the tracking chamber
   TPC.split_chamber : boolean = 0
 
+  #@description CAT logging level
+  CAT.level : string = "mute"
+
   # #@description Force the CAT algorithm to consider a 25 gauss magnetic field (temporary trick)
   # CAT.magnetic_field : real = 25 gauss
 
