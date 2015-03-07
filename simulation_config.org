@@ -941,7 +941,7 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
   TPC.processing_prompt_hits : boolean = 1
 
   #@description Activation of the clustering of delayed hits
-  TPC.processing_delayed_hits : boolean = 0
+  TPC.processing_delayed_hits : boolean = 1
 
   # #@description The time width of the window for collecting candidate clusters of delayed hits (in microsecond)
   # TPC.delayed_hit_cluster_time : real = 10.0 # microsec
