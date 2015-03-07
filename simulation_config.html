@@ -151,7 +151,8 @@ for the JavaScript code in this tag.
 <li><a href="#sec-3-7">3.7. Tracker fitting module</a></li>
 <li><a href="#sec-3-8">3.8. Charged particle tracking module</a></li>
 <li><a href="#sec-3-9">3.9. &gamma; tracking module</a></li>
-<li><a href="#sec-3-10">3.10. Chain modules</a></li>
+<li><a href="#sec-3-10">3.10. Particle identification</a></li>
+<li><a href="#sec-3-11">3.11. Chain modules</a></li>
 </ul>
 </li>
 <li><a href="#sec-4">4. Services</a>
@@ -269,7 +270,7 @@ service_manager.configuration : string[1] as <span class="org-variable-name">pat
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The configuration files for modules</span>
-modules.configuration_files : string[10] as <span class="org-variable-name">path</span> =                     <span class="org-sh-escaped-newline">\</span>
+modules.configuration_files : string[11] as <span class="org-variable-name">path</span> =                     <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/io_modules.conf"</span>                 <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/utl_modules.conf"</span>                <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/simulation_modules.conf"</span>         <span class="org-sh-escaped-newline">\</span>
@@ -279,6 +280,7 @@ modules.configuration_files : string[10] as <span class="org-variable-name">path
     <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/tracker_fitting_modules.conf"</span>    <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/particle_tracking_modules.conf"</span>  <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/gamma_tracking_modules.conf"</span>     <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/pid_modules.conf"</span>                <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/chain_modules.conf"</span>
 </pre>
 </div>
@@ -400,6 +402,11 @@ list of needed libraries
 <td class="left">Falaise_GammaClustering</td>
 <td class="left">$SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_GammaClustering.so</td>
 </tr>
+
+<tr>
+<td class="left">Falaise_PID</td>
+<td class="left">$SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_ParticleIdentification.so</td>
+</tr>
 </tbody>
 </table>
 
@@ -446,6 +453,10 @@ list of needed libraries
 
 [<span class="org-variable-name">name</span>=<span class="org-string">"Falaise_GammaClustering"</span> <span class="org-variable-name">filename</span>=<span class="org-string">"$SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_GammaClustering.so"</span>]
 <span class="org-comment-delimiter">#</span><span class="org-comment">config The Falaise_GammaClustering library</span>
+<span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
+
+[<span class="org-variable-name">name</span>=<span class="org-string">"Falaise_PID"</span> <span class="org-variable-name">filename</span>=<span class="org-string">"$SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_ParticleIdentification.so"</span>]
+<span class="org-comment-delimiter">#</span><span class="org-comment">config The Falaise_PID library</span>
 <span class="org-builtin">autoload</span> : <span class="org-variable-name">boolean</span> = 1
 </pre>
 </div>
@@ -1104,8 +1115,8 @@ manager.vertex_generator_name : <span class="org-variable-name">string</span>  =
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The event generator PRNG label</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">manager.event_generator_name  : string  = "Se82.0nubb"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">manager.event_generator_name  : string  = "Bi214_Po214"</span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">manager.event_generator_name  : string  = "Tl208"</span>
-manager.event_generator_name  : <span class="org-variable-name">string</span> = <span class="org-string">"multi_particles"</span>
+manager.event_generator_name  : <span class="org-variable-name">string</span>  = <span class="org-string">"Tl208"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">manager.event_generator_name  : string = "multi_particles"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">manager.event_generator_name  : string = "electron_monokinetic"</span>
 </pre>
 </div>
@@ -1213,7 +1224,7 @@ add_header.external_properties_prefix : <span class="org-variable-name">string</
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The version control status</span>
-analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git master branch - commit 7c2ea95 - 2015-02-28"</span>
+analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git master branch - commit 5718a0f - 2015-03-07"</span>
 </pre>
 </div>
 </div></li>
@@ -1639,7 +1650,7 @@ TCD_label : <span class="org-variable-name">string</span>  = <span class="org-st
 TPC.processing_prompt_hits : <span class="org-variable-name">boolean</span> = 1
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Activation of the clustering of delayed hits</span>
-TPC.processing_delayed_hits : <span class="org-variable-name">boolean</span> = 0
+TPC.processing_delayed_hits : <span class="org-variable-name">boolean</span> = 1
 
 <span class="org-comment-delimiter"># </span><span class="org-comment">#@description The time width of the window for collecting candidate clusters of delayed hits (in microsecond)</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">TPC.delayed_hit_cluster_time : real = 10.0 # microsec</span>
@@ -1647,11 +1658,17 @@ TPC.processing_delayed_hits : <span class="org-variable-name">boolean</span> = 0
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Pre-clusterizer processing separately both sides of the tracking chamber</span>
 TPC.split_chamber : <span class="org-variable-name">boolean</span> = 0
 
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description CAT logging level</span>
+CAT.level : <span class="org-variable-name">string</span> = <span class="org-string">"mute"</span>
+
 <span class="org-comment-delimiter"># </span><span class="org-comment">#@description Force the CAT algorithm to consider a 25 gauss magnetic field (temporary trick)</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">CAT.magnetic_field : real = 25 gauss</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Use calorimeter hits information to help clustering</span>
 CAT.process_calo_hits : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Store CAT results as data properties</span>
+CAT.store_result_as_properties : <span class="org-variable-name">boolean</span> = 0
 </pre>
 </div>
 </div></li>
@@ -2322,17 +2339,9 @@ GT.maximal_gamma_size : <span class="org-variable-name">integer</span> = 0
 </div>
 </div>
 <div id="outline-container-sec-3-10" class="outline-3">
-<h3 id="sec-3-10"><span class="section-number-3">3.10</span> Chain modules</h3>
+<h3 id="sec-3-10"><span class="section-number-3">3.10</span> Particle identification</h3>
 <div class="outline-text-3" id="text-3-10">
-<p>
-This section holds most of the chain module to set "to music" the different
-modules and tasks. It also contains the different paths given the selection
-requirements. One important point is that module order really matters since a
-module, especially <code>chain_module</code>, needs to know the declaration of all the
-modules it contains.
-</p>
 </div>
-
 <div id="outline-container-sec-3-10-1" class="outline-4">
 <h4 id="sec-3-10-1"><span class="section-number-4">3.10.1</span> Insert preamble</h4>
 <div class="outline-text-4" id="text-3-10-1">
@@ -2347,8 +2356,72 @@ modules it contains.
 </div>
 
 <div id="outline-container-sec-3-10-2" class="outline-4">
-<h4 id="sec-3-10-2"><span class="section-number-4">3.10.2</span> Process after event header selection</h4>
+<h4 id="sec-3-10-2"><span class="section-number-4">3.10.2</span> Module declaration</h4>
 <div class="outline-text-4" id="text-3-10-2">
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"particle_identification"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::reconstruction::particle_identification_module"</span>]
+</pre>
+</div>
+</div>
+
+<ul class="org-ul"><li><a id="unnumbered-63"></a>Logging priority<br  /><div class="outline-text-5" id="text-unnumbered-63">
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging flag</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"trace"</span>
+</pre>
+</div>
+</div></li>
+
+<li><a id="unnumbered-64"></a>Data banks and services labels<br  /><div class="outline-text-5" id="text-unnumbered-64">
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the Cut service</span>
+Cut_label : <span class="org-variable-name">string</span>  = <span class="org-string">"Cuts"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Particle Track Data' bank</span>
+PTD_label : <span class="org-variable-name">string</span>  = <span class="org-string">"PTD"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of particle identification definition</span>
+pid.definitions : <span class="org-variable-name">string</span>[1] = <span class="org-string">"electron::definition"</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">#@description The label associated to definition</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">pid.electron::definition.label : string = "snemo::electron"</span>
+</pre>
+</div>
+</div></li></ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3-11" class="outline-3">
+<h3 id="sec-3-11"><span class="section-number-3">3.11</span> Chain modules</h3>
+<div class="outline-text-3" id="text-3-11">
+<p>
+This section holds most of the chain module to set "to music" the different
+modules and tasks. It also contains the different paths given the selection
+requirements. One important point is that module order really matters since a
+module, especially <code>chain_module</code>, needs to know the declaration of all the
+modules it contains.
+</p>
+</div>
+
+<div id="outline-container-sec-3-11-1" class="outline-4">
+<h4 id="sec-3-11-1"><span class="section-number-4">3.11.1</span> Insert preamble</h4>
+<div class="outline-text-4" id="text-3-11-1">
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of setups</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-11-2" class="outline-4">
+<h4 id="sec-3-11-2"><span class="section-number-4">3.11.2</span> Process after event header selection</h4>
+<div class="outline-text-4" id="text-3-11-2">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"process_with_event_header_cuts"</span> <span class="org-variable-name">type</span>=<span class="org-string">"dpp::if_module"</span>]
@@ -2372,9 +2445,9 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 </div>
 </div>
 
-<div id="outline-container-sec-3-10-3" class="outline-4">
-<h4 id="sec-3-10-3"><span class="section-number-4">3.10.3</span> Analysis chain</h4>
-<div class="outline-text-4" id="text-3-10-3">
+<div id="outline-container-sec-3-11-3" class="outline-4">
+<h4 id="sec-3-11-3"><span class="section-number-4">3.11.3</span> Analysis chain</h4>
+<div class="outline-text-4" id="text-3-11-3">
 <table id="analysis_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
 <caption class="t-above"><span class="table-number">Table 2:</span> <b>Modules used by the analysis process.</b></caption>
 
@@ -2428,9 +2501,9 @@ modules : <span class="org-variable-name">string</span>[6] = <span class="org-sh
 </div>
 </div>
 
-<div id="outline-container-sec-3-10-4" class="outline-4">
-<h4 id="sec-3-10-4"><span class="section-number-4">3.10.4</span> Process after selecting particle track</h4>
-<div class="outline-text-4" id="text-3-10-4">
+<div id="outline-container-sec-3-11-4" class="outline-4">
+<h4 id="sec-3-11-4"><span class="section-number-4">3.11.4</span> Process after selecting particle track</h4>
+<div class="outline-text-4" id="text-3-11-4">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"process_with_particle_track_cuts"</span> <span class="org-variable-name">type</span>=<span class="org-string">"dpp::if_module"</span>]
@@ -2454,9 +2527,9 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 </div>
 </div>
 
-<div id="outline-container-sec-3-10-5" class="outline-4">
-<h4 id="sec-3-10-5"><span class="section-number-4">3.10.5</span> Particle tracking chain</h4>
-<div class="outline-text-4" id="text-3-10-5">
+<div id="outline-container-sec-3-11-5" class="outline-4">
+<h4 id="sec-3-11-5"><span class="section-number-4">3.11.5</span> Particle tracking chain</h4>
+<div class="outline-text-4" id="text-3-11-5">
 <table id="particle_tracking_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
 <caption class="t-above"><span class="table-number">Table 3:</span> <b>Modules used by the particle tracking process.</b></caption>
 
@@ -2510,9 +2583,9 @@ modules : <span class="org-variable-name">string</span>[6] = <span class="org-sh
 </div>
 </div>
 
-<div id="outline-container-sec-3-10-6" class="outline-4">
-<h4 id="sec-3-10-6"><span class="section-number-4">3.10.6</span> Process after fitting selection</h4>
-<div class="outline-text-4" id="text-3-10-6">
+<div id="outline-container-sec-3-11-6" class="outline-4">
+<h4 id="sec-3-11-6"><span class="section-number-4">3.11.6</span> Process after fitting selection</h4>
+<div class="outline-text-4" id="text-3-11-6">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"process_with_fitting_cuts"</span> <span class="org-variable-name">type</span>=<span class="org-string">"dpp::if_module"</span>]
@@ -2536,9 +2609,9 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 </div>
 </div>
 
-<div id="outline-container-sec-3-10-7" class="outline-4">
-<h4 id="sec-3-10-7"><span class="section-number-4">3.10.7</span> Fitting chain</h4>
-<div class="outline-text-4" id="text-3-10-7">
+<div id="outline-container-sec-3-11-7" class="outline-4">
+<h4 id="sec-3-11-7"><span class="section-number-4">3.11.7</span> Fitting chain</h4>
+<div class="outline-text-4" id="text-3-11-7">
 <table id="fitting_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
 <caption class="t-above"><span class="table-number">Table 4:</span> <b>Modules used by the fitting process.</b></caption>
 
@@ -2582,9 +2655,9 @@ modules : <span class="org-variable-name">string</span>[4] = <span class="org-sh
 </div>
 </div>
 
-<div id="outline-container-sec-3-10-8" class="outline-4">
-<h4 id="sec-3-10-8"><span class="section-number-4">3.10.8</span> Process after clustering selection</h4>
-<div class="outline-text-4" id="text-3-10-8">
+<div id="outline-container-sec-3-11-8" class="outline-4">
+<h4 id="sec-3-11-8"><span class="section-number-4">3.11.8</span> Process after clustering selection</h4>
+<div class="outline-text-4" id="text-3-11-8">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"process_with_clustering_cuts"</span> <span class="org-variable-name">type</span>=<span class="org-string">"dpp::if_module"</span>]
@@ -2608,9 +2681,9 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 </div>
 </div>
 
-<div id="outline-container-sec-3-10-9" class="outline-4">
-<h4 id="sec-3-10-9"><span class="section-number-4">3.10.9</span> Clustering chain</h4>
-<div class="outline-text-4" id="text-3-10-9">
+<div id="outline-container-sec-3-11-9" class="outline-4">
+<h4 id="sec-3-11-9"><span class="section-number-4">3.11.9</span> Clustering chain</h4>
+<div class="outline-text-4" id="text-3-11-9">
 <table id="clustering_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
 <caption class="t-above"><span class="table-number">Table 5:</span> <b>Modules used by the clustering process.</b></caption>
 
@@ -2654,9 +2727,9 @@ modules : <span class="org-variable-name">string</span>[4] = <span class="org-sh
 </div>
 </div>
 
-<div id="outline-container-sec-3-10-10" class="outline-4">
-<h4 id="sec-3-10-10"><span class="section-number-4">3.10.10</span> Process after calibration selection</h4>
-<div class="outline-text-4" id="text-3-10-10">
+<div id="outline-container-sec-3-11-10" class="outline-4">
+<h4 id="sec-3-11-10"><span class="section-number-4">3.11.10</span> Process after calibration selection</h4>
+<div class="outline-text-4" id="text-3-11-10">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"process_with_calibrated_cuts"</span> <span class="org-variable-name">type</span>=<span class="org-string">"dpp::if_module"</span>]
@@ -2680,9 +2753,9 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 </div>
 </div>
 
-<div id="outline-container-sec-3-10-11" class="outline-4">
-<h4 id="sec-3-10-11"><span class="section-number-4">3.10.11</span> Calibration chain</h4>
-<div class="outline-text-4" id="text-3-10-11">
+<div id="outline-container-sec-3-11-11" class="outline-4">
+<h4 id="sec-3-11-11"><span class="section-number-4">3.11.11</span> Calibration chain</h4>
+<div class="outline-text-4" id="text-3-11-11">
 <table id="calibration_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
 <caption class="t-above"><span class="table-number">Table 6:</span> <b>Modules used by the calibration process.</b></caption>
 
@@ -2731,9 +2804,9 @@ modules : <span class="org-variable-name">string</span>[5] = <span class="org-sh
 </div>
 </div>
 
-<div id="outline-container-sec-3-10-12" class="outline-4">
-<h4 id="sec-3-10-12"><span class="section-number-4">3.10.12</span> Process after simulation selection</h4>
-<div class="outline-text-4" id="text-3-10-12">
+<div id="outline-container-sec-3-11-12" class="outline-4">
+<h4 id="sec-3-11-12"><span class="section-number-4">3.11.12</span> Process after simulation selection</h4>
+<div class="outline-text-4" id="text-3-11-12">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"process_with_simulated_cuts"</span> <span class="org-variable-name">type</span>=<span class="org-string">"dpp::if_module"</span>]
@@ -2757,9 +2830,9 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 </div>
 </div>
 
-<div id="outline-container-sec-3-10-13" class="outline-4">
-<h4 id="sec-3-10-13"><span class="section-number-4">3.10.13</span> Simulation chain</h4>
-<div class="outline-text-4" id="text-3-10-13">
+<div id="outline-container-sec-3-11-13" class="outline-4">
+<h4 id="sec-3-11-13"><span class="section-number-4">3.11.13</span> Simulation chain</h4>
+<div class="outline-text-4" id="text-3-11-13">
 <table id="simulation_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
 <caption class="t-above"><span class="table-number">Table 7:</span> <b>Modules used by the simulation process.</b></caption>
 
@@ -2798,9 +2871,9 @@ modules : <span class="org-variable-name">string</span>[3] = <span class="org-sh
 </div>
 </div>
 
-<div id="outline-container-sec-3-10-14" class="outline-4">
-<h4 id="sec-3-10-14"><span class="section-number-4">3.10.14</span> Full chain (from simulation &rarr; calibration &rarr; reconstruction)</h4>
-<div class="outline-text-4" id="text-3-10-14">
+<div id="outline-container-sec-3-11-14" class="outline-4">
+<h4 id="sec-3-11-14"><span class="section-number-4">3.11.14</span> Full chain (from simulation &rarr; calibration &rarr; reconstruction)</h4>
+<div class="outline-text-4" id="text-3-11-14">
 <table id="full_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
 <caption class="t-above"><span class="table-number">Table 8:</span> <b>Full chain processing.</b></caption>
 
@@ -2829,9 +2902,9 @@ modules : <span class="org-variable-name">string</span>[1] = <span class="org-sh
 </div>
 </div>
 
-<div id="outline-container-sec-3-10-15" class="outline-4">
-<h4 id="sec-3-10-15"><span class="section-number-4">3.10.15</span> Minimum bias chain (from simulation &rarr; calibration &rarr; reconstruction)</h4>
-<div class="outline-text-4" id="text-3-10-15">
+<div id="outline-container-sec-3-11-15" class="outline-4">
+<h4 id="sec-3-11-15"><span class="section-number-4">3.11.15</span> Minimum bias chain (from simulation &rarr; calibration &rarr; reconstruction)</h4>
+<div class="outline-text-4" id="text-3-11-15">
 <table id="minimum_bias_chain" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
 <caption class="t-above"><span class="table-number">Table 9:</span> <b>Full chain processing without selection.</b></caption>
 
@@ -2856,7 +2929,7 @@ modules : <span class="org-variable-name">string</span>[1] = <span class="org-sh
 </tr>
 
 <tr>
-<td class="left">mock_tracker_clustering</td>
+<td class="left">cat_tracker_clustering</td>
 </tr>
 
 <tr>
@@ -2869,6 +2942,10 @@ modules : <span class="org-variable-name">string</span>[1] = <span class="org-sh
 
 <tr>
 <td class="left">gamma_clustering</td>
+</tr>
+
+<tr>
+<td class="left">particle_identification</td>
 </tr>
 
 <tr>
@@ -2885,24 +2962,25 @@ modules : <span class="org-variable-name">string</span>[1] = <span class="org-sh
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of processing modules to be applied (in this order)</span>
-modules : <span class="org-variable-name">string</span>[9] = <span class="org-sh-escaped-newline">\</span>
+modules : <span class="org-variable-name">string</span>[10] = <span class="org-sh-escaped-newline">\</span>
 <span class="org-string">"simulation"</span> <span class="org-sh-escaped-newline">\</span>
 <span class="org-string">"add_header"</span> <span class="org-sh-escaped-newline">\</span>
 <span class="org-string">"tracker_s2c"</span> <span class="org-sh-escaped-newline">\</span>
 <span class="org-string">"calorimeter_s2c"</span> <span class="org-sh-escaped-newline">\</span>
-<span class="org-string">"mock_tracker_clustering"</span> <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"cat_tracker_clustering"</span> <span class="org-sh-escaped-newline">\</span>
 <span class="org-string">"trackfit_tracker_fitting"</span> <span class="org-sh-escaped-newline">\</span>
 <span class="org-string">"charged_particle_tracking"</span> <span class="org-sh-escaped-newline">\</span>
 <span class="org-string">"gamma_clustering"</span> <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"particle_identification"</span> <span class="org-sh-escaped-newline">\</span>
 <span class="org-string">"io_output_analysed"</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-3-10-16" class="outline-4">
-<h4 id="sec-3-10-16"><span class="section-number-4">3.10.16</span> Miscellaneous</h4>
-<div class="outline-text-4" id="text-3-10-16">
+<div id="outline-container-sec-3-11-16" class="outline-4">
+<h4 id="sec-3-11-16"><span class="section-number-4">3.11.16</span> Miscellaneous</h4>
+<div class="outline-text-4" id="text-3-11-16">
 <table id="reformat_data" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
 <caption class="t-above"><span class="table-number">Table 10:</span> <b>Reformating data.</b></caption>
 
@@ -3073,13 +3151,14 @@ print_report : <span class="org-variable-name">boolean</span> = 1
 factory.no_preload : <span class="org-variable-name">boolean</span> = 0
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description A list of files that contains definition of cuts</span>
-cuts.configuration_files : string[6] as <span class="org-variable-name">path</span> =                         <span class="org-sh-escaped-newline">\</span>
+cuts.configuration_files : string[7] as <span class="org-variable-name">path</span> =                         <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/event_header_cuts.conf"</span>            <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/simulated_data_cuts.conf"</span>          <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/calibrated_data_cuts.conf"</span>         <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/tracker_clustering_data_cuts.conf"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/tracker_trajectory_data_cuts.conf"</span> <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/particle_track_data_cuts.conf"</span>
+  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/particle_track_data_cuts.conf"</span>     <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/pid_cuts.conf"</span>
 </pre>
 </div>
 </div>
@@ -3097,7 +3176,7 @@ cuts.configuration_files : string[6] as <span class="org-variable-name">path</sp
 </div>
 </div>
 
-<ul class="org-ul"><li><a id="unnumbered-63"></a>List of event ids<br  /><div class="outline-text-5" id="text-unnumbered-63">
+<ul class="org-ul"><li><a id="unnumbered-65"></a>List of event ids<br  /><div class="outline-text-5" id="text-unnumbered-65">
 <div class="org-src-container">
 
 <pre class="src src-shell">0_50
@@ -3139,7 +3218,7 @@ list_of_event_ids.file : string as <span class="org-variable-name">path</span> =
 </div>
 </div>
 
-<ul class="org-ul"><li><a id="unnumbered-64"></a>Check bank availability<br  /><div class="outline-text-5" id="text-unnumbered-64">
+<ul class="org-ul"><li><a id="unnumbered-66"></a>Check bank availability<br  /><div class="outline-text-5" id="text-unnumbered-66">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"has_simulated_data"</span> <span class="org-variable-name">type</span>=<span class="org-string">"dpp::utils_cut"</span>]
@@ -3159,7 +3238,7 @@ has_bank.name : <span class="org-variable-name">string</span> = <span class="org
 </div>
 </div></li>
 
-<li><a id="unnumbered-65"></a>Multiple cuts<br  /><div class="outline-text-5" id="text-unnumbered-65">
+<li><a id="unnumbered-67"></a>Multiple cuts<br  /><div class="outline-text-5" id="text-unnumbered-67">
 <p>
 This cuts puts together all the previous declared cuts.
 </p>
@@ -3206,7 +3285,7 @@ cuts : <span class="org-variable-name">string</span>[1] = <span class="org-sh-es
 </div>
 </div>
 
-<ul class="org-ul"><li><a id="unnumbered-66"></a>Check bank availability<br  /><div class="outline-text-5" id="text-unnumbered-66">
+<ul class="org-ul"><li><a id="unnumbered-68"></a>Check bank availability<br  /><div class="outline-text-5" id="text-unnumbered-68">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"has_calibrated_data"</span> <span class="org-variable-name">type</span>=<span class="org-string">"dpp::utils_cut"</span>]
@@ -3226,7 +3305,7 @@ has_bank.name : <span class="org-variable-name">string</span> = <span class="org
 </div>
 </div></li>
 
-<li><a id="unnumbered-67"></a>Check calibrated calorimeter availability<br  /><div class="outline-text-5" id="text-unnumbered-67">
+<li><a id="unnumbered-69"></a>Check calibrated calorimeter availability<br  /><div class="outline-text-5" id="text-unnumbered-69">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"has_cd_calorimeter"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::calibrated_data_cut"</span>]
@@ -3258,7 +3337,7 @@ cut : <span class="org-variable-name">string</span> = <span class="org-string">"
 </div>
 </div></li>
 
-<li><a id="unnumbered-68"></a>Select number of calibrated calorimeter hits<br  /><div class="outline-text-5" id="text-unnumbered-68">
+<li><a id="unnumbered-70"></a>Select number of calibrated calorimeter hits<br  /><div class="outline-text-5" id="text-unnumbered-70">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"cd_calorimeter_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::calibrated_data_cut"</span>]
@@ -3287,7 +3366,7 @@ range_hit_category.max : <span class="org-variable-name">integer</span> = 2
 </div>
 </div></li>
 
-<li><a id="unnumbered-69"></a>Check calibrated tracker availability<br  /><div class="outline-text-5" id="text-unnumbered-69">
+<li><a id="unnumbered-71"></a>Check calibrated tracker availability<br  /><div class="outline-text-5" id="text-unnumbered-71">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"has_cd_tracker"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::calibrated_data_cut"</span>]
@@ -3319,7 +3398,7 @@ cut : <span class="org-variable-name">string</span> = <span class="org-string">"
 </div>
 </div></li>
 
-<li><a id="unnumbered-70"></a>Select number of calibrated tracker hits<br  /><div class="outline-text-5" id="text-unnumbered-70">
+<li><a id="unnumbered-72"></a>Select number of calibrated tracker hits<br  /><div class="outline-text-5" id="text-unnumbered-72">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"cd_tracker_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::calibrated_data_cut"</span>]
@@ -3348,7 +3427,7 @@ range_hit_category.min : <span class="org-variable-name">integer</span> = 3
 </div>
 </div></li>
 
-<li><a id="unnumbered-71"></a>Remove delayed calibrated tracker hits<br  /><div class="outline-text-5" id="text-unnumbered-71">
+<li><a id="unnumbered-73"></a>Remove delayed calibrated tracker hits<br  /><div class="outline-text-5" id="text-unnumbered-73">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"has_delayed_tracker_hit"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::calibrated_data_cut"</span>]
@@ -3380,7 +3459,7 @@ cut : <span class="org-variable-name">string</span> = <span class="org-string">"
 </div>
 </div></li>
 
-<li><a id="unnumbered-72"></a>Multiple cuts<br  /><div class="outline-text-5" id="text-unnumbered-72">
+<li><a id="unnumbered-74"></a>Multiple cuts<br  /><div class="outline-text-5" id="text-unnumbered-74">
 <p>
 This cuts puts together all the previous declared cuts.
 </p>
@@ -3452,7 +3531,7 @@ cuts : <span class="org-variable-name">string</span>[6] = <span class="org-sh-es
 </div>
 </div>
 
-<ul class="org-ul"><li><a id="unnumbered-73"></a>Check bank availability<br  /><div class="outline-text-5" id="text-unnumbered-73">
+<ul class="org-ul"><li><a id="unnumbered-75"></a>Check bank availability<br  /><div class="outline-text-5" id="text-unnumbered-75">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"has_tracker_clustering_data"</span> <span class="org-variable-name">type</span>=<span class="org-string">"dpp::utils_cut"</span>]
@@ -3472,7 +3551,7 @@ has_bank.name : <span class="org-variable-name">string</span> = <span class="org
 </div>
 </div></li>
 
-<li><a id="unnumbered-74"></a>Check if clusters have been performed<br  /><div class="outline-text-5" id="text-unnumbered-74">
+<li><a id="unnumbered-76"></a>Check if clusters have been performed<br  /><div class="outline-text-5" id="text-unnumbered-76">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"has_cluster"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::tracker_clustering_data_cut"</span>]
@@ -3491,7 +3570,7 @@ mode.has_cluster : <span class="org-variable-name">boolean</span> = 1
 </pre>
 </div>
 </div></li>
-<li><a id="unnumbered-75"></a>Select number of cluster<br  /><div class="outline-text-5" id="text-unnumbered-75">
+<li><a id="unnumbered-77"></a>Select number of cluster<br  /><div class="outline-text-5" id="text-unnumbered-77">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"cluster_range_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::tracker_clustering_data_cut"</span>]
@@ -3517,7 +3596,7 @@ range_cluster.max : <span class="org-variable-name">integer</span> = 4
 </div>
 </div></li>
 
-<li><a id="unnumbered-76"></a>Select number of hit within a cluster&#xa0;&#xa0;&#xa0;<span class="tag"><span class="notused">notused</span></span><br  /><div class="outline-text-5" id="text-unnumbered-76">
+<li><a id="unnumbered-78"></a>Select number of hit within a cluster&#xa0;&#xa0;&#xa0;<span class="tag"><span class="notused">notused</span></span><br  /><div class="outline-text-5" id="text-unnumbered-78">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"tcd2_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::analysis::cut::tracker_clustering_data_cut"</span>]
@@ -3540,7 +3619,7 @@ range_tracker_hit.min : <span class="org-variable-name">integer</span> = 1
 </div>
 </div></li>
 
-<li><a id="unnumbered-77"></a>"Selecting" unclustered hits<br  /><div class="outline-text-5" id="text-unnumbered-77">
+<li><a id="unnumbered-79"></a>"Selecting" unclustered hits<br  /><div class="outline-text-5" id="text-unnumbered-79">
 <p>
 We define a serie of cut to remove event with too much unclustered hits. We
 first define a cut to check is there is some unclustered hits. If yes, then we
@@ -3548,7 +3627,7 @@ ask tracker cluster solution to have more than 4 unclustered hits. Finally,
 since we want to remove thess events, we build a <code>nor_cut</code> to keep
 </p>
 </div>
-<ul class="org-ul"><li><a id="unnumbered-78"></a>Check if unclustered hits remain<br  /><div class="outline-text-6" id="text-unnumbered-78">
+<ul class="org-ul"><li><a id="unnumbered-80"></a>Check if unclustered hits remain<br  /><div class="outline-text-6" id="text-unnumbered-80">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"has_unclustered_hits"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::tracker_clustering_data_cut"</span>]
@@ -3567,7 +3646,7 @@ mode.has_unclustered_hits : <span class="org-variable-name">boolean</span> = 1
 </pre>
 </div>
 </div></li>
-<li><a id="unnumbered-79"></a>Select number of unclustered hits<br  /><div class="outline-text-6" id="text-unnumbered-79">
+<li><a id="unnumbered-81"></a>Select number of unclustered hits<br  /><div class="outline-text-6" id="text-unnumbered-81">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"unclustered_hits_range_cut"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::tracker_clustering_data_cut"</span>]
@@ -3590,7 +3669,7 @@ range_unclustered_hits.min : <span class="org-variable-name">integer</span> = 4
 </div>
 </div></li>
 
-<li><a id="unnumbered-80"></a>No unclustered hits nor large number of unclustered hits<br  /><div class="outline-text-6" id="text-unnumbered-80">
+<li><a id="unnumbered-82"></a>No unclustered hits nor large number of unclustered hits<br  /><div class="outline-text-6" id="text-unnumbered-82">
 <table id="unclustered_hits_cuts" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
 <caption class="t-above"><span class="table-number">Table 13:</span> <b>Multi-selection for getting unclustering hits.</b></caption>
 
@@ -3646,7 +3725,7 @@ cut : <span class="org-variable-name">string</span> = <span class="org-string">"
 </div>
 </div></li></ul></li>
 
-<li><a id="unnumbered-81"></a>Multiple cuts<br  /><div class="outline-text-5" id="text-unnumbered-81">
+<li><a id="unnumbered-83"></a>Multiple cuts<br  /><div class="outline-text-5" id="text-unnumbered-83">
 <table id="tracker_clustering_cuts" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
 <caption class="t-above"><span class="table-number">Table 14:</span> <b>Multi-selection for validating tracker clustering process.</b></caption>
 
@@ -3705,7 +3784,7 @@ cuts : <span class="org-variable-name">string</span>[4] = <span class="org-sh-es
 </div>
 </div>
 
-<ul class="org-ul"><li><a id="unnumbered-82"></a>Check bank availability<br  /><div class="outline-text-5" id="text-unnumbered-82">
+<ul class="org-ul"><li><a id="unnumbered-84"></a>Check bank availability<br  /><div class="outline-text-5" id="text-unnumbered-84">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"has_tracker_trajectory_data"</span> <span class="org-variable-name">type</span>=<span class="org-string">"dpp::utils_cut"</span>]
@@ -3725,7 +3804,7 @@ has_bank.name : <span class="org-variable-name">string</span> = <span class="org
 </div>
 </div></li>
 
-<li><a id="unnumbered-83"></a>Multiple cuts<br  /><div class="outline-text-5" id="text-unnumbered-83">
+<li><a id="unnumbered-85"></a>Multiple cuts<br  /><div class="outline-text-5" id="text-unnumbered-85">
 <table id="tracker_trajectory_cuts" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
 <caption class="t-above"><span class="table-number">Table 15:</span> <b>Multi-selection for validating tracker trajectory process.</b></caption>
 
@@ -3769,7 +3848,7 @@ cuts : <span class="org-variable-name">string</span>[1] = <span class="org-sh-es
 </div>
 </div>
 
-<ul class="org-ul"><li><a id="unnumbered-84"></a>Check bank availability<br  /><div class="outline-text-5" id="text-unnumbered-84">
+<ul class="org-ul"><li><a id="unnumbered-86"></a>Check bank availability<br  /><div class="outline-text-5" id="text-unnumbered-86">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"has_particle_track_data"</span> <span class="org-variable-name">type</span>=<span class="org-string">"dpp::utils_cut"</span>]
@@ -3789,7 +3868,7 @@ has_bank.name : <span class="org-variable-name">string</span> = <span class="org
 </div>
 </div></li>
 
-<li><a id="unnumbered-85"></a>Check if particles have been reconstructed<br  /><div class="outline-text-5" id="text-unnumbered-85">
+<li><a id="unnumbered-87"></a>Check if particles have been reconstructed<br  /><div class="outline-text-5" id="text-unnumbered-87">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"has_particle"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::particle_track_data_cut"</span>]
@@ -3808,7 +3887,7 @@ mode.has_particles : <span class="org-variable-name">boolean</span> = 1
 </pre>
 </div>
 </div></li>
-<li><a id="unnumbered-86"></a>Select number of particles<br  /><div class="outline-text-5" id="text-unnumbered-86">
+<li><a id="unnumbered-88"></a>Select number of particles<br  /><div class="outline-text-5" id="text-unnumbered-88">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"range_particle"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::particle_track_data_cut"</span>]
@@ -3834,7 +3913,7 @@ range_particles.min : <span class="org-variable-name">integer</span> = 1
 </div>
 </div></li>
 
-<li><a id="unnumbered-87"></a>Check association with calorimeter hits<br  /><div class="outline-text-5" id="text-unnumbered-87">
+<li><a id="unnumbered-89"></a>Check association with calorimeter hits<br  /><div class="outline-text-5" id="text-unnumbered-89">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"has_associated_calorimeter_hits"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::particle_track_data_cut"</span>]
@@ -3854,7 +3933,7 @@ mode.particle_has_associated_calorimeter_hits : <span class="org-variable-name">
 </div>
 </div></li>
 
-<li><a id="unnumbered-88"></a>Select number of associated calorimeter hits<br  /><div class="outline-text-5" id="text-unnumbered-88">
+<li><a id="unnumbered-90"></a>Select number of associated calorimeter hits<br  /><div class="outline-text-5" id="text-unnumbered-90">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"range_associated_calorimeter_hits"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::particle_track_data_cut"</span>]
@@ -3880,7 +3959,7 @@ particle_range_associated_calorimeter_hits.min : <span class="org-variable-name"
 </div>
 </div></li>
 
-<li><a id="unnumbered-89"></a>Check if track has foil vertex<br  /><div class="outline-text-5" id="text-unnumbered-89">
+<li><a id="unnumbered-91"></a>Check if track has foil vertex<br  /><div class="outline-text-5" id="text-unnumbered-91">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"has_vertex_on_foil"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::particle_track_data_cut"</span>]
@@ -3900,7 +3979,7 @@ mode.particle_has_vertex_on_foil : <span class="org-variable-name">boolean</span
 </div>
 </div></li>
 
-<li><a id="unnumbered-90"></a>Select particle charge<br  /><div class="outline-text-5" id="text-unnumbered-90">
+<li><a id="unnumbered-92"></a>Select particle charge<br  /><div class="outline-text-5" id="text-unnumbered-92">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"has_negative_charge"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::particle_track_data_cut"</span>]
@@ -3965,7 +4044,7 @@ particle_has_charge.type : <span class="org-variable-name">string</span> = <span
 </div>
 </div></li>
 
-<li><a id="unnumbered-91"></a>No isolated calorimeter hits<br  /><div class="outline-text-5" id="text-unnumbered-91">
+<li><a id="unnumbered-93"></a>No isolated calorimeter hits<br  /><div class="outline-text-5" id="text-unnumbered-93">
 <p>
 Remove event with non associated calorimeters hits.
 </p>
@@ -3996,7 +4075,7 @@ cut : <span class="org-variable-name">string</span> = <span class="org-string">"
 </pre>
 </div>
 </div></li>
-<li><a id="unnumbered-92"></a>Multiple cuts<br  /><div class="outline-text-5" id="text-unnumbered-92">
+<li><a id="unnumbered-94"></a>Multiple cuts<br  /><div class="outline-text-5" id="text-unnumbered-94">
 <table id="particle_track_cuts" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
 <caption class="t-above"><span class="table-number">Table 16:</span> <b>Multi-selection for validating particle tracking process.</b></caption>
 
@@ -4062,10 +4141,130 @@ cuts : <span class="org-variable-name">string</span>[8] = <span class="org-sh-es
 </div>
 </div></li></ul>
 </div>
-
 <div id="outline-container-sec-4-3-8" class="outline-4">
-<h4 id="sec-4-3-8"><span class="section-number-4">4.3.8</span> Topology selection</h4>
+<h4 id="sec-4-3-8"><span class="section-number-4">4.3.8</span> PID selection</h4>
 <div class="outline-text-4" id="text-4-3-8">
+</div>
+
+<ul class="org-ul"><li><a id="unnumbered-95"></a>Insert preamble<br  /><div class="outline-text-5" id="text-unnumbered-95">
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of setups</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
+</pre>
+</div>
+</div></li>
+<li><a id="unnumbered-96"></a>Generic definition<br  /></li>
+
+<li><a id="unnumbered-97"></a>\(e^-\) definition<br  /><div class="outline-text-5" id="text-unnumbered-97">
+<p>
+An electron is a <code>particle_track</code> having
+</p>
+<ul class="org-ul">
+<li><p>
+a negative electric charge
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"electron::negative_charge"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::particle_track_cut"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Cut description</span>
+cut.description : <span class="org-variable-name">string</span> = <span class="org-string">"Check negative charged track"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The running mode of this cut instance</span>
+mode.has_charge : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Request negative charged particle</span>
+has_charge.type : <span class="org-variable-name">string</span> = <span class="org-string">"negative"</span>
+</pre>
+</div></li>
+<li><p>
+a vertex on the source foil
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"electron::foil_vertex"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::particle_track_cut"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Cut description</span>
+cut.description : <span class="org-variable-name">string</span> = <span class="org-string">"Check if track has foil vertex"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The running mode of this cut instance</span>
+mode.has_vertex : <span class="org-variable-name">boolean</span> = 1
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Request foil vertex</span>
+has_vertex.type : <span class="org-variable-name">string</span> = <span class="org-string">"foil"</span>
+</pre>
+</div></li>
+<li><p>
+an associated calorimeter hit
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"electron::calo_association"</span> <span class="org-variable-name">type</span>=<span class="org-string">"snemo::cut::particle_track_cut"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Cut description</span>
+cut.description : <span class="org-variable-name">string</span> = <span class="org-string">"Check if track has associated calorimeter hits"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The running mode of this cut instance</span>
+mode.has_associated_calorimeter_hits : <span class="org-variable-name">boolean</span> = 1
+</pre>
+</div></li>
+</ul>
+
+<table id="electron_cuts" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
+<caption class="t-above"><span class="table-number">Table 17:</span> <b>Selections used to define an electron track.</b></caption>
+
+<colgroup>
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">electron::negative_charge</td>
+</tr>
+
+<tr>
+<td class="left">electron::foil_vertex</td>
+</tr>
+
+<tr>
+<td class="left">electron::calo_association</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"electron::definition"</span> <span class="org-variable-name">type</span>=<span class="org-string">"cuts::multi_and_cut"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Cut description</span>
+cut.description : <span class="org-variable-name">string</span> = <span class="org-string">"Multi-and cut"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The cuts to be combined</span>
+cuts : <span class="org-variable-name">string</span>[3] = <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"electron::negative_charge"</span> <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"electron::foil_vertex"</span> <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"electron::calo_association"</span>
+</pre>
+</div>
+</div></li></ul>
+</div>
+
+<div id="outline-container-sec-4-3-9" class="outline-4">
+<h4 id="sec-4-3-9"><span class="section-number-4">4.3.9</span> Topology selection</h4>
+<div class="outline-text-4" id="text-4-3-9">
 <p>
 The following selections define some basic "standard" topological cuts such as :
 </p>
@@ -4081,7 +4280,7 @@ and maybe more in the future.
 </p>
 </div>
 
-<ul class="org-ul"><li><a id="unnumbered-93"></a>Insert preamble<br  /><div class="outline-text-5" id="text-unnumbered-93">
+<ul class="org-ul"><li><a id="unnumbered-98"></a>Insert preamble<br  /><div class="outline-text-5" id="text-unnumbered-98">
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description A sample list of setups</span>
@@ -4091,7 +4290,7 @@ and maybe more in the future.
 </div>
 </div></li>
 
-<li><a id="unnumbered-94"></a>2&beta; selection<br  /><div class="outline-text-5" id="text-unnumbered-94">
+<li><a id="unnumbered-99"></a>2&beta; selection<br  /><div class="outline-text-5" id="text-unnumbered-99">
 <p>
 Define "standard" cuts for 2&beta; events.
 </p>
@@ -4214,7 +4413,7 @@ track reconstruction<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>.
 </div>
 </div></div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/7c2ea958e9e9e387a3f5da7fb70af945439b30dd">7c2ea95</a> - 2015-02-28
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/5718a0f86426eb354d9a62009a9bf0b40ccfc0ac">5718a0f</a> - 2015-03-07
 </div>
 </body>
 </html>
