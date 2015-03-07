@@ -285,6 +285,9 @@ module.
 #+END_SRC
 
 *** Polynomial magnetic field
+:PROPERTIES:
+:TANGLE: no
+:END:
 To take into account effects from the calorimeter magnetic shielding as shown in
 [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=3552][DocDB 3552]], we made a variable magnetic field inside tracker
 
