@@ -75,7 +75,7 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC shell
   #@description The configuration files for modules
-  modules.configuration_files : string[10] as path =                     \
+  modules.configuration_files : string[11] as path =                     \
       "@SNEMO_SIMULATION_CONFIGURATION@/io_modules.conf"                 \
       "@SNEMO_SIMULATION_CONFIGURATION@/utl_modules.conf"                \
       "@SNEMO_SIMULATION_CONFIGURATION@/simulation_modules.conf"         \
@@ -85,6 +85,7 @@ service files.
       "@SNEMO_SIMULATION_CONFIGURATION@/tracker_fitting_modules.conf"    \
       "@SNEMO_SIMULATION_CONFIGURATION@/particle_tracking_modules.conf"  \
       "@SNEMO_SIMULATION_CONFIGURATION@/gamma_tracking_modules.conf"     \
+      "@SNEMO_SIMULATION_CONFIGURATION@/pid_modules.conf"                \
       "@SNEMO_SIMULATION_CONFIGURATION@/chain_modules.conf"
 #+END_SRC
 
@@ -165,6 +166,7 @@ list of needed libraries
 | GammaTracking           | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libGammaTracking.so                   |
 | Falaise_GammaTracking   | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_GammaTracking.so           |
 | Falaise_GammaClustering | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_GammaClustering.so         |
+| Falaise_PID             | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_ParticleIdentification.so  |
 |-------------------------+------------------------------------------------------------------------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
@@ -1478,6 +1480,42 @@ with the number of gammas.
   #@description Maximum size of a gamma tracked
   GT.maximal_gamma_size : integer = 0
 #+END_SRC
+** Particle identification
+:PROPERTIES:
+:TANGLE: pid_modules.conf
+:END:
+*** Insert preamble
+#+BEGIN_SRC shell :noweb yes
+  <<module_preamble>>
+#+END_SRC
+
+*** Module declaration
+
+#+BEGIN_SRC shell
+  [name="particle_identification" type="snemo::reconstruction::particle_identification_module"]
+#+END_SRC
+
+**** Logging priority
+#+BEGIN_SRC shell
+  #@description Logging flag
+  logging.priority : string = "trace"
+#+END_SRC
+
+**** Data banks and services labels
+#+BEGIN_SRC shell
+  #@description The label of the Cut service
+  Cut_label : string  = "Cuts"
+
+  #@description The label of the 'Particle Track Data' bank
+  PTD_label : string  = "PTD"
+
+  #@description The list of particle identification definition
+  pid.definitions : string[1] = "electron::definition"
+
+  # #@description The label associated to definition
+  # pid.electron::definition.label : string = "snemo::electron"
+#+END_SRC
+
 ** Chain modules
 :PROPERTIES:
 :TANGLE: chain_modules.conf
@@ -1634,11 +1672,12 @@ modules it contains.
 | trackfit_tracker_fitting  |
 | charged_particle_tracking |
 | gamma_clustering          |
+| particle_identification   |
 | io_output_analysed        |
 |---------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<chain_module("minimum_bias_chain", 9, minimum_bias_chain)>>
+  <<chain_module("minimum_bias_chain", 10, minimum_bias_chain)>>
 #+END_SRC
 
 *** Miscellaneous
@@ -1751,13 +1790,14 @@ apply selection cuts on arbitrary data models.
   factory.no_preload : boolean = 0
 
   #@description A list of files that contains definition of cuts
-  cuts.configuration_files : string[6] as path =                         \
+  cuts.configuration_files : string[7] as path =                         \
     "@SNEMO_SIMULATION_CONFIGURATION@/event_header_cuts.conf"            \
     "@SNEMO_SIMULATION_CONFIGURATION@/simulated_data_cuts.conf"          \
     "@SNEMO_SIMULATION_CONFIGURATION@/calibrated_data_cuts.conf"         \
     "@SNEMO_SIMULATION_CONFIGURATION@/tracker_clustering_data_cuts.conf" \
     "@SNEMO_SIMULATION_CONFIGURATION@/tracker_trajectory_data_cuts.conf" \
-    "@SNEMO_SIMULATION_CONFIGURATION@/particle_track_data_cuts.conf"
+    "@SNEMO_SIMULATION_CONFIGURATION@/particle_track_data_cuts.conf"     \
+    "@SNEMO_SIMULATION_CONFIGURATION@/pid_cuts.conf"
 #+END_SRC
 
 *** Skeleton codes                                               :noexport:
@@ -2484,6 +2524,102 @@ Remove event with non associated calorimeters hits.
 
 #+BEGIN_SRC shell :noweb yes
   <<multi("particle_track_cut", "and", 8, particle_track_cuts)>>
+#+END_SRC
+*** PID selection
+:PROPERTIES:
+:TANGLE: pid_cuts.conf
+:END:
+
+**** Insert preamble
+#+BEGIN_SRC shell :noweb yes
+  <<service_preamble>>
+#+END_SRC
+**** Generic definition
+***** Skeleton codes                                           :noexport:
+:PROPERTIES:
+:TANGLE: no
+:RESULTS: output
+:END:
+
+****** Check electric charge
+#+NAME: has_charge
+#+HEADERS: :var cname="" :var type="" :var logging="warning"
+#+BEGIN_SRC shell
+  echo '[name="'$cname'" type="snemo::cut::particle_track_cut"]'
+  echo
+  echo '#@description Cut description'
+  echo 'cut.description : string = "Check '$type' charged track"'
+  echo
+  echo '#@description Logging priority'
+  echo 'logging.priority : string = "'$logging'"'
+  echo
+  echo '#@description The running mode of this cut instance'
+  echo 'mode.has_charge : boolean = 1'
+  echo
+  echo '#@description Request '$type' charged particle'
+  echo 'has_charge.type : string = "'$type'"'
+#+END_SRC
+
+****** Check vertex
+#+NAME: has_vertex
+#+HEADERS: :var cname="" :var type="" :var logging="warning"
+#+BEGIN_SRC shell
+  echo '[name="'$cname'" type="snemo::cut::particle_track_cut"]'
+  echo
+  echo '#@description Cut description'
+  echo 'cut.description : string = "Check if track has '$type' vertex"'
+  echo
+  echo '#@description Logging priority'
+  echo 'logging.priority : string = "'$logging'"'
+  echo
+  echo '#@description The running mode of this cut instance'
+  echo 'mode.has_vertex : boolean = 1'
+  echo
+  echo '#@description Request '$type' vertex'
+  echo 'has_vertex.type : string = "'$type'"'
+#+END_SRC
+
+****** Check calorimeter association
+#+NAME: has_associated_calorimeter_hits
+#+HEADERS: :var cname="" :var logging="warning"
+#+BEGIN_SRC shell
+  echo '[name="'$cname'" type="snemo::cut::particle_track_cut"]'
+  echo
+  echo '#@description Cut description'
+  echo 'cut.description : string = "Check if track has associated calorimeter hits"'
+  echo
+  echo '#@description Logging priority'
+  echo 'logging.priority : string = "'$logging'"'
+  echo
+  echo '#@description The running mode of this cut instance'
+  echo 'mode.has_associated_calorimeter_hits : boolean = 1'
+#+END_SRC
+
+**** $e^-$ definition
+An electron is a =particle_track= having
+- a negative electric charge
+  #+BEGIN_SRC shell :noweb yes
+    <<has_charge(cname="electron::negative_charge", type="negative")>>
+  #+END_SRC
+- a vertex on the source foil
+  #+BEGIN_SRC shell :noweb yes
+    <<has_vertex(cname="electron::foil_vertex", type="foil")>>
+  #+END_SRC
+- an associated calorimeter hit
+  #+BEGIN_SRC shell :noweb yes
+    <<has_associated_calorimeter_hits(cname="electron::calo_association")>>
+  #+END_SRC
+
+#+CAPTION: *Selections used to define an electron track.*
+#+TBLNAME: electron_cuts
+|----------------------------|
+| electron::negative_charge  |
+| electron::foil_vertex      |
+| electron::calo_association |
+|----------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<multi("electron::definition", "and", 3, electron_cuts)>>
 #+END_SRC
 
 *** Topology selection
