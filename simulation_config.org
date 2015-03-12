@@ -1510,12 +1510,18 @@ with the number of gammas.
 
   #@description The label of the 'Particle Track Data' bank
   PTD_label : string  = "PTD"
+#+END_SRC
 
+**** PID definitions
+#+BEGIN_SRC shell
   #@description The list of particle identification definition
-  pid.definitions : string[1] = "electron::definition"
+  pid.definitions : string[2] = "electron_definition" "gamma_definition"
 
-  # #@description The label associated to definition
-  # pid.electron::definition.label : string = "snemo::electron"
+  #@description The label associated to 'electron' definition
+  pid.electron_definition.label : string = "snemo::datamodel::electron"
+
+  #@description The label associated to 'gamma' definition
+  pid.gamma_definition.label : string = "snemo::datamodel::gamma"
 #+END_SRC
 
 ** Chain modules
@@ -2613,7 +2619,7 @@ An electron is a =particle_track= having
   #+END_SRC
 
 #+CAPTION: *Selections used to define an electron track.*
-#+TBLNAME: electron_cuts
+#+TBLNAME: electron_definition
 |----------------------------|
 | electron::negative_charge  |
 | electron::foil_vertex      |
@@ -2621,7 +2627,29 @@ An electron is a =particle_track= having
 |----------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("electron::definition", "and", 3, electron_cuts)>>
+  <<multi("electron_definition", "and", 3, electron_definition)>>
+#+END_SRC
+
+**** \gamma definition
+An gamma is a =particle_track= having
+- a neutral electric charge
+  #+BEGIN_SRC shell :noweb yes
+    <<has_charge(cname="gamma::neutral_charge", type="neutral")>>
+  #+END_SRC
+- an associated calorimeter hit
+  #+BEGIN_SRC shell :noweb yes
+    <<has_associated_calorimeter_hits(cname="gamma::calo_association")>>
+  #+END_SRC
+
+#+CAPTION: *Selections used to define a gamma track.*
+#+TBLNAME: gamma_definition
+|-------------------------|
+| gamma::neutral_charge   |
+| gamma::calo_association |
+|-------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<multi("gamma_definition", "and", 2, gamma_definition)>>
 #+END_SRC
 
 *** Topology selection
