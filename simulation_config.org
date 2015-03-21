@@ -508,7 +508,7 @@ Most used event generators are :
 
 #+BEGIN_SRC shell
   #@description The event generator PRNG label
-  manager.event_generator_name  : string  = "Tl208"
+  manager.event_generator_name  : string  = "Se82.0nubb"
 #+END_SRC
 **** G4 manager
 The full =geant4= configuration can be found in the [[file:./sng4_manager.org][sng4_manager]] file.
@@ -1512,16 +1512,37 @@ with the number of gammas.
   PTD_label : string  = "PTD"
 #+END_SRC
 
-**** PID definitions
+**** Driver
+#+BEGIN_SRC shell
+  #@description List of drivers to be used (see description below)
+  driver : string = "PID"
+#+END_SRC
+**** PID driver
+***** Logging priority
+#+BEGIN_SRC shell
+  #@description Logging priority for PID driver
+  PID.logging.priority : string = "trace"
+#+END_SRC
+
+***** PID mode
+#+BEGIN_SRC shell
+  #@description The PID mode
+  PID.mode.label : boolean = 1
+#+END_SRC
+
+***** Particle definitions
 #+BEGIN_SRC shell
   #@description The list of particle identification definition
-  pid.definitions : string[2] = "electron_definition" "gamma_definition"
+  PID.definitions : string[2] = "electron_definition" "gamma_definition"
+#+END_SRC
 
+***** Particle labels
+#+BEGIN_SRC shell
   #@description The label associated to 'electron' definition
-  pid.electron_definition.label : string = "snemo::datamodel::electron"
+  PID.electron_definition.label : string = "snemo::datamodel::electron"
 
   #@description The label associated to 'gamma' definition
-  pid.gamma_definition.label : string = "snemo::datamodel::gamma"
+  PID.gamma_definition.label : string = "snemo::datamodel::gamma"
 #+END_SRC
 
 ** Chain modules
@@ -2317,125 +2338,10 @@ unclustered hits.
   mode.range_particles : boolean = 1
 
   #@description Minimal number of particle track
-  range_particles.min : integer = 1
+  range_particles.min : integer = 2
 
-  # #@description Maximal number of particle track
-  # range_particles.max : integer = 2
-#+END_SRC
-
-**** Check association with calorimeter hits
-#+BEGIN_SRC shell
-  [name="has_associated_calorimeter_hits" type="snemo::cut::particle_track_data_cut"]
-
-  #@description Cut description
-  cut.description : string = "Select association particle/calorimeter hits"
-
-  #@description Logging priority
-  logging.priority : string = "warning"
-
-  #@description The label/name of the 'calibrated data' bank (mandatory)
-  PTD_label : string = "PTD"
-
-  #@description Activate the check for association between track and calorimeter hits
-  mode.particle_has_associated_calorimeter_hits : boolean = 1
-#+END_SRC
-
-**** Select number of associated calorimeter hits
-#+BEGIN_SRC shell
-  [name="range_associated_calorimeter_hits" type="snemo::cut::particle_track_data_cut"]
-
-  #@description Cut description
-  cut.description : string = "Select a number of associated calorimeter hits to one particle"
-
-  #@description Logging priority
-  logging.priority : string = "warning"
-
-  #@description The label/name of the 'calibrated data' bank (mandatory)
-  PTD_label : string = "PTD"
-
-  #@description Activate the check for multiplicity of associated calorimeter hits
-  mode.particle_range_associated_calorimeter_hits : boolean = 1
-
-  #@description Minimal number of associated calorimeter hits in the choosen category
-  particle_range_associated_calorimeter_hits.min : integer = 1
-
-  #@description Maximal number of associated calorimeter hits in the choosen category
-  #particle_range_associated_calorimeter_hits.max : integer = 1
-#+END_SRC
-
-**** Check if track has foil vertex
-#+BEGIN_SRC shell
-  [name="has_vertex_on_foil" type="snemo::cut::particle_track_data_cut"]
-
-  #@description Cut description
-  cut.description : string = "Select particle with vertex on the source foil"
-
-  #@description Logging priority
-  logging.priority : string = "warning"
-
-  #@description The label/name of the 'calibrated data' bank (mandatory)
-  PTD_label : string = "PTD"
-
-  #@description Activate the check for vertex extrapolation on source foil
-  mode.particle_has_vertex_on_foil : boolean = 1
-#+END_SRC
-
-**** Select particle charge
-#+BEGIN_SRC shell
-  [name="has_negative_charge" type="snemo::cut::particle_track_data_cut"]
-
-  #@description Cut description
-  cut.description : string = "Select only negative charge particle"
-
-  #@description Logging priority
-  logging.priority : string = "warning"
-
-  #@description The label/name of the 'particle track data' bank (mandatory)
-  PTD_label : string = "PTD"
-
-  #@description Activate the check for a special boolean (flag) property
-  mode.particle_has_charge : boolean = 1
-
-  #@description Name of the MC hit category to be checked
-  particle_has_charge.type : string = "negative"
-#+END_SRC
-
-#+BEGIN_SRC shell
-  [name="has_positive_charge" type="snemo::cut::particle_track_data_cut"]
-
-  #@description Cut description
-  cut.description : string = "Select only positive charge particle"
-
-  #@description Logging priority
-  logging.priority : string = "warning"
-
-  #@description The label/name of the 'particle track data' bank (mandatory)
-  PTD_label : string = "PTD"
-
-  #@description Activate the check for a special boolean (flag) property
-  mode.particle_has_charge : boolean = 1
-
-  #@description Name of the MC hit category to be checked
-  particle_has_charge.type : string = "positive"
-#+END_SRC
-
-#+BEGIN_SRC shell
-  [name="has_undefined_charge" type="snemo::cut::particle_track_data_cut"]
-
-  #@description Cut description
-  cut.description : string = "Select only undefined charge particle"
-
-  #@description Logging priority
-  logging.priority : string = "warning"
-
-  #@description The label/name of the 'particle track data' bank (mandatory)
-  PTD_label : string = "PTD"
-
-  #@description Activate the check for a special boolean (flag) property
-  mode.particle_has_charge : boolean = 1
-
-  #@description Name of the MC hit category to be checked
-  particle_has_charge.type : string = "undefined"
+  #@description Maximal number of particle track
+  range_particles.max : integer = 2
 #+END_SRC
 
 **** No isolated calorimeter hits
@@ -2462,59 +2368,6 @@ Remove event with non associated calorimeters hits.
   #@description The cut to be negated (mandatory)
   cut : string = "has_non_associated_calorimeter_hits"
 #+END_SRC
-**** Reconstruction parameters selection             :deprecated:noexport:
-#+BEGIN_SRC shell
-  [name="chi2_cut" type="snemo::analysis::cut::basic_particle_track_parameter_cut"]
-
-  #@description Logging priority
-  logging.priority : string = "warning"
-
-  #@description The label/name of the 'particle track data' bank (mandatory)
-  PTD_label : string = "PTD"
-
-  #@description Activate the parameter mode
-  mode.parameter : boolean = 1
-
-  #@description Parameter label (parameter can be either 'chi2',
-  #'reduced_chi2', 'radius')
-  parameter.label : string = "reduced_chi2"
-
-  ##@description Parameter minimal value
-  parameter.min : real = 0.0
-
-  #@description Parameter minimal value
-  parameter.max : real = 1000.0
-#+END_SRC
-
-#+BEGIN_SRC shell
-  [name="deltay_calo_cut" type="snemo::analysis::cut::basic_particle_track_parameter_cut"]
-
-  #@description Logging priority
-  logging.priority : string = "warning"
-
-  #@description The label/name of the 'particle track data' bank (mandatory)
-  PTD_label : string = "PTD"
-
-  #@description The label/name of the 'particle track data' bank
-  SD_label : string = "SD"
-
-  #@description Activate the parameter mode
-  mode.parameter : boolean = 1
-
-  #@description Parameter label (parameter can be either 'vertex_on_foil',
-  #'vertex_on_calorimeter')
-  parameter.label : string = "vertex_on_calorimeter"
-
-  #@description Parameter coordinate (either x, y or z)
-  parameter.coordinate : string = "y"
-
-  #@description Parameter minimal value
-  parameter.min : real = 50.0 # mm
-
-  # #@description Parameter minimal value
-  # parameter.max : real = 10.0 # mm
-#+END_SRC
-
 **** Multiple cuts
 
 #+CAPTION: *Multi-selection for validating particle tracking process.*
@@ -2523,15 +2376,11 @@ Remove event with non associated calorimeters hits.
 | has_particle_track_data              |
 | has_particle                         |
 | range_particle                       |
-| has_associated_calorimeter_hits      |
-| range_associated_calorimeter_hits    |
-| has_vertex_on_foil                   |
-| has_negative_charge                  |
 | !has_non_associated_calorimeter_hits |
 |--------------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("particle_track_cut", "and", 8, particle_track_cuts)>>
+  <<multi("particle_track_cut", "and", 4, particle_track_cuts)>>
 #+END_SRC
 *** PID selection
 :PROPERTIES:
