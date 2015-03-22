@@ -75,7 +75,7 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC shell
   #@description The configuration files for modules
-  modules.configuration_files : string[11] as path =                     \
+  modules.configuration_files : string[12] as path =                     \
       "@SNEMO_SIMULATION_CONFIGURATION@/io_modules.conf"                 \
       "@SNEMO_SIMULATION_CONFIGURATION@/utl_modules.conf"                \
       "@SNEMO_SIMULATION_CONFIGURATION@/simulation_modules.conf"         \
@@ -86,7 +86,8 @@ service files.
       "@SNEMO_SIMULATION_CONFIGURATION@/particle_tracking_modules.conf"  \
       "@SNEMO_SIMULATION_CONFIGURATION@/gamma_tracking_modules.conf"     \
       "@SNEMO_SIMULATION_CONFIGURATION@/pid_modules.conf"                \
-      "@SNEMO_SIMULATION_CONFIGURATION@/chain_modules.conf"
+      "@SNEMO_SIMULATION_CONFIGURATION@/chain_modules.conf"              \
+      "@SNEMO_SIMULATION_CONFIGURATION@/topology_modules.conf"
 #+END_SRC
 
 ** Service manager
@@ -1500,7 +1501,7 @@ with the number of gammas.
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  logging.priority : string = "trace"
+  logging.priority : string = "warning"
 #+END_SRC
 
 **** Data banks and services labels
@@ -1521,7 +1522,7 @@ with the number of gammas.
 ***** Logging priority
 #+BEGIN_SRC shell
   #@description Logging priority for PID driver
-  PID.logging.priority : string = "trace"
+  PID.logging.priority : string = "warning"
 #+END_SRC
 
 ***** PID mode
@@ -1709,6 +1710,39 @@ modules it contains.
   <<chain_module("minimum_bias_chain", 10, minimum_bias_chain)>>
 #+END_SRC
 
+** Topology chain
+:PROPERTIES:
+:TANGLE: topology_modules.conf
+:END:
+
+*** Insert preamble
+#+BEGIN_SRC shell :noweb yes
+  <<module_preamble>>
+#+END_SRC
+
+*** 2 electrons selection
+
+- dedicated output files :
+  #+BEGIN_SRC shell :noweb yes
+    <<output_module("io_output_2e_topology_selected")>>
+    <<output_module("io_output_2e_topology_non_selected")>>
+  #+END_SRC
+- dedicated =if_module= :
+  #+BEGIN_SRC shell :noweb yes
+    <<if_module("process_2e_topology_cut", cut="2e_topology_cut", then="io_output_2e_topology_selected", else="io_output_2e_topology_non_selected")>>
+  #+END_SRC
+- dedicated process module
+  #+CAPTION: *2 electrons topology chain.*
+  #+TBLNAME: 2e_topology_chain
+  |-------------------------|
+  | minimum_bias_chain      |
+  | process_2e_topology_cut |
+  |-------------------------|
+
+  #+BEGIN_SRC shell :noweb yes
+    <<chain_module("2e_topology_chain", 2, 2e_topology_chain)>>
+  #+END_SRC
+
 *** Miscellaneous
 #+CAPTION: *Reformating data.*
 #+TBLNAME: reformat_data
@@ -1813,20 +1847,21 @@ apply selection cuts on arbitrary data models.
   logging.priority : string = "warning"
 
   #@description Print a final report of cut efficiencies
-  print_report : boolean = 1
+  print_report : string = "table"
 
   #@description Flag to skip the preloading of pre-registered cuts
   factory.no_preload : boolean = 0
 
   #@description A list of files that contains definition of cuts
-  cuts.configuration_files : string[7] as path =                         \
+  cuts.configuration_files : string[8] as path =                         \
     "@SNEMO_SIMULATION_CONFIGURATION@/event_header_cuts.conf"            \
     "@SNEMO_SIMULATION_CONFIGURATION@/simulated_data_cuts.conf"          \
     "@SNEMO_SIMULATION_CONFIGURATION@/calibrated_data_cuts.conf"         \
     "@SNEMO_SIMULATION_CONFIGURATION@/tracker_clustering_data_cuts.conf" \
     "@SNEMO_SIMULATION_CONFIGURATION@/tracker_trajectory_data_cuts.conf" \
     "@SNEMO_SIMULATION_CONFIGURATION@/particle_track_data_cuts.conf"     \
-    "@SNEMO_SIMULATION_CONFIGURATION@/pid_cuts.conf"
+    "@SNEMO_SIMULATION_CONFIGURATION@/pid_cuts.conf"                     \
+    "@SNEMO_SIMULATION_CONFIGURATION@/topology_cuts.conf"
 #+END_SRC
 
 *** Skeleton codes                                               :noexport:
@@ -2520,38 +2555,24 @@ and maybe more in the future.
   <<service_preamble>>
 #+END_SRC
 
-**** Skeleton codes                                             :noexport:
-:PROPERTIES:
-:TANGLE: no
-:RESULTS: output
-:END:
-
-Skeleton codes to automate declarations of cut.
-
-***** Topology cut
-#+NAME: topology_cut
-#+HEADERS: :var cname="" :var logging="warning" :var topology="2e"
-#+BEGIN_SRC shell
-  echo '[name="'$cname'" type="snemo::cut::particle_track_data_cut"]'
-  echo
-  echo '#@description Cut description'
-  echo 'cut.description : string = "Select number of particles"'
-  echo
-  echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
-  echo
-  echo '#@description Activate the check for topology event'
-  echo 'mode.topology : boolean = 1'
-  echo
-  echo '#@description Topology label'
-  echo 'topology.labels : string[1] = "'${topology}'"'
-#+END_SRC
 **** 2\beta selection
 
-Define "standard" cuts for 2\beta events.
+Define 2\beta events topology
 
-#+BEGIN_SRC shell :noweb yes
-  <<topology_cut(cname="only_2e_topology", topology="2e")>>
+#+BEGIN_SRC shell
+  [name="2e_topology_cut" type="snemo::cut::topology_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select 2 electrons topology events"
+
+  #@description Logging priority'
+  logging.priority : string = "warning"
+
+  #@description Minimal number of electrons
+  electron_range.min : integer = 2
+
+  #@description Maximal number of electrons
+  electron_range.max : integer = 2
 #+END_SRC
 
 * Running SN@ilWare processing chain
