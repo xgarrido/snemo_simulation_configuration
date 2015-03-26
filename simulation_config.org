@@ -1487,7 +1487,7 @@ with the number of gammas.
   #@description Maximum size of a gamma tracked
   GT.maximal_gamma_size : integer = 0
 #+END_SRC
-** Particle identification
+** Particle identification module
 :PROPERTIES:
 :TANGLE: pid_modules.conf
 :END:
@@ -1738,7 +1738,7 @@ modules it contains.
   <<if_module("process_1e_topology_cut", cut="1e_topology_cut", then="io_output_1e_topology_selected", else="io_output_1e_topology_non_selected")>>
 #+END_SRC
 
-*** 1 electron/ 1 \gamma
+*** 1 electron/1\gamma
 #+BEGIN_SRC shell :noweb yes
   <<output_module("io_output_1e1g_topology_selected")>>
   <<output_module("io_output_1e1g_topology_non_selected")>>
@@ -2437,6 +2437,9 @@ Remove event with non associated calorimeters hits.
 :PROPERTIES:
 :TANGLE: pid_cuts.conf
 :END:
+The following cut defines what may be called a "particle" /i.e./ an electron, an
+alpha in the context of SuperNEMO. Since these cuts apply on every
+=particle_track=, *they must be cuts from =particle_track_cut= type*.
 
 **** Insert preamble
 #+BEGIN_SRC shell :noweb yes
@@ -2576,13 +2579,13 @@ and maybe more in the future.
 Define 2\beta events topology
 
 #+BEGIN_SRC shell
-  [name="2e_topology_cut" type="snemo::cut::topology_cut"]
+  [name="2e_cut" type="snemo::cut::topology_cut"]
 
   #@description Cut description
   cut.description : string = "Select 2 electrons topology events"
 
   #@description Logging priority'
-  logging.priority : string = "warning"
+  logging.priority : string = "trace"
 
   #@description Minimal number of electrons
   electron_range.min : integer = 2
@@ -2591,12 +2594,25 @@ Define 2\beta events topology
   electron_range.max : integer = 2
 #+END_SRC
 
+#+CAPTION: *Definition of 2 electrons topology.*
+#+TBLNAME: 2e_topology_cut
+|-------------------------|
+| has_particle_track_data |
+| has_particle            |
+| 2e_cut                  |
+|-------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<multi("2e_topology_cut", "and", 3, 2e_topology_cut)>>
+#+END_SRC
+
+
 **** 1\beta selection
 
 Define 1\beta events topology
 
 #+BEGIN_SRC shell
-  [name="1e_topology_cut" type="snemo::cut::topology_cut"]
+  [name="1e_cut" type="snemo::cut::topology_cut"]
 
   #@description Cut description
   cut.description : string = "Select 1 electron topology events"
@@ -2611,12 +2627,24 @@ Define 1\beta events topology
   electron_range.max : integer = 1
 #+END_SRC
 
+#+CAPTION: *Definition of 1 electron topology.*
+#+TBLNAME: 1e_topology_cut
+|-------------------------|
+| has_particle_track_data |
+| has_particle            |
+| 1e_cut                  |
+|-------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<multi("1e_topology_cut", "and", 3, 1e_topology_cut)>>
+#+END_SRC
+
 **** 1\beta1\gamma selection
 
 Define 1\beta1\gamma events topology
 
 #+BEGIN_SRC shell
-  [name="1e1g_topology_cut" type="snemo::cut::topology_cut"]
+  [name="1e1g_cut" type="snemo::cut::topology_cut"]
 
   #@description Cut description
   cut.description : string = "Select 1 electron/1 gamma topology events"
@@ -2635,6 +2663,18 @@ Define 1\beta1\gamma events topology
 
   #@description Maximal number of gammas
   gamma_range.max : integer = 1
+#+END_SRC
+
+#+CAPTION: *Definition of 1\beta1\gamma topology.*
+#+TBLNAME: 1e1g_topology_cut
+|-------------------------|
+| has_particle_track_data |
+| has_particle            |
+| 1e1g_cut                |
+|-------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<multi("1e1g_topology_cut", "and", 3, 1e1g_topology_cut)>>
 #+END_SRC
 
 * Running SN@ilWare processing chain
