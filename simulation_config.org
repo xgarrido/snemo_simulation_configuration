@@ -494,6 +494,10 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
   manager.prng_states_save_modulo : integer = 10
 #+END_SRC
 **** Vertex generator
+Several common vertex generators are available such as :
+- tracker_gas_bulk,
+- source_strips_bulk
+
 #+BEGIN_SRC shell
   #@description The vertex generator PRNG label
   manager.vertex_generator_name : string  = "source_strips_bulk"
@@ -1721,29 +1725,41 @@ modules it contains.
 #+END_SRC
 
 *** 2 electrons selection
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_2e_topology_selected")>>
+  <<output_module("io_output_2e_topology_non_selected")>>
+  <<if_module("process_2e_topology_cut", cut="2e_topology_cut", then="io_output_2e_topology_selected", else="io_output_2e_topology_non_selected")>>
+#+END_SRC
 
-- dedicated output files :
-  #+BEGIN_SRC shell :noweb yes
-    <<output_module("io_output_2e_topology_selected")>>
-    <<output_module("io_output_2e_topology_non_selected")>>
-  #+END_SRC
-- dedicated =if_module= :
-  #+BEGIN_SRC shell :noweb yes
-    <<if_module("process_2e_topology_cut", cut="2e_topology_cut", then="io_output_2e_topology_selected", else="io_output_2e_topology_non_selected")>>
-  #+END_SRC
-- dedicated process module
-  #+CAPTION: *2 electrons topology chain.*
-  #+TBLNAME: 2e_topology_chain
-  |-------------------------|
-  | minimum_bias_chain      |
-  | process_2e_topology_cut |
-  |-------------------------|
+*** 1 electron selection
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_1e_topology_selected")>>
+  <<output_module("io_output_1e_topology_non_selected")>>
+  <<if_module("process_1e_topology_cut", cut="1e_topology_cut", then="io_output_1e_topology_selected", else="io_output_1e_topology_non_selected")>>
+#+END_SRC
 
-  #+BEGIN_SRC shell :noweb yes
-    <<chain_module("2e_topology_chain", 2, 2e_topology_chain)>>
-  #+END_SRC
+*** 1 electron/ 1 \gamma
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_1e1g_topology_selected")>>
+  <<output_module("io_output_1e1g_topology_non_selected")>>
+  <<if_module("process_1e1g_topology_cut", cut="1e1g_topology_cut", then="io_output_1e1g_topology_selected", else="io_output_1e1g_topology_non_selected")>>
+#+END_SRC
 
-*** Miscellaneous
+*** Full topology
+#+CAPTION: *Topology chain.*
+#+TBLNAME: topology_chain
+|---------------------------|
+| minimum_bias_chain        |
+| process_2e_topology_cut   |
+| process_1e_topology_cut   |
+| process_1e1g_topology_cut |
+|---------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<chain_module("topology_chain", 4, topology_chain)>>
+#+END_SRC
+
+** Miscellaneous
 #+CAPTION: *Reformating data.*
 #+TBLNAME: reformat_data
 |--------------------------------|
@@ -2573,6 +2589,52 @@ Define 2\beta events topology
 
   #@description Maximal number of electrons
   electron_range.max : integer = 2
+#+END_SRC
+
+**** 1\beta selection
+
+Define 1\beta events topology
+
+#+BEGIN_SRC shell
+  [name="1e_topology_cut" type="snemo::cut::topology_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select 1 electron topology events"
+
+  #@description Logging priority'
+  logging.priority : string = "warning"
+
+  #@description Minimal number of electrons
+  electron_range.min : integer = 1
+
+  #@description Maximal number of electrons
+  electron_range.max : integer = 1
+#+END_SRC
+
+**** 1\beta1\gamma selection
+
+Define 1\beta1\gamma events topology
+
+#+BEGIN_SRC shell
+  [name="1e1g_topology_cut" type="snemo::cut::topology_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select 1 electron/1 gamma topology events"
+
+  #@description Logging priority'
+  logging.priority : string = "warning"
+
+  #@description Minimal number of electrons
+  electron_range.min : integer = 1
+
+  #@description Maximal number of electrons
+  electron_range.max : integer = 1
+
+  #@description Minimal number of gammas
+  gamma_range.min : integer = 1
+
+  #@description Maximal number of gammas
+  gamma_range.max : integer = 1
 #+END_SRC
 
 * Running SN@ilWare processing chain
