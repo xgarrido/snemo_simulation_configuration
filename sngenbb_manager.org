@@ -259,7 +259,26 @@ distribution or following a tabulated energy spectrum.
   multi_rays.probabilities : real[9] = 0.02199 0.0262 0.0406 0.00645 0.00450 0.07164 0.1833 0.6205 0.0894
 #+END_SRC
 
-** Combined generators
+*** Single monokinetic alpha
+#+BEGIN_SRC shell
+  [name="alpha_monokinetic" type="genbb::single_particle_generator"]
+
+  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+
+  #@description Generated particle ("electron", "positron", "gamma", "alpha"):
+  particle_name : string = "alpha"
+
+  #@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):
+  mode : string = "monokinetic"
+
+  #@description Value of the particle energy
+  energy : real as energy = 7000. keV
+
+  #@description Flag for random emission
+  emission_direction : string = "randomized"
+#+END_SRC
+
+* Combined generators
 Combination of several =genbb= generators can be done using
 =genbb::combined_particle_generator= object...
 
