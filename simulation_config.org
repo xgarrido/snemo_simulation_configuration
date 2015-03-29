@@ -903,6 +903,12 @@ different particles.
   #@description Tracker Clusterizer logging priority
   TC.logging.priority : string = "warning"
 
+  #@description Activation of the clustering of prompt hits
+  TPC.processing_prompt_hits : boolean = 1
+
+  #@description Activation of the clustering of delayed hits
+  TPC.processing_delayed_hits : boolean = 1
+
   #@description Maximum layer distance between two neighbour hits
   MTC.max_layer_distance : integer = 2
 
@@ -1240,7 +1246,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   line.guess.guess_trust_mode  : string = "counter"
 
   #@description Fit the delayed geiger cluster
-  line.guess.fit_delay_cluster : boolean = 1
+  line.guess.fit_delayed_clusters : boolean = 1
 #+END_SRC
 
 ****** Fit parameters
@@ -1288,7 +1294,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   trackfit.helix.guess.guess_trust_mode  : string = "counter"
 
   #@description Fit the delayed geiger cluster (by default, false since this mode is devoted to line fit)
-  trackfit.helix.guess.fit_delay_cluster : boolean = 0
+  trackfit.helix.guess.fit_delayed_clusters : boolean = 0
 #+END_SRC
 ****** Fit parameters
 #+BEGIN_SRC shell
@@ -1442,7 +1448,7 @@ implemented but the particle tracking module will stay unchanged.
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  logging.priority : string = "trace"
+  logging.priority : string = "warning"
 #+END_SRC
 **** Data banks and services labels
 #+BEGIN_SRC shell
@@ -1464,7 +1470,7 @@ implemented but the particle tracking module will stay unchanged.
 ***** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  GT.logging.priority : string = "trace"
+  GT.logging.priority : string = "warning"
 #+END_SRC
 ***** Minimal probability
 The following value sets the minimal TOF probability to accept a pair of
@@ -1538,7 +1544,9 @@ with the number of gammas.
 ***** Particle definitions
 #+BEGIN_SRC shell
   #@description The list of particle identification definition
-  PID.definitions : string[2] = "electron_definition" "gamma_definition"
+  PID.definitions : string[3] = "electron_definition" \
+                                "gamma_definition"    \
+                                "alpha_definition"
 #+END_SRC
 
 ***** Particle labels
@@ -1548,6 +1556,9 @@ with the number of gammas.
 
   #@description The label associated to 'gamma' definition
   PID.gamma_definition.label : string = "snemo::datamodel::gamma"
+
+  #@description The label associated to 'alpha' definition
+  PID.alpha_definition.label : string = "snemo::datamodel::alpha"
 #+END_SRC
 
 ** Chain modules
@@ -1705,7 +1716,7 @@ modules it contains.
 | cat_tracker_clustering    |
 | trackfit_tracker_fitting  |
 | charged_particle_tracking |
-| gamma_clustering          |
+| gamma_tracking            |
 | particle_identification   |
 | io_output_analysed        |
 |---------------------------|
@@ -1724,25 +1735,31 @@ modules it contains.
   <<module_preamble>>
 #+END_SRC
 
-*** 2 electrons selection
+*** 2\beta selection
 #+BEGIN_SRC shell :noweb yes
   <<output_module("io_output_2e_topology_selected")>>
   <<output_module("io_output_2e_topology_non_selected")>>
   <<if_module("process_2e_topology_cut", cut="2e_topology_cut", then="io_output_2e_topology_selected", else="io_output_2e_topology_non_selected")>>
 #+END_SRC
 
-*** 1 electron selection
+*** 1\beta selection
 #+BEGIN_SRC shell :noweb yes
   <<output_module("io_output_1e_topology_selected")>>
   <<output_module("io_output_1e_topology_non_selected")>>
   <<if_module("process_1e_topology_cut", cut="1e_topology_cut", then="io_output_1e_topology_selected", else="io_output_1e_topology_non_selected")>>
 #+END_SRC
 
-*** 1 electron/1\gamma
+*** 1\beta/1\gamma selection
 #+BEGIN_SRC shell :noweb yes
   <<output_module("io_output_1e1g_topology_selected")>>
   <<output_module("io_output_1e1g_topology_non_selected")>>
   <<if_module("process_1e1g_topology_cut", cut="1e1g_topology_cut", then="io_output_1e1g_topology_selected", else="io_output_1e1g_topology_non_selected")>>
+#+END_SRC
+*** 1\beta/1\alpha selection
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_1e1a_topology_selected")>>
+  <<output_module("io_output_1e1a_topology_non_selected")>>
+  <<if_module("process_1e1a_topology_cut", cut="1e1a_topology_cut", then="io_output_1e1a_topology_selected", else="io_output_1e1a_topology_non_selected")>>
 #+END_SRC
 
 *** Full topology
@@ -1753,10 +1770,11 @@ modules it contains.
 | process_2e_topology_cut   |
 | process_1e_topology_cut   |
 | process_1e1g_topology_cut |
+| process_1e1a_topology_cut |
 |---------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<chain_module("topology_chain", 4, topology_chain)>>
+  <<chain_module("topology_chain", 5, topology_chain)>>
 #+END_SRC
 
 ** Miscellaneous
@@ -2534,7 +2552,7 @@ An electron is a =particle_track= having
 #+END_SRC
 
 **** \gamma definition
-An gamma is a =particle_track= having
+A gamma is a =particle_track= having
 - a neutral electric charge
   #+BEGIN_SRC shell :noweb yes
     <<has_charge(cname="gamma::neutral_charge", type="neutral")>>
@@ -2553,6 +2571,28 @@ An gamma is a =particle_track= having
 
 #+BEGIN_SRC shell :noweb yes
   <<multi("gamma_definition", "and", 2, gamma_definition)>>
+#+END_SRC
+
+**** \alpha definition
+An alpha is a =particle_track= having
+- a undefined electric charge /i.e./ fitted by a line
+  #+BEGIN_SRC shell :noweb yes
+    <<has_charge(cname="alpha::undefined_charge", type="undefined")>>
+  #+END_SRC
+- a vertex on the source foil
+  #+BEGIN_SRC shell :noweb yes
+    <<has_vertex(cname="alpha::foil_vertex", type="foil")>>
+  #+END_SRC
+
+#+CAPTION: *Selections used to define an alpha track.*
+#+TBLNAME: alpha_definition
+|-------------------------|
+| alpha::undefined_charge |
+| alpha::foil_vertex      |
+|-------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<multi("alpha_definition", "and", 2, alpha_definition)>>
 #+END_SRC
 
 *** Topology selection
@@ -2585,7 +2625,7 @@ Define 2\beta events topology
   cut.description : string = "Select 2 electrons topology events"
 
   #@description Logging priority'
-  logging.priority : string = "trace"
+  logging.priority : string = "warning"
 
   #@description Minimal number of electrons
   electron_range.min : integer = 2
@@ -2605,7 +2645,6 @@ Define 2\beta events topology
 #+BEGIN_SRC shell :noweb yes
   <<multi("2e_topology_cut", "and", 3, 2e_topology_cut)>>
 #+END_SRC
-
 
 **** 1\beta selection
 
@@ -2675,6 +2714,44 @@ Define 1\beta1\gamma events topology
 
 #+BEGIN_SRC shell :noweb yes
   <<multi("1e1g_topology_cut", "and", 3, 1e1g_topology_cut)>>
+#+END_SRC
+
+**** 1\beta1\alpha selection
+
+Define 1\beta1\alpha events topology
+
+#+BEGIN_SRC shell
+  [name="1e1a_cut" type="snemo::cut::topology_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select 1 electron/1 alpha topology events"
+
+  #@description Logging priority'
+  logging.priority : string = "warning"
+
+  #@description Minimal number of electrons
+  electron_range.min : integer = 1
+
+  #@description Maximal number of electrons
+  electron_range.max : integer = 1
+
+  #@description Minimal number of alphas
+  alpha_range.min : integer = 1
+
+  #@description Maximal number of alphas
+  alpha_range.max : integer = 1
+#+END_SRC
+
+#+CAPTION: *Definition of 1\beta1\alpha topology.*
+#+TBLNAME: 1e1a_topology_cut
+|-------------------------|
+| has_particle_track_data |
+| has_particle            |
+| 1e1a_cut                |
+|-------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<multi("1e1a_topology_cut", "and", 3, 1e1a_topology_cut)>>
 #+END_SRC
 
 * Running SN@ilWare processing chain
