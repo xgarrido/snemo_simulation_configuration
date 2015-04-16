@@ -1529,7 +1529,7 @@ with the number of gammas.
 **** Driver
 #+BEGIN_SRC shell
   #@description List of drivers to be used (see description below)
-  driver : string = "PID"
+  drivers : string[1] = "PID"
 #+END_SRC
 **** PID driver
 ***** Logging priority
@@ -1555,15 +1555,114 @@ with the number of gammas.
 ***** Particle labels
 #+BEGIN_SRC shell
   #@description The label associated to 'electron' definition
-  PID.electron_definition.label : string = "snemo::datamodel::electron"
+  PID.electron_definition.label : string = "electron"
 
   #@description The label associated to 'gamma' definition
-  PID.gamma_definition.label : string = "snemo::datamodel::gamma"
+  PID.gamma_definition.label : string = "gamma"
 
   #@description The label associated to 'alpha' definition
-  PID.alpha_definition.label : string = "snemo::datamodel::alpha"
+  PID.alpha_definition.label : string = "alpha"
 #+END_SRC
 
+** Topology module
+:PROPERTIES:
+:TANGLE: topology_modules.conf
+:END:
+
+*** Insert preamble
+#+BEGIN_SRC shell :noweb yes
+  <<module_preamble>>
+#+END_SRC
+
+*** Module declaration
+#+BEGIN_SRC shell
+  [name="topology_identification" type="snemo::reconstruction::topology_module"]
+#+END_SRC
+**** Logging priority
+#+BEGIN_SRC shell
+  #@description Logging flag
+  logging.priority : string = "trace"
+#+END_SRC
+
+**** Data banks and services labels
+#+BEGIN_SRC shell
+  #@description The label of the 'Particle Track Data' bank
+  PTD_label : string  = "PTD"
+
+  #@description The label of the 'Topology Data' bank
+  TD_label : string  = "TD"
+#+END_SRC
+
+**** Drivers
+#+BEGIN_SRC shell
+  #@description List of drivers to be used (see description below)
+  drivers : string[2] = "TOFD" "DVD"
+#+END_SRC
+**** Time-Of-Flight driver
+***** Logging priority
+#+BEGIN_SRC shell
+  #@description Logging flag
+  TOFD.logging.priority : string = "trace"
+#+END_SRC
+
+**** \Delta{}vertex driver
+***** Logging priority
+#+BEGIN_SRC shell
+  #@description Logging flag
+  DVD.logging.priority : string = "trace"
+#+END_SRC
+
+** Topology chain
+:PROPERTIES:
+:TANGLE: topology_modules.conf
+:END:
+
+*** Insert preamble
+#+BEGIN_SRC shell :noweb yes
+  <<module_preamble>>
+#+END_SRC
+
+*** 2\beta selection
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_2e_topology_selected")>>
+  <<output_module("io_output_2e_topology_non_selected")>>
+  <<if_module("process_2e_topology_cut", cut="2e_topology_cut", then="io_output_2e_topology_selected", else="io_output_2e_topology_non_selected")>>
+#+END_SRC
+
+*** 1\beta selection
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_1e_topology_selected")>>
+  <<output_module("io_output_1e_topology_non_selected")>>
+  <<if_module("process_1e_topology_cut", cut="1e_topology_cut", then="io_output_1e_topology_selected", else="io_output_1e_topology_non_selected")>>
+#+END_SRC
+
+*** 1\beta/1\gamma selection
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_1e1g_topology_selected")>>
+  <<output_module("io_output_1e1g_topology_non_selected")>>
+  <<if_module("process_1e1g_topology_cut", cut="1e1g_topology_cut", then="io_output_1e1g_topology_selected", else="io_output_1e1g_topology_non_selected")>>
+#+END_SRC
+*** 1\beta/1\alpha selection
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_1e1a_topology_selected")>>
+  <<output_module("io_output_1e1a_topology_non_selected")>>
+  <<if_module("process_1e1a_topology_cut", cut="1e1a_topology_cut", then="io_output_1e1a_topology_selected", else="io_output_1e1a_topology_non_selected")>>
+#+END_SRC
+
+*** Full topology
+#+CAPTION: *Topology chain.*
+#+TBLNAME: topology_chain
+|---------------------------|
+| minimum_bias_chain        |
+| process_2e_topology_cut   |
+| process_1e_topology_cut   |
+| process_1e1g_topology_cut |
+| process_1e1a_topology_cut |
+|---------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<chain_module("topology_chain", 2, topology_chain)>>
+#+END_SRC
 ** Chain modules
 :PROPERTIES:
 :TANGLE: chain_modules.conf
@@ -1721,65 +1820,13 @@ modules it contains.
 | charged_particle_tracking |
 | gamma_tracking            |
 | particle_identification   |
+| topology_identification   |
 | io_output_analysed        |
 |---------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<chain_module("minimum_bias_chain", 10, minimum_bias_chain)>>
+  <<chain_module("minimum_bias_chain", 11, minimum_bias_chain)>>
 #+END_SRC
-
-** Topology chain
-:PROPERTIES:
-:TANGLE: topology_modules.conf
-:END:
-
-*** Insert preamble
-#+BEGIN_SRC shell :noweb yes
-  <<module_preamble>>
-#+END_SRC
-
-*** 2\beta selection
-#+BEGIN_SRC shell :noweb yes
-  <<output_module("io_output_2e_topology_selected")>>
-  <<output_module("io_output_2e_topology_non_selected")>>
-  <<if_module("process_2e_topology_cut", cut="2e_topology_cut", then="io_output_2e_topology_selected", else="io_output_2e_topology_non_selected")>>
-#+END_SRC
-
-*** 1\beta selection
-#+BEGIN_SRC shell :noweb yes
-  <<output_module("io_output_1e_topology_selected")>>
-  <<output_module("io_output_1e_topology_non_selected")>>
-  <<if_module("process_1e_topology_cut", cut="1e_topology_cut", then="io_output_1e_topology_selected", else="io_output_1e_topology_non_selected")>>
-#+END_SRC
-
-*** 1\beta/1\gamma selection
-#+BEGIN_SRC shell :noweb yes
-  <<output_module("io_output_1e1g_topology_selected")>>
-  <<output_module("io_output_1e1g_topology_non_selected")>>
-  <<if_module("process_1e1g_topology_cut", cut="1e1g_topology_cut", then="io_output_1e1g_topology_selected", else="io_output_1e1g_topology_non_selected")>>
-#+END_SRC
-*** 1\beta/1\alpha selection
-#+BEGIN_SRC shell :noweb yes
-  <<output_module("io_output_1e1a_topology_selected")>>
-  <<output_module("io_output_1e1a_topology_non_selected")>>
-  <<if_module("process_1e1a_topology_cut", cut="1e1a_topology_cut", then="io_output_1e1a_topology_selected", else="io_output_1e1a_topology_non_selected")>>
-#+END_SRC
-
-*** Full topology
-#+CAPTION: *Topology chain.*
-#+TBLNAME: topology_chain
-|---------------------------|
-| minimum_bias_chain        |
-| process_2e_topology_cut   |
-| process_1e_topology_cut   |
-| process_1e1g_topology_cut |
-| process_1e1a_topology_cut |
-|---------------------------|
-
-#+BEGIN_SRC shell :noweb yes
-  <<chain_module("topology_chain", 5, topology_chain)>>
-#+END_SRC
-
 ** Miscellaneous
 #+CAPTION: *Reformating data.*
 #+TBLNAME: reformat_data
@@ -2621,32 +2668,69 @@ and maybe more in the future.
 
 Define 2\beta events topology
 
-#+BEGIN_SRC shell
-  [name="2e_cut" type="snemo::cut::topology_cut"]
+- select 2 electrons event topology :
+  #+BEGIN_SRC shell
+  [name="2e_topology_pattern" type="snemo::cut::topology_cut"]
 
   #@description Cut description
-  cut.description : string = "Select 2 electrons topology events"
+  cut.description : string = "Select 2 electrons topology pattern"
 
   #@description Logging priority'
-  logging.priority : string = "warning"
+  logging.priority : string = "error"
 
-  #@description Minimal number of electrons
-  electron_range.min : integer = 2
+  #@description Activate the check for pattern id label
+  mode.pattern_id : boolean = 1
 
-  #@description Maximal number of electrons
-  electron_range.max : integer = 2
+  #@description Label of the topology pattern id
+  pattern_id.label : string = "2e"
 #+END_SRC
 
+- select events with internal probability :
+  #+BEGIN_SRC shell
+    [name="2e_has_internal_probability" type="snemo::cut::topology_cut"]
+
+    #@description Cut description
+    cut.description : string = "Select events with internal probability"
+
+    #@description Logging priority'
+    logging.priority : string = "error"
+
+    #@description Activate the check for internal probability
+    mode.has_internal_probability : boolean = 1
+  #+END_SRC
+
+- select events with good internal probability :
+  #+BEGIN_SRC shell
+    [name="2e_range_internal_probability" type="snemo::cut::topology_cut"]
+
+    #@description Cut description
+    cut.description : string = "Select good internal probability"
+
+    #@description Logging priority'
+    logging.priority : string = "error"
+
+    #@description Activate the check for internal probability value
+    mode.range_internal_probability : boolean = 1
+
+    #@description Minimal value for internal probability
+    #internal_probability.min : real as percent = 5 %
+    range_internal_probability.min : real = 0.01
+  #+END_SRC
+
+The following cut combines all the previous ones to define what 2 electrons
+events are
 #+CAPTION: *Definition of 2 electrons topology.*
 #+TBLNAME: 2e_topology_cut
-|-------------------------|
-| has_particle_track_data |
-| has_particle            |
-| 2e_cut                  |
-|-------------------------|
+|-------------------------------|
+| has_particle_track_data       |
+| has_particle                  |
+| 2e_topology_pattern           |
+| 2e_has_internal_probability   |
+| 2e_range_internal_probability |
+|-------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("2e_topology_cut", "and", 3, 2e_topology_cut)>>
+  <<multi("2e_topology_cut", "and", 5, 2e_topology_cut)>>
 #+END_SRC
 
 **** 1\beta selection
