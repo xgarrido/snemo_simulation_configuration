@@ -278,13 +278,13 @@ distribution or following a tabulated energy spectrum.
   emission_direction : string = "randomized"
 #+END_SRC
 
-* Combined generators
+** Combined generators
 Combination of several =genbb= generators can be done using
 =genbb::combined_particle_generator= object...
 
 *** Simultaneous \gamma-rays
 #+BEGIN_SRC shell
-  [name="multi_particles" type="genbb::combined_particle_generator"]
+  [name="multi_gamma_particles" type="genbb::combined_particle_generator"]
 
   #@config A model that generates several particles  at the same time
 
@@ -320,4 +320,90 @@ Combination of several =genbb= generators can be done using
 
   #@description The shift time associated to the "gamma2" contribution
   generators.gamma2.fixed_time : real as time = 0 ns
+#+END_SRC
+
+*** Multi-particles gun
+
+#+BEGIN_SRC shell
+  [name="electron_monokinetic1" type="genbb::single_particle_generator"]
+
+  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+
+  #@description Generated particle ("electron", "positron", "gamma", "alpha"):
+  particle_name : string = "electron"
+
+  #@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):
+  mode : string = "monokinetic"
+
+  #@description Value of the particle energy
+  energy : real as energy = 1000. keV
+
+  #@description Flag for random emission
+  emission_direction : string = "randomized"
+#+END_SRC
+
+#+BEGIN_SRC shell
+  [name="electron_monokinetic2" type="genbb::single_particle_generator"]
+
+  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+
+  #@description Generated particle ("electron", "positron", "gamma", "alpha"):
+  particle_name : string = "electron"
+
+  #@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):
+  mode : string = "monokinetic"
+
+  #@description Value of the particle energy
+  energy : real as energy = 3000. keV
+
+  #@description Flag for random emission
+  emission_direction : string = "randomized"
+#+END_SRC
+
+#+BEGIN_SRC shell
+  [name="multi_particles" type="genbb::combined_particle_generator"]
+
+  #@config A model that generates several particles  at the same time
+
+  #@description Logging priority
+  logging.priority : string = "warning"
+
+  #@description Assign unique generation id
+  assign_generation_ids : boolean = 1
+
+  #@description The mode ("timing", "plain_probability" or "activity")
+  mode : string = "time"
+
+  #@description The list of particle generators that compose the combo
+  generators.labels : string[3] = \
+                    "electron1"   \
+                    "electron2"   \
+                    "gamma1"
+
+  #@description The name of the generator associated the "electron1" contribution
+  generators.electron1.name : string = "electron_monokinetic1"
+
+  #@description The time mode associated to the "electron1" contribution
+  generators.electron1.time_mode : string = "fixed"
+
+  #@description The shift time associated to the "electron1" contribution
+  generators.electron1.fixed_time : real as time = 0 ns
+
+  #@description The name of the generator associated the "electron2" contribution
+  generators.electron2.name : string = "electron_monokinetic1"
+
+  #@description The time mode associated to the "electron2" contribution
+  generators.electron2.time_mode : string = "fixed"
+
+  #@description The shift time associated to the "electron2" contribution
+  generators.electron2.fixed_time : real as time = 0 ns
+
+  #@description The name of the generator associated the "gamma1" contribution
+  generators.gamma1.name : string = "gamma_monokinetic"
+
+  #@description The time mode associated to the "electron2" contribution
+  generators.gamma1.time_mode : string = "fixed"
+
+  #@description The shift time associated to the "electron2" contribution
+  generators.gamma1.fixed_time : real as time = 0 ns
 #+END_SRC
