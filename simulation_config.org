@@ -496,7 +496,8 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 **** Vertex generator
 Several common vertex generators are available such as :
 - tracker_gas_bulk,
-- source_strips_bulk
+- source_strips_bulk,
+- source_strips_surface.
 
 #+BEGIN_SRC shell
   #@description The vertex generator PRNG label
@@ -509,11 +510,13 @@ Most used event generators are :
 - Bi214_Po214,
 - Tl208,
 - multi_particles,
-- electron_monokinetic.
+- multi_gamma_particles,
+- electron_monokinetic,
+- alpha_monokinetic.
 
 #+BEGIN_SRC shell
   #@description The event generator PRNG label
-  manager.event_generator_name  : string  = "Se82.0nubb"
+  manager.event_generator_name : string  = "Se82.0nubb"
 #+END_SRC
 **** G4 manager
 The full =geant4= configuration can be found in the [[file:./sng4_manager.org][sng4_manager]] file.
