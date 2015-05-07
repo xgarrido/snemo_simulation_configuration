@@ -1596,8 +1596,9 @@ with the number of gammas.
 **** Drivers
 #+BEGIN_SRC shell
   #@description List of drivers to be used (see description below)
-  drivers : string[2] = "TOFD" "DVD"
+  drivers : string[3] = "TOFD" "DVD" "AMD"
 #+END_SRC
+
 **** Time-Of-Flight driver
 ***** Logging priority
 #+BEGIN_SRC shell
@@ -1610,6 +1611,13 @@ with the number of gammas.
 #+BEGIN_SRC shell
   #@description Logging flag
   DVD.logging.priority : string = "trace"
+#+END_SRC
+
+**** \theta driver
+***** Logging priority
+#+BEGIN_SRC shell
+  #@description Logging flag
+  AMD.logging.priority : string = "trace"
 #+END_SRC
 
 ** Topology chain
@@ -1661,7 +1669,7 @@ with the number of gammas.
 |---------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<chain_module("topology_chain", 2, topology_chain)>>
+  <<chain_module("topology_chain", 5, topology_chain)>>
 #+END_SRC
 ** Chain modules
 :PROPERTIES:
@@ -2574,6 +2582,34 @@ alpha in the context of SuperNEMO. Since these cuts apply on every
   echo 'mode.has_associated_calorimeter_hits : boolean = 1'
 #+END_SRC
 
+#+NAME: has_no_associated_calorimeter_hits
+#+HEADERS: :var cname="" :var logging="warning"
+#+BEGIN_SRC shell
+  name=${cname/no_/}
+  echo '[name="'$name'" type="snemo::cut::particle_track_cut"]'
+  echo
+  echo '#@description Cut description'
+  echo 'cut.description : string = "Check if track has associated calorimeter hits"'
+  echo
+  echo '#@description Logging priority'
+  echo 'logging.priority : string = "'$logging'"'
+  echo
+  echo '#@description The running mode of this cut instance'
+  echo 'mode.has_associated_calorimeter_hits : boolean = 1'
+  echo
+  echo '[name="'$cname'" type="cuts::not_cut"]'
+  echo
+  echo '#@description Cut description'
+  echo 'cut.description : string = "Check if track has no associated calorimeter hits"'
+  echo
+  echo '#@description Logging priority'
+  echo 'logging.priority : string = "'$logging'"'
+  echo
+  echo '#@description The name of the cut to be negated'
+  echo 'cut : string = "'$name'"'
+#+END_SRC
+
+
 **** $e^-$ definition
 An electron is a =particle_track= having
 - a negative electric charge
@@ -2633,16 +2669,21 @@ An alpha is a =particle_track= having
   #+BEGIN_SRC shell :noweb yes
     <<has_vertex(cname="alpha::foil_vertex", type="foil")>>
   #+END_SRC
+- no associated calorimeter hits
+  #+BEGIN_SRC shell :noweb yes
+    <<has_no_associated_calorimeter_hits(cname="alpha::no_calo_association")>>
+  #+END_SRC
 
 #+CAPTION: *Selections used to define an alpha track.*
 #+TBLNAME: alpha_definition
-|-------------------------|
-| alpha::undefined_charge |
-| alpha::foil_vertex      |
-|-------------------------|
+|----------------------------|
+| alpha::undefined_charge    |
+| alpha::foil_vertex         |
+| alpha::no_calo_association |
+|----------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("alpha_definition", "and", 2, alpha_definition)>>
+  <<multi("alpha_definition", "and", 3, alpha_definition)>>
 #+END_SRC
 
 *** Topology selection
@@ -2675,7 +2716,7 @@ Define 2\beta events topology
   #@description Cut description
   cut.description : string = "Select 2 electrons topology pattern"
 
-  #@description Logging priority'
+  #@description Logging priority
   logging.priority : string = "error"
 
   #@description Activate the check for pattern id label
@@ -2743,14 +2784,14 @@ Define 1\beta events topology
   #@description Cut description
   cut.description : string = "Select 1 electron topology events"
 
-  #@description Logging priority'
-  logging.priority : string = "warning"
+  #@description Logging priority
+  logging.priority : string = "error"
 
-  #@description Minimal number of electrons
-  electron_range.min : integer = 1
+  #@description Activate the check for pattern id label
+  mode.pattern_id : boolean = 1
 
-  #@description Maximal number of electrons
-  electron_range.max : integer = 1
+  #@description Label of the topology pattern id
+  pattern_id.label : string = "1e"
 #+END_SRC
 
 #+CAPTION: *Definition of 1 electron topology.*
@@ -2775,20 +2816,14 @@ Define 1\beta1\gamma events topology
   #@description Cut description
   cut.description : string = "Select 1 electron/1 gamma topology events"
 
-  #@description Logging priority'
-  logging.priority : string = "warning"
+  #@description Logging priority
+  logging.priority : string = "error"
 
-  #@description Minimal number of electrons
-  electron_range.min : integer = 1
+  #@description Activate the check for pattern id label
+  mode.pattern_id : boolean = 1
 
-  #@description Maximal number of electrons
-  electron_range.max : integer = 1
-
-  #@description Minimal number of gammas
-  gamma_range.min : integer = 1
-
-  #@description Maximal number of gammas
-  gamma_range.max : integer = 1
+  #@description Label of the topology pattern id
+  pattern_id.label : string = "1e1g"
 #+END_SRC
 
 #+CAPTION: *Definition of 1\beta1\gamma topology.*
@@ -2813,20 +2848,14 @@ Define 1\beta1\alpha events topology
   #@description Cut description
   cut.description : string = "Select 1 electron/1 alpha topology events"
 
-  #@description Logging priority'
-  logging.priority : string = "warning"
+  #@description Logging priority
+  logging.priority : string = "error"
 
-  #@description Minimal number of electrons
-  electron_range.min : integer = 1
+  #@description Activate the check for pattern id label
+  mode.pattern_id : boolean = 1
 
-  #@description Maximal number of electrons
-  electron_range.max : integer = 1
-
-  #@description Minimal number of alphas
-  alpha_range.min : integer = 1
-
-  #@description Maximal number of alphas
-  alpha_range.max : integer = 1
+  #@description Label of the topology pattern id
+  pattern_id.label : string = "1e1a"
 #+END_SRC
 
 #+CAPTION: *Definition of 1\beta1\alpha topology.*
