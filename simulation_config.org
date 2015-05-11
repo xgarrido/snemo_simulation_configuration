@@ -1433,13 +1433,31 @@ implemented but the particle tracking module will stay unchanged.
   PTD_label : string  = "PTD"
 #+END_SRC
 
+**** Driver
+#+BEGIN_SRC shell
+  #@description List of drivers to be used (see description below)
+  driver : string = "GC"
+#+END_SRC
+
+**** Default options
+#+BEGIN_SRC shell
+  #@description Gamma algorithm logging priority
+  BGB.logging.priority : string = "trace"
+
+  #@description Enable the extrapolation to the source foil
+  BGB.add_foil_vertex_extrapolation : boolean = 1
+
+  #@description Minimal internal probability for foil vertex extrapolation
+  BGB.add_foil_vertex_minimal_probability : real as fraction = 1 %
+#+END_SRC
+
 **** Cluster properties
 #+BEGIN_SRC shell
   #@description The time spread between calorimeter hits within a cluster
-  cluster.time_range : real as time = 2.5 ns
+  GC.cluster_time_range : real as time = 2.5 ns
 
   #@description The geometrical condition to cluster calorimeter hits ("side", "diagonal", "first", "second")
-  cluster.grid_mask : string = "first"
+  GC.cluster_grid_mask : string = "first"
 #+END_SRC
 
 *** \gamma tracking
@@ -1458,16 +1476,26 @@ implemented but the particle tracking module will stay unchanged.
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
 
-  #@description The label of the 'Calibrated Data' bank
-  CD_label : string  = "CD"
-
   #@description The label of the 'Particle Track Data' bank
   PTD_label : string  = "PTD"
 #+END_SRC
+
 **** Driver
 #+BEGIN_SRC shell
   #@description List of drivers to be used (see description below)
   driver : string = "GT"
+#+END_SRC
+
+**** Default options
+#+BEGIN_SRC shell
+  #@description Gamma algorithm logging priority
+  BGB.logging.priority : string = "trace"
+
+  #@description Enable the extrapolation to the source foil
+  BGB.add_foil_vertex_extrapolation : boolean = 1
+
+  #@description Minimal internal probability for foil vertex extrapolation
+  BGB.add_foil_vertex_minimal_probability : real as fraction = 1 %
 #+END_SRC
 **** \gamma tracking setup
 ***** Logging priority
