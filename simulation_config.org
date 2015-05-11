@@ -1854,7 +1854,7 @@ modules it contains.
 | cat_tracker_clustering    |
 | trackfit_tracker_fitting  |
 | charged_particle_tracking |
-| gamma_tracking            |
+| gamma_clustering          |
 | particle_identification   |
 | topology_identification   |
 | io_output_analysed        |
