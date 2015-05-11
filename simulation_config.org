@@ -1660,44 +1660,44 @@ with the number of gammas.
 
 *** 2\beta selection
 #+BEGIN_SRC shell :noweb yes
-  <<output_module("io_output_2e_topology_selected")>>
-  <<output_module("io_output_2e_topology_non_selected")>>
-  <<if_module("process_2e_topology_cut", cut="2e_topology_cut", then="io_output_2e_topology_selected", else="io_output_2e_topology_non_selected")>>
+  <<output_module("io_output_2e_channel_selected")>>
+  <<output_module("io_output_2e_channel_non_selected")>>
+  <<if_module("process_2e_channel_cut", cut="2e_channel_cut", then="io_output_2e_channel_selected", else="io_output_2e_channel_non_selected")>>
 #+END_SRC
 
 *** 1\beta selection
 #+BEGIN_SRC shell :noweb yes
-  <<output_module("io_output_1e_topology_selected")>>
-  <<output_module("io_output_1e_topology_non_selected")>>
-  <<if_module("process_1e_topology_cut", cut="1e_topology_cut", then="io_output_1e_topology_selected", else="io_output_1e_topology_non_selected")>>
+  <<output_module("io_output_1e_channel_selected")>>
+  <<output_module("io_output_1e_channel_non_selected")>>
+  <<if_module("process_1e_channel_cut", cut="1e_channel_cut", then="io_output_1e_channel_selected", else="io_output_1e_channel_non_selected")>>
 #+END_SRC
 
 *** 1\beta/1\gamma selection
 #+BEGIN_SRC shell :noweb yes
-  <<output_module("io_output_1e1g_topology_selected")>>
-  <<output_module("io_output_1e1g_topology_non_selected")>>
-  <<if_module("process_1e1g_topology_cut", cut="1e1g_topology_cut", then="io_output_1e1g_topology_selected", else="io_output_1e1g_topology_non_selected")>>
+  <<output_module("io_output_1e1g_channel_selected")>>
+  <<output_module("io_output_1e1g_channel_non_selected")>>
+  <<if_module("process_1e1g_channel_cut", cut="1e1g_channel_cut", then="io_output_1e1g_channel_selected", else="io_output_1e1g_channel_non_selected")>>
 #+END_SRC
 *** 1\beta/1\alpha selection
 #+BEGIN_SRC shell :noweb yes
-  <<output_module("io_output_1e1a_topology_selected")>>
-  <<output_module("io_output_1e1a_topology_non_selected")>>
-  <<if_module("process_1e1a_topology_cut", cut="1e1a_topology_cut", then="io_output_1e1a_topology_selected", else="io_output_1e1a_topology_non_selected")>>
+  <<output_module("io_output_1e1a_channel_selected")>>
+  <<output_module("io_output_1e1a_channel_non_selected")>>
+  <<if_module("process_1e1a_channel_cut", cut="1e1a_channel_cut", then="io_output_1e1a_channel_selected", else="io_output_1e1a_channel_non_selected")>>
 #+END_SRC
 
 *** Full topology
 #+CAPTION: *Topology chain.*
-#+TBLNAME: topology_chain
+#+TBLNAME: channel_chain
 |---------------------------|
 | minimum_bias_chain        |
-| process_2e_topology_cut   |
-| process_1e_topology_cut   |
-| process_1e1g_topology_cut |
-| process_1e1a_topology_cut |
+| process_2e_channel_cut   |
+| process_1e_channel_cut   |
+| process_1e1g_channel_cut |
+| process_1e1a_channel_cut |
 |---------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<chain_module("topology_chain", 5, topology_chain)>>
+  <<chain_module("channel_chain", 2, channel_chain)>>
 #+END_SRC
 ** Chain modules
 :PROPERTIES:
@@ -2714,12 +2714,12 @@ An alpha is a =particle_track= having
   <<multi("alpha_definition", "and", 3, alpha_definition)>>
 #+END_SRC
 
-*** Topology selection
+*** Channel selection
 :PROPERTIES:
 :TANGLE: topology_cuts.conf
 :END:
 
-The following selections define some basic "standard" topological cuts such as :
+The following selections define some basic "standard" channel cuts such as :
 - 2 electrons,
 - 1 electron,
 - 1 electron, $n$ gammas,
@@ -2735,7 +2735,7 @@ and maybe more in the future.
 
 **** 2\beta selection
 
-Define 2\beta events topology
+Define 2\beta events channel
 
 - select 2 electrons event topology :
   #+BEGIN_SRC shell
@@ -2745,7 +2745,7 @@ Define 2\beta events topology
   cut.description : string = "Select 2 electrons topology pattern"
 
   #@description Logging priority
-  logging.priority : string = "error"
+  logging.priority : string = "trace"
 
   #@description Activate the check for pattern id label
   mode.pattern_id : boolean = 1
@@ -2782,14 +2782,13 @@ Define 2\beta events topology
     mode.range_internal_probability : boolean = 1
 
     #@description Minimal value for internal probability
-    #internal_probability.min : real as percent = 5 %
-    range_internal_probability.min : real = 0.01
+    range_internal_probability.min : real as fraction = 1 %
   #+END_SRC
 
 The following cut combines all the previous ones to define what 2 electrons
 events are
-#+CAPTION: *Definition of 2 electrons topology.*
-#+TBLNAME: 2e_topology_cut
+#+CAPTION: *Definition of 2 electrons channel.*
+#+TBLNAME: 2e_channel_cut
 |-------------------------------|
 | has_particle_track_data       |
 | has_particle                  |
@@ -2799,12 +2798,12 @@ events are
 |-------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("2e_topology_cut", "and", 5, 2e_topology_cut)>>
+  <<multi("2e_channel_cut", "and", 5, 2e_channel_cut)>>
 #+END_SRC
 
 **** 1\beta selection
 
-Define 1\beta events topology
+Define 1\beta events channel
 
 #+BEGIN_SRC shell
   [name="1e_cut" type="snemo::cut::topology_cut"]
@@ -2822,8 +2821,8 @@ Define 1\beta events topology
   pattern_id.label : string = "1e"
 #+END_SRC
 
-#+CAPTION: *Definition of 1 electron topology.*
-#+TBLNAME: 1e_topology_cut
+#+CAPTION: *Definition of 1 electron channel.*
+#+TBLNAME: 1e_channel_cut
 |-------------------------|
 | has_particle_track_data |
 | has_particle            |
@@ -2831,12 +2830,12 @@ Define 1\beta events topology
 |-------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("1e_topology_cut", "and", 3, 1e_topology_cut)>>
+  <<multi("1e_channel_cut", "and", 3, 1e_channel_cut)>>
 #+END_SRC
 
 **** 1\beta1\gamma selection
 
-Define 1\beta1\gamma events topology
+Define 1\beta1\gamma events channel
 
 #+BEGIN_SRC shell
   [name="1e1g_cut" type="snemo::cut::topology_cut"]
@@ -2854,8 +2853,8 @@ Define 1\beta1\gamma events topology
   pattern_id.label : string = "1e1g"
 #+END_SRC
 
-#+CAPTION: *Definition of 1\beta1\gamma topology.*
-#+TBLNAME: 1e1g_topology_cut
+#+CAPTION: *Definition of 1\beta1\gamma channel.*
+#+TBLNAME: 1e1g_channel_cut
 |-------------------------|
 | has_particle_track_data |
 | has_particle            |
@@ -2863,7 +2862,7 @@ Define 1\beta1\gamma events topology
 |-------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("1e1g_topology_cut", "and", 3, 1e1g_topology_cut)>>
+  <<multi("1e1g_channel_cut", "and", 3, 1e1g_channel_cut)>>
 #+END_SRC
 
 **** 1\beta1\alpha selection
@@ -2886,8 +2885,8 @@ Define 1\beta1\alpha events topology
   pattern_id.label : string = "1e1a"
 #+END_SRC
 
-#+CAPTION: *Definition of 1\beta1\alpha topology.*
-#+TBLNAME: 1e1a_topology_cut
+#+CAPTION: *Definition of 1\beta1\alpha channel.*
+#+TBLNAME: 1e1a_channel_cut
 |-------------------------|
 | has_particle_track_data |
 | has_particle            |
@@ -2895,7 +2894,7 @@ Define 1\beta1\alpha events topology
 |-------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("1e1a_topology_cut", "and", 3, 1e1a_topology_cut)>>
+  <<multi("1e1a_channel_cut", "and", 3, 1e1a_channel_cut)>>
 #+END_SRC
 
 * Running SN@ilWare processing chain
