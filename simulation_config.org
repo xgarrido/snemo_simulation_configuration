@@ -2697,6 +2697,19 @@ An alpha is a =particle_track= having
   #+BEGIN_SRC shell :noweb yes
     <<has_charge(cname="alpha::undefined_charge", type="undefined")>>
   #+END_SRC
+- a delayed cluster
+  #+BEGIN_SRC shell
+    [name="alpha::delayed_cluster" type="snemo::cut::particle_track_cut"]
+
+    #@description Cut description
+    cut.description : string = "Check delayed cluster"
+
+    #@description Logging priority
+    logging.priority : string = "error"
+
+    #@description The running mode of this cut instance
+    mode.has_delayed_cluster : boolean = 1
+  #+END_SRC
 - a vertex on the source foil
   #+BEGIN_SRC shell :noweb yes
     <<has_vertex(cname="alpha::foil_vertex", type="foil")>>
@@ -2737,23 +2750,56 @@ and maybe more in the future.
   <<service_preamble>>
 #+END_SRC
 
-**** Generic selection
+**** Skeleton codes                                             :noexport:
+:PROPERTIES:
+:TANGLE: no
+:RESULTS: output
+:END:
+
+***** Check particle tracks presence
+#+NAME: has_particles
+#+HEADERS: :var topo="" :var logging="warning"
 #+BEGIN_SRC shell
-  [name="has_pattern_id" type="snemo::cut::topology_data_cut"]
+  echo '[name="'$topo'::has_particles" type="snemo::cut::particle_track_data_cut"]'
+  echo
+  echo '#@description Cut description'
+  echo 'cut.description : string = "Select reconstructed particle for '$topo' topology"'
+  echo
+  echo '#@description Logging priority'
+  echo 'logging.priority : string = "'$logging'"'
+  echo
+  echo '#@description The label/name of the bank (mandatory)'
+  echo 'PTD_label : string = "PTD"'
+  echo
+  echo '#@description The running mode of this cut instance'
+  echo 'mode.has_particles : boolean = 1'
+#+END_SRC
 
-  #@description Cut description
-  cut.description : string = "Ensure pattern id presence"
-
-  #@description Logging priority
-  logging.priority : string = "trace"
-
-  #@description Activate the check for pattern id label
-  mode.has_pattern_id : boolean = 1
+***** Check pattern id presence
+#+NAME: has_pattern_id
+#+HEADERS: :var topo="" :var logging="warning"
+#+BEGIN_SRC shell
+  echo '[name="'$topo'::has_pattern_id" type="snemo::cut::topology_data_cut"]'
+  echo
+  echo '#@description Cut description'
+  echo 'cut.description : string = "Ensure pattern id presence for '$topo' topology"'
+  echo
+  echo '#@description Logging priority'
+  echo 'logging.priority : string = "'$logging'"'
+  echo
+  echo '#@description The running mode of this cut instance'
+  echo 'mode.has_pattern_id : boolean = 1'
 #+END_SRC
 
 **** 2\beta selection
 
 Define 2\beta events channel
+- generic cuts :
+  #+BEGIN_SRC shell :noweb yes
+    <<has_bank("2e::has_particle_track_data", bname="PTD")>>
+    <<has_particles("2e")>>
+    <<has_pattern_id("2e")>>
+  #+END_SRC
 
 - select 2 electrons event topology :
   #+BEGIN_SRC shell
@@ -2763,7 +2809,7 @@ Define 2\beta events channel
   cut.description : string = "Select 2 electrons topology pattern"
 
   #@description Logging priority
-  logging.priority : string = "trace"
+  logging.priority : string = "error"
 
   #@description Activate the check for pattern id label
   mode.pattern_id : boolean = 1
@@ -2808,9 +2854,9 @@ events are
 #+CAPTION: *Definition of 2 electrons channel.*
 #+TBLNAME: 2e_channel_cut
 |-------------------------------|
-| has_particle_track_data       |
-| has_particle                  |
-| has_pattern_id                |
+| 2e::has_particle_track_data   |
+| 2e::has_particles             |
+| 2e::has_pattern_id            |
 | 2e_topology_pattern           |
 | 2e_has_internal_probability   |
 | 2e_range_internal_probability |
@@ -2824,30 +2870,38 @@ events are
 
 Define 1\beta events channel
 
-#+BEGIN_SRC shell
-  [name="1e_cut" type="snemo::cut::topology_data_cut"]
+- generic cuts :
+  #+BEGIN_SRC shell :noweb yes
+    <<has_bank("1e::has_particle_track_data", bname="PTD")>>
+    <<has_particles("1e")>>
+    <<has_pattern_id("1e")>>
+  #+END_SRC
 
-  #@description Cut description
-  cut.description : string = "Select 1 electron topology events"
+- select 1 electron event topology :
+  #+BEGIN_SRC shell
+    [name="1e_cut" type="snemo::cut::topology_data_cut"]
 
-  #@description Logging priority
-  logging.priority : string = "error"
+    #@description Cut description
+    cut.description : string = "Select 1 electron topology events"
 
-  #@description Activate the check for pattern id label
-  mode.pattern_id : boolean = 1
+    #@description Logging priority
+    logging.priority : string = "error"
 
-  #@description Label of the topology pattern id
-  pattern_id.label : string = "1e"
-#+END_SRC
+    #@description Activate the check for pattern id label
+    mode.pattern_id : boolean = 1
+
+    #@description Label of the topology pattern id
+    pattern_id.label : string = "1e"
+  #+END_SRC
 
 #+CAPTION: *Definition of 1 electron channel.*
 #+TBLNAME: 1e_channel_cut
-|-------------------------|
-| has_particle_track_data |
-| has_particle            |
-| has_pattern_id          |
-| 1e_cut                  |
-|-------------------------|
+|-----------------------------|
+| 1e::has_particle_track_data |
+| 1e::has_particles           |
+| 1e::has_pattern_id          |
+| 1e_cut                      |
+|-----------------------------|
 
 #+BEGIN_SRC shell :noweb yes
   <<multi("1e_channel_cut", "and", 4, 1e_channel_cut)>>
@@ -2857,30 +2911,38 @@ Define 1\beta events channel
 
 Define 1\beta1\gamma events channel
 
-#+BEGIN_SRC shell
-  [name="1e1g_cut" type="snemo::cut::topology_data_cut"]
+- generic cuts :
+  #+BEGIN_SRC shell :noweb yes
+    <<has_bank("1e1g::has_particle_track_data", bname="PTD")>>
+    <<has_particles("1e1g")>>
+    <<has_pattern_id("1e1g")>>
+  #+END_SRC
 
-  #@description Cut description
-  cut.description : string = "Select 1 electron/1 gamma topology events"
+- select 1 electron, 1 gamma event topology :
+  #+BEGIN_SRC shell
+    [name="1e1g_cut" type="snemo::cut::topology_data_cut"]
 
-  #@description Logging priority
-  logging.priority : string = "error"
+    #@description Cut description
+    cut.description : string = "Select 1 electron/1 gamma topology events"
 
-  #@description Activate the check for pattern id label
-  mode.pattern_id : boolean = 1
+    #@description Logging priority
+    logging.priority : string = "error"
 
-  #@description Label of the topology pattern id
-  pattern_id.label : string = "1e1g"
-#+END_SRC
+    #@description Activate the check for pattern id label
+    mode.pattern_id : boolean = 1
+
+    #@description Label of the topology pattern id
+    pattern_id.label : string = "1e1g"
+  #+END_SRC
 
 #+CAPTION: *Definition of 1\beta1\gamma channel.*
 #+TBLNAME: 1e1g_channel_cut
-|-------------------------|
-| has_particle_track_data |
-| has_particle            |
-| has_pattern_id          |
-| 1e1g_cut                |
-|-------------------------|
+|-------------------------------|
+| 1e1g::has_particle_track_data |
+| 1e1g::has_particles           |
+| 1e1g::has_pattern_id          |
+| 1e1g_cut                      |
+|-------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
   <<multi("1e1g_channel_cut", "and", 4, 1e1g_channel_cut)>>
@@ -2890,30 +2952,38 @@ Define 1\beta1\gamma events channel
 
 Define 1\beta1\alpha events topology
 
-#+BEGIN_SRC shell
-  [name="1e1a_cut" type="snemo::cut::topology_data_cut"]
+- generic cuts :
+  #+BEGIN_SRC shell :noweb yes
+    <<has_bank("1e1a::has_particle_track_data", bname="PTD")>>
+    <<has_particles("1e1a")>>
+    <<has_pattern_id("1e1a")>>
+  #+END_SRC
 
-  #@description Cut description
-  cut.description : string = "Select 1 electron/1 alpha topology events"
+- select 1 electron, 1 alpha delayed event topology :
+  #+BEGIN_SRC shell
+    [name="1e1a_cut" type="snemo::cut::topology_data_cut"]
 
-  #@description Logging priority
-  logging.priority : string = "error"
+    #@description Cut description
+    cut.description : string = "Select 1 electron/1 alpha topology events"
 
-  #@description Activate the check for pattern id label
-  mode.pattern_id : boolean = 1
+    #@description Logging priority
+    logging.priority : string = "error"
 
-  #@description Label of the topology pattern id
-  pattern_id.label : string = "1e1a"
-#+END_SRC
+    #@description Activate the check for pattern id label
+    mode.pattern_id : boolean = 1
+
+    #@description Label of the topology pattern id
+    pattern_id.label : string = "1e1a"
+  #+END_SRC
 
 #+CAPTION: *Definition of 1\beta1\alpha channel.*
 #+TBLNAME: 1e1a_channel_cut
-|-------------------------|
-| has_particle_track_data |
-| has_particle            |
-| has_pattern_id          |
-| 1e1a_cut                |
-|-------------------------|
+|-------------------------------|
+| 1e1a::has_particle_track_data |
+| 1e1a::has_particles           |
+| 1e1a::has_pattern_id          |
+| 1e1a_cut                      |
+|-------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
   <<multi("1e1a_channel_cut", "and", 4, 1e1a_channel_cut)>>
