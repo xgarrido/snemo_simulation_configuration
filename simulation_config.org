@@ -1371,13 +1371,13 @@ then decorelated with the pipeline execution. Other algorithms can be
 implemented but the particle tracking module will stay unchanged.
 #+BEGIN_SRC shell
   #@description List of drivers to be used (see description below)
-  drivers : string[3] = "VED" "CCD" "CAD"
+  drivers : string[4] = "VED" "CCD" "CAD" "AFD"
 #+END_SRC
 
 ***** Vertex Extrapolation Driver
 #+BEGIN_SRC shell
   #@description Vertex Extrapolation Driver logging priority
-  VED.logging.priority : string = "warning"
+  VED.logging.priority : string = "error"
 
   #@description Use linear extrapolation (not implemented yet)
   VED.use_linear_extrapolation : boolean = 0
@@ -1402,6 +1402,11 @@ implemented but the particle tracking module will stay unchanged.
 
   #@description Use a simpler approach by looking for gieger cells in front of calo (not implemented yet)
   CAD.use_last_geiger_cell : boolean = 0
+#+END_SRC
+***** Alpha Finder Driver
+#+BEGIN_SRC shell
+  #@description Alpha Finder Driver logging priority
+  AFD.logging.priority : string = "warning"
 #+END_SRC
 ** \gamma tracking module
 :PROPERTIES:
