@@ -2641,6 +2641,36 @@ alpha in the context of SuperNEMO. Since these cuts apply on every
   echo '#@description The name of the cut to be negated'
   echo 'cut : string = "'$name'"'
 #+END_SRC
+****** Check the number of associated calorimeter hits
+#+NAME: range_associated_calorimeter_hits
+#+HEADERS: :var cname="" :var category="" :var min=-1 :var max=-1 :var logging="warning"
+#+BEGIN_SRC shell
+  echo '[name="'$cname'" type="snemo::cut::particle_track_cut"]'
+  echo
+  echo '#@description Cut description'
+  echo 'cut.description : string = "Check if track has a range of associated calorimeter hits"'
+  echo
+  echo '#@description Logging priority'
+  echo 'logging.priority : string = "'$logging'"'
+  echo
+  echo '#@description The running mode of this cut instance'
+  echo 'mode.range_associated_calorimeter_hits : boolean = 1'
+  echo
+  if [ ! -z $category ]; then
+      echo '#@description The calorimeter category to be checked'
+      echo 'range_associated_calorimeter_hits.category : string = "'$category'"'
+      echo
+  fi
+  if [[ $min != -1 ]]; then
+      echo '#@description The minimal number of calorimeter associated'
+      echo 'range_associated_calorimeter_hits.min : integer = '$min
+      echo
+  fi
+  if [[ $max != -1 ]]; then
+      echo '#@description The maximal number of calorimeter associated'
+      echo 'range_associated_calorimeter_hits.max : integer = '$max
+  fi
+#+END_SRC
 
 **** $e^-$ definition
 An electron is a =particle_track= having
@@ -2654,19 +2684,41 @@ An electron is a =particle_track= having
   #+END_SRC
 - an associated calorimeter hit
   #+BEGIN_SRC shell :noweb yes
-    <<has_associated_calorimeter_hits(cname="electron::calo_association")>>
+    <<has_associated_calorimeter_hits(cname="electron::calorimeter_association")>>
   #+END_SRC
 
 #+CAPTION: *Selections used to define an electron track.*
 #+TBLNAME: electron_definition
-|----------------------------|
-| electron::negative_charge  |
-| electron::foil_vertex      |
-| electron::calo_association |
-|----------------------------|
+|-----------------------------------|
+| electron::negative_charge         |
+| electron::calorimeter_association |
+| electron::foil_vertex             |
+|-----------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
   <<multi("electron_definition", "and", 3, electron_definition)>>
+#+END_SRC
+
+/Addendum/
+
+If you want to select only main wall and/or X-wall calorimeter hits for electron,
+you can declare to =particle_track_cut= cut with
+=range_associated_calorimeter_hits= mode enabled and then use the =multi_or= cut
+from =i_cut= library. For instance,
+#+BEGIN_SRC shell :noweb yes
+  <<range_associated_calorimeter_hits(cname="electron::calo_association", category="calo", min=1)>>
+  <<range_associated_calorimeter_hits(cname="electron::xcalo_association", category="xcalo", min=1)>>
+#+END_SRC
+
+#+CAPTION: *Selections used to select electron with =calo= or =xcalo= associated.*
+#+TBLNAME: electron_calos_association
+|-----------------------------|
+| electron::calo_association  |
+| electron::xcalo_association |
+|-----------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<multi("electron::calos_association", "or", 2, electron_calos_association)>>
 #+END_SRC
 
 **** \gamma definition
