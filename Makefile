@@ -33,7 +33,7 @@ $(GIT_BRANCH)/.%.tangle: %.org
 
 tarball: org
 	@echo "NOTICE: Making tarball configuration"
-	@tar czf $(GIT_BRANCH).tar.gz $(GIT_BRANCH)
+	@tar -czf $(GIT_BRANCH).tar.gz --exclude='.*.tangle' $(GIT_BRANCH)
 
 push: org
 	@echo "NOTICE: Pushing current configuration to Lyon"
