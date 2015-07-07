@@ -122,7 +122,7 @@ Insert preamble
     mode   : string = "surface"
 
     #@description Surface mode box top face activation
-    mode.surface.top  : boolean = 1
+    mode.surface.top  : boolean = true
   #+END_SRC
 
 - Generate vertex from the surface of the X-calorimeter's scintillator blocks:
@@ -142,7 +142,7 @@ Insert preamble
     mode   : string = "surface"
 
     #@description Surface mode box top face activation
-    mode.surface.top  : boolean = 1
+    mode.surface.top  : boolean = true
   #+END_SRC
 
 - Generate vertex from the surface of the \gamma veto's scintillator blocks:
@@ -162,7 +162,7 @@ Insert preamble
     mode : string = "surface"
 
     #@description Surface mode box top face activation
-    mode.surface.top : boolean = 1
+    mode.surface.top : boolean = true
   #+END_SRC
 
 - Generate vertex in the PMT glass
@@ -182,10 +182,10 @@ Insert preamble
     mode : string = "bulk"
 
     #@description Generation within polycone material
-    mode.bulk.body : boolean = 1
+    mode.bulk.body : boolean = true
 
     #@description Generate vertex on all polycone frustrum
-    polycone.all_frustrum : boolean = 1
+    polycone.all_frustrum : boolean = true
   #+END_SRC
 
 ** Tracker vertices
@@ -236,13 +236,13 @@ Insert preamble
     mode   : string = "surface"
 
     #@description Surface mode box side face activation
-    mode.surface.side   : boolean = 1
+    mode.surface.side   : boolean = true
 
     #@description Surface mode box bottom face activation
-    mode.surface.bottom : boolean = 0
+    mode.surface.bottom : boolean = false
 
     #@description Surface mode box top face activation
-    mode.surface.top    : boolean = 0
+    mode.surface.top    : boolean = false
   #+END_SRC
 
 - Generate vertex on the surface of the field wires:
@@ -262,13 +262,13 @@ Insert preamble
     mode   : string = "surface"
 
     #@description Surface mode box side face activation
-    mode.surface.side   : boolean = 1
+    mode.surface.side   : boolean = true
 
     #@description Surface mode box bottom face activation
-    mode.surface.bottom : boolean = 0
+    mode.surface.bottom : boolean = false
 
     #@description Surface mode box top face activation
-    mode.surface.top    : boolean = 0
+    mode.surface.top    : boolean = false
   #+END_SRC
 
 - Generate vertex from the bulk volume of the field wires:
@@ -443,7 +443,7 @@ Here starts the validation configuration. We first add a support to vertex
 validation
 #+BEGIN_SRC shell
   #@description Vertex validation support
-  vertex_validation_support : boolean = 1
+  vertex_validation_support : boolean = true
 #+END_SRC
 we define the logging level
 #+BEGIN_SRC shell
@@ -453,7 +453,7 @@ we define the logging level
 and we activate it
 #+BEGIN_SRC shell
   #@description Vertex validation activation
-  validation.activation : boolean = 1
+  validation.activation : boolean = true
 #+END_SRC
 
 We also defines the maximum number of tries for the rejection process; above this
@@ -542,10 +542,10 @@ Insert preamble
     mode   : string = "surface"
 
     #@description Surface mode box back face activation
-    mode.surface.back  : boolean = 1
+    mode.surface.back  : boolean = true
 
     #@description Surface mode box front face activation
-    mode.surface.front : boolean = 1
+    mode.surface.front : boolean = true
   #+END_SRC
 
 *** External source strips
@@ -588,10 +588,10 @@ Insert preamble
     mode   : string = "surface"
 
     #@description Surface mode box back face activation
-    mode.surface.back  : boolean = 1
+    mode.surface.back  : boolean = true
 
     #@description Surface mode box front face activation
-    mode.surface.front : boolean = 1
+    mode.surface.front : boolean = true
   #+END_SRC
 
 *** Combined vertex
@@ -665,22 +665,22 @@ Insert preamble
     mode   : string = "surface"
 
     #@description Surface mode box back face activation
-    mode.surface.back   : boolean = 1
+    mode.surface.back   : boolean = true
 
     #@description Surface mode box front face activation
-    mode.surface.front  : boolean = 1
+    mode.surface.front  : boolean = true
 
     #@description Surface mode box bottom face activation
-    mode.surface.bottom : boolean = 1
+    mode.surface.bottom : boolean = true
 
     #@description Surface mode box top face activation
-    mode.surface.top    : boolean = 1
+    mode.surface.top    : boolean = true
 
     #@description Surface mode box left face activation
-    mode.surface.left   : boolean = 1
+    mode.surface.left   : boolean = true
 
     #@description Surface mode box right face activation
-    mode.surface.right  : boolean = 1
+    mode.surface.right  : boolean = true
   #+END_SRC
 
 - Generate vertex from the volume of the hall

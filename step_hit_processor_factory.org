@@ -57,7 +57,7 @@ and the =cluster.time_space= into a unique calorimeter hit.
   #@description The name of the sensitive MC hits that must be processed to fill the output hit category
   sensitive.category             : string = "calorimeter_SD"
   #@description Flag to activate a preallocated buffer/pool of MC hits to optimize memory management
-  use_private_pool               : boolean = 1
+  use_private_pool               : boolean = true
   #@description Initial capacity of the buffer/pool of MC hits
   private_pool_capacity          : integer = 10
   #@description The name of the geometry category to be attached to the output MC hits
@@ -135,7 +135,7 @@ the minimal approach distance to the anode wire.
    #@description Mean ionization energy used to randomize electron-ion pairs along the particle path
    mean_ionization_energy : real as energy = 50.0 eV
    #@description For each cell traversed by a track, compute the position of maximal approach to the anode wire (debug purpose only so default is 0)
-   compute_maximal_approach_position : boolean = 0
+   compute_maximal_approach_position : boolean = false
 #+END_SRC
 
 ** Visualization processors
@@ -194,9 +194,9 @@ the minimal approach distance to the anode wire.
   logging.priority                  : string  = "warning"
   hit.category                      : string  = "__visu.tracks"
   sensitive.category                : string  = "__all.volumes.SD"
-  sensitive.record_track_id         : boolean = 1
-  sensitive.record_primary_particle : boolean = 1
-  geometry.volumes.all              : boolean = 1
+  sensitive.record_track_id         : boolean = true
+  sensitive.record_primary_particle : boolean = true
+  geometry.volumes.all              : boolean = true
   geometry.volumes.excluded         : string[2] = "field_wire.model.log" "anode_wire.model.log"
 #+END_SRC
 
@@ -220,7 +220,7 @@ the minimal approach distance to the anode wire.
   hit.category          : string    = "__visu.tracks"
   sensitive.category    : string    = "__wires.SD"
   geometry.volumes      : string[2] = "field_wire.model.log" "anode_wire.model.log"
-  visu.highlighted_hits : boolean   = 1
+  visu.highlighted_hits : boolean = true
 #+END_SRC
 **** Films hits
 #+BEGIN_SRC shell :tangle no
@@ -230,7 +230,7 @@ the minimal approach distance to the anode wire.
   hit.category       : string  = "__visu.tracks"
   sensitive.category : string  = "__films.SD"
   geometry.volumes.with_materials : string[3] = "std::mylar" "std::nylon" "std::pfte"
-  visu.highlighted_hits : boolean   = 0
+  visu.highlighted_hits : boolean = false
 #+END_SRC
 
 **** Tracking chamber

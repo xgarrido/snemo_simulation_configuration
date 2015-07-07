@@ -59,10 +59,10 @@ service files.
   logging.priority : string = "warning"
 
   #@description Embedded module factory debug flag
-  factory.debug : boolean = 0
+  factory.debug : boolean = false
 
   #@description Embedded module factory 'no preload' flag
-  factory.no_preload : boolean = 0
+  factory.no_preload : boolean = false
 #+END_SRC
 
 *** Service manager configuration
@@ -141,7 +141,7 @@ receives a table list and builds the corresponding =dlls.conf= file.
           echo '[name="'$dll'" filename=""]'
       fi
       echo '#config The '$dll' library'
-      echo 'autoload : boolean = 1'
+      echo 'autoload : boolean = true'
       echo
   done
 #+END_SRC
@@ -468,12 +468,12 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
   SD_label  : string = "SD"
 
   #@description Flag to allow cleaning of some former simulated data bank if any (default: 0)
-  erase_former_SD_bank : boolean = 0
+  erase_former_SD_bank : boolean = false
 #+END_SRC
 **** Seed values
 #+BEGIN_SRC shell
   #@description The simulation manager PRNG seed
-  manager.seed                  : integer = 2
+  manager.seed                  : integer = 3
 
   #@description The vertex generator PRNG seed
   manager.vertex_generator_seed : integer = 4
@@ -516,7 +516,7 @@ Most used event generators are :
 
 #+BEGIN_SRC shell
   #@description The event generator PRNG label
-  manager.event_generator_name : string  = "Se82.0nubb"
+  manager.event_generator_name : string  = "electron_monokinetic"
 #+END_SRC
 **** G4 manager
 The full =geant4= configuration can be found in the [[file:./sng4_manager.org][sng4_manager]] file.
@@ -561,10 +561,10 @@ particles has been restricted.
   add_header.event_number : integer = 0
 
   #@description The event weight given by GENBB and used for 'energy_range' mode
-  add_header.use_genbb_weight : boolean = 1
+  add_header.use_genbb_weight : boolean = true
 
   #@description The event label from GENBB settings
-  add_header.use_genbb_label  : boolean = 1
+  add_header.use_genbb_label  : boolean = true
 #+END_SRC
 
 Among the options offered by =event_header_utils_module=, there is a possibility
@@ -674,7 +674,7 @@ simulation setup if needed.
   add_header.bank_label : string = "EH"
 
   #@description Update flag
-  add_header.update : boolean = 1
+  add_header.update : boolean = true
 
   #@description The external properties files to be exported in event_header properties
   add_header.external_properties_path : string as path = \
@@ -822,7 +822,7 @@ for the quenching of alpha particles.
 **** Activate \alpha quenching
 #+BEGIN_SRC shell
   #@description Alpha quenching boolean
-  alpha_quenching : boolean = 1
+  alpha_quenching : boolean = true
 #+END_SRC
 **** Calorimeter regimes
 ***** Hit categories
@@ -907,10 +907,10 @@ different particles.
   TC.logging.priority : string = "warning"
 
   #@description Activation of the clustering of prompt hits
-  TPC.processing_prompt_hits : boolean = 1
+  TPC.processing_prompt_hits : boolean = true
 
   #@description Activation of the clustering of delayed hits
-  TPC.processing_delayed_hits : boolean = 1
+  TPC.processing_delayed_hits : boolean = true
 
   #@description Maximum layer distance between two neighbour hits
   MTC.max_layer_distance : integer = 2
@@ -930,7 +930,7 @@ different particles.
 
 # #+BEGIN_SRC shell
 #   #@description Tracker pre clusterizer splitting chamber option
-#   TPC.split_chamber : boolean = 0
+#   TPC.split_chamber : boolean = false
 # #+END_SRC
 
 **** Cellular Automaton Tracker
@@ -954,16 +954,16 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
   TCD_label : string  = "TCD"
 
   #@description Activation of the clustering of prompt hits
-  TPC.processing_prompt_hits : boolean = 1
+  TPC.processing_prompt_hits : boolean = true
 
   #@description Activation of the clustering of delayed hits
-  TPC.processing_delayed_hits : boolean = 1
+  TPC.processing_delayed_hits : boolean = true
 
   # #@description The time width of the window for collecting candidate clusters of delayed hits (in microsecond)
   # TPC.delayed_hit_cluster_time : real = 10.0 # microsec
 
   #@description Pre-clusterizer processing separately both sides of the tracking chamber
-  TPC.split_chamber : boolean = 0
+  TPC.split_chamber : boolean = false
 
   #@description CAT logging level
   CAT.level : string = "mute"
@@ -972,10 +972,10 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
   # CAT.magnetic_field : real = 25 gauss
 
   #@description Use calorimeter hits information to help clustering
-  CAT.process_calo_hits : boolean = 1
+  CAT.process_calo_hits : boolean = true
 
   #@description Store CAT results as data properties
-  CAT.store_result_as_properties : boolean = 0
+  CAT.store_result_as_properties : boolean = false
 #+END_SRC
 
 **** SULTAN tracker
@@ -1002,22 +1002,22 @@ Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/
   TCD_label : string  = "TCD"
 
   #@description Activation of the clustering of prompt hits
-  TPC.processing_prompt_hits : boolean = 1
+  TPC.processing_prompt_hits : boolean = true
 
   #@description Activation of the clustering of delayed hits
-  TPC.processing_delayed_hits : boolean = 0
+  TPC.processing_delayed_hits : boolean = false
 
   # #@description The time width of the window for collecting candidate clusters of delayed hits (in microsecond)
   # TPC.delayed_hit_cluster_time : real = 10.0 # microsec
 
   #@description Activation of the clustering of delayed hits
-  TPC.split_chamber : boolean = 0
+  TPC.split_chamber : boolean = false
 
   #@description Use calorimeter hits information to help clustering
-  SULTAN.process_calo_hits : boolean = 1
+  SULTAN.process_calo_hits : boolean = true
 
   # #@description Clusterize with helix model
-  # SULTAN.clusterize_with_helix_model : boolean = 1
+  # SULTAN.clusterize_with_helix_model : boolean = true
 
   # #@description Force the SULTAN algorithm to consider a 25 gauss magnetic field (temporary trick)
   # SULTAN.magnetic_field : real = 25 gauss
@@ -1026,7 +1026,7 @@ Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/
   # SULTAN.max_time : real = 5000 ms
 
   # #@description Use online event display (devel only)
-  # SULTAN.print_event_display : boolean = 0
+  # SULTAN.print_event_display : boolean = false
 
   # #@description To be described
   # SULTAN.Emin : real  = 120 keV
@@ -1062,13 +1062,13 @@ Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/
   # SULTAN.sigma_z_factor : real  = 1.0
 
   # #@description Clusterize with endpoints
-  # SULTAN.use_endpoints : boolean = 1
+  # SULTAN.use_endpoints : boolean = true
 
   # #@description Clusterize with Legendre transform
-  # SULTAN.use_legendre : boolean = 0
+  # SULTAN.use_legendre : boolean = false
 
   # #@description Use clocks to time different parts of the software
-  # SULTAN.use_clocks : boolean = 0
+  # SULTAN.use_clocks : boolean = false
 #+END_SRC
 
 **** Tracker Cluster Path                                     :notworking:
@@ -1103,16 +1103,16 @@ by K. Bhardwaj.
   gg_cell_geom_category : string = "drift_cell_core"
 
   #@description Activation of the clustering of prompt hits
-  TPC.processing_prompt_hits : boolean = 1
+  TPC.processing_prompt_hits : boolean = true
 
   #@description Activation of the clustering of delayed hits
-  TPC.processing_delayed_hits : boolean = 1
+  TPC.processing_delayed_hits : boolean = true
 
   #@description The time width of the window for collecting candidate clusters of delayed hits (in microsecond)
   TPC.delayed_hit_cluster_time : real = 10.0 # microsec
 
   #@description Activation of the clustering of delayed hits
-  TPC.split_chamber : boolean = 1
+  TPC.split_chamber : boolean = true
 
   #@description TCP param
   TCP.gamma : integer = 3
@@ -1237,19 +1237,19 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   line.guess.logging.priority  : string = "error"
 
   #@description Use max radius (cell size) to construct initial guess point (1) or use the effective drift Geiger distance of the hit (0)
-  line.guess.use_max_radius    : boolean = 0
+  line.guess.use_max_radius    : boolean = false
 
   #@description Apply a factor (>0) to the max radius (devel mode)
   line.guess.max_radius_factor : real = 1.0
 
   #@description Use guess trust (1) or keep all of the guess fits (0) and select later
-  line.guess.use_guess_trust   : boolean = 0
+  line.guess.use_guess_trust   : boolean = false
 
   #@description Mode for trusting a fit guess ("counter", "barycenter")
   line.guess.guess_trust_mode  : string = "counter"
 
   #@description Fit the delayed geiger cluster
-  line.guess.fit_delayed_clusters : boolean = 1
+  line.guess.fit_delayed_clusters : boolean = true
 #+END_SRC
 
 ****** Fit parameters
@@ -1261,22 +1261,22 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   #line.store_number_of_solutions : integer = 2
 
   #@description Print the status of the fit stepper at each step (devel only)
-  line.fit.step_print_status : boolean = 0
+  line.fit.step_print_status : boolean = false
 
   #@description Plot the 2D view of the fitted data at each step (devel only)
-  line.fit.step_draw         : boolean = 0
+  line.fit.step_draw         : boolean = false
 
   #@description Track fit adds start time as an additionnal parameter to the fit (needs a calibration driver)
-  line.fit.fit_start_time    : boolean = 0
+  line.fit.fit_start_time    : boolean = false
 
   #@description Track fit recomputes the drift distance from drift time (needs a calibration driver)
-  line.fit.using_drift_time  : boolean = 0
+  line.fit.using_drift_time  : boolean = false
 
   #@description Allow a fitted track to begin not tangential to the first hit
-  line.fit.using_first       : boolean = 0
+  line.fit.using_first       : boolean = false
 
   #@description Allow a fitted track to end not tangential to the last hit
-  line.fit.using_last        : boolean = 0
+  line.fit.using_last        : boolean = false
 #+END_SRC
 ***** Helix fit parameters
 ****** Guess parameters
@@ -1285,19 +1285,19 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   trackfit.helix.guess.logging.priority  : string = "error"
 
   #@description Use max radius (cell size) to construct initial guess point (1) or use the effective drift Geiger distance of the hit (0)
-  trackfit.helix.guess.use_max_radius    : boolean = 0
+  trackfit.helix.guess.use_max_radius    : boolean = false
 
   #@description Apply a factor (>0) to the max radius (devel mode)
   trackfit.helix.guess.max_radius_factor : real = 1.0
 
   #@description Use guess trust (1) or keep all of the guess fits (0) and select later
-  trackfit.helix.guess.use_guess_trust   : boolean = 0
+  trackfit.helix.guess.use_guess_trust   : boolean = false
 
   #@description Mode for trusting a fit guess ("counter", "barycenter")
   trackfit.helix.guess.guess_trust_mode  : string = "counter"
 
   #@description Fit the delayed geiger cluster (by default, false since this mode is devoted to line fit)
-  trackfit.helix.guess.fit_delayed_clusters : boolean = 0
+  trackfit.helix.guess.fit_delayed_clusters : boolean = false
 #+END_SRC
 ****** Fit parameters
 #+BEGIN_SRC shell
@@ -1308,19 +1308,19 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
   #trackfit.helix.store_number_of_solutions : integer = 2
 
   #@description Print the status of the fit stepper at each step (devel only)
-  trackfit.helix.fit.step_print_status : boolean = 0
+  trackfit.helix.fit.step_print_status : boolean = false
 
   #@description Plot the 2D view of the fitted data at each step (devel only)
-  trackfit.helix.fit.step_draw         : boolean = 0
+  trackfit.helix.fit.step_draw         : boolean = false
 
   #@description Track fit recomputes the drift distance from drift time (needs a calibration driver)
-  trackfit.helix.fit.using_drift_time  : boolean = 0
+  trackfit.helix.fit.using_drift_time  : boolean = false
 
   #@description Allow a fitted track to begin not tangential to the first hit
-  trackfit.helix.fit.using_first       : boolean = 0
+  trackfit.helix.fit.using_first       : boolean = false
 
   #@description Allow a fitted track to end not tangential to the last hit
-  trackfit.helix.fit.using_last        : boolean = 0
+  trackfit.helix.fit.using_last        : boolean = false
 #+END_SRC
 
 ** Charged particle tracking module
@@ -1380,7 +1380,7 @@ implemented but the particle tracking module will stay unchanged.
   VED.logging.priority : string = "error"
 
   #@description Use linear extrapolation (not implemented yet)
-  VED.use_linear_extrapolation : boolean = 0
+  VED.use_linear_extrapolation : boolean = false
 #+END_SRC
 
 ***** Charge Computation Driver
@@ -1389,7 +1389,7 @@ implemented but the particle tracking module will stay unchanged.
   CCD.logging.priority : string = "warning"
 
   #@description Charge sign convention
-  CCD.charge_from_source : boolean = 1
+  CCD.charge_from_source : boolean = true
 #+END_SRC
 
 ***** Calorimeter Association Driver
@@ -1401,7 +1401,7 @@ implemented but the particle tracking module will stay unchanged.
   CAD.matching_tolerance : real as length = 100 mm
 
   #@description Use a simpler approach by looking for gieger cells in front of calo (not implemented yet)
-  CAD.use_last_geiger_cell : boolean = 0
+  CAD.use_last_geiger_cell : boolean = false
 #+END_SRC
 ***** Alpha Finder Driver
 #+BEGIN_SRC shell
@@ -1444,7 +1444,7 @@ implemented but the particle tracking module will stay unchanged.
   BGB.logging.priority : string = "error"
 
   #@description Enable the extrapolation to the source foil
-  BGB.add_foil_vertex_extrapolation : boolean = 1
+  BGB.add_foil_vertex_extrapolation : boolean = true
 
   #@description Minimal internal probability for foil vertex extrapolation
   BGB.add_foil_vertex_minimal_probability : real as fraction = 1 %
@@ -1497,7 +1497,7 @@ implemented but the particle tracking module will stay unchanged.
   BGB.logging.priority : string = "error"
 
   #@description Enable the extrapolation to the source foil
-  BGB.add_foil_vertex_extrapolation : boolean = 1
+  BGB.add_foil_vertex_extrapolation : boolean = true
 
   #@description Minimal internal probability for foil vertex extrapolation
   BGB.add_foil_vertex_minimal_probability : real as fraction = 1 %
@@ -1521,7 +1521,7 @@ calorimeter assocation in the base of the best probability and not in relation
 with the number of gammas.
 #+BEGIN_SRC shell
   #@description Prefer probability rather than size of gamma tracked
-  GT.use_absolute : boolean = 0
+  GT.use_absolute : boolean = false
 #+END_SRC
 
 ***** Maximum size of the gamma tracked
@@ -1574,7 +1574,7 @@ with the number of gammas.
 ***** PID mode
 #+BEGIN_SRC shell
   #@description The PID mode
-  PID.mode.label : boolean = 1
+  PID.mode.label : boolean = true
 #+END_SRC
 
 ***** Particle definitions
@@ -1940,10 +1940,10 @@ reconstruction ... but all of them will use the same geometry.
   # "@falaise:config/snemo/demonstrator/geometry/3.0/manager.conf"
 
   #@description Embedded SuperNEMO geometry manager must build its mapping lookup table
-  manager.build_mapping : boolean = 1
+  manager.build_mapping : boolean = true
 
   #@description Embedded geometry manager's mapping lookup table does not exclude any geometry category
-  manager.no_excluded_categories : boolean = 1
+  manager.no_excluded_categories : boolean = true
 #+END_SRC
 
 ** Cuts service
@@ -1975,7 +1975,7 @@ apply selection cuts on arbitrary data models.
   print_report : string = "table"
 
   #@description Flag to skip the preloading of pre-registered cuts
-  factory.no_preload : boolean = 0
+  factory.no_preload : boolean = false
 
   #@description A list of files that contains definition of cuts
   cuts.configuration_files : string[8] as path =                         \
@@ -2074,7 +2074,7 @@ This skeleton code allows to check the availability of a data bank.
   EH_label : string = "EH"
 
   #@description Activate list of event ids mode
-  mode.list_of_event_ids : boolean = 1
+  mode.list_of_event_ids : boolean = true
 
   #@description Filename with event id
   list_of_event_ids.file : string as path = "./test.lis"
@@ -2134,7 +2134,7 @@ This cuts puts together all the previous declared cuts.
   CD_label : string = "CD"
 
   #@description Activate the check for a special boolean (flag) property
-  mode.has_hit_category : boolean = 1
+  mode.has_hit_category : boolean = true
 
   #@description Name of the MC hit category to be checked
   has_hit_category.category : string = "calorimeter"
@@ -2161,7 +2161,7 @@ This cuts puts together all the previous declared cuts.
   CD_label : string = "CD"
 
   #@description Activate the check for multiplicity of calibrated hits
-  mode.range_hit_category : boolean = 1
+  mode.range_hit_category : boolean = true
 
   #@description Name of the hit category to be checked
   range_hit_category.category : string = "calorimeter"
@@ -2187,7 +2187,7 @@ This cuts puts together all the previous declared cuts.
   CD_label : string = "CD"
 
   #@description Activate the check for a special boolean (flag) property
-  mode.has_hit_category : boolean = 1
+  mode.has_hit_category : boolean = true
 
   #@description Name of the hit category to be checked
   has_hit_category.category : string = "tracker"
@@ -2214,7 +2214,7 @@ This cuts puts together all the previous declared cuts.
   CD_label : string = "CD"
 
   #@description Activate the check for multiplicity of calibrated hits
-  mode.range_hit_category : boolean = 1
+  mode.range_hit_category : boolean = true
 
   #@description Name of the hit category to be checked
   range_hit_category.category : string = "tracker"
@@ -2240,7 +2240,7 @@ This cuts puts together all the previous declared cuts.
   CD_label : string = "CD"
 
   #@description Activate the check for delayed trait bit
-  mode.tracker_hit_is_delayed : boolean = 1
+  mode.tracker_hit_is_delayed : boolean = true
 
   #@description Delayed time of the tracker hit
   tracker_hit_is_delayed.delay_time : real as time = 15 us
@@ -2298,7 +2298,7 @@ This cuts puts together all the previous declared cuts.
   TCD_label : string = "TCD"
 
   #@description Activate the check of clusters presence
-  mode.has_cluster : boolean = 1
+  mode.has_cluster : boolean = true
 #+END_SRC
 **** Select number of cluster
 #+BEGIN_SRC shell
@@ -2314,7 +2314,7 @@ This cuts puts together all the previous declared cuts.
   TCD_label : string = "TCD"
 
   #@description Activate the check for multiplicity of clusters
-  mode.range_cluster : boolean = 1
+  mode.range_cluster : boolean = true
 
   #@description Minimal number of clusters
   range_cluster.min : integer = 2
@@ -2334,7 +2334,7 @@ This cuts puts together all the previous declared cuts.
   TCD_label : string = "TCD"
 
   #@description Activate the check for multiplicity of clusters
-  mode.range_tracker_hit : boolean = 1
+  mode.range_tracker_hit : boolean = true
 
   #@description Minimal number of cells in cluster
   range_tracker_hit.min : integer = 1
@@ -2362,7 +2362,7 @@ since we want to remove thess events, we build a =nor_cut= to keep
   TCD_label : string = "TCD"
 
   #@description Activate the check of unclustered hits
-  mode.has_unclustered_hits : boolean = 1
+  mode.has_unclustered_hits : boolean = true
 #+END_SRC
 ***** Select number of unclustered hits
 #+BEGIN_SRC shell
@@ -2378,7 +2378,7 @@ since we want to remove thess events, we build a =nor_cut= to keep
   TCD_label : string = "TCD"
 
   #@description Activate the check for multiplicity of unclustered hits
-  mode.range_unclustered_hits : boolean = 1
+  mode.range_unclustered_hits : boolean = true
 
   #@description Minimal number of unclustured hits
   range_unclustered_hits.min : integer = 4
@@ -2440,15 +2440,54 @@ unclustered hits.
   <<has_bank("has_tracker_trajectory_data", bname="TTD")>>
 #+END_SRC
 
+**** Check for default solution
+#+BEGIN_SRC shell
+  [name="has_solution_cut" type="snemo::cut::tracker_trajectory_data_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select event with default solution"
+
+  #@description Logging priority
+  logging.priority : string = "warning"
+
+  #@description The label/name of the 'tracker trajectory data' bank (mandatory)
+  TTD_label : string = "TTD"
+
+  #@description Activate the check for default solution
+  mode.has_solution : boolean = true
+#+END_SRC
+
+**** Select only good trajectories
+#+BEGIN_SRC shell
+  [name="pvalue_range_cut" type="snemo::cut::tracker_trajectory_data_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select event with good p-value trajectory"
+
+  #@description Logging priority
+  logging.priority : string = "warning"
+
+  #@description The label/name of the 'tracker trajectory data' bank (mandatory)
+  TTD_label : string = "TTD"
+
+  #@description Activate the check for good p-value trajectories
+  mode.range_pvalue : boolean = true
+
+  #@description Minimal value for p-value
+  range_pvalue.min : real as fraction = 10 %
+#+END_SRC
+
 **** Multiple cuts
 #+CAPTION: *Multi-selection for validating tracker trajectory process.*
 #+TBLNAME: tracker_trajectory_cuts
 |-----------------------------|
 | has_tracker_trajectory_data |
+| has_solution_cut            |
+| pvalue_range_cut            |
 |-----------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi(cname="tracker_trajectory_cut", "and", 1, tracker_trajectory_cuts)>>
+  <<multi(cname="tracker_trajectory_cut", "and", 3, tracker_trajectory_cuts)>>
 #+END_SRC
 
 *** Particle track selection
@@ -2479,7 +2518,7 @@ unclustered hits.
   PTD_label : string = "PTD"
 
   #@description Activate the check for a special boolean (flag) property
-  mode.has_particles : boolean = 1
+  mode.has_particles : boolean = true
 #+END_SRC
 **** Select number of particles
 #+BEGIN_SRC shell
@@ -2495,7 +2534,7 @@ unclustered hits.
   PTD_label : string = "PTD"
 
   #@description Activate the check for multiplicity of particles trajectories
-  mode.range_particles : boolean = 1
+  mode.range_particles : boolean = true
 
   #@description Minimal number of particle track
   range_particles.min : integer = 2
@@ -2519,7 +2558,7 @@ Remove event with non associated calorimeters hits.
   PTD_label : string = "PTD"
 
   #@description Activate the check for non associated calorimeter hits
-  mode.has_non_associated_calorimeter_hits : boolean = 1
+  mode.has_non_associated_calorimeter_hits : boolean = true
 #+END_SRC
 
 #+BEGIN_SRC shell
@@ -2574,7 +2613,7 @@ alpha in the context of SuperNEMO. Since these cuts apply on every
   echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description The running mode of this cut instance'
-  echo 'mode.has_charge : boolean = 1'
+  echo 'mode.has_charge : boolean = true'
   echo
   echo '#@description Request '$type' charged particle'
   echo 'has_charge.type : string = "'$type'"'
@@ -2593,7 +2632,7 @@ alpha in the context of SuperNEMO. Since these cuts apply on every
   echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description The running mode of this cut instance'
-  echo 'mode.has_vertex : boolean = 1'
+  echo 'mode.has_vertex : boolean = true'
   echo
   echo '#@description Request '$type' vertex'
   echo 'has_vertex.type : string = "'$type'"'
@@ -2612,7 +2651,7 @@ alpha in the context of SuperNEMO. Since these cuts apply on every
   echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description The running mode of this cut instance'
-  echo 'mode.has_associated_calorimeter_hits : boolean = 1'
+  echo 'mode.has_associated_calorimeter_hits : boolean = true'
 #+END_SRC
 
 #+NAME: has_no_associated_calorimeter_hits
@@ -2628,7 +2667,7 @@ alpha in the context of SuperNEMO. Since these cuts apply on every
   echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description The running mode of this cut instance'
-  echo 'mode.has_associated_calorimeter_hits : boolean = 1'
+  echo 'mode.has_associated_calorimeter_hits : boolean = true'
   echo
   echo '[name="'$cname'" type="cuts::not_cut"]'
   echo
@@ -2654,7 +2693,7 @@ alpha in the context of SuperNEMO. Since these cuts apply on every
   echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description The running mode of this cut instance'
-  echo 'mode.range_associated_calorimeter_hits : boolean = 1'
+  echo 'mode.range_associated_calorimeter_hits : boolean = true'
   echo
   if [ ! -z $category ]; then
       echo '#@description The calorimeter category to be checked'
@@ -2760,7 +2799,7 @@ An alpha is a =particle_track= having
     logging.priority : string = "error"
 
     #@description The running mode of this cut instance
-    mode.has_delayed_cluster : boolean = 1
+    mode.has_delayed_cluster : boolean = true
   #+END_SRC
 - a vertex on the source foil
   #+BEGIN_SRC shell :noweb yes
@@ -2774,9 +2813,10 @@ An alpha is a =particle_track= having
 #+CAPTION: *Selections used to define an alpha track.*
 #+TBLNAME: alpha_definition
 |----------------------------|
+| alpha::delayed_cluster     |
 | alpha::undefined_charge    |
-| alpha::foil_vertex         |
 | alpha::no_calo_association |
+| alpha::foil_vertex         |
 |----------------------------|
 
 #+BEGIN_SRC shell :noweb yes
@@ -2824,7 +2864,7 @@ and maybe more in the future.
   echo 'PTD_label : string = "PTD"'
   echo
   echo '#@description The running mode of this cut instance'
-  echo 'mode.has_particles : boolean = 1'
+  echo 'mode.has_particles : boolean = true'
 #+END_SRC
 
 ***** Check pattern id presence
@@ -2840,7 +2880,7 @@ and maybe more in the future.
   echo 'logging.priority : string = "'$logging'"'
   echo
   echo '#@description The running mode of this cut instance'
-  echo 'mode.has_pattern_id : boolean = 1'
+  echo 'mode.has_pattern_id : boolean = true'
 #+END_SRC
 
 **** 2\beta selection
@@ -2864,7 +2904,7 @@ Define 2\beta events channel
   logging.priority : string = "error"
 
   #@description Activate the check for pattern id label
-  mode.pattern_id : boolean = 1
+  mode.pattern_id : boolean = true
 
   #@description Label of the topology pattern id
   pattern_id.label : string = "2e"
@@ -2881,7 +2921,7 @@ Define 2\beta events channel
     logging.priority : string = "error"
 
     #@description Activate the check for internal probability
-    mode.has_internal_probability : boolean = 1
+    mode.has_internal_probability : boolean = true
   #+END_SRC
 
 - select events with good internal probability :
@@ -2895,7 +2935,7 @@ Define 2\beta events channel
     logging.priority : string = "error"
 
     #@description Activate the check for internal probability value
-    mode.range_internal_probability : boolean = 1
+    mode.range_internal_probability : boolean = true
 
     #@description Minimal value for internal probability
     range_internal_probability.min : real as fraction = 1 %
@@ -2940,7 +2980,7 @@ Define 1\beta events channel
     logging.priority : string = "error"
 
     #@description Activate the check for pattern id label
-    mode.pattern_id : boolean = 1
+    mode.pattern_id : boolean = true
 
     #@description Label of the topology pattern id
     pattern_id.label : string = "1e"
@@ -2981,7 +3021,7 @@ Define 1\beta1\gamma events channel
     logging.priority : string = "error"
 
     #@description Activate the check for pattern id label
-    mode.pattern_id : boolean = 1
+    mode.pattern_id : boolean = true
 
     #@description Label of the topology pattern id
     pattern_id.label : string = "1e1g"
@@ -3022,7 +3062,7 @@ Define 1\beta1\alpha events topology
     logging.priority : string = "error"
 
     #@description Activate the check for pattern id label
-    mode.pattern_id : boolean = 1
+    mode.pattern_id : boolean = true
 
     #@description Label of the topology pattern id
     pattern_id.label : string = "1e1a"

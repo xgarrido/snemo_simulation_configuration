@@ -292,7 +292,7 @@ Combination of several =genbb= generators can be done using
   logging.priority : string = "warning"
 
   #@description Assign unique generation id
-  assign_generation_ids : boolean = 1
+  assign_generation_ids : boolean = true
 
   #@description The mode ("timing", "plain_probability" or "activity")
   mode : string = "time"
@@ -369,7 +369,7 @@ Combination of several =genbb= generators can be done using
   logging.priority : string = "warning"
 
   #@description Assign unique generation id
-  assign_generation_ids : boolean = 1
+  assign_generation_ids : boolean = true
 
   #@description The mode ("timing", "plain_probability" or "activity")
   mode : string = "time"
