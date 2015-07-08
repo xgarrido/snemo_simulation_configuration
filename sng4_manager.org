@@ -84,7 +84,7 @@ Main configuration file for the detector construction user object.
 *** Logging priority
 #+BEGIN_SRC shell
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = "fatal"
 #+END_SRC
 
 *** GDML scheme and options

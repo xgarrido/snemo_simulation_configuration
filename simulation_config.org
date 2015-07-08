@@ -516,7 +516,7 @@ Most used event generators are :
 
 #+BEGIN_SRC shell
   #@description The event generator PRNG label
-  manager.event_generator_name : string  = "electron_monokinetic"
+  manager.event_generator_name : string  = "Se82.0nubb"
 #+END_SRC
 **** G4 manager
 The full =geant4= configuration can be found in the [[file:./sng4_manager.org][sng4_manager]] file.
@@ -1653,57 +1653,6 @@ with the number of gammas.
   AMD.logging.priority : string = "error"
 #+END_SRC
 
-** Topology chain
-:PROPERTIES:
-:TANGLE: topology_modules.conf
-:END:
-
-*** Insert preamble
-#+BEGIN_SRC shell :noweb yes
-  <<module_preamble>>
-#+END_SRC
-
-*** 2\beta selection
-#+BEGIN_SRC shell :noweb yes
-  <<output_module("io_output_2e_channel_selected")>>
-  <<output_module("io_output_2e_channel_non_selected")>>
-  <<if_module("process_2e_channel_cut", cut="2e_channel_cut", then="io_output_2e_channel_selected", else="io_output_2e_channel_non_selected")>>
-#+END_SRC
-
-*** 1\beta selection
-#+BEGIN_SRC shell :noweb yes
-  <<output_module("io_output_1e_channel_selected")>>
-  <<output_module("io_output_1e_channel_non_selected")>>
-  <<if_module("process_1e_channel_cut", cut="1e_channel_cut", then="io_output_1e_channel_selected", else="io_output_1e_channel_non_selected")>>
-#+END_SRC
-
-*** 1\beta/1\gamma selection
-#+BEGIN_SRC shell :noweb yes
-  <<output_module("io_output_1e1g_channel_selected")>>
-  <<output_module("io_output_1e1g_channel_non_selected")>>
-  <<if_module("process_1e1g_channel_cut", cut="1e1g_channel_cut", then="io_output_1e1g_channel_selected", else="io_output_1e1g_channel_non_selected")>>
-#+END_SRC
-*** 1\beta/1\alpha selection
-#+BEGIN_SRC shell :noweb yes
-  <<output_module("io_output_1e1a_channel_selected")>>
-  <<output_module("io_output_1e1a_channel_non_selected")>>
-  <<if_module("process_1e1a_channel_cut", cut="1e1a_channel_cut", then="io_output_1e1a_channel_selected", else="io_output_1e1a_channel_non_selected")>>
-#+END_SRC
-
-*** Full topology
-#+CAPTION: *Topology chain.*
-#+TBLNAME: channel_chain
-|--------------------------|
-| minimum_bias_chain       |
-| process_2e_channel_cut   |
-| process_1e_channel_cut   |
-| process_1e1g_channel_cut |
-| process_1e1a_channel_cut |
-|--------------------------|
-
-#+BEGIN_SRC shell :noweb yes
-  <<chain_module("channel_chain", 5, channel_chain)>>
-#+END_SRC
 ** Chain modules
 :PROPERTIES:
 :TANGLE: chain_modules.conf
@@ -1867,6 +1816,48 @@ modules it contains.
 
 #+BEGIN_SRC shell :noweb yes
   <<chain_module("minimum_bias_chain", 11, minimum_bias_chain)>>
+#+END_SRC
+*** Channel chain
+**** 2\beta selection
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_2e_channel_selected")>>
+  <<output_module("io_output_2e_channel_non_selected")>>
+  <<if_module("process_2e_channel_cut", cut="2e::channel_cut", then="io_output_2e_channel_selected", else="io_output_2e_channel_non_selected")>>
+#+END_SRC
+
+**** 1\beta selection
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_1e_channel_selected")>>
+  <<output_module("io_output_1e_channel_non_selected")>>
+  <<if_module("process_1e_channel_cut", cut="1e::channel_cut", then="io_output_1e_channel_selected", else="io_output_1e_channel_non_selected")>>
+#+END_SRC
+
+**** 1\beta/1\gamma selection
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_1e1g_channel_selected")>>
+  <<output_module("io_output_1e1g_channel_non_selected")>>
+  <<if_module("process_1e1g_channel_cut", cut="1e1g::channel_cut", then="io_output_1e1g_channel_selected", else="io_output_1e1g_channel_non_selected")>>
+#+END_SRC
+**** 1\beta/1\alpha selection
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_1e1a_channel_selected")>>
+  <<output_module("io_output_1e1a_channel_non_selected")>>
+  <<if_module("process_1e1a_channel_cut", cut="1e1a::channel_cut", then="io_output_1e1a_channel_selected", else="io_output_1e1a_channel_non_selected")>>
+#+END_SRC
+
+**** Full topology
+#+CAPTION: *Topology chain.*
+#+TBLNAME: channel_chain
+|--------------------------|
+| minimum_bias_chain       |
+| process_2e_channel_cut   |
+| process_1e_channel_cut   |
+| process_1e1g_channel_cut |
+| process_1e1a_channel_cut |
+|--------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<chain_module("channel_chain", 5, channel_chain)>>
 #+END_SRC
 ** Miscellaneous
 #+CAPTION: *Reformating data.*
@@ -2895,7 +2886,7 @@ Define 2\beta events channel
 
 - select 2 electrons event topology :
   #+BEGIN_SRC shell
-  [name="2e_topology_pattern" type="snemo::cut::topology_data_cut"]
+  [name="2e::topology_pattern" type="snemo::cut::topology_data_cut"]
 
   #@description Cut description
   cut.description : string = "Select 2 electrons topology pattern"
@@ -2912,7 +2903,7 @@ Define 2\beta events channel
 
 - select events with internal probability :
   #+BEGIN_SRC shell
-    [name="2e_has_internal_probability" type="snemo::cut::channel_2e_cut"]
+    [name="2e::has_internal_probability" type="snemo::cut::channel_2e_cut"]
 
     #@description Cut description
     cut.description : string = "Select events with internal probability"
@@ -2926,7 +2917,7 @@ Define 2\beta events channel
 
 - select events with good internal probability :
   #+BEGIN_SRC shell
-    [name="2e_range_internal_probability" type="snemo::cut::channel_2e_cut"]
+    [name="2e::range_internal_probability" type="snemo::cut::channel_2e_cut"]
 
     #@description Cut description
     cut.description : string = "Select good internal probability"
@@ -2945,17 +2936,17 @@ The following cut combines all the previous ones to define what 2 electrons
 events are
 #+CAPTION: *Definition of 2 electrons channel.*
 #+TBLNAME: 2e_channel_cut
-|-------------------------------|
-| 2e::has_particle_track_data   |
-| 2e::has_particles             |
-| 2e::has_pattern_id            |
-| 2e_topology_pattern           |
-| 2e_has_internal_probability   |
-| 2e_range_internal_probability |
-|-------------------------------|
+|--------------------------------|
+| 2e::has_particle_track_data    |
+| 2e::has_particles              |
+| 2e::has_pattern_id             |
+| 2e::topology_pattern           |
+| 2e::has_internal_probability   |
+| 2e::range_internal_probability |
+|--------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("2e_channel_cut", "and", 6, 2e_channel_cut)>>
+  <<multi("2e::channel_cut", "and", 6, 2e_channel_cut)>>
 #+END_SRC
 
 **** 1\beta selection
@@ -2971,7 +2962,7 @@ Define 1\beta events channel
 
 - select 1 electron event topology :
   #+BEGIN_SRC shell
-    [name="1e_cut" type="snemo::cut::topology_data_cut"]
+    [name="1e::topology_pattern" type="snemo::cut::topology_data_cut"]
 
     #@description Cut description
     cut.description : string = "Select 1 electron topology events"
@@ -2992,11 +2983,11 @@ Define 1\beta events channel
 | 1e::has_particle_track_data |
 | 1e::has_particles           |
 | 1e::has_pattern_id          |
-| 1e_cut                      |
+| 1e::topology_pattern        |
 |-----------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("1e_channel_cut", "and", 4, 1e_channel_cut)>>
+  <<multi("1e::channel_cut", "and", 4, 1e_channel_cut)>>
 #+END_SRC
 
 **** 1\beta1\gamma selection
@@ -3012,7 +3003,7 @@ Define 1\beta1\gamma events channel
 
 - select 1 electron, 1 gamma event topology :
   #+BEGIN_SRC shell
-    [name="1e1g_cut" type="snemo::cut::topology_data_cut"]
+    [name="1e1g::topology_pattern" type="snemo::cut::topology_data_cut"]
 
     #@description Cut description
     cut.description : string = "Select 1 electron/1 gamma topology events"
@@ -3033,11 +3024,11 @@ Define 1\beta1\gamma events channel
 | 1e1g::has_particle_track_data |
 | 1e1g::has_particles           |
 | 1e1g::has_pattern_id          |
-| 1e1g_cut                      |
+| 1e1g::topology_pattern        |
 |-------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("1e1g_channel_cut", "and", 4, 1e1g_channel_cut)>>
+  <<multi("1e1g::channel_cut", "and", 4, 1e1g_channel_cut)>>
 #+END_SRC
 
 **** 1\beta1\alpha selection
@@ -3053,7 +3044,7 @@ Define 1\beta1\alpha events topology
 
 - select 1 electron, 1 alpha delayed event topology :
   #+BEGIN_SRC shell
-    [name="1e1a_cut" type="snemo::cut::topology_data_cut"]
+    [name="1e1a::topology_pattern" type="snemo::cut::topology_data_cut"]
 
     #@description Cut description
     cut.description : string = "Select 1 electron/1 alpha topology events"
@@ -3074,11 +3065,11 @@ Define 1\beta1\alpha events topology
 | 1e1a::has_particle_track_data |
 | 1e1a::has_particles           |
 | 1e1a::has_pattern_id          |
-| 1e1a_cut                      |
+| 1e1a::topology_pattern        |
 |-------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("1e1a_channel_cut", "and", 4, 1e1a_channel_cut)>>
+  <<multi("1e1a::channel_cut", "and", 4, 1e1a_channel_cut)>>
 #+END_SRC
 
 * Running SN@ilWare processing chain
