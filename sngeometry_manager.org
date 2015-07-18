@@ -303,7 +303,7 @@ To take into account effects from the calorimeter magnetic shielding as shown in
   magnetic_field.unit : string = "gauss"
 
   #@description Bz field polynomial degree
-  magnetic_field.Bz.x.polynomial_degree : integer = 3
+  magnetic_field.Bz.x.polynomial_degree : integer = 2
 
   #@description Bz x-parameters
   magnetic_field.Bz.x.polynomial_parameters : real[3] = 25.0 0.0 -8e-5
