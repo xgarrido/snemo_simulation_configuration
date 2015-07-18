@@ -7,6 +7,7 @@
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Xavier Garrido" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="css/styles.css" />
                <link rel="stylesheet" href="css/org-pygments.css" />
                <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
@@ -87,28 +88,28 @@ for the JavaScript code in this tag.
 <h2></h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Introduction</a></li>
-<li><a href="#sec-2">2. Manager configuration</a>
+<li><a href="#orgheadline1">1. Introduction</a></li>
+<li><a href="#orgheadline3">2. Manager configuration</a>
 <ul>
-<li><a href="#sec-2-1">2.1. Genbb manager configuration</a></li>
+<li><a href="#orgheadline2">2.1. Genbb manager configuration</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3. Genbb wrappers</a>
+<li><a href="#orgheadline21">3. Genbb wrappers</a>
 <ul>
-<li><a href="#sec-3-1">3.1. 2&nu;2&beta; isotope with energy cut</a></li>
-<li><a href="#sec-3-2">3.2. &nbsp;<sup>96</sup>Zr excited state</a></li>
-<li><a href="#sec-3-3">3.3. &nbsp;<sup>222</sup>Rn in the tracking chamber</a></li>
-<li><a href="#sec-3-4">3.4. Radioelement wrappers</a></li>
-<li><a href="#sec-3-5">3.5. Single particle generators</a></li>
-<li><a href="#sec-3-6">3.6. Combined generators</a></li>
+<li><a href="#orgheadline4">3.1. 2&nu;2&beta; isotope with energy cut</a></li>
+<li><a href="#orgheadline5">3.2. &nbsp;<sup>96</sup>Zr excited state</a></li>
+<li><a href="#orgheadline6">3.3. &nbsp;<sup>222</sup>Rn in the tracking chamber</a></li>
+<li><a href="#orgheadline8">3.4. Radioelement wrappers</a></li>
+<li><a href="#orgheadline17">3.5. Single particle generators</a></li>
+<li><a href="#orgheadline20">3.6. Combined generators</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The <code>genbb</code> package is dedicated to the generation of double beta decay and/or
@@ -121,12 +122,12 @@ More details concerning the use of <code>genbb</code> can be found in <a href="h
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Manager configuration</h2>
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">2</span> Manager configuration</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Genbb manager configuration</h3>
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><span class="section-number-3">2.1</span> Genbb manager configuration</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Here, general options such as verbosity, debug flags are passed to <code>genbb</code>
@@ -152,8 +153,8 @@ generators.configuration_files : string[5] as <span class="org-variable-name">pa
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Genbb wrappers</h2>
+<div id="outline-container-orgheadline21" class="outline-2">
+<h2 id="orgheadline21"><span class="section-number-2">3</span> Genbb wrappers</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 This section holds the configuration of several <code>genbb</code> wrappers.
@@ -168,8 +169,8 @@ This section holds the configuration of several <code>genbb</code> wrappers.
 </div>
 </div>
 
-<div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 2&nu;2&beta; isotope with energy cut</h3>
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">3.1</span> 2&nu;2&beta; isotope with energy cut</h3>
 <div class="outline-text-3" id="text-3-1">
 <div class="org-src-container">
 
@@ -184,8 +185,8 @@ energy_min      : real as <span class="org-variable-name">energy</span> = 2.0 Me
 </div>
 </div>
 </div>
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> &nbsp;<sup>96</sup>Zr excited state</h3>
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">3.2</span> &nbsp;<sup>96</sup>Zr excited state</h3>
 <div class="outline-text-3" id="text-3-2">
 <div class="org-src-container">
 
@@ -200,8 +201,8 @@ decay_dbd_mode  : <span class="org-variable-name">integer</span> = 4 <span class
 </div>
 </div>
 
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> &nbsp;<sup>222</sup>Rn in the tracking chamber</h3>
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">3.3</span> &nbsp;<sup>222</sup>Rn in the tracking chamber</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Here, we use the same definition as <code>Bi214_Po214</code> that can be find in
@@ -220,8 +221,8 @@ decay_isotope   : <span class="org-variable-name">string</span>  = <span class="
 </div>
 </div>
 </div>
-<div id="outline-container-sec-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Radioelement wrappers</h3>
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">3.4</span> Radioelement wrappers</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 This part basically provides additionnal event generator wrappers for
@@ -229,8 +230,8 @@ SuperNEMO.
 </p>
 </div>
 
-<div id="outline-container-sec-3-4-1" class="outline-4">
-<h4 id="sec-3-4-1"><span class="section-number-4">3.4.1</span> &nbsp;<sup>214</sup>Pb 0&nu;&beta;&beta;</h4>
+<div id="outline-container-orgheadline7" class="outline-4">
+<h4 id="orgheadline7"><span class="section-number-4">3.4.1</span> &nbsp;<sup>214</sup>Pb 0&nu;&beta;&beta;</h4>
 <div class="outline-text-4" id="text-3-4-1">
 <p>
 Following a <a href="http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=2946">talk</a> given by Vladimir Treytak during Bratislava collaboration
@@ -250,8 +251,8 @@ decay_dbd_mode  : <span class="org-variable-name">integer</span> = 1
 </div>
 </div>
 
-<div id="outline-container-sec-3-5" class="outline-3">
-<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Single particle generators</h3>
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17"><span class="section-number-3">3.5</span> Single particle generators</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 Here, single particle can be generated using different energy distribution : fix
@@ -260,8 +261,8 @@ distribution or following a tabulated energy spectrum.
 </p>
 </div>
 
-<div id="outline-container-sec-3-5-1" class="outline-4">
-<h4 id="sec-3-5-1"><span class="section-number-4">3.5.1</span> Single monokinetic electron</h4>
+<div id="outline-container-orgheadline9" class="outline-4">
+<h4 id="orgheadline9"><span class="section-number-4">3.5.1</span> Single monokinetic electron</h4>
 <div class="outline-text-4" id="text-3-5-1">
 <div class="org-src-container">
 
@@ -285,8 +286,8 @@ emission_direction : <span class="org-variable-name">string</span> = <span class
 </div>
 </div>
 
-<div id="outline-container-sec-3-5-2" class="outline-4">
-<h4 id="sec-3-5-2"><span class="section-number-4">3.5.2</span> Single electron with flat energy distribution</h4>
+<div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10"><span class="section-number-4">3.5.2</span> Single electron with flat energy distribution</h4>
 <div class="outline-text-4" id="text-3-5-2">
 <div class="org-src-container">
 
@@ -313,8 +314,8 @@ emission_direction : <span class="org-variable-name">string</span> = <span class
 </div>
 </div>
 
-<div id="outline-container-sec-3-5-3" class="outline-4">
-<h4 id="sec-3-5-3"><span class="section-number-4">3.5.3</span> Single electron with gaussian energy distribution</h4>
+<div id="outline-container-orgheadline11" class="outline-4">
+<h4 id="orgheadline11"><span class="section-number-4">3.5.3</span> Single electron with gaussian energy distribution</h4>
 <div class="outline-text-4" id="text-3-5-3">
 <div class="org-src-container">
 
@@ -341,8 +342,8 @@ emission_direction : <span class="org-variable-name">string</span> = <span class
 </div>
 </div>
 
-<div id="outline-container-sec-3-5-4" class="outline-4">
-<h4 id="sec-3-5-4"><span class="section-number-4">3.5.4</span> Single electron with conic emission</h4>
+<div id="outline-container-orgheadline12" class="outline-4">
+<h4 id="orgheadline12"><span class="section-number-4">3.5.4</span> Single electron with conic emission</h4>
 <div class="outline-text-4" id="text-3-5-4">
 <div class="org-src-container">
 
@@ -378,8 +379,8 @@ energy : real as <span class="org-variable-name">energy</span> = 3000 keV
 </div>
 </div>
 
-<div id="outline-container-sec-3-5-5" class="outline-4">
-<h4 id="sec-3-5-5"><span class="section-number-4">3.5.5</span> Single gamma with monokinetic energy</h4>
+<div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13"><span class="section-number-4">3.5.5</span> Single gamma with monokinetic energy</h4>
 <div class="outline-text-4" id="text-3-5-5">
 <div class="org-src-container">
 
@@ -402,8 +403,8 @@ emission_direction : <span class="org-variable-name">string</span> = <span class
 </div>
 </div>
 </div>
-<div id="outline-container-sec-3-5-6" class="outline-4">
-<h4 id="sec-3-5-6"><span class="section-number-4">3.5.6</span> Single gamma with flat energy distribution</h4>
+<div id="outline-container-orgheadline14" class="outline-4">
+<h4 id="orgheadline14"><span class="section-number-4">3.5.6</span> Single gamma with flat energy distribution</h4>
 <div class="outline-text-4" id="text-3-5-6">
 <div class="org-src-container">
 
@@ -430,8 +431,8 @@ max_energy : real as <span class="org-variable-name">energy</span> = 3. MeV
 </div>
 </div>
 
-<div id="outline-container-sec-3-5-7" class="outline-4">
-<h4 id="sec-3-5-7"><span class="section-number-4">3.5.7</span> Multi-&gamma;-rays</h4>
+<div id="outline-container-orgheadline15" class="outline-4">
+<h4 id="orgheadline15"><span class="section-number-4">3.5.7</span> Multi-&gamma;-rays</h4>
 <div class="outline-text-4" id="text-3-5-7">
 <div class="org-src-container">
 
@@ -460,10 +461,35 @@ multi_rays.probabilities : <span class="org-variable-name">real</span>[9] = 0.02
 </div>
 </div>
 </div>
+
+<div id="outline-container-orgheadline16" class="outline-4">
+<h4 id="orgheadline16"><span class="section-number-4">3.5.8</span> Single monokinetic alpha</h4>
+<div class="outline-text-4" id="text-3-5-8">
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"alpha_monokinetic"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::single_particle_generator"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generated particle ("electron", "positron", "gamma", "alpha"):</span>
+particle_name : <span class="org-variable-name">string</span> = <span class="org-string">"alpha"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):</span>
+mode : <span class="org-variable-name">string</span> = <span class="org-string">"monokinetic"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Value of the particle energy</span>
+energy : real as <span class="org-variable-name">energy</span> = 7000. keV
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag for random emission</span>
+emission_direction : <span class="org-variable-name">string</span> = <span class="org-string">"randomized"</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 
-<div id="outline-container-sec-3-6" class="outline-3">
-<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Combined generators</h3>
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">3.6</span> Combined generators</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
 Combination of several <code>genbb</code> generators can be done using
@@ -471,12 +497,12 @@ Combination of several <code>genbb</code> generators can be done using
 </p>
 </div>
 
-<div id="outline-container-sec-3-6-1" class="outline-4">
-<h4 id="sec-3-6-1"><span class="section-number-4">3.6.1</span> Simultaneous &gamma;-rays</h4>
+<div id="outline-container-orgheadline18" class="outline-4">
+<h4 id="orgheadline18"><span class="section-number-4">3.6.1</span> Simultaneous &gamma;-rays</h4>
 <div class="outline-text-4" id="text-3-6-1">
 <div class="org-src-container">
 
-<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"multi_particles"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::combined_particle_generator"</span>]
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"multi_gamma_particles"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::combined_particle_generator"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config A model that generates several particles  at the same time</span>
 
@@ -484,7 +510,7 @@ Combination of several <code>genbb</code> generators can be done using
 logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Assign unique generation id</span>
-assign_generation_ids : <span class="org-variable-name">boolean</span> = 1
+assign_generation_ids : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode ("timing", "plain_probability" or "activity")</span>
 mode : <span class="org-variable-name">string</span> = <span class="org-string">"time"</span>
@@ -516,11 +542,106 @@ generators.gamma2.fixed_time : real as <span class="org-variable-name">time</spa
 </div>
 </div>
 </div>
+
+<div id="outline-container-orgheadline19" class="outline-4">
+<h4 id="orgheadline19"><span class="section-number-4">3.6.2</span> Multi-particles gun</h4>
+<div class="outline-text-4" id="text-3-6-2">
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"electron_monokinetic1"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::single_particle_generator"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generated particle ("electron", "positron", "gamma", "alpha"):</span>
+particle_name : <span class="org-variable-name">string</span> = <span class="org-string">"electron"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):</span>
+mode : <span class="org-variable-name">string</span> = <span class="org-string">"monokinetic"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Value of the particle energy</span>
+energy : real as <span class="org-variable-name">energy</span> = 1000. keV
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag for random emission</span>
+emission_direction : <span class="org-variable-name">string</span> = <span class="org-string">"randomized"</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"electron_monokinetic2"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::single_particle_generator"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Generated particle ("electron", "positron", "gamma", "alpha"):</span>
+particle_name : <span class="org-variable-name">string</span> = <span class="org-string">"electron"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):</span>
+mode : <span class="org-variable-name">string</span> = <span class="org-string">"monokinetic"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Value of the particle energy</span>
+energy : real as <span class="org-variable-name">energy</span> = 3000. keV
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag for random emission</span>
+emission_direction : <span class="org-variable-name">string</span> = <span class="org-string">"randomized"</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"multi_particles"</span> <span class="org-variable-name">type</span>=<span class="org-string">"genbb::combined_particle_generator"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config A model that generates several particles  at the same time</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Assign unique generation id</span>
+assign_generation_ids : <span class="org-variable-name">boolean</span> = true
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The mode ("timing", "plain_probability" or "activity")</span>
+mode : <span class="org-variable-name">string</span> = <span class="org-string">"time"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of particle generators that compose the combo</span>
+generators.labels : <span class="org-variable-name">string</span>[3] = <span class="org-sh-escaped-newline">\</span>
+                  <span class="org-string">"electron1"</span>   <span class="org-sh-escaped-newline">\</span>
+                  <span class="org-string">"electron2"</span>   <span class="org-sh-escaped-newline">\</span>
+                  <span class="org-string">"gamma1"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The name of the generator associated the "electron1" contribution</span>
+generators.electron1.name : <span class="org-variable-name">string</span> = <span class="org-string">"electron_monokinetic1"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The time mode associated to the "electron1" contribution</span>
+generators.electron1.time_mode : <span class="org-variable-name">string</span> = <span class="org-string">"fixed"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The shift time associated to the "electron1" contribution</span>
+generators.electron1.fixed_time : real as <span class="org-variable-name">time</span> = 0 ns
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The name of the generator associated the "electron2" contribution</span>
+generators.electron2.name : <span class="org-variable-name">string</span> = <span class="org-string">"electron_monokinetic1"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The time mode associated to the "electron2" contribution</span>
+generators.electron2.time_mode : <span class="org-variable-name">string</span> = <span class="org-string">"fixed"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The shift time associated to the "electron2" contribution</span>
+generators.electron2.fixed_time : real as <span class="org-variable-name">time</span> = 0 ns
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The name of the generator associated the "gamma1" contribution</span>
+generators.gamma1.name : <span class="org-variable-name">string</span> = <span class="org-string">"gamma_monokinetic"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The time mode associated to the "electron2" contribution</span>
+generators.gamma1.time_mode : <span class="org-variable-name">string</span> = <span class="org-string">"fixed"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The shift time associated to the "electron2" contribution</span>
+generators.gamma1.fixed_time : real as <span class="org-variable-name">time</span> = 0 ns
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/5718a0f86426eb354d9a62009a9bf0b40ccfc0ac">5718a0f</a> - 2015-03-07
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/04a5c060580b21c54082ad22c2afcf50f8987f12">04a5c06</a> - 2015-07-18
 </div>
 </body>
 </html>

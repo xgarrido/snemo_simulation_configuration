@@ -7,6 +7,7 @@
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Xavier Garrido" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="css/styles.css" />
                <link rel="stylesheet" href="css/org-pygments.css" />
                <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
@@ -76,6 +77,51 @@ for the JavaScript code in this tag.
       }
      }
   </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      messageStyle: "none",
+      TeX: {
+          extensions: ["cancel.js"],
+          Macros: {
+              vv: ["{\\vec{#1}}",1],
+              Upsigma: "{\\Sigma}",
+              Updelta: "{\\Delta}",
+              varoiint: "{\\iint}",
+              varoint: "{\\int}",
+              grad: "{\\vec{\\nabla}}",
+              div: "{\\vec{\\nabla}.}",
+              rot: "{\\vec{\\nabla}\\times\\,}",
+              ket: ["{|#1 \\rangle}",1],
+              bra: ["{\\langle#1|}",1],
+              psh: ["{\\langle#1|#2 \\rangle}",2],
+              bm: ["{\\boldsymbol #1}",1]
+          }
+      }
+  });
+  MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+      var TEX = MathJax.InputJax.TeX;
+      TEX.Definitions.macros.unit = "jaxunit";
+      TEX.Parse.Augment({
+          jaxunit: function (name) {
+              var n = this.GetBrackets(name),
+              unit = this.GetArgument(name)
+              if (n == null) {n = ""}
+              var tex = n + '\\,\\text{'+unit+'}';
+              this.string = tex + this.string.slice(this.i); this.i = 0;
+          }
+      });
+  });
+  MathJax.Hub.Queue(function () {
+      document.getElementById("spinner").style.display = "none";
+  });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <div id="spinner">
+    <div id="bounce1"></div>
+    <div id="bounce2"></div>
+    <div id="bounce3"></div>
+    <small>Loading MathJax...</small>
+  </div>
 </head>
 <body onload="randomLinkColor();displayTOC();"><div id="toc"></div>
 <div id="preamble" class="status">
@@ -87,27 +133,27 @@ for the JavaScript code in this tag.
 <h2></h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Introduction</a></li>
-<li><a href="#sec-2">2. Manager configuration</a>
+<li><a href="#orgheadline1">1. Introduction</a></li>
+<li><a href="#orgheadline5">2. Manager configuration</a>
 <ul>
-<li><a href="#sec-2-1">2.1. Logging priority</a></li>
-<li><a href="#sec-2-2">2.2. Vertices list of files</a></li>
+<li><a href="#orgheadline2">2.1. Logging priority</a></li>
+<li><a href="#orgheadline4">2.2. Vertices list of files</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3. Vertex configuration</a>
+<li><a href="#orgheadline3">3. Vertex configuration</a>
 <ul>
-<li><a href="#sec-3-1">3.1. Scintillator vertices</a></li>
-<li><a href="#sec-3-2">3.2. Tracker vertices</a></li>
-<li><a href="#sec-3-3">3.3. Source vertices</a></li>
-<li><a href="#sec-3-4">3.4. External vertices</a></li>
+<li><a href="#orgheadline6">3.1. Scintillator vertices</a></li>
+<li><a href="#orgheadline7">3.2. Tracker vertices</a></li>
+<li><a href="#orgheadline8">3.3. Source vertices</a></li>
+<li><a href="#orgheadline9">3.4. External vertices</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This file holds some vertex generators related to SuperNEMO detector geometry.
@@ -115,13 +161,13 @@ This file holds some vertex generators related to SuperNEMO detector geometry.
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Manager configuration</h2>
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5"><span class="section-number-2">2</span> Manager configuration</h2>
 <div class="outline-text-2" id="text-2">
 </div>
 
-<div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Logging priority</h3>
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><span class="section-number-3">2.1</span> Logging priority</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 
@@ -132,12 +178,12 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 </div>
 </div>
 
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Vertices list of files</h3>
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">2.2</span> Vertices list of files</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 The following code defines the location of several vertices files. All of them
-are defined in Section <a href="#sec-3">3</a>.
+are defined in Section <a href="#orgheadline3">3</a>.
 </p>
 <div class="org-src-container">
 
@@ -153,24 +199,24 @@ vg_list : string[4] as <span class="org-variable-name">path</span> =            
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Vertex configuration</h2>
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">3</span> Vertex configuration</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 This section defines several vertices configuration :
 </p>
 <ul class="org-ul">
-<li><a href="#sec-3-1">Scintillator vertices</a>: to generate external events coming from calorimeter
+<li><a href="#orgheadline6">Scintillator vertices</a>: to generate external events coming from calorimeter
 walls,</li>
-<li><a href="#sec-3-2">Tracker vertices</a>: to generate events from the internal drift chamber either on
+<li><a href="#orgheadline7">Tracker vertices</a>: to generate events from the internal drift chamber either on
 wires surface or inside gas tracking,</li>
-<li><a href="#sec-3-2">Source vertices</a>: to produce 2&beta; events or to simulate source contamination.</li>
-<li><a href="#sec-3-4">External vertices</a>: to generate events from outside the detector like neutrons</li>
+<li><a href="#orgheadline8">Source vertices</a>: to produce 2&beta; events or to simulate source contamination.</li>
+<li><a href="#orgheadline9">External vertices</a>: to generate events from outside the detector like neutrons</li>
 </ul>
 </div>
 
-<div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Scintillator vertices</h3>
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">3.1</span> Scintillator vertices</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Insert preamble
@@ -271,7 +317,7 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box top face activation</span>
-mode.surface.top  : <span class="org-variable-name">boolean</span> = 1
+mode.surface.top  : <span class="org-variable-name">boolean</span> = true
 </pre>
 </div></li>
 
@@ -295,7 +341,7 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box top face activation</span>
-mode.surface.top  : <span class="org-variable-name">boolean</span> = 1
+mode.surface.top  : <span class="org-variable-name">boolean</span> = true
 </pre>
 </div></li>
 
@@ -319,7 +365,7 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 mode : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box top face activation</span>
-mode.surface.top : <span class="org-variable-name">boolean</span> = 1
+mode.surface.top : <span class="org-variable-name">boolean</span> = true
 </pre>
 </div></li>
 
@@ -343,18 +389,18 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 mode : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation within polycone material</span>
-mode.bulk.body : <span class="org-variable-name">boolean</span> = 1
+mode.bulk.body : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Generate vertex on all polycone frustrum</span>
-polycone.all_frustrum : <span class="org-variable-name">boolean</span> = 1
+polycone.all_frustrum : <span class="org-variable-name">boolean</span> = true
 </pre>
 </div></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Tracker vertices</h3>
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7"><span class="section-number-3">3.2</span> Tracker vertices</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Insert preamble
@@ -368,8 +414,8 @@ Insert preamble
 </div>
 </div>
 
-<div id="outline-container-sec-3-2-1" class="outline-4">
-<h4 id="sec-3-2-1"><span class="section-number-4">3.2.1</span> Vertices on tracker wires</h4>
+<div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10"><span class="section-number-4">3.2.1</span> Vertices on tracker wires</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <ul class="org-ul">
 <li><p>
@@ -413,13 +459,13 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box side face activation</span>
-mode.surface.side   : <span class="org-variable-name">boolean</span> = 1
+mode.surface.side   : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box bottom face activation</span>
-mode.surface.bottom : <span class="org-variable-name">boolean</span> = 0
+mode.surface.bottom : <span class="org-variable-name">boolean</span> = false
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box top face activation</span>
-mode.surface.top    : <span class="org-variable-name">boolean</span> = 0
+mode.surface.top    : <span class="org-variable-name">boolean</span> = false
 </pre>
 </div></li>
 
@@ -443,13 +489,13 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box side face activation</span>
-mode.surface.side   : <span class="org-variable-name">boolean</span> = 1
+mode.surface.side   : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box bottom face activation</span>
-mode.surface.bottom : <span class="org-variable-name">boolean</span> = 0
+mode.surface.bottom : <span class="org-variable-name">boolean</span> = false
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box top face activation</span>
-mode.surface.top    : <span class="org-variable-name">boolean</span> = 0
+mode.surface.top    : <span class="org-variable-name">boolean</span> = false
 </pre>
 </div></li>
 
@@ -477,10 +523,10 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 </div>
 </div>
 
-<div id="outline-container-sec-3-2-2" class="outline-4">
-<h4 id="sec-3-2-2"><span class="section-number-4">3.2.2</span> Vertices within tracker volumes (wires included)</h4>
+<div id="outline-container-orgheadline15" class="outline-4">
+<h4 id="orgheadline15"><span class="section-number-4">3.2.2</span> Vertices within tracker volumes (wires included)</h4>
 <div class="outline-text-4" id="text-3-2-2">
-</div><ul class="org-ul"><li><a id="unnumbered-1"></a>Generator using category list<br  /><div class="outline-text-5" id="text-unnumbered-1">
+</div><ul class="org-ul"><li><a id="orgheadline11"></a>Generator using category list<br  /><div class="outline-text-5" id="text-orgheadline11">
 <p>
 This vertex generator is quite classical in the way that it uses the category
 file list and especially, the <code>drift_cell_core</code> category. This means that
@@ -508,7 +554,7 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 </div>
 </div></li>
 
-<li><a id="unnumbered-2"></a>Vertex generator using hardcoded geometry position<br  /><div class="outline-text-5" id="text-unnumbered-2">
+<li><a id="orgheadline12"></a>Vertex generator using hardcoded geometry position<br  /><div class="outline-text-5" id="text-orgheadline12">
 <p>
 The following vertex generator defines a box which dimensions are hardcoded by
 following the dimensions between source foil and calroimeter walls. This means
@@ -552,8 +598,8 @@ box.z : real as <span class="org-variable-name">length</span> = 3030.0 mm
 </div>
 
 <p>
-Then we define 2 placements : one for the front part ($x&gt;0$) of the tracker and
-another one for the back part ($x&lt;0$).
+Then we define 2 placements : one for the front part (\(x>0\)) of the tracker and
+another one for the back part (\(x<0\)).
 </p>
 
 <div class="org-src-container">
@@ -628,7 +674,7 @@ generators.tracker_back_volume_bulk.absolute_weight  : <span class="org-variable
 </div>
 </div></li>
 
-<li><a id="unnumbered-3"></a>Vertex generator with validator<br  /><div class="outline-text-5" id="text-unnumbered-3">
+<li><a id="orgheadline13"></a>Vertex generator with validator<br  /><div class="outline-text-5" id="text-orgheadline13">
 <p>
 We finally use a rejection method based on changes from
 <a href="https://nemo.lpc-caen.in2p3.fr/changeset/15140/genvtx/trunk">https://nemo.lpc-caen.in2p3.fr/changeset/15140/genvtx/trunk</a>. The idea is to
@@ -657,7 +703,7 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 </div>
 </div>
 
-<ul class="org-ul"><li><a id="unnumbered-4"></a>Vertex validation<br  /><div class="outline-text-6" id="text-unnumbered-4">
+<ul class="org-ul"><li><a id="orgheadline14"></a>Vertex validation<br  /><div class="outline-text-6" id="text-orgheadline14">
 <p>
 Here starts the validation configuration. We first add a support to vertex
 validation
@@ -665,7 +711,7 @@ validation
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Vertex validation support</span>
-vertex_validation_support : <span class="org-variable-name">boolean</span> = 1
+vertex_validation_support : <span class="org-variable-name">boolean</span> = true
 </pre>
 </div>
 <p>
@@ -683,7 +729,7 @@ and we activate it
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Vertex validation activation</span>
-validation.activation : <span class="org-variable-name">boolean</span> = 1
+validation.activation : <span class="org-variable-name">boolean</span> = true
 </pre>
 </div>
 
@@ -735,8 +781,8 @@ validation.validator_params.logging.priority : <span class="org-variable-name">s
 </div>
 </div>
 
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Source vertices</h3>
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">3.3</span> Source vertices</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Since there are two types of source strips namely "internal" and "external" with
@@ -758,8 +804,8 @@ Insert preamble
 </div>
 </div>
 
-<div id="outline-container-sec-3-3-1" class="outline-4">
-<h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> Internal source strips</h4>
+<div id="outline-container-orgheadline16" class="outline-4">
+<h4 id="orgheadline16"><span class="section-number-4">3.3.1</span> Internal source strips</h4>
 <div class="outline-text-4" id="text-3-3-1">
 <ul class="org-ul">
 <li><p>
@@ -807,18 +853,18 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box back face activation</span>
-mode.surface.back  : <span class="org-variable-name">boolean</span> = 1
+mode.surface.back  : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box front face activation</span>
-mode.surface.front : <span class="org-variable-name">boolean</span> = 1
+mode.surface.front : <span class="org-variable-name">boolean</span> = true
 </pre>
 </div></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-3-3-2" class="outline-4">
-<h4 id="sec-3-3-2"><span class="section-number-4">3.3.2</span> External source strips</h4>
+<div id="outline-container-orgheadline17" class="outline-4">
+<h4 id="orgheadline17"><span class="section-number-4">3.3.2</span> External source strips</h4>
 <div class="outline-text-4" id="text-3-3-2">
 <ul class="org-ul">
 <li><p>
@@ -866,18 +912,18 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box back face activation</span>
-mode.surface.back  : <span class="org-variable-name">boolean</span> = 1
+mode.surface.back  : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box front face activation</span>
-mode.surface.front : <span class="org-variable-name">boolean</span> = 1
+mode.surface.front : <span class="org-variable-name">boolean</span> = true
 </pre>
 </div></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-3-3-3" class="outline-4">
-<h4 id="sec-3-3-3"><span class="section-number-4">3.3.3</span> Combined vertex</h4>
+<div id="outline-container-orgheadline18" class="outline-4">
+<h4 id="orgheadline18"><span class="section-number-4">3.3.3</span> Combined vertex</h4>
 <div class="outline-text-4" id="text-3-3-3">
 <ul class="org-ul">
 <li><p>
@@ -933,8 +979,8 @@ generators.source_strips_internal_surface.absolute_weight : <span class="org-var
 </div>
 </div>
 </div>
-<div id="outline-container-sec-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> External vertices</h3>
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">3.4</span> External vertices</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 Insert preamble
@@ -967,22 +1013,22 @@ origin : <span class="org-variable-name">string</span> = <span class="org-string
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"surface"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box back face activation</span>
-mode.surface.back   : <span class="org-variable-name">boolean</span> = 1
+mode.surface.back   : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box front face activation</span>
-mode.surface.front  : <span class="org-variable-name">boolean</span> = 1
+mode.surface.front  : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box bottom face activation</span>
-mode.surface.bottom : <span class="org-variable-name">boolean</span> = 1
+mode.surface.bottom : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box top face activation</span>
-mode.surface.top    : <span class="org-variable-name">boolean</span> = 1
+mode.surface.top    : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box left face activation</span>
-mode.surface.left   : <span class="org-variable-name">boolean</span> = 1
+mode.surface.left   : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Surface mode box right face activation</span>
-mode.surface.right  : <span class="org-variable-name">boolean</span> = 1
+mode.surface.right  : <span class="org-variable-name">boolean</span> = true
 </pre>
 </div></li>
 
@@ -1011,7 +1057,7 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 </div>
 </div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/5718a0f86426eb354d9a62009a9bf0b40ccfc0ac">5718a0f</a> - 2015-03-07
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/04a5c060580b21c54082ad22c2afcf50f8987f12">04a5c06</a> - 2015-07-18
 </div>
 </body>
 </html>

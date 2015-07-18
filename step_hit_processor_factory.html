@@ -7,6 +7,7 @@
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Xavier Garrido" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="css/styles.css" />
                <link rel="stylesheet" href="css/org-pygments.css" />
                <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
@@ -87,20 +88,20 @@ for the JavaScript code in this tag.
 <h2></h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Introduction</a></li>
-<li><a href="#sec-2">2. Processors</a>
+<li><a href="#orgheadline1">1. Introduction</a></li>
+<li><a href="#orgheadline15">2. Processors</a>
 <ul>
-<li><a href="#sec-2-1">2.1. Calorimeter processors</a></li>
-<li><a href="#sec-2-2">2.2. Geiger cells processors</a></li>
-<li><a href="#sec-2-3">2.3. Visualization processors</a></li>
+<li><a href="#orgheadline5">2.1. Calorimeter processors</a></li>
+<li><a href="#orgheadline6">2.2. Geiger cells processors</a></li>
+<li><a href="#orgheadline14">2.3. Visualization processors</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This file holds the configuration for the different Step Hit Processors (SHP)
@@ -118,8 +119,8 @@ them visible given a list of sensitive categories.
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Processors</h2>
+<div id="outline-container-orgheadline15" class="outline-2">
+<h2 id="orgheadline15"><span class="section-number-2">2</span> Processors</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 
@@ -130,8 +131,8 @@ them visible given a list of sensitive categories.
 </div>
 </div>
 
-<div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Calorimeter processors</h3>
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">2.1</span> Calorimeter processors</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 This processor collects all MC true hits from the calorimeter scintillator
@@ -158,8 +159,8 @@ and the <code>cluster.time_space</code> into a unique calorimeter hit.
 </p>
 </div>
 
-<div id="outline-container-sec-2-1-1" class="outline-4">
-<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> Main wall</h4>
+<div id="outline-container-orgheadline2" class="outline-4">
+<h4 id="orgheadline2"><span class="section-number-4">2.1.1</span> Main wall</h4>
 <div class="outline-text-4" id="text-2-1-1">
 <div class="org-src-container">
 
@@ -174,7 +175,7 @@ hit.category                   : <span class="org-variable-name">string</span> =
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The name of the sensitive MC hits that must be processed to fill the output hit category</span>
 sensitive.category             : <span class="org-variable-name">string</span> = <span class="org-string">"calorimeter_SD"</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag to activate a preallocated buffer/pool of MC hits to optimize memory management</span>
-use_private_pool               : <span class="org-variable-name">boolean</span> = 1
+use_private_pool               : <span class="org-variable-name">boolean</span> = true
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Initial capacity of the buffer/pool of MC hits</span>
 private_pool_capacity          : <span class="org-variable-name">integer</span> = 10
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The name of the geometry category to be attached to the output MC hits</span>
@@ -190,8 +191,8 @@ cluster.space_range            : real as <span class="org-variable-name">length<
 </div>
 </div>
 
-<div id="outline-container-sec-2-1-2" class="outline-4">
-<h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> X-wall</h4>
+<div id="outline-container-orgheadline3" class="outline-4">
+<h4 id="orgheadline3"><span class="section-number-4">2.1.2</span> X-wall</h4>
 <div class="outline-text-4" id="text-2-1-2">
 <div class="org-src-container">
 
@@ -215,8 +216,8 @@ cluster.space_range : real as <span class="org-variable-name">length</span> = 10
 </div>
 </div>
 </div>
-<div id="outline-container-sec-2-1-3" class="outline-4">
-<h4 id="sec-2-1-3"><span class="section-number-4">2.1.3</span> &gamma; veto</h4>
+<div id="outline-container-orgheadline4" class="outline-4">
+<h4 id="orgheadline4"><span class="section-number-4">2.1.3</span> &gamma; veto</h4>
 <div class="outline-text-4" id="text-2-1-3">
 <div class="org-src-container">
 
@@ -242,8 +243,8 @@ cluster.space_range : real as <span class="org-variable-name">length</span> = 10
 </div>
 </div>
 
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Geiger cells processors</h3>
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">2.2</span> Geiger cells processors</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 This processor collects all MC true hits from the drift cell volumes (with the
@@ -273,17 +274,17 @@ mapping.category       : <span class="org-variable-name">string</span>  = <span 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Mean ionization energy used to randomize electron-ion pairs along the particle path</span>
 mean_ionization_energy : real as <span class="org-variable-name">energy</span> = 50.0 eV
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description For each cell traversed by a track, compute the position of maximal approach to the anode wire (debug purpose only so default is 0)</span>
-compute_maximal_approach_position : <span class="org-variable-name">boolean</span> = 0
+compute_maximal_approach_position : <span class="org-variable-name">boolean</span> = false
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Visualization processors</h3>
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14"><span class="section-number-3">2.3</span> Visualization processors</h3>
 <div class="outline-text-3" id="text-2-3">
-</div><div id="outline-container-sec-2-3-1" class="outline-4">
-<h4 id="sec-2-3-1"><span class="section-number-4">2.3.1</span> Dedicated step hit processors</h4>
+</div><div id="outline-container-orgheadline7" class="outline-4">
+<h4 id="orgheadline7"><span class="section-number-4">2.3.1</span> Dedicated step hit processors</h4>
 <div class="outline-text-4" id="text-2-3-1">
 <div class="org-src-container">
 
@@ -335,8 +336,8 @@ sensitive.category : <span class="org-variable-name">string</span> = <span class
 </div>
 </div>
 
-<div id="outline-container-sec-2-3-2" class="outline-4">
-<h4 id="sec-2-3-2"><span class="section-number-4">2.3.2</span> Enabling all volumes</h4>
+<div id="outline-container-orgheadline8" class="outline-4">
+<h4 id="orgheadline8"><span class="section-number-4">2.3.2</span> Enabling all volumes</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <div class="org-src-container">
 
@@ -345,19 +346,19 @@ sensitive.category : <span class="org-variable-name">string</span> = <span class
 logging.priority                  : <span class="org-variable-name">string</span>  = <span class="org-string">"warning"</span>
 hit.category                      : <span class="org-variable-name">string</span>  = <span class="org-string">"__visu.tracks"</span>
 sensitive.category                : <span class="org-variable-name">string</span>  = <span class="org-string">"__all.volumes.SD"</span>
-sensitive.record_track_id         : <span class="org-variable-name">boolean</span> = 1
-sensitive.record_primary_particle : <span class="org-variable-name">boolean</span> = 1
-geometry.volumes.all              : <span class="org-variable-name">boolean</span> = 1
+sensitive.record_track_id         : <span class="org-variable-name">boolean</span> = true
+sensitive.record_primary_particle : <span class="org-variable-name">boolean</span> = true
+geometry.volumes.all              : <span class="org-variable-name">boolean</span> = true
 geometry.volumes.excluded         : <span class="org-variable-name">string</span>[2] = <span class="org-string">"field_wire.model.log"</span> <span class="org-string">"anode_wire.model.log"</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-2-3-3" class="outline-4">
-<h4 id="sec-2-3-3"><span class="section-number-4">2.3.3</span> Special visual step hit processors</h4>
+<div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13"><span class="section-number-4">2.3.3</span> Special visual step hit processors</h4>
 <div class="outline-text-4" id="text-2-3-3">
-</div><ul class="org-ul"><li><a id="unnumbered-1"></a>Source hits<br  /><div class="outline-text-5" id="text-unnumbered-1">
+</div><ul class="org-ul"><li><a id="orgheadline9"></a>Source hits<br  /><div class="outline-text-5" id="text-orgheadline9">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"source.visu.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::push_all_step_hit_processor"</span>]
@@ -371,7 +372,7 @@ geometry.volumes   : <span class="org-variable-name">string</span>[2] = <span cl
 </pre>
 </div>
 </div></li>
-<li><a id="unnumbered-2"></a>Wires hits<br  /><div class="outline-text-5" id="text-unnumbered-2">
+<li><a id="orgheadline10"></a>Wires hits<br  /><div class="outline-text-5" id="text-orgheadline10">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"wires.visu.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::push_all_step_hit_processor"</span>]
@@ -380,11 +381,11 @@ logging.priority      : <span class="org-variable-name">string</span>    = <span
 hit.category          : <span class="org-variable-name">string</span>    = <span class="org-string">"__visu.tracks"</span>
 sensitive.category    : <span class="org-variable-name">string</span>    = <span class="org-string">"__wires.SD"</span>
 geometry.volumes      : <span class="org-variable-name">string</span>[2] = <span class="org-string">"field_wire.model.log"</span> <span class="org-string">"anode_wire.model.log"</span>
-visu.highlighted_hits : <span class="org-variable-name">boolean</span>   = 1
+visu.highlighted_hits : <span class="org-variable-name">boolean</span> = true
 </pre>
 </div>
 </div></li>
-<li><a id="unnumbered-3"></a>Films hits<br  /><div class="outline-text-5" id="text-unnumbered-3">
+<li><a id="orgheadline11"></a>Films hits<br  /><div class="outline-text-5" id="text-orgheadline11">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"films.visu.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::push_all_step_hit_processor"</span>]
@@ -393,12 +394,12 @@ logging.priority   : <span class="org-variable-name">string</span>  = <span clas
 hit.category       : <span class="org-variable-name">string</span>  = <span class="org-string">"__visu.tracks"</span>
 sensitive.category : <span class="org-variable-name">string</span>  = <span class="org-string">"__films.SD"</span>
 geometry.volumes.with_materials : <span class="org-variable-name">string</span>[3] = <span class="org-string">"std::mylar"</span> <span class="org-string">"std::nylon"</span> <span class="org-string">"std::pfte"</span>
-visu.highlighted_hits : <span class="org-variable-name">boolean</span>   = 0
+visu.highlighted_hits : <span class="org-variable-name">boolean</span> = false
 </pre>
 </div>
 </div></li>
 
-<li><a id="unnumbered-4"></a>Tracking chamber<br  /><div class="outline-text-5" id="text-unnumbered-4">
+<li><a id="orgheadline12"></a>Tracking chamber<br  /><div class="outline-text-5" id="text-orgheadline12">
 <div class="org-src-container">
 
 <pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"tracking_gas.visu.hit_processor"</span> <span class="org-variable-name">type</span>=<span class="org-string">"mctools::push_all_step_hit_processor"</span>]
@@ -416,7 +417,7 @@ geometry.volumes.excluded       : <span class="org-variable-name">string</span>[
 </div>
 </div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/5718a0f86426eb354d9a62009a9bf0b40ccfc0ac">5718a0f</a> - 2015-03-07
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/04a5c060580b21c54082ad22c2afcf50f8987f12">04a5c06</a> - 2015-07-18
 </div>
 </body>
 </html>

@@ -7,6 +7,7 @@
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Xavier Garrido" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="css/styles.css" />
                <link rel="stylesheet" href="css/org-pygments.css" />
                <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
@@ -87,40 +88,40 @@ for the JavaScript code in this tag.
 <h2></h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Introduction</a></li>
-<li><a href="#sec-2">2. Manager configuration</a>
+<li><a href="#orgheadline1">1. Introduction</a></li>
+<li><a href="#orgheadline12">2. Manager configuration</a>
 <ul>
-<li><a href="#sec-2-1">2.1. Setup label, description and version</a></li>
-<li><a href="#sec-2-2">2.2. Logging priority</a></li>
-<li><a href="#sec-2-3">2.3. Geometry factory</a></li>
-<li><a href="#sec-2-4">2.4. ID manager</a></li>
-<li><a href="#sec-2-5">2.5. Mapping configuration</a></li>
-<li><a href="#sec-2-6">2.6. Plugins configuration</a></li>
+<li><a href="#orgheadline2">2.1. Setup label, description and version</a></li>
+<li><a href="#orgheadline3">2.2. Logging priority</a></li>
+<li><a href="#orgheadline6">2.3. Geometry factory</a></li>
+<li><a href="#orgheadline9">2.4. ID manager</a></li>
+<li><a href="#orgheadline10">2.5. Mapping configuration</a></li>
+<li><a href="#orgheadline11">2.6. Plugins configuration</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3. Material for SuperNEMO detector</a>
+<li><a href="#orgheadline20">3. Material for SuperNEMO detector</a>
 <ul>
-<li><a href="#sec-3-1">3.1. Material driver</a></li>
-<li><a href="#sec-3-2">3.2. Material aliases</a></li>
+<li><a href="#orgheadline19">3.1. Material driver</a></li>
+<li><a href="#orgheadline16">3.2. Material aliases</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4. Magnetic field for SuperNEMO detector</a>
+<li><a href="#orgheadline29">4. Magnetic field for SuperNEMO detector</a>
 <ul>
-<li><a href="#sec-4-1">4.1. Magnetic field plugin</a></li>
-<li><a href="#sec-4-2">4.2. Magnetic field drivers</a></li>
+<li><a href="#orgheadline24">4.1. Magnetic field plugin</a></li>
+<li><a href="#orgheadline28">4.2. Magnetic field drivers</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5. Locators for SuperNEMO detector</a>
+<li><a href="#orgheadline35">5. Locators for SuperNEMO detector</a>
 <ul>
-<li><a href="#sec-5-1">5.1. Locator driver</a></li>
+<li><a href="#orgheadline34">5.1. Locator driver</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The <code>sngeometry</code> library provides some geometry wrappers arround <code>geomtools</code>
@@ -134,13 +135,13 @@ This file holds mainly the paths to geometry files most of them are placed in
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Manager configuration</h2>
+<div id="outline-container-orgheadline12" class="outline-2">
+<h2 id="orgheadline12"><span class="section-number-2">2</span> Manager configuration</h2>
 <div class="outline-text-2" id="text-2">
 </div>
 
-<div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Setup label, description and version</h3>
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><span class="section-number-3">2.1</span> Setup label, description and version</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 
@@ -157,8 +158,8 @@ setup_version : <span class="org-variable-name">string</span> = <span class="org
 </div>
 </div>
 
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Logging priority</h3>
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3"><span class="section-number-3">2.2</span> Logging priority</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 
@@ -169,16 +170,16 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 </div>
 </div>
 
-<div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Geometry factory</h3>
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">2.3</span> Geometry factory</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 The geometry factory holds all the files needed for the geometry construction.
 </p>
 </div>
 
-<div id="outline-container-sec-2-3-1" class="outline-4">
-<h4 id="sec-2-3-1"><span class="section-number-4">2.3.1</span> Logging priority</h4>
+<div id="outline-container-orgheadline4" class="outline-4">
+<h4 id="orgheadline4"><span class="section-number-4">2.3.1</span> Logging priority</h4>
 <div class="outline-text-4" id="text-2-3-1">
 <div class="org-src-container">
 
@@ -189,8 +190,8 @@ factory.logging.priority : <span class="org-variable-name">string</span> = <span
 </div>
 </div>
 
-<div id="outline-container-sec-2-3-2" class="outline-4">
-<h4 id="sec-2-3-2"><span class="section-number-4">2.3.2</span> Geometry files</h4>
+<div id="outline-container-orgheadline5" class="outline-4">
+<h4 id="orgheadline5"><span class="section-number-4">2.3.2</span> Geometry files</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <div class="org-src-container">
 
@@ -224,11 +225,11 @@ factory.geom_files : string[22] as <span class="org-variable-name">path</span> =
 </div>
 </div>
 
-<div id="outline-container-sec-2-4" class="outline-3">
-<h3 id="sec-2-4"><span class="section-number-3">2.4</span> ID manager</h3>
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">2.4</span> ID manager</h3>
 <div class="outline-text-3" id="text-2-4">
-</div><div id="outline-container-sec-2-4-1" class="outline-4">
-<h4 id="sec-2-4-1"><span class="section-number-4">2.4.1</span> Logging priority</h4>
+</div><div id="outline-container-orgheadline7" class="outline-4">
+<h4 id="orgheadline7"><span class="section-number-4">2.4.1</span> Logging priority</h4>
 <div class="outline-text-4" id="text-2-4-1">
 <div class="org-src-container">
 
@@ -239,8 +240,8 @@ id_mgr.logging.priority : <span class="org-variable-name">string</span> = <span 
 </div>
 </div>
 
-<div id="outline-container-sec-2-4-2" class="outline-4">
-<h4 id="sec-2-4-2"><span class="section-number-4">2.4.2</span> Category list</h4>
+<div id="outline-container-orgheadline8" class="outline-4">
+<h4 id="orgheadline8"><span class="section-number-4">2.4.2</span> Category list</h4>
 <div class="outline-text-4" id="text-2-4-2">
 <p>
 Categories are used to assign a unique id number (integer) to a geometrical
@@ -257,13 +258,13 @@ id_mgr.categories_list : string as <span class="org-variable-name">path</span> =
 </div>
 </div>
 
-<div id="outline-container-sec-2-5" class="outline-3">
-<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Mapping configuration</h3>
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><span class="section-number-3">2.5</span> Mapping configuration</h3>
 <div class="outline-text-3" id="text-2-5">
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Build the embedded mapping dictionnary</span>
-build_mapping : <span class="org-variable-name">boolean</span> = 0
+build_mapping : <span class="org-variable-name">boolean</span> = false
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Max depth of the mapping: no items to be mapped</span>
 mapping.max_depth : <span class="org-variable-name">integer</span> = 0
@@ -280,16 +281,16 @@ mapping.excluded_categories : <span class="org-variable-name">string</span>[5] =
 </div>
 </div>
 
-<div id="outline-container-sec-2-6" class="outline-3">
-<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Plugins configuration</h3>
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><span class="section-number-3">2.6</span> Plugins configuration</h3>
 <div class="outline-text-3" id="text-2-6">
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Plugins factory preload from system registration (default=0)</span>
-plugins.factory_no_preload : <span class="org-variable-name">boolean</span> = 0
+plugins.factory_no_preload : <span class="org-variable-name">boolean</span> = false
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Plugins initialization at load (default=0)</span>
-plugins.force_initialization_at_load : <span class="org-variable-name">boolean</span> = 0
+plugins.force_initialization_at_load : <span class="org-variable-name">boolean</span> = false
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration files for geometry manager's plugins</span>
 plugins.configuration_files : string[3] as <span class="org-variable-name">path</span> =                 <span class="org-sh-escaped-newline">\</span>
@@ -302,11 +303,11 @@ plugins.configuration_files : string[3] as <span class="org-variable-name">path<
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Material for SuperNEMO detector</h2>
+<div id="outline-container-orgheadline20" class="outline-2">
+<h2 id="orgheadline20"><span class="section-number-2">3</span> Material for SuperNEMO detector</h2>
 <div class="outline-text-2" id="text-3">
-</div><div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Material driver</h3>
+</div><div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">3.1</span> Material driver</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 We use the definitions of isotopes, elements and materials from the installed
@@ -314,8 +315,8 @@ materials library. Here the <code>materials_aliases</code> definition are locall
 to change the source foil isotope.
 </p>
 </div>
-<div id="outline-container-sec-3-1-1" class="outline-4">
-<h4 id="sec-3-1-1"><span class="section-number-4">3.1.1</span> Plugin declaration</h4>
+<div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13"><span class="section-number-4">3.1.1</span> Plugin declaration</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <div class="org-src-container">
 
@@ -330,8 +331,8 @@ to change the source foil isotope.
 </div>
 </div>
 
-<div id="outline-container-sec-3-1-2" class="outline-4">
-<h4 id="sec-3-1-2"><span class="section-number-4">3.1.2</span> Logging priority</h4>
+<div id="outline-container-orgheadline14" class="outline-4">
+<h4 id="orgheadline14"><span class="section-number-4">3.1.2</span> Logging priority</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <div class="org-src-container">
 
@@ -345,8 +346,8 @@ materials.logging.priority : <span class="org-variable-name">string</span> = <sp
 </div>
 </div>
 
-<div id="outline-container-sec-3-1-3" class="outline-4">
-<h4 id="sec-3-1-3"><span class="section-number-4">3.1.3</span> Use isotope mass database</h4>
+<div id="outline-container-orgheadline15" class="outline-4">
+<h4 id="orgheadline15"><span class="section-number-4">3.1.3</span> Use isotope mass database</h4>
 <div class="outline-text-4" id="text-3-1-3">
 <p>
 Recent <a href="https://nemo.lpc-caen.in2p3.fr/changeset/14821">release</a> of <code>materials</code> component changes the default behavior which was
@@ -358,31 +359,31 @@ indicate it to <code>materials</code> manager.
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Use AME 2003</span>
-materials.load_isotope_mass_data : <span class="org-variable-name">boolean</span> = 1
+materials.load_isotope_mass_data : <span class="org-variable-name">boolean</span> = true
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-3-1-4" class="outline-4">
-<h4 id="sec-3-1-4"><span class="section-number-4">3.1.4</span> Allow overloading of materials</h4>
+<div id="outline-container-orgheadline17" class="outline-4">
+<h4 id="orgheadline17"><span class="section-number-4">3.1.4</span> Allow overloading of materials</h4>
 <div class="outline-text-4" id="text-3-1-4">
 <p>
 This property allows the overloading of some materials as it is done, for
-example, in <a href="#sec-3-2">3.2</a> section.
+example, in <a href="#orgheadline16">3.2</a> section.
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag to allow the overloading of materials</span>
-materials.alias_allow_overload : <span class="org-variable-name">boolean</span> = 1
+materials.alias_allow_overload : <span class="org-variable-name">boolean</span> = true
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-3-1-5" class="outline-4">
-<h4 id="sec-3-1-5"><span class="section-number-4">3.1.5</span> Files</h4>
+<div id="outline-container-orgheadline18" class="outline-4">
+<h4 id="orgheadline18"><span class="section-number-4">3.1.5</span> Files</h4>
 <div class="outline-text-4" id="text-3-1-5">
 <div class="org-src-container">
 
@@ -401,8 +402,8 @@ materials.configuration_files : string[7] as <span class="org-variable-name">pat
 </div>
 </div>
 
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Material aliases</h3>
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><span class="section-number-3">3.2</span> Material aliases</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 This piece of code allows user to define or redefine materials aliases. Here for
@@ -425,15 +426,15 @@ material : <span class="org-variable-name">string</span> = <span class="org-stri
 </div>
 </div>
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Magnetic field for SuperNEMO detector</h2>
+<div id="outline-container-orgheadline29" class="outline-2">
+<h2 id="orgheadline29"><span class="section-number-2">4</span> Magnetic field for SuperNEMO detector</h2>
 <div class="outline-text-2" id="text-4">
-</div><div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Magnetic field plugin</h3>
+</div><div id="outline-container-orgheadline24" class="outline-3">
+<h3 id="orgheadline24"><span class="section-number-3">4.1</span> Magnetic field plugin</h3>
 <div class="outline-text-3" id="text-4-1">
 </div>
-<div id="outline-container-sec-4-1-1" class="outline-4">
-<h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> Plugin declaration</h4>
+<div id="outline-container-orgheadline21" class="outline-4">
+<h4 id="orgheadline21"><span class="section-number-4">4.1.1</span> Plugin declaration</h4>
 <div class="outline-text-4" id="text-4-1-1">
 <div class="org-src-container">
 
@@ -448,8 +449,8 @@ material : <span class="org-variable-name">string</span> = <span class="org-stri
 </div>
 </div>
 
-<div id="outline-container-sec-4-1-2" class="outline-4">
-<h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> Logging priority</h4>
+<div id="outline-container-orgheadline22" class="outline-4">
+<h4 id="orgheadline22"><span class="section-number-4">4.1.2</span> Logging priority</h4>
 <div class="outline-text-4" id="text-4-1-2">
 <div class="org-src-container">
 
@@ -460,8 +461,8 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 </div>
 </div>
 
-<div id="outline-container-sec-4-1-3" class="outline-4">
-<h4 id="sec-4-1-3"><span class="section-number-4">4.1.3</span> EM field manager configuration</h4>
+<div id="outline-container-orgheadline23" class="outline-4">
+<h4 id="orgheadline23"><span class="section-number-4">4.1.3</span> EM field manager configuration</h4>
 <div class="outline-text-4" id="text-4-1-3">
 <div class="org-src-container">
 
@@ -487,7 +488,7 @@ module.
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Flag to activate the geometry volume/field associations map</span>
-manager.build_geom_map : <span class="org-variable-name">boolean</span> = 1
+manager.build_geom_map : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Manager logging priority</span>
 manager.geom_map.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
@@ -507,12 +508,12 @@ manager.geom_map.associations.module.field_name : <span class="org-variable-name
 </div>
 </div>
 
-<div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Magnetic field drivers</h3>
+<div id="outline-container-orgheadline28" class="outline-3">
+<h3 id="orgheadline28"><span class="section-number-3">4.2</span> Magnetic field drivers</h3>
 <div class="outline-text-3" id="text-4-2">
 </div>
-<div id="outline-container-sec-4-2-1" class="outline-4">
-<h4 id="sec-4-2-1"><span class="section-number-4">4.2.1</span> Driver preamble</h4>
+<div id="outline-container-orgheadline25" class="outline-4">
+<h4 id="orgheadline25"><span class="section-number-4">4.2.1</span> Driver preamble</h4>
 <div class="outline-text-4" id="text-4-2-1">
 <div class="org-src-container">
 
@@ -525,8 +526,8 @@ manager.geom_map.associations.module.field_name : <span class="org-variable-name
 </div>
 </div>
 
-<div id="outline-container-sec-4-2-2" class="outline-4">
-<h4 id="sec-4-2-2"><span class="section-number-4">4.2.2</span> Constant magnetic field</h4>
+<div id="outline-container-orgheadline26" class="outline-4">
+<h4 id="orgheadline26"><span class="section-number-4">4.2.2</span> Constant magnetic field</h4>
 <div class="outline-text-4" id="text-4-2-2">
 <div class="org-src-container">
 
@@ -547,8 +548,8 @@ magnetic_field.coordinates : <span class="org-variable-name">real</span>[3] = 0.
 </div>
 </div>
 
-<div id="outline-container-sec-4-2-3" class="outline-4">
-<h4 id="sec-4-2-3"><span class="section-number-4">4.2.3</span> Polynomial magnetic field</h4>
+<div id="outline-container-orgheadline27" class="outline-4">
+<h4 id="orgheadline27"><span class="section-number-4">4.2.3</span> Polynomial magnetic field</h4>
 <div class="outline-text-4" id="text-4-2-3">
 <p>
 To take into account effects from the calorimeter magnetic shielding as shown in
@@ -568,7 +569,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 magnetic_field.unit : <span class="org-variable-name">string</span> = <span class="org-string">"gauss"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Bz field polynomial degree</span>
-magnetic_field.Bz.x.polynomial_degree : <span class="org-variable-name">integer</span> = 3
+magnetic_field.Bz.x.polynomial_degree : <span class="org-variable-name">integer</span> = 2
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Bz x-parameters</span>
 magnetic_field.Bz.x.polynomial_parameters : <span class="org-variable-name">real</span>[3] = 25.0 0.0 -8e-5
@@ -582,16 +583,16 @@ magnetic_field.Bz.x.limits : real[2] as <span class="org-variable-name">length</
 </div>
 </div>
 
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Locators for SuperNEMO detector</h2>
+<div id="outline-container-orgheadline35" class="outline-2">
+<h2 id="orgheadline35"><span class="section-number-2">5</span> Locators for SuperNEMO detector</h2>
 <div class="outline-text-2" id="text-5">
-</div><div id="outline-container-sec-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Locator driver</h3>
+</div><div id="outline-container-orgheadline34" class="outline-3">
+<h3 id="orgheadline34"><span class="section-number-3">5.1</span> Locator driver</h3>
 <div class="outline-text-3" id="text-5-1">
 </div>
 
-<div id="outline-container-sec-5-1-1" class="outline-4">
-<h4 id="sec-5-1-1"><span class="section-number-4">5.1.1</span> Plugin declaration</h4>
+<div id="outline-container-orgheadline30" class="outline-4">
+<h4 id="orgheadline30"><span class="section-number-4">5.1.1</span> Plugin declaration</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <div class="org-src-container">
 
@@ -606,8 +607,8 @@ magnetic_field.Bz.x.limits : real[2] as <span class="org-variable-name">length</
 </div>
 </div>
 
-<div id="outline-container-sec-5-1-2" class="outline-4">
-<h4 id="sec-5-1-2"><span class="section-number-4">5.1.2</span> Logging priority</h4>
+<div id="outline-container-orgheadline31" class="outline-4">
+<h4 id="orgheadline31"><span class="section-number-4">5.1.2</span> Logging priority</h4>
 <div class="outline-text-4" id="text-5-1-2">
 <div class="org-src-container">
 
@@ -617,8 +618,8 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 </div>
 </div>
 </div>
-<div id="outline-container-sec-5-1-3" class="outline-4">
-<h4 id="sec-5-1-3"><span class="section-number-4">5.1.3</span> Geometry requirements</h4>
+<div id="outline-container-orgheadline32" class="outline-4">
+<h4 id="orgheadline32"><span class="section-number-4">5.1.3</span> Geometry requirements</h4>
 <div class="outline-text-4" id="text-5-1-3">
 <div class="org-src-container">
 
@@ -629,8 +630,8 @@ geometry.setup_requirement : <span class="org-variable-name">string</span>[2] = 
 </div>
 </div>
 
-<div id="outline-container-sec-5-1-4" class="outline-4">
-<h4 id="sec-5-1-4"><span class="section-number-4">5.1.4</span> Module number</h4>
+<div id="outline-container-orgheadline33" class="outline-4">
+<h4 id="orgheadline33"><span class="section-number-4">5.1.4</span> Module number</h4>
 <div class="outline-text-4" id="text-5-1-4">
 <div class="org-src-container">
 
@@ -644,7 +645,7 @@ locators.module_number : <span class="org-variable-name">integer</span> = 0
 </div>
 </div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/5718a0f86426eb354d9a62009a9bf0b40ccfc0ac">5718a0f</a> - 2015-03-07
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/04a5c060580b21c54082ad22c2afcf50f8987f12">04a5c06</a> - 2015-07-18
 </div>
 </body>
 </html>
