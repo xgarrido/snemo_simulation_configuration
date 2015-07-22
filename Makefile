@@ -13,12 +13,13 @@ GIT_BRANCH = $(shell git branch | grep \* | cut -d' ' -f2)
 CCAGE_DIRECTORY = /sps/nemo/scratch/garrido/simulations/snemo_simulation_configuration
 LAL_DIRECTORY	= /exp/nemo/garrido/workdir/supernemo/simulations/snemo_simulation_configuration
 
-FILES  = $(notdir $(shell ls *.org 2> /dev/null))
-FILEST = $(FILES:%.org=$(GIT_BRANCH)/.%.tangle)
+FILES        = $(notdir $(shell ls *.org 2> /dev/null | sed -e 's/snvariant_manager.org//g'))
+ORG_FILES    = $(FILES) snvariant_manager.org
+TANGLE_FILES = $(ORG_FILES:%.org=$(GIT_BRANCH)/.%.tangle)
 
 all: org
 
-org: $(FILEST)
+org: $(TANGLE_FILES)
 	@if ls | grep -q "\.def"; then mv *.def $(GIT_BRANCH)/.;fi
 	@if ls | grep -q "\.conf"; then mv *.conf $(GIT_BRANCH)/.;fi
 	@if ls | grep -q "\.lis"; then mv *.lis $(GIT_BRANCH)/.;fi

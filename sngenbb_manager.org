@@ -15,7 +15,7 @@ More details concerning the use of =genbb= can be found in [[https://nemo.lpc-ca
 :PROPERTIES:
 :TANGLE: sngenbb_manager.conf
 :END:
-** Genbb manager configuration
+
 Here, general options such as verbosity, debug flags are passed to =genbb=
 manager.
 #+BEGIN_SRC shell
