@@ -1,0 +1,112 @@
+#+TITLE:  Variant Manager Configuration
+#+AUTHOR: Xavier Garrido
+#+DATE:   2015-07-21
+#+OPTIONS: ^:{}
+#+STARTUP: entitiespretty
+
+* Introduction
+
+The variant concept has been introduced in order to define "variable" parameters
+for configuration files. Basic idea is to set a number of parameters that will
+be used within configuration files such as vertex or genbb generator names. Then
+it is possible to change their respective values in the command line, for
+instance.
+
+* Manager configuration
+:PROPERTIES:
+:TANGLE: snvariant_manager.conf
+:END:
+
+#+BEGIN_SRC shell
+  #@config The main configuration parameters for the application variant repository
+
+  #@description The organization name
+  organization : string = "SuperNEMO"
+
+  #@description The application name
+  application  : string = "SN@ilWare"
+
+  #@description The list of configuration files for embedded registries
+  registries.config : string[1] as path = \
+    "@SNEMO_SIMULATION_CONFIGURATION@/snvariant_core_registry.conf"
+
+  #@description The lock request
+  lock : boolean = true
+#+END_SRC
+
+* Registries
+:PROPERTIES:
+:TANGLE: snvariant_core_registry.conf
+:END:
+
+#+BEGIN_SRC shell
+  #@config The configuration for the core variant registry
+
+  #@description The name of the registry
+  name : string = "core"
+
+  #@description The display name of the registry
+  display_name : string = "Core"
+
+  #@description A short description
+  terse_description : string = "The core application parameters"
+
+  #@description Logging priority
+  logging.priority : string = "fatal"
+
+  #@description The variant model to be used as the default top variant
+  top_variant_name : string = "core.VM"
+
+  # #@description The list of prefixes for preserving some auxiliary properties
+  # preserved_property_prefixes : string[2] = "CMS." "DB."
+
+  #@description The list of files containing the definition of variant/parameter models
+  configuration_items.files : string[2] as path =  \
+    "@datatools:variants/models/base_variants.def" \
+    "@SNEMO_SIMULATION_CONFIGURATION@/snvariant_core_variants.def"
+#+END_SRC
+
+* Variant definitions
+** Core variants
+:PROPERTIES:
+:TANGLE: snvariant_core_variants.def
+:END:
+
+*** Vertex generators
+
+#+BEGIN_SRC shell
+
+#+END_SRC
+
+#+BEGIN_SRC shell
+  [name="vertex_generator_name.PM" type="parameter"]
+  display_name              : string = "Vertex generator name"
+  description               : string = "The name of the vertex generator"
+  type                      : string = "string"
+  mutability                : string = "variable"
+  variable.mode             : string = "enumeration"
+  string.enumerated.size    : integer = 4
+  string.enumerated_0.value : string = "source_strips_bulk"
+  string.enumerated_1.value : string = "source_strips_surface"
+  string.enumerated_2.value : string = "field_wires_surface"
+  string.enumerated_3.value : string = "tracker_gas_bulk"
+  string.default            : string = "source_strips_bulk"
+#+END_SRC
+
+*** Top variant
+#+BEGIN_SRC shell
+  [name="core.VM" type="variant"]
+
+  #@config A variant model describing the parameters for the core application
+
+  #@description The display name of this variant
+  display_name : string = "Core setup"
+
+  #@description A short description of the variant
+  terse_description : string = "The configuration parameters for the core application"
+
+  #@description The list of variant parameters
+  parameters : string[1] = "vg"
+
+  parameters.vg.model : string = "vertex_generator_name.PM"
+#+END_SRC
