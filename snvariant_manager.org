@@ -77,11 +77,14 @@ instance.
 #+NAME: vg_list_variants
 #+BEGIN_SRC shell :tangle no :results output
   cnt=0
-  for f in current/*.lis; do
-      vgs=$(cat $f | grep 'genvtx::.*_vg' | sed 's@\[name="\(.*\)".*type.*@\1@')
+  falaise_dir=$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources
+  files=$(cat current/sngenvertex_manager.conf | grep '".*/.*"' | awk -F \" '{print $2}')
+  for if in ${=files}; do
+      file=${if/@falaise:/${falaise_dir}\/}
+      vgs=$(cat $file | grep 'genvtx::.*_vg' | awk -F \" '{print $2}')
       for ivg in ${=vgs}; do
-        echo "string.enumerated_${cnt}.value : string = \"${ivg}\""
-        let cnt++
+          echo "string.enumerated_${cnt}.value : string = \"${ivg}\""
+          let cnt++
       done
   done
   echo "string.enumerated.size : integer = ${cnt}"
@@ -97,6 +100,34 @@ instance.
   <<vg_list_variants()>>
 #+END_SRC
 
+*** Event generators
+
+#+NAME: eg_list_variants
+#+BEGIN_SRC shell :tangle no :results output
+  cnt=0
+  falaise_dir=$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources
+  files=$(cat current/sngenbb_manager.conf | grep '".*/.*"' | awk -F \" '{print $2}')
+  for if in ${=files}; do
+      file=${if/@falaise:/${falaise_dir}\/}
+      egs=$(cat $file | grep 'genbb::' | awk -F \" '{print $2}')
+      for ieg in ${=egs}; do
+          echo "string.enumerated_${cnt}.value : string = \"${ieg}\""
+          let cnt++
+      done
+  done
+  echo "string.enumerated.size : integer = ${cnt}"
+#+END_SRC
+
+#+BEGIN_SRC shell :noweb yes
+  [name="event_generator_name.PM" type="parameter"]
+  display_name              : string = "Event generator name"
+  description               : string = "The name of the genbb event generator"
+  type                      : string = "string"
+  mutability                : string = "variable"
+  variable.mode             : string = "enumeration"
+  <<eg_list_variants()>>
+#+END_SRC
+
 *** Top variant
 #+BEGIN_SRC shell
   [name="core.VM" type="variant"]
@@ -110,7 +141,8 @@ instance.
   terse_description : string = "The configuration parameters for the core application"
 
   #@description The list of variant parameters
-  parameters : string[1] = "vg"
+  parameters : string[2] = "vg" "eg"
 
   parameters.vg.model : string = "vertex_generator_name.PM"
+  parameters.eg.model : string = "event_generator_name.PM"
 #+END_SRC

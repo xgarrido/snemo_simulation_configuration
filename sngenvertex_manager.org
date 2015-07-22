@@ -22,7 +22,7 @@ The following code defines the location of several vertices files. All of them
 are defined in Section [[Vertex configuration]].
 #+BEGIN_SRC shell
   #@description Names of the files configuring the list of registered vertex generators
-  vg_list : string[4] as path =                                              \
+  vg_list : string[4] as path =                       \
     "@SNEMO_SIMULATION_CONFIGURATION@/scin_vg.lis"    \
     "@SNEMO_SIMULATION_CONFIGURATION@/tracker_vg.lis" \
     "@SNEMO_SIMULATION_CONFIGURATION@/source_vg.lis"  \
