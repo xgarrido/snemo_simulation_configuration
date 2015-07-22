@@ -103,7 +103,7 @@ distribution or following a tabulated energy spectrum.
 #+BEGIN_SRC shell
   [name="electron_monokinetic" type="genbb::single_particle_generator"]
 
-  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+  #@config Parameters for the 'single_particle' mode (class genbb::single_particle_generator):
 
   #@description Generated particle ("electron", "positron", "gamma", "alpha"):
   particle_name : string = "electron"
@@ -122,7 +122,7 @@ distribution or following a tabulated energy spectrum.
 #+BEGIN_SRC shell
   [name="electron_0-3MeV_flat" type="genbb::single_particle_generator"]
 
-  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+  #@config Parameters for the 'single_particle' mode (class genbb::single_particle_generator):
 
   #@description Generated particle ("electron", "positron", "gamma", "alpha"):
   particle_name : string = "electron"
@@ -144,7 +144,7 @@ distribution or following a tabulated energy spectrum.
 #+BEGIN_SRC shell
   [name="electron_gaussian_energy" type="genbb::single_particle_generator"]
 
-  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+  #@config Parameters for the 'single_particle' mode (class genbb::single_particle_generator):
 
   #@description Generated particle ("electron", "positron", "gamma", "alpha"):
   particle_name : string = "electron"
@@ -166,7 +166,7 @@ distribution or following a tabulated energy spectrum.
 #+BEGIN_SRC shell
   [name="electron_monokinetic_with_cone" type="genbb::single_particle_generator"]
 
-  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+  #@config Parameters for the 'single_particle' mode (class genbb::single_particle_generator):
 
   #@description Generated particle ("electron", "positron", "gamma", "alpha"):
   particle_name : string = "electron"
@@ -197,7 +197,7 @@ distribution or following a tabulated energy spectrum.
 #+BEGIN_SRC shell
   [name="gamma_monokinetic" type="genbb::single_particle_generator"]
 
-  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+  #@config Parameters for the 'single_particle' mode (class genbb::single_particle_generator):
 
   #@description Generated particle ("electron", "positron", "gamma", "alpha"):
   particle_name : string = "gamma"
@@ -215,7 +215,7 @@ distribution or following a tabulated energy spectrum.
 #+BEGIN_SRC shell
   [name="gamma_0-3MeV_flat" type="genbb::single_particle_generator"]
 
-  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+  #@config Parameters for the 'single_particle' mode (class genbb::single_particle_generator):
 
   #@description Generated particle ("electron", "positron", "gamma", "alpha"):
   particle_name : string = "gamma"
@@ -263,7 +263,7 @@ distribution or following a tabulated energy spectrum.
 #+BEGIN_SRC shell
   [name="alpha_monokinetic" type="genbb::single_particle_generator"]
 
-  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+  #@config Parameters for the 'single_particle' mode (class genbb::single_particle_generator):
 
   #@description Generated particle ("electron", "positron", "gamma", "alpha"):
   particle_name : string = "alpha"
@@ -327,7 +327,7 @@ Combination of several =genbb= generators can be done using
 #+BEGIN_SRC shell
   [name="electron_monokinetic1" type="genbb::single_particle_generator"]
 
-  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+  #@config Parameters for the 'single_particle' mode (class genbb::single_particle_generator):
 
   #@description Generated particle ("electron", "positron", "gamma", "alpha"):
   particle_name : string = "electron"
@@ -345,7 +345,7 @@ Combination of several =genbb= generators can be done using
 #+BEGIN_SRC shell
   [name="electron_monokinetic2" type="genbb::single_particle_generator"]
 
-  #@config Parameters for the "single_particle" mode (class genbb::single_particle_generator):
+  #@config Parameters for the 'single_particle' mode (class genbb::single_particle_generator):
 
   #@description Generated particle ("electron", "positron", "gamma", "alpha"):
   particle_name : string = "electron"
