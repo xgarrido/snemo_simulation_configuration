@@ -74,23 +74,27 @@ instance.
 
 *** Vertex generators
 
-#+BEGIN_SRC shell
-
+#+NAME: vg_list_variants
+#+BEGIN_SRC shell :tangle no :results output
+  cnt=0
+  for f in current/*.lis; do
+      vgs=$(cat $f | grep 'genvtx::.*_vg' | sed 's@\[name="\(.*\)".*type.*@\1@')
+      for ivg in ${=vgs}; do
+        echo "string.enumerated_${cnt}.value : string = \"${ivg}\""
+        let cnt++
+      done
+  done
+  echo "string.enumerated.size : integer = ${cnt}"
 #+END_SRC
 
-#+BEGIN_SRC shell
+#+BEGIN_SRC shell :noweb yes
   [name="vertex_generator_name.PM" type="parameter"]
   display_name              : string = "Vertex generator name"
   description               : string = "The name of the vertex generator"
   type                      : string = "string"
   mutability                : string = "variable"
   variable.mode             : string = "enumeration"
-  string.enumerated.size    : integer = 4
-  string.enumerated_0.value : string = "source_strips_bulk"
-  string.enumerated_1.value : string = "source_strips_surface"
-  string.enumerated_2.value : string = "field_wires_surface"
-  string.enumerated_3.value : string = "tracker_gas_bulk"
-  string.default            : string = "source_strips_bulk"
+  <<vg_list_variants()>>
 #+END_SRC
 
 *** Top variant
