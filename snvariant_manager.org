@@ -92,11 +92,11 @@ instance.
 
 #+BEGIN_SRC shell :noweb yes
   [name="vertex_generator_name.PM" type="parameter"]
-  display_name              : string = "Vertex generator name"
-  description               : string = "The name of the vertex generator"
-  type                      : string = "string"
-  mutability                : string = "variable"
-  variable.mode             : string = "enumeration"
+  display_name  : string = "Vertex generator name"
+  description   : string = "The name of the vertex generator"
+  type          : string = "string"
+  mutability    : string = "variable"
+  variable.mode : string = "enumeration"
   <<vg_list_variants()>>
 #+END_SRC
 
@@ -120,12 +120,27 @@ instance.
 
 #+BEGIN_SRC shell :noweb yes
   [name="event_generator_name.PM" type="parameter"]
-  display_name              : string = "Event generator name"
-  description               : string = "The name of the genbb event generator"
-  type                      : string = "string"
-  mutability                : string = "variable"
-  variable.mode             : string = "enumeration"
+  display_name  : string = "Event generator name"
+  description   : string = "The name of the genbb event generator"
+  type          : string = "string"
+  mutability    : string = "variable"
+  variable.mode : string = "enumeration"
   <<eg_list_variants()>>
+#+END_SRC
+
+*** Magnetic field
+**** Magnitude of z-component magnetic field
+#+BEGIN_SRC shell
+  [name="bz_magnitude.PM" type="parameter"]
+  display_name        : string = "Bz field magnitude"
+  description         : string = "Magnitude of z-component of magnetic field"
+  type                : string = "real"
+  real.unit_label     : string = "magnetic_flux_density"
+  real.preferred_unit : string = "gauss"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 G, 100 G]"
+  real.default        : real as magnetic_flux_density = 25 G
 #+END_SRC
 
 *** Top variant
@@ -141,8 +156,9 @@ instance.
   terse_description : string = "The configuration parameters for the core application"
 
   #@description The list of variant parameters
-  parameters : string[2] = "vg" "eg"
+  parameters : string[3] = "vg" "eg" "bz"
 
   parameters.vg.model : string = "vertex_generator_name.PM"
   parameters.eg.model : string = "event_generator_name.PM"
+  parameters.bz.model : string = "bz_magnitude.PM"
 #+END_SRC
