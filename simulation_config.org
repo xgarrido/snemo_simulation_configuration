@@ -850,9 +850,9 @@ We do not use these parameters
 ***** Energy resolutions
 #+BEGIN_SRC shell
   #@description Optical lines resolutions (FWHM @ 1 MeV)
-  calo.energy.resolution  : real = 0.08
-  xcalo.energy.resolution : real = 0.12
-  gveto.energy.resolution : real = 0.15
+  calo.energy.resolution  : real as fraction = @variant(core:cer|"8 %")
+  xcalo.energy.resolution : real as fraction = @variant(core:xer|"12 %")
+  gveto.energy.resolution : real as fraction = @variant(core:ger|"15 %")
 #+END_SRC
 
 ***** Energy thresholds

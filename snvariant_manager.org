@@ -128,6 +128,47 @@ instance.
   <<eg_list_variants()>>
 #+END_SRC
 
+*** Calorimeter parameters
+**** Energy resolutions
+#+BEGIN_SRC shell
+  [name="calo_energy_resolution.PM" type="parameter"]
+  display_name        : string = "Main wall energy resolution"
+  description         : string = "Energy resolution of main wall calorimeter"
+  type                : string = "real"
+  real.unit_label     : string = "fraction"
+  real.preferred_unit : string = "%"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 %, 100 %]"
+  real.default        : real as fraction = 8 %
+#+END_SRC
+
+#+BEGIN_SRC shell
+  [name="xcalo_energy_resolution.PM" type="parameter"]
+  display_name        : string = "X-wall energy resolution"
+  description         : string = "Energy resolution of X-wall calorimeter"
+  type                : string = "real"
+  real.unit_label     : string = "fraction"
+  real.preferred_unit : string = "%"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 %, 100 %]"
+  real.default        : real as fraction = 12 %
+#+END_SRC
+
+#+BEGIN_SRC shell
+  [name="gveto_energy_resolution.PM" type="parameter"]
+  display_name        : string = "Gamma veto energy resolution"
+  description         : string = "Energy resolution of gamma veto calorimeter"
+  type                : string = "real"
+  real.unit_label     : string = "fraction"
+  real.preferred_unit : string = "%"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 %, 100 %]"
+  real.default        : real as fraction = 15 %
+#+END_SRC
+
 *** Magnetic field
 **** Magnitude of z-component magnetic field
 #+BEGIN_SRC shell
@@ -156,9 +197,12 @@ instance.
   terse_description : string = "The configuration parameters for the core application"
 
   #@description The list of variant parameters
-  parameters : string[3] = "vg" "eg" "bz"
+  parameters : string[6] = "vg" "eg" "bz" "cer" "xer" "ger"
 
   parameters.vg.model : string = "vertex_generator_name.PM"
   parameters.eg.model : string = "event_generator_name.PM"
   parameters.bz.model : string = "bz_magnitude.PM"
+  parameters.cer.model : string = "calo_energy_resolution.PM"
+  parameters.xer.model : string = "xcalo_energy_resolution.PM"
+  parameters.ger.model : string = "gveto_energy_resolution.PM"
 #+END_SRC
