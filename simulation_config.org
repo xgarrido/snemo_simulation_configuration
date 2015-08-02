@@ -473,19 +473,19 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 **** Seed values
 #+BEGIN_SRC shell
   #@description The simulation manager PRNG seed
-  manager.seed                  : integer = 3
+  manager.seed : integer = @variant(core:irs/if_random_seed/null_seed|2)
 
   #@description The vertex generator PRNG seed
-  manager.vertex_generator_seed : integer = 4
+  manager.vertex_generator_seed : integer = @variant(core:irs/if_random_seed/null_seed|4)
 
   #@description The event generator PRNG seed
-  manager.event_generator_seed  : integer = 5
+  manager.event_generator_seed  : integer = @variant(core:irs/if_random_seed/null_seed|5)
 
   #@description The SHPF PRNG seed
-  manager.shpf_seed             : integer = 6
+  manager.shpf_seed : integer = @variant(core:irs/if_random_seed/null_seed|6)
 
   #@description The saving of PRNG seeds
-  manager.output_prng_seeds_file  : string as path = "/tmp/${USER}/snemo.d/prng_seeds.save"
+  manager.output_prng_seeds_file : string as path = "/tmp/${USER}/snemo.d/prng_seeds.save"
 
   #@description The saving of PRNG states
   manager.output_prng_states_file : string as path = "/tmp/${USER}/snemo.d/prng_states.save"
