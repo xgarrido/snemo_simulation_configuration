@@ -195,7 +195,7 @@ example, we locally change the source material without changing anything else.
   [name="bb_source_material" type="alias"]
 
   #@description The alias for the source
-  material : string = "snemo::se82_source_material"
+  material : string = @variant(core:bbsm|"snemo::se82_source_material")
 
 #+END_SRC
 
