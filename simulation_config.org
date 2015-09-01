@@ -648,7 +648,7 @@ The following code block retrieves the version number of a given component
 **** Set the geometrical origin of the vertex
 #+BEGIN_SRC shell
   #@description Origin of the vertices
-  analysis.vertex_origin : string = "foil"
+  analysis.vertex_origin : string = @variant(core:vg|"source_strips_bulk")
 #+END_SRC
 
 **** Store the job id
