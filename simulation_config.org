@@ -207,27 +207,26 @@ module. It also defines the output directory where to store each output steps.
 #+NAME: output_module
 #+HEADERS: :var mname="" :var logging="warning" :var ofilename=""
 #+BEGIN_SRC shell
-  IO_OUTPUT_DIRECTORY="/tmp/\${USER}/snemo.d"
-  if [ ! -d ${IO_OUTPUT_DIRECTORY} ]; then
-      mkdir -p $(eval "echo ${IO_OUTPUT_DIRECTORY}")
-  fi
-  echo '[name="'$mname'" type="dpp::output_module"]'
-  echo
-  echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
-  echo
-  echo '#@description Output file mode'
-  echo 'files.mode : string = "single"'
-  echo
-  echo '#@description Path to output data file'
-  if [ -z ${ofilename} ]; then
-      echo 'files.single.filename : string as path = "'$IO_OUTPUT_DIRECTORY/$mname'.brio"'
-  else
-      echo 'files.single.filename : string as path = "'$ofilename'"'
-  fi
-  echo
-  echo '#@description The label of the Context service'
-  echo 'Ctx_label : string  = "Ctx"'
+    echo '[name="'$mname'" type="dpp::output_module"]'
+    echo
+    echo '#@description Logging priority'
+    echo 'logging.priority : string = "'$logging'"'
+    echo
+    echo '#@description Output file mode'
+    echo 'files.mode : string = "single"'
+    echo
+    echo '#@description Path to output data file'
+    if [ -z ${ofilename} ]; then
+        echo 'files.single.path : string as path = @variant(core:io|"/tmp/${USER}/snemo.d/")'
+        echo
+        echo '#@description Filename to output data file'
+        echo 'files.single.filename : string = "'$mname'.brio"'
+    else
+        echo 'files.single.filename : string as path = "'$ofilename'"'
+    fi
+    echo
+    echo '#@description The label of the Context service'
+    echo 'Ctx_label : string  = "Ctx"'
 #+END_SRC
 
 *** Skeleton code for removing data bank

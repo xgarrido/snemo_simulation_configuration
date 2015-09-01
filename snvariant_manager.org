@@ -225,6 +225,18 @@ instance.
   boolean.variant.true          : string = "if_random_seed"
 #+END_SRC
 
+*** Output directory
+#+BEGIN_SRC shell
+  [name="output_directory.PM" type="parameter"]
+  display_name   : string = "Output directory"
+  description    : string = "The output directory for the generated files"
+  type           : string = "string"
+  path           : boolean = 1
+  mutability     : string = "variable"
+  variable.mode  : string = "free"
+  string.default : string = "/tmp/${USER}/snemo.d/"
+#+END_SRC
+
 *** Top variant
 #+BEGIN_SRC shell
   [name="core.VM" type="variant"]
@@ -238,7 +250,7 @@ instance.
   terse_description : string = "The configuration parameters for the core application"
 
   #@description The list of variant parameters
-  parameters : string[8] = "vg" "eg" "bz" "cer" "xer" "ger" "irs" "bbsm"
+  parameters : string[9] = "vg" "eg" "bz" "cer" "xer" "ger" "irs" "bbsm" "io"
 
   parameters.vg.model   : string = "vertex_generator_name.PM"
   parameters.eg.model   : string = "event_generator_name.PM"
@@ -248,4 +260,5 @@ instance.
   parameters.ger.model  : string = "gveto_energy_resolution.PM"
   parameters.irs.model  : string = "random_seed_flag.PM"
   parameters.bbsm.model : string = "bb_source_material.PM"
+  parameters.io.model   : string = "output_directory.PM"
 #+END_SRC
