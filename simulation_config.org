@@ -217,7 +217,7 @@ module. It also defines the output directory where to store each output steps.
     echo
     echo '#@description Path to output data file'
     if [ -z ${ofilename} ]; then
-        echo 'files.single.path : string as path = @variant(core:io|"/tmp/${USER}/snemo.d/")'
+        echo 'files.single.path : string as path = @variant(core:output_path|"/tmp/${USER}/snemo.d/")'
         echo
         echo '#@description Filename to output data file'
         echo 'files.single.filename : string = "'$mname'.brio"'
@@ -472,22 +472,22 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 **** Seed values
 #+BEGIN_SRC shell
   #@description The simulation manager PRNG seed
-  manager.seed : integer = @variant(core:irs/if_random_seed/null_seed|2)
+  manager.seed : integer = @variant(core:random_seed_flag/if_random_seed/null_seed|2)
 
   #@description The vertex generator PRNG seed
-  manager.vertex_generator_seed : integer = @variant(core:irs/if_random_seed/null_seed|4)
+  manager.vertex_generator_seed : integer = @variant(core:random_seed_flag/if_random_seed/null_seed|4)
 
   #@description The event generator PRNG seed
-  manager.event_generator_seed  : integer = @variant(core:irs/if_random_seed/null_seed|5)
+  manager.event_generator_seed  : integer = @variant(core:random_seed_flag/if_random_seed/null_seed|5)
 
   #@description The SHPF PRNG seed
-  manager.shpf_seed : integer = @variant(core:irs/if_random_seed/null_seed|6)
+  manager.shpf_seed : integer = @variant(core:random_seed_flag/if_random_seed/null_seed|6)
 
   #@description The saving of PRNG seeds
-  manager.output_prng_seeds_file : string as path = "/tmp/${USER}/snemo.d/prng_seeds.save"
+  manager.output_prng_seeds_file : string as path = @variant(core:output_path)@variant(core:filename|"prng_seeds.save")
 
   #@description The saving of PRNG states
-  manager.output_prng_states_file : string as path = "/tmp/${USER}/snemo.d/prng_states.save"
+  manager.output_prng_states_file : string as path = @variant(core:output_path)@variant(core:filename|"prng_states.save")
 
   #@description The modulo for PRNG states backup
   manager.prng_states_save_modulo : integer = 10
@@ -500,7 +500,7 @@ Several common vertex generators are available such as :
 
 #+BEGIN_SRC shell
   #@description The vertex generator PRNG label
-  manager.vertex_generator_name : string  = @variant(core:vg|"source_strips_bulk")
+  manager.vertex_generator_name : string  = @variant(core:vertex_generator|"source_strips_bulk")
 #+END_SRC
 
 **** Event generator
@@ -515,7 +515,7 @@ Most used event generators are :
 
 #+BEGIN_SRC shell
   #@description The event generator PRNG label
-  manager.event_generator_name : string  = @variant(core:eg|"Se82.0nubb")
+  manager.event_generator_name : string  = @variant(core:event_generator|"Se82.0nubb")
 #+END_SRC
 **** G4 manager
 The full =geant4= configuration can be found in the [[file:./sng4_manager.org][sng4_manager]] file.
@@ -648,7 +648,7 @@ The following code block retrieves the version number of a given component
 **** Set the geometrical origin of the vertex
 #+BEGIN_SRC shell
   #@description Origin of the vertices
-  analysis.vertex_origin : string = @variant(core:vg|"source_strips_bulk")
+  analysis.vertex_origin : string = @variant(core:vertex_generator|"source_strips_bulk")
 #+END_SRC
 
 **** Store the job id
@@ -849,9 +849,9 @@ We do not use these parameters
 ***** Energy resolutions
 #+BEGIN_SRC shell
   #@description Optical lines resolutions (FWHM @ 1 MeV)
-  calo.energy.resolution  : real as fraction = @variant(core:cer|"8 %")
-  xcalo.energy.resolution : real as fraction = @variant(core:xer|"12 %")
-  gveto.energy.resolution : real as fraction = @variant(core:ger|"15 %")
+  calo.energy.resolution  : real as fraction = @variant(core:calo_energy_resolution|"8 %")
+  xcalo.energy.resolution : real as fraction = @variant(core:xcalo_energy_resolution|"12 %")
+  gveto.energy.resolution : real as fraction = @variant(core:gveto_energy_resolution|"15 %")
 #+END_SRC
 
 ***** Energy thresholds

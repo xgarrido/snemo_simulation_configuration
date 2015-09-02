@@ -227,7 +227,7 @@ instance.
 
 *** Output directory
 #+BEGIN_SRC shell
-  [name="output_directory.PM" type="parameter"]
+  [name="output_path.PM" type="parameter"]
   display_name   : string = "Output directory"
   description    : string = "The output directory for the generated files"
   type           : string = "string"
@@ -238,7 +238,26 @@ instance.
 #+END_SRC
 
 *** Top variant
-#+BEGIN_SRC shell
+#+NAME: core_variant
+#+BEGIN_SRC shell :tangle no :results output
+  cnt=0
+  pms=$(cat ./snvariant_manager.org | grep '\[name=.*.PM' | grep -v 'print' | awk -F \" '{print $2}')
+  for i in ${=pms}; do
+      pm_name=${i/.PM/}
+      echo "parameters.${pm_name}.model : string = \"$i\""
+      let cnt++
+      array[cnt]=$i
+  done
+  echo
+  echo "#@description The list of variant parameters"
+  echo "parameters : string[$cnt] = \\"
+  for i in $array; do
+      echo -n "\"${i/.PM/}\" "
+      if [ $i != $array[-1] ]; then echo ' \';fi
+  done
+#+END_SRC
+
+#+BEGIN_SRC shell :noweb yes
   [name="core.VM" type="variant"]
 
   #@config A variant model describing the parameters for the core application
@@ -249,16 +268,5 @@ instance.
   #@description A short description of the variant
   terse_description : string = "The configuration parameters for the core application"
 
-  #@description The list of variant parameters
-  parameters : string[9] = "vg" "eg" "bz" "cer" "xer" "ger" "irs" "bbsm" "io"
-
-  parameters.vg.model   : string = "vertex_generator_name.PM"
-  parameters.eg.model   : string = "event_generator_name.PM"
-  parameters.bz.model   : string = "bz_magnitude.PM"
-  parameters.cer.model  : string = "calo_energy_resolution.PM"
-  parameters.xer.model  : string = "xcalo_energy_resolution.PM"
-  parameters.ger.model  : string = "gveto_energy_resolution.PM"
-  parameters.irs.model  : string = "random_seed_flag.PM"
-  parameters.bbsm.model : string = "bb_source_material.PM"
-  parameters.io.model   : string = "output_directory.PM"
+  <<core_variant()>>
 #+END_SRC

@@ -195,7 +195,7 @@ example, we locally change the source material without changing anything else.
   [name="bb_source_material" type="alias"]
 
   #@description The alias for the source
-  material : string = @variant(core:bbsm|"snemo::se82_source_material")
+  material : string = @variant(core:bb_source_material|"snemo::se82_source_material")
 
 #+END_SRC
 
@@ -281,7 +281,7 @@ module.
   magnetic_field.unit        : string  = "gauss"
 
   #@description Coordinates of the static magnetic field (Bx, By, Bz)
-  magnetic_field.coordinates : real[3] = 0.0 0.0 @variant(core:bz|"25.0")
+  magnetic_field.coordinates : real[3] = 0.0 0.0 @variant(core:bz_magnitude|"25.0")
 #+END_SRC
 
 *** Polynomial magnetic field
