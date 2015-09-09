@@ -169,6 +169,16 @@ instance.
   real.default        : real as fraction = 15 %
 #+END_SRC
 
+**** Low thresholds
+*** Total number of simulated events
+#+BEGIN_SRC shell
+  [name="total_number_of_event.PM" type="parameter"]
+  display_name  : string = "Total number of event"
+  description   : string = "The total number of event simulated"
+  type          : string = "real"
+  mutability    : string = "variable"
+  variable.mode : string = "free"
+#+END_SRC
 *** Magnetic field
 **** Magnitude of z-component magnetic field
 #+BEGIN_SRC shell
