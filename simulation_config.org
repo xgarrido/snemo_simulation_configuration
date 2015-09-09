@@ -642,7 +642,7 @@ The following code block retrieves the version number of a given component
 **** Set the total number of event simulated
 #+BEGIN_SRC shell
   #@description The total number of event simulated
-  analysis.total_number_of_event : real = 1e5
+  analysis.total_number_of_event : real = @variant(core:total_number_of_event|1)
 #+END_SRC
 
 **** Set the geometrical origin of the vertex
@@ -857,13 +857,13 @@ We do not use these parameters
 ***** Energy thresholds
 #+BEGIN_SRC shell
   #@description Optical lines trigger thresholds
-  calo.energy.high_threshold  : real as energy = 150 keV
-  xcalo.energy.high_threshold : real as energy = 150 keV
-  gveto.energy.high_threshold : real as energy = 150 keV
+  calo.energy.high_threshold  : real as energy = @variant(core:calo_high_energy_threshold|150 keV)
+  xcalo.energy.high_threshold : real as energy = @variant(core:xcalo_high_energy_threshold|150 keV)
+  gveto.energy.high_threshold : real as energy = @variant(core:gveto_high_energy_threshold|150 keV)
 
-  calo.energy.low_threshold   : real as energy = 50 keV
-  xcalo.energy.low_threshold  : real as energy = 50 keV
-  gveto.energy.low_threshold  : real as energy = 50 keV
+  calo.energy.low_threshold   : real as energy = @variant(core:calo_low_energy_threshold|50 keV)
+  xcalo.energy.low_threshold  : real as energy = @variant(core:xcalo_low_energy_threshold|50 keV)
+  gveto.energy.low_threshold  : real as energy = @variant(core:gveto_low_energy_threshold|50 keV)
 #+END_SRC
 
 ** Tracker clustering modules
