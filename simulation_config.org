@@ -501,7 +501,7 @@ Several common vertex generators are available such as :
 
 #+BEGIN_SRC shell
   #@description The vertex generator PRNG label
-  manager.vertex_generator_name : string  = @variant(core:vertex_generator|"source_strips_bulk")
+  manager.vertex_generator_name : string  = @variant(simulation:vertex_generator|"source_strips_bulk")
 #+END_SRC
 
 **** Event generator
@@ -516,7 +516,7 @@ Most used event generators are :
 
 #+BEGIN_SRC shell
   #@description The event generator PRNG label
-  manager.event_generator_name : string  = @variant(core:event_generator|"Se82.0nubb")
+  manager.event_generator_name : string  = @variant(simulation:event_generator|"Se82.0nubb")
 #+END_SRC
 **** G4 manager
 The full =geant4= configuration can be found in the [[file:./sng4_manager.org][sng4_manager]] file.
@@ -643,13 +643,13 @@ The following code block retrieves the version number of a given component
 **** Set the total number of event simulated
 #+BEGIN_SRC shell
   #@description The total number of event simulated
-  analysis.total_number_of_event : real = @variant(core:total_number_of_event|1)
+  analysis.total_number_of_event : real = @variant(simulation:total_number_of_event|1)
 #+END_SRC
 
 **** Set the geometrical origin of the vertex
 #+BEGIN_SRC shell
   #@description Origin of the vertices
-  analysis.vertex_origin : string = @variant(core:vertex_generator|"source_strips_bulk")
+  analysis.vertex_origin : string = @variant(simulation:vertex_generator|"source_strips_bulk")
 #+END_SRC
 
 **** Store the job id
@@ -850,21 +850,21 @@ We do not use these parameters
 ***** Energy resolutions
 #+BEGIN_SRC shell
   #@description Optical lines resolutions (FWHM @ 1 MeV)
-  calo.energy.resolution  : real as fraction = @variant(core:calo_energy_resolution|"8 %")
-  xcalo.energy.resolution : real as fraction = @variant(core:xcalo_energy_resolution|"12 %")
-  gveto.energy.resolution : real as fraction = @variant(core:gveto_energy_resolution|"15 %")
+  calo.energy.resolution  : real as fraction = @variant(detector:calo_energy_resolution|8 %)
+  xcalo.energy.resolution : real as fraction = @variant(detector:xcalo_energy_resolution|12 %)
+  gveto.energy.resolution : real as fraction = @variant(detector:gveto_energy_resolution|15 %)
 #+END_SRC
 
 ***** Energy thresholds
 #+BEGIN_SRC shell
   #@description Optical lines trigger thresholds
-  calo.energy.high_threshold  : real as energy = @variant(core:calo_high_energy_threshold|150 keV)
-  xcalo.energy.high_threshold : real as energy = @variant(core:xcalo_high_energy_threshold|150 keV)
-  gveto.energy.high_threshold : real as energy = @variant(core:gveto_high_energy_threshold|150 keV)
+  calo.energy.high_threshold  : real as energy = @variant(detector:calo_high_energy_threshold|150 keV)
+  xcalo.energy.high_threshold : real as energy = @variant(detector:xcalo_high_energy_threshold|150 keV)
+  gveto.energy.high_threshold : real as energy = @variant(detector:gveto_high_energy_threshold|150 keV)
 
-  calo.energy.low_threshold   : real as energy = @variant(core:calo_low_energy_threshold|50 keV)
-  xcalo.energy.low_threshold  : real as energy = @variant(core:xcalo_low_energy_threshold|50 keV)
-  gveto.energy.low_threshold  : real as energy = @variant(core:gveto_low_energy_threshold|50 keV)
+  calo.energy.low_threshold   : real as energy = @variant(detector:calo_low_energy_threshold|50 keV)
+  xcalo.energy.low_threshold  : real as energy = @variant(detector:xcalo_low_energy_threshold|50 keV)
+  gveto.energy.low_threshold  : real as energy = @variant(detector:gveto_low_energy_threshold|50 keV)
 #+END_SRC
 
 ** Tracker clustering modules

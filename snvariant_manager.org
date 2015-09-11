@@ -61,16 +61,105 @@ instance.
   # preserved_property_prefixes : string[2] = "CMS." "DB."
 
   #@description The list of files containing the definition of variant/parameter models
-  configuration_items.files : string[2] as path =  \
-    "@datatools:variants/models/base_variants.def" \
-    "@SNEMO_SIMULATION_CONFIGURATION@/snvariant_core_variants.def"
+  configuration_items.files : string[4] as path =              \
+    "@datatools:variants/models/base_variants.def"             \
+    "@SNEMO_SIMULATION_CONFIGURATION@/core_variants.def"       \
+    "@SNEMO_SIMULATION_CONFIGURATION@/simulation_variants.def" \
+    "@SNEMO_SIMULATION_CONFIGURATION@/detector_variants.def"
 #+END_SRC
 
 * Variant definitions
+** Code skeleton                                                  :noexport:
+#+NAME: variant_generator
+#+BEGIN_SRC shell :tangle no :results output :var regex=""
+  cnt=0
+  pms=$(sed -n '/*.*'${regex}' variants/,/*.*variants/p' ./snvariant_manager.org | grep '\[name=.*.PM' | grep -v 'print' | awk -F \" '{print $2}')
+  for i in ${=pms}; do
+      pm_name=${i/.PM/}
+      echo "parameters.${pm_name}.model : string = \"$i\""
+      let cnt++
+      array[cnt]=$i
+  done
+  echo
+  echo "#@description The list of variant parameters"
+  echo "parameters : string[$cnt] = \\"
+  for i in $array; do
+      echo -n "\"${i/.PM/}\" "
+      if [ $i != $array[-1] ]; then echo ' \';fi
+  done
+#+END_SRC
+
 ** Core variants
 :PROPERTIES:
-:TANGLE: snvariant_core_variants.def
+:TANGLE: core_variants.def
 :END:
+*** Output directory
+#+BEGIN_SRC shell
+  [name="output_path.PM" type="parameter"]
+  display_name   : string = "Output directory"
+  description    : string = "The output directory for the generated files"
+  type           : string = "string"
+  path           : boolean = 1
+  mutability     : string = "variable"
+  variable.mode  : string = "free"
+  string.default : string = "/tmp/${USER}/snemo.d/"
+#+END_SRC
+
+*** Top variant
+
+#+BEGIN_SRC shell :noweb yes
+  [name="core.VM" type="variant"]
+
+  #@config A variant model describing the core parameters
+
+  #@description The display name of this variant
+  display_name : string = "Core setup"
+
+  #@description A short description of the variant
+  terse_description : string = "The configuration parameters for the core application"
+
+  <<variant_generator(regex="Core")>>
+#+END_SRC
+
+** Simulation variants
+:PROPERTIES:
+:TANGLE: simulation_variants.def
+:END:
+*** Seed manager
+#+BEGIN_SRC shell
+  [name="random_seed.PM" type="parameter"]
+  display_name  : string = "Value for random seeds"
+  type          : string = "integer"
+  mutability    : string = "fixed"
+  integer.fixed : integer = 0
+
+  [name="if_random_seed.VM" type="variant"]
+  display_name               : string = "Random seeds"
+  parameters                 : string[1] = "null_seed"
+  parameters.null_seed.model : string = "random_seed.PM"
+#+END_SRC
+
+#+BEGIN_SRC shell
+  [name="random_seed_flag.PM" type="parameter"]
+  display_name                  : string = "Seed flag"
+  description                   : string = "A flag to make random seeds"
+  type                          : string = "boolean"
+  mutability                    : string = "variable"
+  boolean.default               : boolean = 0
+  variants                      : string[1] = "if_random_seed"
+  variants.if_random_seed.model : string = "if_random_seed.VM"
+  boolean.variant.true          : string = "if_random_seed"
+#+END_SRC
+
+*** Total number of simulated events
+#+BEGIN_SRC shell
+  [name="total_number_of_event.PM" type="parameter"]
+  display_name  : string = "Total number of event"
+  description   : string = "The total number of event simulated"
+  type          : string = "real"
+  mutability    : string = "variable"
+  variable.mode : string = "free"
+#+END_SRC
 
 *** Vertex generators
 
@@ -128,6 +217,26 @@ instance.
   <<eg_list_variants()>>
 #+END_SRC
 
+*** Top variant
+
+#+BEGIN_SRC shell :noweb yes
+  [name="simulation.VM" type="variant"]
+
+  #@config A variant model describing the simulation parameters
+
+  #@description The display name of this variant
+  display_name : string = "Simulation setup"
+
+  #@description A short description of the variant
+  terse_description : string = "The configuration parameters for the simulation setup"
+
+  <<variant_generator(regex="Simulation")>>
+#+END_SRC
+** Detector variants
+:PROPERTIES:
+:TANGLE: detector_variants.def
+:END:
+
 *** Calorimeter parameters
 **** Energy resolutions
 #+BEGIN_SRC shell
@@ -170,15 +279,6 @@ instance.
 #+END_SRC
 
 **** Low thresholds
-*** Total number of simulated events
-#+BEGIN_SRC shell
-  [name="total_number_of_event.PM" type="parameter"]
-  display_name  : string = "Total number of event"
-  description   : string = "The total number of event simulated"
-  type          : string = "real"
-  mutability    : string = "variable"
-  variable.mode : string = "free"
-#+END_SRC
 *** Magnetic field
 **** Magnitude of z-component magnetic field
 #+BEGIN_SRC shell
@@ -209,74 +309,18 @@ instance.
   string.enumerated_3.value : string = "snemo::copper"
 #+END_SRC
 
-*** Seed manager
-#+BEGIN_SRC shell
-  [name="random_seed.PM" type="parameter"]
-  display_name  : string = "Value for random seeds"
-  type          : string = "integer"
-  mutability    : string = "fixed"
-  integer.fixed : integer = 0
-
-  [name="if_random_seed.VM" type="variant"]
-  display_name               : string = "Random seeds"
-  parameters                 : string[1] = "null_seed"
-  parameters.null_seed.model : string = "random_seed.PM"
-#+END_SRC
-
-#+BEGIN_SRC shell
-  [name="random_seed_flag.PM" type="parameter"]
-  display_name                  : string = "Seed flag"
-  description                   : string = "A flag to make random seeds"
-  type                          : string = "boolean"
-  mutability                    : string = "variable"
-  boolean.default               : boolean = 0
-  variants                      : string[1] = "if_random_seed"
-  variants.if_random_seed.model : string = "if_random_seed.VM"
-  boolean.variant.true          : string = "if_random_seed"
-#+END_SRC
-
-*** Output directory
-#+BEGIN_SRC shell
-  [name="output_path.PM" type="parameter"]
-  display_name   : string = "Output directory"
-  description    : string = "The output directory for the generated files"
-  type           : string = "string"
-  path           : boolean = 1
-  mutability     : string = "variable"
-  variable.mode  : string = "free"
-  string.default : string = "/tmp/${USER}/snemo.d/"
-#+END_SRC
-
 *** Top variant
-#+NAME: core_variant
-#+BEGIN_SRC shell :tangle no :results output
-  cnt=0
-  pms=$(cat ./snvariant_manager.org | grep '\[name=.*.PM' | grep -v 'print' | awk -F \" '{print $2}')
-  for i in ${=pms}; do
-      pm_name=${i/.PM/}
-      echo "parameters.${pm_name}.model : string = \"$i\""
-      let cnt++
-      array[cnt]=$i
-  done
-  echo
-  echo "#@description The list of variant parameters"
-  echo "parameters : string[$cnt] = \\"
-  for i in $array; do
-      echo -n "\"${i/.PM/}\" "
-      if [ $i != $array[-1] ]; then echo ' \';fi
-  done
-#+END_SRC
 
 #+BEGIN_SRC shell :noweb yes
-  [name="core.VM" type="variant"]
+  [name="detector.VM" type="variant"]
 
-  #@config A variant model describing the parameters for the core application
+  #@config A variant model describing the detector parameters
 
   #@description The display name of this variant
-  display_name : string = "Core setup"
+  display_name : string = "Detector setup"
 
   #@description A short description of the variant
-  terse_description : string = "The configuration parameters for the core application"
+  terse_description : string = "The configuration parameters for the detector setup"
 
-  <<core_variant()>>
+  <<variant_generator(regex="Detector")>>
 #+END_SRC
