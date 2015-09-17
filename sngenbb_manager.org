@@ -22,7 +22,7 @@ manager.
   #@config Main configuration parameters for the genbb manager
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description List of files containing particle generator definition rules
   generators.configuration_files : string[5] as path = \
@@ -289,7 +289,7 @@ Combination of several =genbb= generators can be done using
   #@config A model that generates several particles  at the same time
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description Assign unique generation id
   assign_generation_ids : boolean = true
@@ -366,7 +366,7 @@ Combination of several =genbb= generators can be done using
   #@config A model that generates several particles  at the same time
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description Assign unique generation id
   assign_generation_ids : boolean = true

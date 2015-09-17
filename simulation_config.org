@@ -56,7 +56,7 @@ service files.
 *** Logging priority
 #+BEGIN_SRC shell
   #@description Module manager logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description Embedded module factory debug flag
   factory.debug : boolean = false
@@ -97,7 +97,7 @@ service files.
 *** Logging priority
 #+BEGIN_SRC shell
   #@description Service manager logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 *** Name & description
 #+BEGIN_SRC shell
@@ -210,7 +210,7 @@ module. It also defines the output directory where to store each output steps.
     echo '[name="'$mname'" type="dpp::output_module"]'
     echo
     echo '#@description Logging priority'
-    echo 'logging.priority : string = "'$logging'"'
+    echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
     echo
     echo '#@description Output file mode'
     echo 'files.mode : string = "single"'
@@ -237,7 +237,7 @@ module. It also defines the output directory where to store each output steps.
   echo '[name="'$mname'" type="dpp::utils_module"]'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
   echo '#@description The processor mode'
   echo 'mode : string = "'$mode'"'
@@ -257,7 +257,7 @@ receives a table list and builds the =chain_module= declaration given its name.
   echo '[name="'$mname'" type="dpp::chain_module"]'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
   echo '#@description The list of processing modules to be applied (in this order)'
   echo 'modules : string['$nmodule'] = \'
@@ -277,7 +277,7 @@ This skeleton code is a template to declare =if_module= processor.
   echo '[name="'$mname'" type="dpp::if_module"]'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
   echo '#@description The label/name of the cut service'
   echo 'cut_service.label : string = "Cuts"'
@@ -454,10 +454,10 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
 **** Logging flag
 #+BEGIN_SRC shell
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The simulation manager logging priority
-  manager.logging.priority : string = "warning"
+  manager.logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 **** Bank & service labels
 #+BEGIN_SRC shell
@@ -546,7 +546,7 @@ particles has been restricted.
   [name="add_header" type="snemo::processing::event_header_utils_module"]
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The processor mode
   mode : string = "add_header"
@@ -665,7 +665,7 @@ simulation setup if needed.
   [name="update_header" type="snemo::processing::event_header_utils_module"]
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The processor mode
   mode : string = "add_header"
@@ -709,7 +709,7 @@ and [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?doci
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 
 **** Data bank labels and hit category
@@ -795,7 +795,7 @@ for the quenching of alpha particles.
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 
 **** Data bank labels
@@ -892,7 +892,7 @@ different particles.
   [name="mock_tracker_clustering" type="snemo::reconstruction::mock_tracker_clustering_module"]
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
@@ -904,7 +904,7 @@ different particles.
   TCD_label : string  = "TCD"
 
   #@description Tracker Clusterizer logging priority
-  TC.logging.priority : string = "warning"
+  TC.logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description Activation of the clustering of prompt hits
   TPC.processing_prompt_hits : boolean = true
@@ -942,7 +942,7 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
   [name="cat_tracker_clustering" type="snemo::reconstruction::cat_tracker_clustering_module"]
 
   #@description Logging support
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
@@ -990,7 +990,7 @@ Yorck Ramachers (see [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/
   [name="sultan_tracker_clustering" type="snemo::reconstruction::sultan_tracker_clustering_module"]
 
   #@description Logging support
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
@@ -1079,7 +1079,7 @@ by K. Bhardwaj.
   [name="tcp_tracker_clustering" type="snemo::reconstruction::processing::tracker_clustering_module"]
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label of the Geometry service
   Geo_label : string  = "Geo"
@@ -1187,7 +1187,7 @@ or line models.
 **** General logging
 #+BEGIN_SRC shell
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 
 **** Data bank & services labels
@@ -1234,7 +1234,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
 ****** Guess parameters
 #+BEGIN_SRC shell
   #@description Activate logging messages for line guess driver
-  line.guess.logging.priority  : string = "error"
+  line.guess.logging.priority  : string = @variant(core:logging_priority|"error")
 
   #@description Use max radius (cell size) to construct initial guess point (1) or use the effective drift Geiger distance of the hit (0)
   line.guess.use_max_radius    : boolean = false
@@ -1282,7 +1282,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
 ****** Guess parameters
 #+BEGIN_SRC shell
   #@description Activate logging messages for helix guess driver
-  trackfit.helix.guess.logging.priority  : string = "error"
+  trackfit.helix.guess.logging.priority  : string = @variant(core:logging_priority|"error")
 
   #@description Use max radius (cell size) to construct initial guess point (1) or use the effective drift Geiger distance of the hit (0)
   trackfit.helix.guess.use_max_radius    : boolean = false
@@ -1347,7 +1347,7 @@ track with calorimeter blocks.
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 **** Data banks and services labels
 #+BEGIN_SRC shell
@@ -1377,7 +1377,7 @@ implemented but the particle tracking module will stay unchanged.
 ***** Vertex Extrapolation Driver
 #+BEGIN_SRC shell
   #@description Vertex Extrapolation Driver logging priority
-  VED.logging.priority : string = "error"
+  VED.logging.priority : string = @variant(core:logging_priority|"error")
 
   #@description Use linear extrapolation (not implemented yet)
   VED.use_linear_extrapolation : boolean = false
@@ -1386,7 +1386,7 @@ implemented but the particle tracking module will stay unchanged.
 ***** Charge Computation Driver
 #+BEGIN_SRC shell
   #@description Charge Computation Driver logging priority
-  CCD.logging.priority : string = "warning"
+  CCD.logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description Charge sign convention
   CCD.charge_from_source : boolean = true
@@ -1395,7 +1395,7 @@ implemented but the particle tracking module will stay unchanged.
 ***** Calorimeter Association Driver
 #+BEGIN_SRC shell
   #@description Calorimeter Association Driver logging priority
-  CAD.logging.priority : string = "warning"
+  CAD.logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description Maximum matching distance for track/calo association
   CAD.matching_tolerance : real as length = 100 mm
@@ -1406,7 +1406,7 @@ implemented but the particle tracking module will stay unchanged.
 ***** Alpha Finder Driver
 #+BEGIN_SRC shell
   #@description Alpha Finder Driver logging priority
-  AFD.logging.priority : string = "warning"
+  AFD.logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 ** \gamma tracking module
 :PROPERTIES:
@@ -1426,7 +1426,7 @@ implemented but the particle tracking module will stay unchanged.
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 
 **** Data banks and services labels
@@ -1441,7 +1441,7 @@ implemented but the particle tracking module will stay unchanged.
 **** Default options
 #+BEGIN_SRC shell
   #@description Gamma algorithm logging priority
-  BGB.logging.priority : string = "error"
+  BGB.logging.priority : string = @variant(core:logging_priority|"error")
 
   #@description Enable the extrapolation to the source foil
   BGB.add_foil_vertex_extrapolation : boolean = true
@@ -1474,7 +1474,7 @@ implemented but the particle tracking module will stay unchanged.
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 **** Data banks and services labels
 #+BEGIN_SRC shell
@@ -1494,7 +1494,7 @@ implemented but the particle tracking module will stay unchanged.
 **** Default options
 #+BEGIN_SRC shell
   #@description Gamma algorithm logging priority
-  BGB.logging.priority : string = "error"
+  BGB.logging.priority : string = @variant(core:logging_priority|"error")
 
   #@description Enable the extrapolation to the source foil
   BGB.add_foil_vertex_extrapolation : boolean = true
@@ -1506,7 +1506,7 @@ implemented but the particle tracking module will stay unchanged.
 ***** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  GT.logging.priority : string = "warning"
+  GT.logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 ***** Minimal probability
 The following value sets the minimal TOF probability to accept a pair of
@@ -1547,7 +1547,7 @@ with the number of gammas.
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 
 **** Data banks and services labels
@@ -1568,7 +1568,7 @@ with the number of gammas.
 ***** Logging priority
 #+BEGIN_SRC shell
   #@description Logging priority for PID driver
-  PID.logging.priority : string = "warning"
+  PID.logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 
 ***** PID mode
@@ -1614,7 +1614,7 @@ with the number of gammas.
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  logging.priority : string = "error"
+  logging.priority : string = @variant(core:logging_priority|"error")
 #+END_SRC
 
 **** Data banks and services labels
@@ -1636,21 +1636,21 @@ with the number of gammas.
 ***** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  TOFD.logging.priority : string = "error"
+  TOFD.logging.priority : string = @variant(core:logging_priority|"error")
 #+END_SRC
 
 **** \Delta{}vertex driver
 ***** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  DVD.logging.priority : string = "error"
+  DVD.logging.priority : string = @variant(core:logging_priority|"error")
 #+END_SRC
 
 **** \theta driver
 ***** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  AMD.logging.priority : string = "error"
+  AMD.logging.priority : string = @variant(core:logging_priority|"error")
 #+END_SRC
 
 ** Chain modules
@@ -1900,7 +1900,7 @@ software components, including other services or data processing modules (see
   [name="Ctx" type="dpp::context_service"]
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description File from which the context is to be loaded at program start
   load.file : string as path  = "/tmp/${USER}/snemo.d/snemo_context.conf"
@@ -1923,7 +1923,7 @@ reconstruction ... but all of them will use the same geometry.
   [name="Geo" type="geomtools::geometry_service"]
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description Embedded SuperNEMO geometry manager main configuration file
   manager.configuration_file : string as path = \
@@ -1946,7 +1946,7 @@ apply selection cuts on arbitrary data models.
   [name="Cuts" type="cuts::cut_service"]
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The main configuration file for the embedded cut manager
   cut_manager.config : string as path = \
@@ -1960,7 +1960,7 @@ apply selection cuts on arbitrary data models.
 
 #+BEGIN_SRC shell
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description Print a final report of cut efficiencies
   print_report : string = "table"
@@ -2001,7 +2001,7 @@ This skeleton code allows to check the availability of a data bank.
   echo 'cut.description : string = "Check availabity of '$bname'"'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
   echo '#@description The running mode of this utils_cut instance'
   echo 'mode : string = "'$mode'"'
@@ -2026,7 +2026,7 @@ This skeleton code allows to check the availability of a data bank.
   echo 'cut.description : string = "Multi-'$mode' cut"'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
   echo '#@description The cuts to be combined'
   echo 'cuts : string['$ncut'] = \'
@@ -2059,7 +2059,7 @@ This skeleton code allows to check the availability of a data bank.
   cut.description : string = "Select event following a list of event ids"
 
   #@description Logging priority
-  logging.priority : string = "debug"
+  logging.priority : string = @variant(core:logging_priority|"debug")
 
   #@description The label/name of the event header' bank (mandatory)
   EH_label : string = "EH"
@@ -2119,7 +2119,7 @@ This cuts puts together all the previous declared cuts.
   cut.description : string = "Select calibrated calorimeter hit"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   CD_label : string = "CD"
@@ -2146,7 +2146,7 @@ This cuts puts together all the previous declared cuts.
   cut.description : string = "Select a given number of calibrated calorimeter hits"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   CD_label : string = "CD"
@@ -2172,7 +2172,7 @@ This cuts puts together all the previous declared cuts.
   cut.description : string = "Select calibrated tracker hit"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   CD_label : string = "CD"
@@ -2199,7 +2199,7 @@ This cuts puts together all the previous declared cuts.
   cut.description : string = "Select a given number of calibrated tracker hits"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   CD_label : string = "CD"
@@ -2225,7 +2225,7 @@ This cuts puts together all the previous declared cuts.
   cut.description : string = "Select delayed calibrated tracker hit"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   CD_label : string = "CD"
@@ -2283,7 +2283,7 @@ This cuts puts together all the previous declared cuts.
   cut.description : string = "Check tracker cluster presence"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'tracker clustering data' bank (mandatory)
   TCD_label : string = "TCD"
@@ -2299,7 +2299,7 @@ This cuts puts together all the previous declared cuts.
   cut.description : string = "Select a given number of tracker clusters"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'tracker clustering data' bank (mandatory)
   TCD_label : string = "TCD"
@@ -2319,7 +2319,7 @@ This cuts puts together all the previous declared cuts.
   [name="tcd2_cut" type="snemo::analysis::cut::tracker_clustering_data_cut"]
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'tracker clustering data' bank (mandatory)
   TCD_label : string = "TCD"
@@ -2347,7 +2347,7 @@ since we want to remove thess events, we build a =nor_cut= to keep
   cut.description : string = "Check unclustered hits presence"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'tracker clustering data' bank (mandatory)
   TCD_label : string = "TCD"
@@ -2363,7 +2363,7 @@ since we want to remove thess events, we build a =nor_cut= to keep
   cut.description : string = "Select a given number of unclustered hits"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'tracker clustering data' bank (mandatory)
   TCD_label : string = "TCD"
@@ -2397,7 +2397,7 @@ unclustered hits.
   cut.description : string = "Remove event with large number of unclustered hits"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description  The name of the cut to be negated
   cut : string = "range_unclustered_hits"
@@ -2439,7 +2439,7 @@ unclustered hits.
   cut.description : string = "Select event with default solution"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'tracker trajectory data' bank (mandatory)
   TTD_label : string = "TTD"
@@ -2456,7 +2456,7 @@ unclustered hits.
   cut.description : string = "Select event with good p-value trajectory"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'tracker trajectory data' bank (mandatory)
   TTD_label : string = "TTD"
@@ -2503,7 +2503,7 @@ unclustered hits.
   cut.description : string = "Select reconstructed particle"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   PTD_label : string = "PTD"
@@ -2519,7 +2519,7 @@ unclustered hits.
   cut.description : string = "Select a number of particle tracks"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'calibrated data' bank (mandatory)
   PTD_label : string = "PTD"
@@ -2543,7 +2543,7 @@ Remove event with non associated calorimeters hits.
   cut.description : string = "Select event with non associated calorimeter hits"
 
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The label/name of the 'particle track data' bank (mandatory)
   PTD_label : string = "PTD"
@@ -2601,7 +2601,7 @@ alpha in the context of SuperNEMO. Since these cuts apply on every
   echo 'cut.description : string = "Check '$type' charged track"'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
   echo '#@description The running mode of this cut instance'
   echo 'mode.has_charge : boolean = true'
@@ -2620,7 +2620,7 @@ alpha in the context of SuperNEMO. Since these cuts apply on every
   echo 'cut.description : string = "Check if track has '$type' vertex"'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
   echo '#@description The running mode of this cut instance'
   echo 'mode.has_vertex : boolean = true'
@@ -2639,7 +2639,7 @@ alpha in the context of SuperNEMO. Since these cuts apply on every
   echo 'cut.description : string = "Check if track has associated calorimeter hits"'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
   echo '#@description The running mode of this cut instance'
   echo 'mode.has_associated_calorimeter_hits : boolean = true'
@@ -2655,7 +2655,7 @@ alpha in the context of SuperNEMO. Since these cuts apply on every
   echo 'cut.description : string = "Check if track has associated calorimeter hits"'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
   echo '#@description The running mode of this cut instance'
   echo 'mode.has_associated_calorimeter_hits : boolean = true'
@@ -2666,7 +2666,7 @@ alpha in the context of SuperNEMO. Since these cuts apply on every
   echo 'cut.description : string = "Check if track has no associated calorimeter hits"'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
   echo '#@description The name of the cut to be negated'
   echo 'cut : string = "'$name'"'
@@ -2681,7 +2681,7 @@ alpha in the context of SuperNEMO. Since these cuts apply on every
   echo 'cut.description : string = "Check if track has a range of associated calorimeter hits"'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
   echo '#@description The running mode of this cut instance'
   echo 'mode.range_associated_calorimeter_hits : boolean = true'
@@ -2787,7 +2787,7 @@ An alpha is a =particle_track= having
     cut.description : string = "Check delayed cluster"
 
     #@description Logging priority
-    logging.priority : string = "error"
+    logging.priority : string = @variant(core:logging_priority|"error")
 
     #@description The running mode of this cut instance
     mode.has_delayed_cluster : boolean = true
@@ -2849,7 +2849,7 @@ and maybe more in the future.
   echo 'cut.description : string = "Select reconstructed particle for '$topo' topology"'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
   echo '#@description The label/name of the bank (mandatory)'
   echo 'PTD_label : string = "PTD"'
@@ -2868,7 +2868,7 @@ and maybe more in the future.
   echo 'cut.description : string = "Ensure pattern id presence for '$topo' topology"'
   echo
   echo '#@description Logging priority'
-  echo 'logging.priority : string = "'$logging'"'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
   echo '#@description The running mode of this cut instance'
   echo 'mode.has_pattern_id : boolean = true'
@@ -2892,7 +2892,7 @@ Define 2\beta events channel
   cut.description : string = "Select 2 electrons topology pattern"
 
   #@description Logging priority
-  logging.priority : string = "error"
+  logging.priority : string = @variant(core:logging_priority|"error")
 
   #@description Activate the check for pattern id label
   mode.pattern_id : boolean = true
@@ -2909,7 +2909,7 @@ Define 2\beta events channel
     cut.description : string = "Select events with internal probability"
 
     #@description Logging priority'
-    logging.priority : string = "error"
+    logging.priority : string = @variant(core:logging_priority|"error")
 
     #@description Activate the check for internal probability
     mode.has_internal_probability : boolean = true
@@ -2923,7 +2923,7 @@ Define 2\beta events channel
     cut.description : string = "Select good internal probability"
 
     #@description Logging priority'
-    logging.priority : string = "error"
+    logging.priority : string = @variant(core:logging_priority|"error")
 
     #@description Activate the check for internal probability value
     mode.range_internal_probability : boolean = true
@@ -2968,7 +2968,7 @@ Define 1\beta events channel
     cut.description : string = "Select 1 electron topology events"
 
     #@description Logging priority
-    logging.priority : string = "error"
+    logging.priority : string = @variant(core:logging_priority|"error")
 
     #@description Activate the check for pattern id label
     mode.pattern_id : boolean = true
@@ -3009,7 +3009,7 @@ Define 1\beta1\gamma events channel
     cut.description : string = "Select 1 electron/1 gamma topology events"
 
     #@description Logging priority
-    logging.priority : string = "error"
+    logging.priority : string = @variant(core:logging_priority|"error")
 
     #@description Activate the check for pattern id label
     mode.pattern_id : boolean = true
@@ -3050,7 +3050,7 @@ Define 1\beta1\alpha events topology
     cut.description : string = "Select 1 electron/1 alpha topology events"
 
     #@description Logging priority
-    logging.priority : string = "error"
+    logging.priority : string = @variant(core:logging_priority|"error")
 
     #@description Activate the check for pattern id label
     mode.pattern_id : boolean = true

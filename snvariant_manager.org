@@ -52,7 +52,7 @@ instance.
   terse_description : string = "The core application parameters"
 
   #@description Logging priority
-  logging.priority : string = "fatal"
+  logging.priority : string = @variant(core:logging_priority|"fatal")
 
   #@description The variant model to be used as the default top variant
   top_variant_name : string = "core.VM"
@@ -61,15 +61,21 @@ instance.
   # preserved_property_prefixes : string[2] = "CMS." "DB."
 
   #@description The list of files containing the definition of variant/parameter models
-  configuration_items.files : string[4] as path =              \
-    "@datatools:variants/models/base_variants.def"             \
+  configuration_items.files : string[3] as path =              \
     "@SNEMO_SIMULATION_CONFIGURATION@/core_variants.def"       \
     "@SNEMO_SIMULATION_CONFIGURATION@/simulation_variants.def" \
     "@SNEMO_SIMULATION_CONFIGURATION@/detector_variants.def"
 #+END_SRC
 
 * Variant definitions
-** Code skeleton                                                  :noexport:
+** Code skeletons                                                 :noexport:
+#+NAME: variant_preamble
+#+BEGIN_SRC shell :results none :tangle no
+  #@description The definitions for generic variants
+  #@key_label   "name"
+  #@meta_label  "type"
+#+END_SRC
+
 #+NAME: variant_generator
 #+BEGIN_SRC shell :tangle no :results output :var regex=""
   cnt=0
@@ -93,6 +99,31 @@ instance.
 :PROPERTIES:
 :TANGLE: core_variants.def
 :END:
+*** Insert preamble
+#+BEGIN_SRC shell :noweb yes
+  <<variant_preamble>>
+#+END_SRC
+
+*** Logging priority
+#+BEGIN_SRC shell
+  [name="logging_priority.PM" type="parameter"]
+  display_name              : string = "Logging priority"
+  terse_description         : string = "The logging priority"
+  type                      : string = "string"
+  mutability                : string = "variable"
+  variable.mode             : string = "enumeration"
+  string.enumerated.size    : integer = 8
+  string.enumerated_0.value : string = "fatal"
+  string.enumerated_1.value : string = "critical"
+  string.enumerated_2.value : string = "error"
+  string.enumerated_3.value : string = "warning"
+  string.enumerated_4.value : string = "notice"
+  string.enumerated_5.value : string = "information"
+  string.enumerated_6.value : string = "debug"
+  string.enumerated_7.value : string = "trace"
+  string.default            : string = "fatal"
+#+END_SRC
+
 *** Output directory
 #+BEGIN_SRC shell
   [name="output_path.PM" type="parameter"]
@@ -125,6 +156,11 @@ instance.
 :PROPERTIES:
 :TANGLE: simulation_variants.def
 :END:
+*** Insert preamble
+#+BEGIN_SRC shell :noweb yes
+  <<variant_preamble>>
+#+END_SRC
+
 *** Seed manager
 #+BEGIN_SRC shell
   [name="random_seed.PM" type="parameter"]
@@ -236,6 +272,10 @@ instance.
 :PROPERTIES:
 :TANGLE: detector_variants.def
 :END:
+*** Insert preamble
+#+BEGIN_SRC shell :noweb yes
+  <<variant_preamble>>
+#+END_SRC
 
 *** Calorimeter parameters
 **** Energy resolutions

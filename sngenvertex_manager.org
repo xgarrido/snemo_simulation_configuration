@@ -14,7 +14,7 @@ This file holds some vertex generators related to SuperNEMO detector geometry.
 ** Logging priority
 #+BEGIN_SRC shell
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 
 ** Vertices list of files
@@ -59,7 +59,7 @@ Insert preamble
     #@config Vertex generation from the bulk of the main calorimeter wrapper
 
     #@description Logging priority
-    logging.priority : string = "warning"
+    logging.priority : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     #origin : string = "category=calorimeter_wrapper module={*} side={1} column={0;1;2;4;19} row={0;1;2;12;13}"
@@ -78,7 +78,7 @@ Insert preamble
     #@config Vertex generation from the bulk of the X-wall calorimeter wrapper
 
     #@description Logging priority
-    logging.priority : string = "warning"
+    logging.priority : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     origin : string = "category='xcalo_wrapper' module={*} side={*} column={*} row={*}"
@@ -96,7 +96,7 @@ Insert preamble
     #@config Vertex generation from the bulk of the gamma veto wrapper
 
     #@description Logging priority
-    logging.priority : string = "warning"
+    logging.priority : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     origin : string = "category='gveto_wrapper' module={*} side={*} wall={*} column={*}"
@@ -113,7 +113,7 @@ Insert preamble
     #@config Vertex generation from the surface of the main calorimeter wrapper
 
     #@description Logging priority
-    logging.priority : string = "warning"
+    logging.priority : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     origin : string = "category='calorimeter_wrapper' module={*} side={*} column={*} row={*}"
@@ -133,7 +133,7 @@ Insert preamble
     #@config Vertex generation from the surface of the X-wall calorimeter wrapper
 
     #@description Logging priority
-    logging.priority : string = "warning"
+    logging.priority : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     origin : string = "category='xcalo_wrapper' module={*} side={*} column={*} row={*}"
@@ -153,7 +153,7 @@ Insert preamble
     #@config Vertex generation from the surface of the gamma veto wrapper
 
     #@description Logging priority
-    logging.priority : string = "warning"
+    logging.priority : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     origin : string = "category='gveto_wrapper' module={*} side={*} wall={*} column={*}"
@@ -173,7 +173,7 @@ Insert preamble
     #@config Vertex generation from the bulk of the PMT glass wrapper
 
     #@description Logging priority
-    logging.priority : string = "warning"
+    logging.priority : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     origin : string = "category='calorimeter_pmt_glass' module={*} side={*} column={*} row={*}"
@@ -210,7 +210,7 @@ Insert preamble
     #@config Vertex generation from the bulk volume of the anode wires
 
     #@description Logging priority
-    logging.priority  : string = "warning"
+    logging.priority  : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     origin : string = "category='drift_cell_anodic_wire' module={*} side={*} layer={*} row={*}"
@@ -227,7 +227,7 @@ Insert preamble
     #@config Vertex generation from the surface of the anode wires
 
     #@description Logging priority
-    logging.priority  : string = "warning"
+    logging.priority  : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     origin : string = "category='drift_cell_anodic_wire' module={*} side={*} layer={*} row={*}"
@@ -253,7 +253,7 @@ Insert preamble
     #@config Vertex generation from the surface of the field wires
 
     #@description Logging priority
-    logging.priority  : string = "warning"
+    logging.priority  : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     origin : string = "category='drift_cell_field_wire' module={*} side={*} layer={*} row={*} set={*} wire={*}"
@@ -279,7 +279,7 @@ Insert preamble
     #@config Vertex generation from the bulk volume of the anode wires
 
     #@description Logging priority
-    logging.priority  : string = "warning"
+    logging.priority  : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     origin : string = "category='drift_cell_field_wire' module={*} side={*} layer={*} row={*}"
@@ -303,7 +303,7 @@ get a full coverage of tracker gaz, you may have a look to the next section.
   #@config Vertex generation from the core of Geiger cell
 
   #@description Logging priority
-  logging.priority  : string = "warning"
+  logging.priority  : string = @variant(core:logging_priority|"warning")
 
   #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
   origin : string = "category='drift_cell_core' module={*} side={*} layer={*} row={*}"
@@ -332,7 +332,7 @@ been used :
   #@config Vertex generation from the tracker gaz
 
   #@description Logging priority
-  logging.priority  : string = "warning"
+  logging.priority  : string = @variant(core:logging_priority|"warning")
 
   #@description Generation mode ("surface" or "bulk")
   mode   : string = "bulk"
@@ -356,7 +356,7 @@ another one for the back part ($x<0$).
   #@config Vertex generation from the front tracker volume
 
   #@description Logging priority
-  logging.priority  : string = "warning"
+  logging.priority  : string = @variant(core:logging_priority|"warning")
 
   #@description Vertex generator name to place
   vertex_generator.name : string = "tracker_volume_box"
@@ -377,7 +377,7 @@ another one for the back part ($x<0$).
   #@config Vertex generation from the front tracker volume
 
   #@description Logging priority
-  logging.priority  : string = "warning"
+  logging.priority  : string = @variant(core:logging_priority|"warning")
 
   #@description Vertex generator name to place
   vertex_generator.name : string = "tracker_volume_box"
@@ -400,7 +400,7 @@ vertex generators:
   #@config Vertex generation from the bulk volume of the tracker
 
   #@description Logging priority
-  logging.priority  : string = "warning"
+  logging.priority  : string = @variant(core:logging_priority|"warning")
 
   #@description Geometry version requirement (not working with version lower than 2.0)
   geometry.setup_requirement : string = "snemo::demonstrator(>=3)"
@@ -426,7 +426,7 @@ shoot vertex within SuperNEMO module and then reject the ones not inside
   #@config Vertex generation from 'tracking_gas' material
 
   #@description Logging priority
-  logging.priority  : string = "warning"
+  logging.priority  : string = @variant(core:logging_priority|"warning")
 
   #@description Geometry version requirement (not working with version lower than 3.0)
   geometry.setup_requirement : string = "snemo::demonstrator(>=3)"
@@ -448,7 +448,7 @@ validation
 we define the logging level
 #+BEGIN_SRC shell
   #@description Maximum number of tries for the rejection method
-  validation.logging.priority : string = "warning"
+  validation.logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 and we activate it
 #+BEGIN_SRC shell
@@ -482,7 +482,7 @@ We can also set the logging priority and the maximum depth to look inside
   # validation.validator_params.max_depth : integer = 100
 
   #@description Logging level for validator
-  validation.validator_params.logging.priority : string = "warning"
+  validation.validator_params.logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 
 ** Source vertices
@@ -511,7 +511,7 @@ Insert preamble
     #@config Vertex generation from the bulk volume of the inner source strips
 
     #@description Logging priority
-    logging.priority  : string = "warning"
+    logging.priority  : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry version requirement (not working with version lower than 2.0)
     geometry.setup_requirement : string = "snemo::demonstrator(>=3)"
@@ -530,7 +530,7 @@ Insert preamble
     #@config Vertex generation from the surface of the inner source strips
 
     #@description Logging priority
-    logging.priority  : string = "warning"
+    logging.priority  : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry version requirement (not working with version lower than 2.0)
     geometry.setup_requirement : string = "snemo::demonstrator(>=3)"
@@ -557,7 +557,7 @@ Insert preamble
     #@config Vertex generation from the bulk volume of the outer source strips
 
     #@description Logging priority
-    logging.priority  : string = "warning"
+    logging.priority  : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry version requirement (not working with version lower than 2.0)
     geometry.setup_requirement : string = "snemo::demonstrator(>=3)"
@@ -576,7 +576,7 @@ Insert preamble
     #@config Vertex generation from the surface of the outer source strips
 
     #@description Logging priority
-    logging.priority  : string = "warning"
+    logging.priority  : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry version requirement (not working with version lower than 2.0)
     geometry.setup_requirement : string = "snemo::demonstrator(>=3)"
@@ -603,7 +603,7 @@ Insert preamble
     #@config Vertex generation from the bulk volume of the source strips
 
     #@description Logging priority
-    logging.priority  : string = "warning"
+    logging.priority  : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry version requirement (not working with version lower than 2.0)
     geometry.setup_requirement : string = "snemo::demonstrator(>=3)"
@@ -623,7 +623,7 @@ Insert preamble
     #@config Vertex generation from the surface of the source strips
 
     #@description Logging priority
-    logging.priority  : string = "warning"
+    logging.priority  : string = @variant(core:logging_priority|"warning")
 
     #@description Geometry version requirement (not working with version lower than 2.0)
     geometry.setup_requirement : string = "snemo::demonstrator(>=3)"
@@ -656,7 +656,7 @@ Insert preamble
     #@config Vertex generation from the surface of the experimental hall
 
     #@description Logging priority
-    logging.priority  : string = "notice"
+    logging.priority  : string = @variant(core:logging_priority|"notice")
 
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     origin : string = "category='hall'"
@@ -690,7 +690,7 @@ Insert preamble
     #@config Vertex generation from the volume of the experimental hall
 
     #@description Logging priority
-    logging.priority  : string = "notice"
+    logging.priority  : string = @variant(core:logging_priority|"notice")
 
     #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
     origin : string = "category='hall'"

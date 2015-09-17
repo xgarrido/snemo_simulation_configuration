@@ -30,7 +30,7 @@ This file holds mainly the paths to geometry files most of them are placed in
 ** Logging priority
 #+BEGIN_SRC shell
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 
 ** Geometry factory
@@ -39,7 +39,7 @@ The geometry factory holds all the files needed for the geometry construction.
 *** Logging priority
 #+BEGIN_SRC shell
   #@description Logging priority of the embedded geometry model factory
-  factory.logging.priority : string = "warning"
+  factory.logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 
 *** Geometry files
@@ -74,7 +74,7 @@ The geometry factory holds all the files needed for the geometry construction.
 *** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag of the embedded ID manager
-  id_mgr.logging.priority : string = "warning"
+  id_mgr.logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 
 *** Category list
@@ -140,10 +140,10 @@ to change the source foil isotope.
 *** Logging priority
 #+BEGIN_SRC shell
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description Materials manager logging priority
-  materials.logging.priority : string = "warning"
+  materials.logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 
 *** Use isotope mass database
@@ -217,13 +217,13 @@ example, we locally change the source material without changing anything else.
 *** Logging priority
 #+BEGIN_SRC shell
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 
 *** EM field manager configuration
 #+BEGIN_SRC shell
   #@description Manager logging priority
-  manager.logging.priority : string = "warning"
+  manager.logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The name of the geometry service
   manager.services.geometry : string = "Geo"
@@ -243,7 +243,7 @@ module.
   manager.build_geom_map : boolean = true
 
   #@description Manager logging priority
-  manager.geom_map.logging.priority : string = "warning"
+  manager.geom_map.logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The list of EM fields associated to some logical volumes
   manager.geom_map.associations.labels : string[1] = "module"
@@ -275,7 +275,7 @@ module.
   #@config Configuration parameters for the magnetic field of SuperNEMO
 
   #@description Logging flag
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description Default implicit magnetic field unit
   magnetic_field.unit        : string  = "gauss"
@@ -297,7 +297,7 @@ To take into account effects from the calorimeter magnetic shielding as shown in
   #@config Configuration parameters for a variable magnetic field
 
   #@description Logging flag
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description Default implicit magnetic field unit
   magnetic_field.unit : string = "gauss"
@@ -331,7 +331,7 @@ To take into account effects from the calorimeter magnetic shielding as shown in
 *** Logging priority
 #+BEGIN_SRC shell
   #@description Logging priority
-  logging.priority : string = "warning"
+  logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 *** Geometry requirements
 #+BEGIN_SRC shell
