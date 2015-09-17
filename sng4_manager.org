@@ -325,6 +325,12 @@ Quite experimental try to set particles used within SuperNEMO "framework".
 :PROPERTIES:
 :TANGLE: snem_processes.conf
 :END:
+***** Logging priority
+#+BEGIN_SRC shell
+  #@description Logging priority
+  logging.priority : string = "warning"
+#+END_SRC
+
 ***** General settings
 #+BEGIN_SRC shell
   #@config Configuration parameters for the electro-magnetic Geant4 physics constructor
