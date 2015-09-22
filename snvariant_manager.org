@@ -171,7 +171,6 @@ instance.
   string.enumerated_5.value : string = "information"
   string.enumerated_6.value : string = "debug"
   string.enumerated_7.value : string = "trace"
-  string.default            : string = "fatal"
 #+END_SRC
 
 *** Output directory
