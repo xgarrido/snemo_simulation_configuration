@@ -10,8 +10,9 @@ BATCH = $(EMACS) --batch --no-init-file					\
 
 GIT_BRANCH = $(shell git branch | grep \* | cut -d' ' -f2)
 
-CCAGE_DIRECTORY = /sps/nemo/scratch/garrido/workdir/supernemo/simulations/snemo_simulation_configuration
-LAL_DIRECTORY	= /exp/nemo/garrido/workdir/supernemo/simulations/snemo_simulation_configuration
+CCAGE_DIRECTORY	    = /sps/nemo/scratch/garrido/workdir/supernemo/simulations/snemo_simulation_configuration
+LAL_DIRECTORY	    = /exp/nemo/garrido/workdir/supernemo/simulations/snemo_simulation_configuration
+XTREMWEB_DIRECTORY  = /tmp/vmuser/snemo_simulation_configuration
 
 FILES        = $(notdir $(shell ls *.org 2> /dev/null | sed -e 's/snvariant_manager.org//g'))
 ORG_FILES    = $(FILES) snvariant_manager.org
@@ -36,15 +37,25 @@ tarball: org
 	@echo "NOTICE: Making tarball configuration"
 	@tar -czf $(GIT_BRANCH).tar.gz --exclude='.*.tangle' $(GIT_BRANCH)
 
-push: org
+push: lyon lal xtremweb
+
+lyon: org
 	@echo "NOTICE: Pushing current configuration to Lyon"
 	@mkdir -p /tmp/ssc.d/ && rm -rf /tmp/ssc.d/* && cp -r $(GIT_BRANCH)/*.{conf,def,lis} /tmp/ssc.d/. && sed -i -e 's#'`pwd`/$(GIT_BRANCH)'#$(CCAGE_DIRECTORY)/$(GIT_BRANCH)#g' /tmp/ssc.d/*
 	@ssh garrido@ccage.in2p3.fr "mkdir -p $(CCAGE_DIRECTORY)/$(GIT_BRANCH); cd $(CCAGE_DIRECTORY); if [ -L current ]; then rm current; fi; ln -sf $(GIT_BRANCH) current"
-	@rsync -e ssh -avP --delete --recursive --force /tmp/ssc.d/*.{conf,def,lis} garrido@ccage.in2p3.fr:$(CCAGE_DIRECTORY)/$(GIT_BRANCH)/.
+	@scp /tmp/ssc.d/*.{conf,def,lis} garrido@ccage.in2p3.fr:$(CCAGE_DIRECTORY)/$(GIT_BRANCH)/.
+
+lal: org
 	@echo "NOTICE: Pushing current configuration to LAL"
 	@mkdir -p /tmp/ssc.d/ && rm -rf /tmp/ssc.d/* && cp -r $(GIT_BRANCH)/*.{conf,def,lis} /tmp/ssc.d/. && sed -i -e 's#'`pwd`/$(GIT_BRANCH)'#$(LAL_DIRECTORY)/$(GIT_BRANCH)#g' /tmp/ssc.d/*
 	@ssh garrido@lx3.lal.in2p3.fr "mkdir -p $(LAL_DIRECTORY)/$(GIT_BRANCH); cd $(LAL_DIRECTORY); test -L current && rm current; ln -sf $(GIT_BRANCH) current"
-	@rsync -e ssh -avP --delete --recursive --force /tmp/ssc.d/*.{conf,def,lis} garrido@lx3.lal.in2p3.fr:$(LAL_DIRECTORY)/$(GIT_BRANCH)/.
+	@scp /tmp/ssc.d/*.{conf,def,lis} garrido@lx3.lal.in2p3.fr:$(LAL_DIRECTORY)/$(GIT_BRANCH)/.
+
+xtremweb: org
+	@echo "NOTICE: Pushing current configuration to XtremWeb"
+	@mkdir -p /tmp/ssc.d/ && rm -rf /tmp/ssc.d/* && cp -r $(GIT_BRANCH)/*.{conf,def,lis} /tmp/ssc.d/. && sed -i -e 's#'`pwd`/$(GIT_BRANCH)'#$(XTREMWEB_DIRECTORY)/$(GIT_BRANCH)#g' /tmp/ssc.d/*
+	@ssh -p 2222 vmuser@134.158.89.155 "mkdir -p $(XTREMWEB_DIRECTORY)/$(GIT_BRANCH); cd $(XTREMWEB_DIRECTORY); test -L current && rm current; ln -sf $(GIT_BRANCH) current"
+	@scp -P 2222 /tmp/ssc.d/*.{conf,def,lis} vmuser@134.158.89.155:$(XTREMWEB_DIRECTORY)/$(GIT_BRANCH)/.
 
 clean:
 	@rm -f *.tangle *.tar.gz *.conf *.def *.aux *.tex *.fls *fdb_latexmk *.log *.pdf *~ *.el
