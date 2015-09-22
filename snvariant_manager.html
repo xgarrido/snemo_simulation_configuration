@@ -1,0 +1,748 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Variant Manager Configuration</title>
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Xavier Garrido" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="css/styles.css" />
+               <link rel="stylesheet" href="css/org-pygments.css" />
+               <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script><script type="text/javascript">
+  function randomLinkColor() {
+      var colors = ['#f1c40f','#e74c3c','#3399cc','#e67e22','#67ad00','#8e44ad','#1abc9c','#003399'];
+      var random_color = colors[Math.floor(Math.random() * colors.length)];
+      var elements = document.querySelectorAll('a');
+      [].slice.call(elements).forEach(function(elem) {
+          //elem.style.color = random_color;
+      });
+  }
+  function displayTOC() {
+      var ttoc = document.getElementById("text-table-of-contents");
+      if (ttoc) {
+          var maincontent = '<a class="button"><i class="fa fa-list"></i></a>'
+          maincontent += "<div>" + ttoc.innerHTML + "</div>";
+          document.getElementById("toc").innerHTML = maincontent;
+      } else {
+          document.getElementById("toc").style.display = "none";
+          document.getElementById("preamble").style.top = "10px";
+      }
+     }
+  </script>
+</head>
+<body onload="randomLinkColor();displayTOC();"><div id="toc"></div>
+<div id="preamble" class="status">
+ <a href="https://github.com/xgarrido/snemo_simulation_configuration"><i class="fa fa-github"></i></a><br/> 
+</div>
+<div id="content">
+<h1 class="title">Variant Manager Configuration</h1>
+<div id="table-of-contents">
+<h2></h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. Introduction</a></li>
+<li><a href="#orgheadline2">2. Manager configuration</a></li>
+<li><a href="#orgheadline6">3. Registries</a>
+<ul>
+<li><a href="#orgheadline3">3.1. Core registry</a></li>
+<li><a href="#orgheadline4">3.2. Simulation registry</a></li>
+<li><a href="#orgheadline5">3.3. Detector registry</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline28">4. Variant definitions</a>
+<ul>
+<li><a href="#orgheadline11">4.1. Core variants</a></li>
+<li><a href="#orgheadline18">4.2. Simulation variants</a></li>
+<li><a href="#orgheadline27">4.3. Detector variants</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The variant concept has been introduced in order to define "variable" parameters
+for configuration files. Basic idea is to set a number of parameters that will
+be used within configuration files such as vertex or genbb generator names. Then
+it is possible to change their respective values in the command line, for
+instance.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> Manager configuration</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@config The main configuration parameters for the application variant repository</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The organization name</span>
+organization : <span class="org-variable-name">string</span> = <span class="org-string">"SuperNEMO"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The application name</span>
+application  : <span class="org-variable-name">string</span> = <span class="org-string">"SN@ilWare"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of configuration files for embedded registries</span>
+registries.config : string[3] as <span class="org-variable-name">path</span> =                                 <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/snvariant_core_registry.conf"</span>       <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/snvariant_simulation_registry.conf"</span> <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/snvariant_detector_registry.conf"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The lock request</span>
+lock : <span class="org-variable-name">boolean</span> = true
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-2">
+<h2 id="orgheadline6"><span class="section-number-2">3</span> Registries</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3"><span class="section-number-3">3.1</span> Core registry</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@config The configuration for the core variant registry</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The name of the registry</span>
+name : <span class="org-variable-name">string</span> = <span class="org-string">"core"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The display name of the registry</span>
+display_name : <span class="org-variable-name">string</span> = <span class="org-string">"Core"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description A short description</span>
+terse_description : <span class="org-variable-name">string</span> = <span class="org-string">"The core application parameters"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"fatal"</span>)
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The variant model to be used as the default top variant</span>
+top_variant_name : <span class="org-variable-name">string</span> = <span class="org-string">"core.VM"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of files containing the definition of variant/parameter models</span>
+configuration_items.files : string[1] as <span class="org-variable-name">path</span> =  <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/core_variants.def"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">3.2</span> Simulation registry</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@config The configuration for the simulation variant registry</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The name of the registry</span>
+name : <span class="org-variable-name">string</span> = <span class="org-string">"simulation"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The display name of the registry</span>
+display_name : <span class="org-variable-name">string</span> = <span class="org-string">"Simulation"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description A short description</span>
+terse_description : <span class="org-variable-name">string</span> = <span class="org-string">"The simulation application parameters"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"fatal"</span>)
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The variant model to be used as the default top variant</span>
+top_variant_name : <span class="org-variable-name">string</span> = <span class="org-string">"simulation.VM"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of files containing the definition of variant/parameter models</span>
+configuration_items.files : string[1] as <span class="org-variable-name">path</span> =  <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/simulation_variants.def"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">3.3</span> Detector registry</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@config The configuration for the simulation variant registry</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The name of the registry</span>
+name : <span class="org-variable-name">string</span> = <span class="org-string">"detector"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The display name of the registry</span>
+display_name : <span class="org-variable-name">string</span> = <span class="org-string">"Detector"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description A short description</span>
+terse_description : <span class="org-variable-name">string</span> = <span class="org-string">"The detector application parameters"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"fatal"</span>)
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The variant model to be used as the default top variant</span>
+top_variant_name : <span class="org-variable-name">string</span> = <span class="org-string">"detector.VM"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of files containing the definition of variant/parameter models</span>
+configuration_items.files : string[1] as <span class="org-variable-name">path</span> =  <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/detector_variants.def"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline28" class="outline-2">
+<h2 id="orgheadline28"><span class="section-number-2">4</span> Variant definitions</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><span class="section-number-3">4.1</span> Core variants</h3>
+<div class="outline-text-3" id="text-4-1">
+</div>
+<div id="outline-container-orgheadline7" class="outline-4">
+<h4 id="orgheadline7"><span class="section-number-4">4.1.1</span> Insert preamble</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The definitions for generic variants</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-4">
+<h4 id="orgheadline8"><span class="section-number-4">4.1.2</span> Logging priority</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"logging_priority.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name              : <span class="org-variable-name">string</span> = <span class="org-string">"Logging priority"</span>
+terse_description         : <span class="org-variable-name">string</span> = <span class="org-string">"The logging priority"</span>
+<span class="org-builtin">type</span>                      : <span class="org-variable-name">string</span> = <span class="org-string">"string"</span>
+mutability                : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode             : <span class="org-variable-name">string</span> = <span class="org-string">"enumeration"</span>
+string.enumerated.size    : <span class="org-variable-name">integer</span> = 8
+string.enumerated_0.value : <span class="org-variable-name">string</span> = <span class="org-string">"fatal"</span>
+string.enumerated_1.value : <span class="org-variable-name">string</span> = <span class="org-string">"critical"</span>
+string.enumerated_2.value : <span class="org-variable-name">string</span> = <span class="org-string">"error"</span>
+string.enumerated_3.value : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+string.enumerated_4.value : <span class="org-variable-name">string</span> = <span class="org-string">"notice"</span>
+string.enumerated_5.value : <span class="org-variable-name">string</span> = <span class="org-string">"information"</span>
+string.enumerated_6.value : <span class="org-variable-name">string</span> = <span class="org-string">"debug"</span>
+string.enumerated_7.value : <span class="org-variable-name">string</span> = <span class="org-string">"trace"</span>
+string.default            : <span class="org-variable-name">string</span> = <span class="org-string">"fatal"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-4">
+<h4 id="orgheadline9"><span class="section-number-4">4.1.3</span> Output directory</h4>
+<div class="outline-text-4" id="text-4-1-3">
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"output_path.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name   : <span class="org-variable-name">string</span> = <span class="org-string">"Output directory"</span>
+description    : <span class="org-variable-name">string</span> = <span class="org-string">"The output directory for the generated files"</span>
+<span class="org-builtin">type</span>           : <span class="org-variable-name">string</span> = <span class="org-string">"string"</span>
+path           : <span class="org-variable-name">boolean</span> = 1
+mutability     : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode  : <span class="org-variable-name">string</span> = <span class="org-string">"free"</span>
+string.default : <span class="org-variable-name">string</span> = <span class="org-string">"/tmp/${USER}/snemo.d/"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10"><span class="section-number-4">4.1.4</span> Top variant</h4>
+<div class="outline-text-4" id="text-4-1-4">
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"core.VM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"variant"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config A variant model describing the core parameters</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The display name of this variant</span>
+display_name : <span class="org-variable-name">string</span> = <span class="org-string">"Core setup"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description A short description of the variant</span>
+terse_description : <span class="org-variable-name">string</span> = <span class="org-string">"The configuration parameters for the core application"</span>
+
+parameters.logging_priority.model : <span class="org-variable-name">string</span> = <span class="org-string">"logging_priority.PM"</span>
+parameters.output_path.model : <span class="org-variable-name">string</span> = <span class="org-string">"output_path.PM"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of variant parameters</span>
+parameters : <span class="org-variable-name">string</span>[2] = <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"logging_priority"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"output_path"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18"><span class="section-number-3">4.2</span> Simulation variants</h3>
+<div class="outline-text-3" id="text-4-2">
+</div>
+<div id="outline-container-orgheadline12" class="outline-4">
+<h4 id="orgheadline12"><span class="section-number-4">4.2.1</span> Insert preamble</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The definitions for generic variants</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13"><span class="section-number-4">4.2.2</span> Seed manager</h4>
+<div class="outline-text-4" id="text-4-2-2">
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"random_seed.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name  : <span class="org-variable-name">string</span> = <span class="org-string">"Value for random seeds"</span>
+<span class="org-builtin">type</span>          : <span class="org-variable-name">string</span> = <span class="org-string">"integer"</span>
+mutability    : <span class="org-variable-name">string</span> = <span class="org-string">"fixed"</span>
+integer.fixed : <span class="org-variable-name">integer</span> = 0
+
+[<span class="org-variable-name">name</span>=<span class="org-string">"if_random_seed.VM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"variant"</span>]
+display_name               : <span class="org-variable-name">string</span> = <span class="org-string">"Random seeds"</span>
+parameters                 : <span class="org-variable-name">string</span>[1] = <span class="org-string">"null_seed"</span>
+parameters.null_seed.model : <span class="org-variable-name">string</span> = <span class="org-string">"random_seed.PM"</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"random_seed_flag.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name                  : <span class="org-variable-name">string</span> = <span class="org-string">"Seed flag"</span>
+description                   : <span class="org-variable-name">string</span> = <span class="org-string">"A flag to make random seeds"</span>
+<span class="org-builtin">type</span>                          : <span class="org-variable-name">string</span> = <span class="org-string">"boolean"</span>
+mutability                    : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+boolean.default               : <span class="org-variable-name">boolean</span> = 0
+variants                      : <span class="org-variable-name">string</span>[1] = <span class="org-string">"if_random_seed"</span>
+variants.if_random_seed.model : <span class="org-variable-name">string</span> = <span class="org-string">"if_random_seed.VM"</span>
+boolean.variant.true          : <span class="org-variable-name">string</span> = <span class="org-string">"if_random_seed"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline14" class="outline-4">
+<h4 id="orgheadline14"><span class="section-number-4">4.2.3</span> Total number of simulated events</h4>
+<div class="outline-text-4" id="text-4-2-3">
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"total_number_of_event.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name  : <span class="org-variable-name">string</span> = <span class="org-string">"Total number of event"</span>
+description   : <span class="org-variable-name">string</span> = <span class="org-string">"The total number of event simulated"</span>
+<span class="org-builtin">type</span>          : <span class="org-variable-name">string</span> = <span class="org-string">"real"</span>
+mutability    : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode : <span class="org-variable-name">string</span> = <span class="org-string">"free"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline15" class="outline-4">
+<h4 id="orgheadline15"><span class="section-number-4">4.2.4</span> Vertex generators</h4>
+<div class="outline-text-4" id="text-4-2-4">
+<div class="org-src-container">
+
+<pre class="src src-shell" id="orgsrcblock1"><span class="org-variable-name">cnt</span>=0
+<span class="org-variable-name">falaise_dir</span>=$<span class="org-variable-name">SNAILWARE_PRO_DIR</span>/falaise/install/share/Falaise-1.0.0/resources
+<span class="org-variable-name">files</span>=$(cat current/sngenvertex_manager.conf | grep <span class="org-string">'".*/.*"'</span> | awk -F <span class="org-string">\"</span> <span class="org-string">'{print $2}'</span>)
+<span class="org-keyword">for</span> if<span class="org-keyword"> in</span> ${=files}; <span class="org-keyword">do</span>
+    <span class="org-variable-name">file</span>=${<span class="org-variable-name">if</span>/@falaise:/${<span class="org-variable-name">falaise_dir</span>}<span class="org-string">\/</span>}
+    <span class="org-variable-name">vgs</span>=$(cat $<span class="org-variable-name">file</span> | grep <span class="org-string">'genvtx::.*_vg'</span> | awk -F <span class="org-string">\"</span> <span class="org-string">'{print $2}'</span>)
+    <span class="org-keyword">for</span> ivg<span class="org-keyword"> in</span> ${=vgs}; <span class="org-keyword">do</span>
+        <span class="org-builtin">echo</span> <span class="org-string">"string.enumerated_${cnt}.value : string = \"${ivg}\""</span>
+        <span class="org-builtin">let</span> cnt++
+    <span class="org-keyword">done</span>
+<span class="org-keyword">done</span>
+<span class="org-builtin">echo</span> <span class="org-string">"string.enumerated.size : integer = ${cnt}"</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"vertex_generator_name.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name  : <span class="org-variable-name">string</span> = <span class="org-string">"Vertex generator name"</span>
+description   : <span class="org-variable-name">string</span> = <span class="org-string">"The name of the vertex generator"</span>
+<span class="org-builtin">type</span>          : <span class="org-variable-name">string</span> = <span class="org-string">"string"</span>
+mutability    : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode : <span class="org-variable-name">string</span> = <span class="org-string">"enumeration"</span>
+string.enumerated_0.value : <span class="org-variable-name">string</span> = <span class="org-string">"calo_wrapper_bulk"</span>
+string.enumerated_1.value : <span class="org-variable-name">string</span> = <span class="org-string">"xcalo_wrapper_bulk"</span>
+string.enumerated_2.value : <span class="org-variable-name">string</span> = <span class="org-string">"gveto_wrapper_bulk"</span>
+string.enumerated_3.value : <span class="org-variable-name">string</span> = <span class="org-string">"calo_wrapper_surface"</span>
+string.enumerated_4.value : <span class="org-variable-name">string</span> = <span class="org-string">"xcalo_wrapper_surface"</span>
+string.enumerated_5.value : <span class="org-variable-name">string</span> = <span class="org-string">"gveto_wrapper_surface"</span>
+string.enumerated_6.value : <span class="org-variable-name">string</span> = <span class="org-string">"pmt_glass_bulk"</span>
+string.enumerated_7.value : <span class="org-variable-name">string</span> = <span class="org-string">"anode_wire_bulk"</span>
+string.enumerated_8.value : <span class="org-variable-name">string</span> = <span class="org-string">"anode_wire_surface"</span>
+string.enumerated_9.value : <span class="org-variable-name">string</span> = <span class="org-string">"field_wire_surface"</span>
+string.enumerated_10.value : <span class="org-variable-name">string</span> = <span class="org-string">"field_wire_bulk"</span>
+string.enumerated_11.value : <span class="org-variable-name">string</span> = <span class="org-string">"tracker_drift_cell_bulk"</span>
+string.enumerated_12.value : <span class="org-variable-name">string</span> = <span class="org-string">"tracker_volume_box"</span>
+string.enumerated_13.value : <span class="org-variable-name">string</span> = <span class="org-string">"tracker_front_volume_bulk"</span>
+string.enumerated_14.value : <span class="org-variable-name">string</span> = <span class="org-string">"tracker_back_volume_bulk"</span>
+string.enumerated_15.value : <span class="org-variable-name">string</span> = <span class="org-string">"tracker_volume_bulk"</span>
+string.enumerated_16.value : <span class="org-variable-name">string</span> = <span class="org-string">"tracker_gas_bulk"</span>
+string.enumerated_17.value : <span class="org-variable-name">string</span> = <span class="org-string">"source_strips_internal_bulk"</span>
+string.enumerated_18.value : <span class="org-variable-name">string</span> = <span class="org-string">"source_strips_internal_surface"</span>
+string.enumerated_19.value : <span class="org-variable-name">string</span> = <span class="org-string">"source_strips_external_bulk"</span>
+string.enumerated_20.value : <span class="org-variable-name">string</span> = <span class="org-string">"source_strips_external_surface"</span>
+string.enumerated_21.value : <span class="org-variable-name">string</span> = <span class="org-string">"source_strips_bulk"</span>
+string.enumerated_22.value : <span class="org-variable-name">string</span> = <span class="org-string">"source_strips_surface"</span>
+string.enumerated_23.value : <span class="org-variable-name">string</span> = <span class="org-string">"experimental_hall_surface"</span>
+string.enumerated_24.value : <span class="org-variable-name">string</span> = <span class="org-string">"experimental_hall_bulk"</span>
+string.enumerated.size : <span class="org-variable-name">integer</span> = 25
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-4">
+<h4 id="orgheadline16"><span class="section-number-4">4.2.5</span> Event generators</h4>
+<div class="outline-text-4" id="text-4-2-5">
+<div class="org-src-container">
+
+<pre class="src src-shell" id="orgsrcblock2"><span class="org-variable-name">cnt</span>=0
+<span class="org-variable-name">falaise_dir</span>=$<span class="org-variable-name">SNAILWARE_PRO_DIR</span>/falaise/install/share/Falaise-1.0.0/resources
+<span class="org-variable-name">files</span>=$(cat current/sngenbb_manager.conf | grep <span class="org-string">'".*/.*"'</span> | awk -F <span class="org-string">\"</span> <span class="org-string">'{print $2}'</span>)
+<span class="org-keyword">for</span> if<span class="org-keyword"> in</span> ${=files}; <span class="org-keyword">do</span>
+    <span class="org-variable-name">file</span>=${<span class="org-variable-name">if</span>/@falaise:/${<span class="org-variable-name">falaise_dir</span>}<span class="org-string">\/</span>}
+    <span class="org-variable-name">egs</span>=$(cat $<span class="org-variable-name">file</span> | grep <span class="org-string">'genbb::'</span> | awk -F <span class="org-string">\"</span> <span class="org-string">'{print $2}'</span>)
+    <span class="org-keyword">for</span> ieg<span class="org-keyword"> in</span> ${=egs}; <span class="org-keyword">do</span>
+        <span class="org-builtin">echo</span> <span class="org-string">"string.enumerated_${cnt}.value : string = \"${ieg}\""</span>
+        <span class="org-builtin">let</span> cnt++
+    <span class="org-keyword">done</span>
+<span class="org-keyword">done</span>
+<span class="org-builtin">echo</span> <span class="org-string">"string.enumerated.size : integer = ${cnt}"</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"event_generator_name.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name  : <span class="org-variable-name">string</span> = <span class="org-string">"Event generator name"</span>
+description   : <span class="org-variable-name">string</span> = <span class="org-string">"The name of the genbb event generator"</span>
+<span class="org-builtin">type</span>          : <span class="org-variable-name">string</span> = <span class="org-string">"string"</span>
+mutability    : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode : <span class="org-variable-name">string</span> = <span class="org-string">"enumeration"</span>
+string.enumerated_0.value : <span class="org-variable-name">string</span> = <span class="org-string">"Tl208"</span>
+string.enumerated_1.value : <span class="org-variable-name">string</span> = <span class="org-string">"Bi214_Po214"</span>
+string.enumerated_2.value : <span class="org-variable-name">string</span> = <span class="org-string">"Bi212_Po212"</span>
+string.enumerated_3.value : <span class="org-variable-name">string</span> = <span class="org-string">"Pa234m"</span>
+string.enumerated_4.value : <span class="org-variable-name">string</span> = <span class="org-string">"K40"</span>
+string.enumerated_5.value : <span class="org-variable-name">string</span> = <span class="org-string">"Y90"</span>
+string.enumerated_6.value : <span class="org-variable-name">string</span> = <span class="org-string">"Sr90"</span>
+string.enumerated_7.value : <span class="org-variable-name">string</span> = <span class="org-string">"Ra226"</span>
+string.enumerated_8.value : <span class="org-variable-name">string</span> = <span class="org-string">"Pa231"</span>
+string.enumerated_9.value : <span class="org-variable-name">string</span> = <span class="org-string">"Co60"</span>
+string.enumerated_10.value : <span class="org-variable-name">string</span> = <span class="org-string">"Bi207"</span>
+string.enumerated_11.value : <span class="org-variable-name">string</span> = <span class="org-string">"Am241"</span>
+string.enumerated_12.value : <span class="org-variable-name">string</span> = <span class="org-string">"Na22"</span>
+string.enumerated_13.value : <span class="org-variable-name">string</span> = <span class="org-string">"Mn54"</span>
+string.enumerated_14.value : <span class="org-variable-name">string</span> = <span class="org-string">"Ca48.0nubb"</span>
+string.enumerated_15.value : <span class="org-variable-name">string</span> = <span class="org-string">"Ca48.0nubb_rhc_lambda_0"</span>
+string.enumerated_16.value : <span class="org-variable-name">string</span> = <span class="org-string">"Ca48.0nubb_rhc_lambda_0_2"</span>
+string.enumerated_17.value : <span class="org-variable-name">string</span> = <span class="org-string">"Ca48.2nubb"</span>
+string.enumerated_18.value : <span class="org-variable-name">string</span> = <span class="org-string">"Ca48.0nubbM1"</span>
+string.enumerated_19.value : <span class="org-variable-name">string</span> = <span class="org-string">"Ca48.0nubbM2"</span>
+string.enumerated_20.value : <span class="org-variable-name">string</span> = <span class="org-string">"Se82.0nubb"</span>
+string.enumerated_21.value : <span class="org-variable-name">string</span> = <span class="org-string">"Se82.0nubb_rhc_lambda_0"</span>
+string.enumerated_22.value : <span class="org-variable-name">string</span> = <span class="org-string">"Se82.0nubb_rhc_lambda_0_2"</span>
+string.enumerated_23.value : <span class="org-variable-name">string</span> = <span class="org-string">"Se82.2nubb"</span>
+string.enumerated_24.value : <span class="org-variable-name">string</span> = <span class="org-string">"Se82.0nubbM1"</span>
+string.enumerated_25.value : <span class="org-variable-name">string</span> = <span class="org-string">"Se82.0nubbM2"</span>
+string.enumerated_26.value : <span class="org-variable-name">string</span> = <span class="org-string">"Mo100.0nubb"</span>
+string.enumerated_27.value : <span class="org-variable-name">string</span> = <span class="org-string">"Mo100.0nubb_rhc_lambda_0"</span>
+string.enumerated_28.value : <span class="org-variable-name">string</span> = <span class="org-string">"Mo100.0nubb_rhc_lambda_0_2"</span>
+string.enumerated_29.value : <span class="org-variable-name">string</span> = <span class="org-string">"Mo100.2nubb"</span>
+string.enumerated_30.value : <span class="org-variable-name">string</span> = <span class="org-string">"Mo100.0nubbM1"</span>
+string.enumerated_31.value : <span class="org-variable-name">string</span> = <span class="org-string">"Mo100.0nubbM2"</span>
+string.enumerated_32.value : <span class="org-variable-name">string</span> = <span class="org-string">"Nd150.0nubb"</span>
+string.enumerated_33.value : <span class="org-variable-name">string</span> = <span class="org-string">"Nd150.0nubb_rhc_lambda_0"</span>
+string.enumerated_34.value : <span class="org-variable-name">string</span> = <span class="org-string">"Nd150.0nubb_rhc_lambda_0_2"</span>
+string.enumerated_35.value : <span class="org-variable-name">string</span> = <span class="org-string">"Nd150.2nubb"</span>
+string.enumerated_36.value : <span class="org-variable-name">string</span> = <span class="org-string">"Nd150.0nubbM1"</span>
+string.enumerated_37.value : <span class="org-variable-name">string</span> = <span class="org-string">"Nd150.0nubbM2"</span>
+string.enumerated_38.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron.20keV"</span>
+string.enumerated_39.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron.50keV"</span>
+string.enumerated_40.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron.100keV"</span>
+string.enumerated_41.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron.200keV"</span>
+string.enumerated_42.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron.500keV"</span>
+string.enumerated_43.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron.1MeV"</span>
+string.enumerated_44.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron.2MeV"</span>
+string.enumerated_45.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron.3MeV"</span>
+string.enumerated_46.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron.50-2000keV_flat"</span>
+string.enumerated_47.value : <span class="org-variable-name">string</span> = <span class="org-string">"gamma.20keV"</span>
+string.enumerated_48.value : <span class="org-variable-name">string</span> = <span class="org-string">"gamma.50keV"</span>
+string.enumerated_49.value : <span class="org-variable-name">string</span> = <span class="org-string">"gamma.100keV"</span>
+string.enumerated_50.value : <span class="org-variable-name">string</span> = <span class="org-string">"gamma.500keV"</span>
+string.enumerated_51.value : <span class="org-variable-name">string</span> = <span class="org-string">"gamma.1MeV"</span>
+string.enumerated_52.value : <span class="org-variable-name">string</span> = <span class="org-string">"gamma.2MeV"</span>
+string.enumerated_53.value : <span class="org-variable-name">string</span> = <span class="org-string">"gamma.2615keV"</span>
+string.enumerated_54.value : <span class="org-variable-name">string</span> = <span class="org-string">"Se82.2nubb-2MeV"</span>
+string.enumerated_55.value : <span class="org-variable-name">string</span> = <span class="org-string">"Zr96.2nubb"</span>
+string.enumerated_56.value : <span class="org-variable-name">string</span> = <span class="org-string">"Rn222"</span>
+string.enumerated_57.value : <span class="org-variable-name">string</span> = <span class="org-string">"Pb214.0nubb"</span>
+string.enumerated_58.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron_monokinetic"</span>
+string.enumerated_59.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron_0-3MeV_flat"</span>
+string.enumerated_60.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron_gaussian_energy"</span>
+string.enumerated_61.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron_monokinetic_with_cone"</span>
+string.enumerated_62.value : <span class="org-variable-name">string</span> = <span class="org-string">"gamma_monokinetic"</span>
+string.enumerated_63.value : <span class="org-variable-name">string</span> = <span class="org-string">"gamma_0-3MeV_flat"</span>
+string.enumerated_64.value : <span class="org-variable-name">string</span> = <span class="org-string">"multi_gamma_rays"</span>
+string.enumerated_65.value : <span class="org-variable-name">string</span> = <span class="org-string">"alpha_monokinetic"</span>
+string.enumerated_66.value : <span class="org-variable-name">string</span> = <span class="org-string">"multi_gamma_particles"</span>
+string.enumerated_67.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron_monokinetic1"</span>
+string.enumerated_68.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron_monokinetic2"</span>
+string.enumerated_69.value : <span class="org-variable-name">string</span> = <span class="org-string">"multi_particles"</span>
+string.enumerated.size : <span class="org-variable-name">integer</span> = 70
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline17" class="outline-4">
+<h4 id="orgheadline17"><span class="section-number-4">4.2.6</span> Top variant</h4>
+<div class="outline-text-4" id="text-4-2-6">
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"simulation.VM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"variant"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config A variant model describing the simulation parameters</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The display name of this variant</span>
+display_name : <span class="org-variable-name">string</span> = <span class="org-string">"Simulation setup"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description A short description of the variant</span>
+terse_description : <span class="org-variable-name">string</span> = <span class="org-string">"The configuration parameters for the simulation setup"</span>
+
+parameters.random_seed.model : <span class="org-variable-name">string</span> = <span class="org-string">"random_seed.PM"</span>
+parameters.random_seed_flag.model : <span class="org-variable-name">string</span> = <span class="org-string">"random_seed_flag.PM"</span>
+parameters.total_number_of_event.model : <span class="org-variable-name">string</span> = <span class="org-string">"total_number_of_event.PM"</span>
+parameters.vertex_generator_name.model : <span class="org-variable-name">string</span> = <span class="org-string">"vertex_generator_name.PM"</span>
+parameters.event_generator_name.model : <span class="org-variable-name">string</span> = <span class="org-string">"event_generator_name.PM"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of variant parameters</span>
+parameters : <span class="org-variable-name">string</span>[5] = <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"random_seed"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"random_seed_flag"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"total_number_of_event"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"vertex_generator_name"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"event_generator_name"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline27" class="outline-3">
+<h3 id="orgheadline27"><span class="section-number-3">4.3</span> Detector variants</h3>
+<div class="outline-text-3" id="text-4-3">
+</div>
+<div id="outline-container-orgheadline19" class="outline-4">
+<h4 id="orgheadline19"><span class="section-number-4">4.3.1</span> Insert preamble</h4>
+<div class="outline-text-4" id="text-4-3-1">
+<div class="org-src-container">
+
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The definitions for generic variants</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@key_label   "name"</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">@meta_label  "type"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline22" class="outline-4">
+<h4 id="orgheadline22"><span class="section-number-4">4.3.2</span> Calorimeter parameters</h4>
+<div class="outline-text-4" id="text-4-3-2">
+</div><ul class="org-ul"><li><a id="orgheadline20"></a>Energy resolutions<br  /><div class="outline-text-5" id="text-orgheadline20">
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"calo_energy_resolution.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name        : <span class="org-variable-name">string</span> = <span class="org-string">"Main wall energy resolution"</span>
+description         : <span class="org-variable-name">string</span> = <span class="org-string">"Energy resolution of main wall calorimeter"</span>
+<span class="org-builtin">type</span>                : <span class="org-variable-name">string</span> = <span class="org-string">"real"</span>
+real.unit_label     : <span class="org-variable-name">string</span> = <span class="org-string">"fraction"</span>
+real.preferred_unit : <span class="org-variable-name">string</span> = <span class="org-string">"%"</span>
+mutability          : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode       : <span class="org-variable-name">string</span> = <span class="org-string">"interval"</span>
+real.domain         : <span class="org-variable-name">string</span> = <span class="org-string">"[0 %, 100 %]"</span>
+real.default        : real as <span class="org-variable-name">fraction</span> = 8 %
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"xcalo_energy_resolution.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name        : <span class="org-variable-name">string</span> = <span class="org-string">"X-wall energy resolution"</span>
+description         : <span class="org-variable-name">string</span> = <span class="org-string">"Energy resolution of X-wall calorimeter"</span>
+<span class="org-builtin">type</span>                : <span class="org-variable-name">string</span> = <span class="org-string">"real"</span>
+real.unit_label     : <span class="org-variable-name">string</span> = <span class="org-string">"fraction"</span>
+real.preferred_unit : <span class="org-variable-name">string</span> = <span class="org-string">"%"</span>
+mutability          : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode       : <span class="org-variable-name">string</span> = <span class="org-string">"interval"</span>
+real.domain         : <span class="org-variable-name">string</span> = <span class="org-string">"[0 %, 100 %]"</span>
+real.default        : real as <span class="org-variable-name">fraction</span> = 12 %
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"gveto_energy_resolution.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name        : <span class="org-variable-name">string</span> = <span class="org-string">"Gamma veto energy resolution"</span>
+description         : <span class="org-variable-name">string</span> = <span class="org-string">"Energy resolution of gamma veto calorimeter"</span>
+<span class="org-builtin">type</span>                : <span class="org-variable-name">string</span> = <span class="org-string">"real"</span>
+real.unit_label     : <span class="org-variable-name">string</span> = <span class="org-string">"fraction"</span>
+real.preferred_unit : <span class="org-variable-name">string</span> = <span class="org-string">"%"</span>
+mutability          : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode       : <span class="org-variable-name">string</span> = <span class="org-string">"interval"</span>
+real.domain         : <span class="org-variable-name">string</span> = <span class="org-string">"[0 %, 100 %]"</span>
+real.default        : real as <span class="org-variable-name">fraction</span> = 15 %
+</pre>
+</div>
+</div></li>
+
+<li><a id="orgheadline21"></a>Low thresholds<br  /></li></ul>
+</div>
+<div id="outline-container-orgheadline24" class="outline-4">
+<h4 id="orgheadline24"><span class="section-number-4">4.3.3</span> Magnetic field</h4>
+<div class="outline-text-4" id="text-4-3-3">
+</div><ul class="org-ul"><li><a id="orgheadline23"></a>Magnitude of z-component magnetic field<br  /><div class="outline-text-5" id="text-orgheadline23">
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"bz_magnitude.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name        : <span class="org-variable-name">string</span> = <span class="org-string">"Bz field magnitude"</span>
+description         : <span class="org-variable-name">string</span> = <span class="org-string">"Magnitude of z-component of magnetic field"</span>
+<span class="org-builtin">type</span>                : <span class="org-variable-name">string</span> = <span class="org-string">"real"</span>
+real.unit_label     : <span class="org-variable-name">string</span> = <span class="org-string">"magnetic_flux_density"</span>
+real.preferred_unit : <span class="org-variable-name">string</span> = <span class="org-string">"gauss"</span>
+mutability          : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode       : <span class="org-variable-name">string</span> = <span class="org-string">"interval"</span>
+real.domain         : <span class="org-variable-name">string</span> = <span class="org-string">"[0 G, 100 G]"</span>
+real.default        : real as <span class="org-variable-name">magnetic_flux_density</span> = 25 G
+</pre>
+</div>
+</div></li></ul>
+</div>
+
+<div id="outline-container-orgheadline25" class="outline-4">
+<h4 id="orgheadline25"><span class="section-number-4">4.3.4</span> Source material</h4>
+<div class="outline-text-4" id="text-4-3-4">
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"bb_source_material.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name  : <span class="org-variable-name">string</span> = <span class="org-string">"Source material"</span>
+description   : <span class="org-variable-name">string</span> = <span class="org-string">"The material of the source foil"</span>
+<span class="org-builtin">type</span>          : <span class="org-variable-name">string</span> = <span class="org-string">"string"</span>
+mutability    : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode : <span class="org-variable-name">string</span> = <span class="org-string">"enumeration"</span>
+string.enumerated.size : <span class="org-variable-name">integer</span> = 4
+string.enumerated_0.value : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::se82_source_material"</span>
+string.enumerated_1.value : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::ca48_source_material"</span>
+string.enumerated_2.value : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::nd150_source_material"</span>
+string.enumerated_3.value : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::copper"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline26" class="outline-4">
+<h4 id="orgheadline26"><span class="section-number-4">4.3.5</span> Top variant</h4>
+<div class="outline-text-4" id="text-4-3-5">
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"detector.VM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"variant"</span>]
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@config A variant model describing the detector parameters</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The display name of this variant</span>
+display_name : <span class="org-variable-name">string</span> = <span class="org-string">"Detector setup"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description A short description of the variant</span>
+terse_description : <span class="org-variable-name">string</span> = <span class="org-string">"The configuration parameters for the detector setup"</span>
+
+parameters.calo_energy_resolution.model : <span class="org-variable-name">string</span> = <span class="org-string">"calo_energy_resolution.PM"</span>
+parameters.xcalo_energy_resolution.model : <span class="org-variable-name">string</span> = <span class="org-string">"xcalo_energy_resolution.PM"</span>
+parameters.gveto_energy_resolution.model : <span class="org-variable-name">string</span> = <span class="org-string">"gveto_energy_resolution.PM"</span>
+parameters.bz_magnitude.model : <span class="org-variable-name">string</span> = <span class="org-string">"bz_magnitude.PM"</span>
+parameters.bb_source_material.model : <span class="org-variable-name">string</span> = <span class="org-string">"bb_source_material.PM"</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of variant parameters</span>
+parameters : <span class="org-variable-name">string</span>[5] = <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"calo_energy_resolution"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"xcalo_energy_resolution"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"gveto_energy_resolution"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"bz_magnitude"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"bb_source_material"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/f12b5b4d531ed66160b0aca766d24ef090dc27be">f12b5b4</a> - 2015-09-22
+</div>
+</body>
+</html>
