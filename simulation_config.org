@@ -694,6 +694,9 @@ simulation setup if needed.
 #+END_SRC
 
 *** Tracker simulation to calibration data
+:PROPERTIES:
+:CUSTOM_ID: tracker_s2c
+:END:
 
 This module converts simulated data into calibrated data for SuperNEMO
 tracker. It is a mock digitization/calibration data module of Monte-Carlo
