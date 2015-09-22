@@ -250,7 +250,7 @@ instance.
 *** Vertex generators
 
 #+NAME: vg_list_variants
-#+BEGIN_SRC shell :tangle no :results output
+#+BEGIN_SRC shell :tangle no :results output :exports none
   cnt=0
   falaise_dir=$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources
   files=$(cat current/sngenvertex_manager.conf | grep '".*/.*"' | awk -F \" '{print $2}')
@@ -278,7 +278,7 @@ instance.
 *** Event generators
 
 #+NAME: eg_list_variants
-#+BEGIN_SRC shell :tangle no :results output
+#+BEGIN_SRC shell :tangle no :results output :exports none
   cnt=0
   falaise_dir=$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources
   files=$(cat current/sngenbb_manager.conf | grep '".*/.*"' | awk -F \" '{print $2}')
