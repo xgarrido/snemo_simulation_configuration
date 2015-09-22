@@ -164,7 +164,7 @@ setup_version : <span class="org-variable-name">string</span> = <span class="org
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 </pre>
 </div>
 </div>
@@ -184,7 +184,7 @@ The geometry factory holds all the files needed for the geometry construction.
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority of the embedded geometry model factory</span>
-factory.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+factory.logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 </pre>
 </div>
 </div>
@@ -234,7 +234,7 @@ factory.geom_files : string[22] as <span class="org-variable-name">path</span> =
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging flag of the embedded ID manager</span>
-id_mgr.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+id_mgr.logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 </pre>
 </div>
 </div>
@@ -337,10 +337,10 @@ to change the source foil isotope.
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Materials manager logging priority</span>
-materials.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+materials.logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 </pre>
 </div>
 </div>
@@ -419,7 +419,7 @@ example, we locally change the source material without changing anything else.
 [<span class="org-variable-name">name</span>=<span class="org-string">"bb_source_material"</span> <span class="org-variable-name">type</span>=<span class="org-string">"alias"</span>]
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The alias for the source</span>
-material : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::se82_source_material"</span>
+material : <span class="org-variable-name">string</span> = @variant(detector:bb_source_material|<span class="org-string">"snemo::se82_source_material"</span>)
 </pre>
 </div>
 </div>
@@ -455,7 +455,7 @@ material : <span class="org-variable-name">string</span> = <span class="org-stri
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 </pre>
 </div>
 </div>
@@ -467,7 +467,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Manager logging priority</span>
-manager.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+manager.logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The name of the geometry service</span>
 manager.services.geometry : <span class="org-variable-name">string</span> = <span class="org-string">"Geo"</span>
@@ -491,7 +491,7 @@ module.
 manager.build_geom_map : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Manager logging priority</span>
-manager.geom_map.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+manager.geom_map.logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of EM fields associated to some logical volumes</span>
 manager.geom_map.associations.labels : <span class="org-variable-name">string</span>[1] = <span class="org-string">"module"</span>
@@ -536,13 +536,13 @@ manager.geom_map.associations.module.field_name : <span class="org-variable-name
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Configuration parameters for the magnetic field of SuperNEMO</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging flag</span>
-logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Default implicit magnetic field unit</span>
 magnetic_field.unit        : <span class="org-variable-name">string</span>  = <span class="org-string">"gauss"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Coordinates of the static magnetic field (Bx, By, Bz)</span>
-magnetic_field.coordinates : <span class="org-variable-name">real</span>[3] = 0.0 0.0 25.0
+magnetic_field.coordinates : <span class="org-variable-name">real</span>[3] = 0.0 0.0 @variant(detector:bz_magnitude|25.0)
 </pre>
 </div>
 </div>
@@ -563,7 +563,7 @@ To take into account effects from the calorimeter magnetic shielding as shown in
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Configuration parameters for a variable magnetic field</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging flag</span>
-logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Default implicit magnetic field unit</span>
 magnetic_field.unit : <span class="org-variable-name">string</span> = <span class="org-string">"gauss"</span>
@@ -613,7 +613,7 @@ magnetic_field.Bz.x.limits : real[2] as <span class="org-variable-name">length</
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 </pre>
 </div>
 </div>
@@ -645,7 +645,7 @@ locators.module_number : <span class="org-variable-name">integer</span> = 0
 </div>
 </div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/04a5c060580b21c54082ad22c2afcf50f8987f12">04a5c06</a> - 2015-07-18
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/65f42cb9717a6c8fd774a2ffe65649b1f11431c8">65f42cb</a> - 2015-09-22
 </div>
 </body>
 </html>

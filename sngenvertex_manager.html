@@ -172,7 +172,7 @@ This file holds some vertex generators related to SuperNEMO detector geometry.
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 </pre>
 </div>
 </div>
@@ -188,7 +188,7 @@ are defined in Section <a href="#orgheadline3">3</a>.
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Names of the files configuring the list of registered vertex generators</span>
-vg_list : string[4] as <span class="org-variable-name">path</span> =                                              <span class="org-sh-escaped-newline">\</span>
+vg_list : string[4] as <span class="org-variable-name">path</span> =                       <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/scin_vg.lis"</span>    <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/tracker_vg.lis"</span> <span class="org-sh-escaped-newline">\</span>
   <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/source_vg.lis"</span>  <span class="org-sh-escaped-newline">\</span>
@@ -242,7 +242,7 @@ scintillator blocks:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk of the main calorimeter wrapper</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 <span class="org-comment-delimiter">#</span><span class="org-comment">origin : string = "category=calorimeter_wrapper module={*} side={1} column={0;1;2;4;19} row={0;1;2;12;13}"</span>
@@ -265,7 +265,7 @@ scintillator blocks:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk of the X-wall calorimeter wrapper</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='xcalo_wrapper' module={*} side={*} column={*} row={*}"</span>
@@ -287,7 +287,7 @@ calorimeter's scintillator blocks:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk of the gamma veto wrapper</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='gveto_wrapper' module={*} side={*} wall={*} column={*}"</span>
@@ -308,7 +308,7 @@ Generate vertex from the surface of the main calorimeter's scintillator blocks:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the main calorimeter wrapper</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='calorimeter_wrapper' module={*} side={*} column={*} row={*}"</span>
@@ -332,7 +332,7 @@ Generate vertex from the surface of the X-calorimeter's scintillator blocks:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the X-wall calorimeter wrapper</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='xcalo_wrapper' module={*} side={*} column={*} row={*}"</span>
@@ -356,7 +356,7 @@ Generate vertex from the surface of the &gamma; veto's scintillator blocks:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the gamma veto wrapper</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='gveto_wrapper' module={*} side={*} wall={*} column={*}"</span>
@@ -380,7 +380,7 @@ Generate vertex in the PMT glass
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk of the PMT glass wrapper</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='calorimeter_pmt_glass' module={*} side={*} column={*} row={*}"</span>
@@ -429,7 +429,7 @@ Generate vertex from the bulk volume of the anode wires:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk volume of the anode wires</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='drift_cell_anodic_wire' module={*} side={*} layer={*} row={*}"</span>
@@ -450,7 +450,7 @@ Generate vertex on the surface of the anode wires:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the anode wires</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='drift_cell_anodic_wire' module={*} side={*} layer={*} row={*}"</span>
@@ -480,7 +480,7 @@ Generate vertex on the surface of the field wires:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the field wires</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='drift_cell_field_wire' module={*} side={*} layer={*} row={*} set={*} wire={*}"</span>
@@ -510,7 +510,7 @@ Generate vertex from the bulk volume of the field wires:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk volume of the anode wires</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='drift_cell_field_wire' module={*} side={*} layer={*} row={*}"</span>
@@ -543,7 +543,7 @@ get a full coverage of tracker gaz, you may have a look to the next section.
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the core of Geiger cell</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='drift_cell_core' module={*} side={*} layer={*} row={*}"</span>
@@ -581,7 +581,7 @@ been used :
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the tracker gaz</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Generation mode ("surface" or "bulk")</span>
 mode   : <span class="org-variable-name">string</span> = <span class="org-string">"bulk"</span>
@@ -609,7 +609,7 @@ another one for the back part (\(x<0\)).
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the front tracker volume</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Vertex generator name to place</span>
 vertex_generator.name : <span class="org-variable-name">string</span> = <span class="org-string">"tracker_volume_box"</span>
@@ -632,7 +632,7 @@ placement.z : real as <span class="org-variable-name">length</span> = 0.0 mm
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the front tracker volume</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Vertex generator name to place</span>
 vertex_generator.name : <span class="org-variable-name">string</span> = <span class="org-string">"tracker_volume_box"</span>
@@ -659,7 +659,7 @@ vertex generators:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk volume of the tracker</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
 geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
@@ -689,7 +689,7 @@ shoot vertex within SuperNEMO module and then reject the ones not inside
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from 'tracking_gas' material</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 3.0)</span>
 geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
@@ -720,7 +720,7 @@ we define the logging level
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description Maximum number of tries for the rejection method</span>
-validation.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+validation.logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 </pre>
 </div>
 <p>
@@ -774,7 +774,7 @@ We can also set the logging priority and the maximum depth to look inside
 <span class="org-comment-delimiter"># </span><span class="org-comment">validation.validator_params.max_depth : integer = 100</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging level for validator</span>
-validation.validator_params.logging.priority : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+validation.validator_params.logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 </pre>
 </div>
 </div></li></ul></li></ul>
@@ -818,7 +818,7 @@ Generate vertex from the bulk volume of the source foil:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk volume of the inner source strips</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
 geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
@@ -841,7 +841,7 @@ Generate vertex from the surface of the source foil:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the inner source strips</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
 geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
@@ -877,7 +877,7 @@ Generate vertex from the bulk volume of the source foil:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk volume of the outer source strips</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
 geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
@@ -900,7 +900,7 @@ Generate vertex from the surface of the source foil:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the outer source strips</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
 geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
@@ -936,7 +936,7 @@ Generate vertex from both the bulk volume of all the source foils:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the bulk volume of the source strips</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
 geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
@@ -960,7 +960,7 @@ Generate vertex from the surface of all the source foils:
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the source strips</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"warning"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry version requirement (not working with version lower than 2.0)</span>
 geometry.setup_requirement : <span class="org-variable-name">string</span> = <span class="org-string">"snemo::demonstrator(&gt;=3)"</span>
@@ -1004,7 +1004,7 @@ Generate vertex from the surface of the hall walls
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the surface of the experimental hall</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"notice"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"notice"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='hall'"</span>
@@ -1042,7 +1042,7 @@ Generate vertex from the volume of the hall
 <span class="org-comment-delimiter">#</span><span class="org-comment">@config Vertex generation from the volume of the experimental hall</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Logging priority</span>
-logging.priority  : <span class="org-variable-name">string</span> = <span class="org-string">"notice"</span>
+logging.priority  : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"notice"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Geometry origin of vertex in term of geometry category and addresses (geom ID)</span>
 origin : <span class="org-variable-name">string</span> = <span class="org-string">"category='hall'"</span>
@@ -1057,7 +1057,7 @@ mode   : <span class="org-variable-name">string</span> = <span class="org-string
 </div>
 </div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/04a5c060580b21c54082ad22c2afcf50f8987f12">04a5c06</a> - 2015-07-18
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/65f42cb9717a6c8fd774a2ffe65649b1f11431c8">65f42cb</a> - 2015-09-22
 </div>
 </body>
 </html>
