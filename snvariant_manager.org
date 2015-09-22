@@ -368,7 +368,76 @@ instance.
   real.default        : real as fraction = 15 %
 #+END_SRC
 
-**** Low thresholds
+**** Energy thresholds
+#+BEGIN_SRC shell
+  [name="calo_high_energy_threshold.PM" type="parameter"]
+  display_name        : string = "Main wall high energy threshold"
+  description         : string = "High energy threshold of main wall calorimeter"
+  type                : string = "real"
+  real.unit_label     : string = "energy"
+  real.preferred_unit : string = "keV"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 keV, 3 MeV]"
+  real.default        : real as energy = 150 keV
+  [name="calo_low_energy_threshold.PM" type="parameter"]
+  display_name        : string = "Main wall low energy threshold"
+  description         : string = "Low energy threshold of main wall calorimeter"
+  type                : string = "real"
+  real.unit_label     : string = "energy"
+  real.preferred_unit : string = "keV"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 keV, 3 MeV]"
+  real.default        : real as energy = 50 keV
+#+END_SRC
+
+#+BEGIN_SRC shell
+  [name="xcalo_high_energy_threshold.PM" type="parameter"]
+  display_name        : string = "X-wall high energy threshold"
+  description         : string = "High energy threshold of x-wall calorimeter"
+  type                : string = "real"
+  real.unit_label     : string = "energy"
+  real.preferred_unit : string = "keV"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 keV, 3 MeV]"
+  real.default        : real as energy = 150 keV
+  [name="xcalo_low_energy_threshold.PM" type="parameter"]
+  display_name        : string = "X-wall low energy threshold"
+  description         : string = "Low energy threshold of x-wall calorimeter"
+  type                : string = "real"
+  real.unit_label     : string = "energy"
+  real.preferred_unit : string = "keV"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 keV, 3 MeV]"
+  real.default        : real as energy = 50 keV
+#+END_SRC
+
+#+BEGIN_SRC shell
+  [name="gveto_high_energy_threshold.PM" type="parameter"]
+  display_name        : string = "Gamma veto high energy threshold"
+  description         : string = "High energy threshold of gamma veto calorimeter"
+  type                : string = "real"
+  real.unit_label     : string = "energy"
+  real.preferred_unit : string = "keV"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 keV, 3 MeV]"
+  real.default        : real as energy = 150 keV
+  [name="gveto_low_energy_threshold.PM" type="parameter"]
+  display_name        : string = "Gamma veto low energy threshold"
+  description         : string = "Low energy threshold of gamma veto calorimeter"
+  type                : string = "real"
+  real.unit_label     : string = "energy"
+  real.preferred_unit : string = "keV"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 keV, 3 MeV]"
+  real.default        : real as energy = 50 keV
+#+END_SRC
+
 *** Magnetic field
 **** Magnitude of z-component magnetic field
 #+BEGIN_SRC shell
