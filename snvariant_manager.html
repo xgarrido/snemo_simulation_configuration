@@ -628,8 +628,84 @@ real.default        : real as <span class="org-variable-name">fraction</span> = 
 </div>
 </div></li>
 
-<li><a id="orgheadline21"></a>Low thresholds<br  /></li></ul>
+<li><a id="orgheadline21"></a>Energy thresholds<br  /><div class="outline-text-5" id="text-orgheadline21">
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"calo_high_energy_threshold.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name        : <span class="org-variable-name">string</span> = <span class="org-string">"Main wall high energy threshold"</span>
+description         : <span class="org-variable-name">string</span> = <span class="org-string">"High energy threshold of main wall calorimeter"</span>
+<span class="org-builtin">type</span>                : <span class="org-variable-name">string</span> = <span class="org-string">"real"</span>
+real.unit_label     : <span class="org-variable-name">string</span> = <span class="org-string">"energy"</span>
+real.preferred_unit : <span class="org-variable-name">string</span> = <span class="org-string">"keV"</span>
+mutability          : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode       : <span class="org-variable-name">string</span> = <span class="org-string">"interval"</span>
+real.domain         : <span class="org-variable-name">string</span> = <span class="org-string">"[0 keV, 3 MeV]"</span>
+real.default        : real as <span class="org-variable-name">energy</span> = 150 keV
+[<span class="org-variable-name">name</span>=<span class="org-string">"calo_low_energy_threshold.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name        : <span class="org-variable-name">string</span> = <span class="org-string">"Main wall low energy threshold"</span>
+description         : <span class="org-variable-name">string</span> = <span class="org-string">"Low energy threshold of main wall calorimeter"</span>
+<span class="org-builtin">type</span>                : <span class="org-variable-name">string</span> = <span class="org-string">"real"</span>
+real.unit_label     : <span class="org-variable-name">string</span> = <span class="org-string">"energy"</span>
+real.preferred_unit : <span class="org-variable-name">string</span> = <span class="org-string">"keV"</span>
+mutability          : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode       : <span class="org-variable-name">string</span> = <span class="org-string">"interval"</span>
+real.domain         : <span class="org-variable-name">string</span> = <span class="org-string">"[0 keV, 3 MeV]"</span>
+real.default        : real as <span class="org-variable-name">energy</span> = 50 keV
+</pre>
 </div>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"xcalo_high_energy_threshold.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name        : <span class="org-variable-name">string</span> = <span class="org-string">"X-wall high energy threshold"</span>
+description         : <span class="org-variable-name">string</span> = <span class="org-string">"High energy threshold of x-wall calorimeter"</span>
+<span class="org-builtin">type</span>                : <span class="org-variable-name">string</span> = <span class="org-string">"real"</span>
+real.unit_label     : <span class="org-variable-name">string</span> = <span class="org-string">"energy"</span>
+real.preferred_unit : <span class="org-variable-name">string</span> = <span class="org-string">"keV"</span>
+mutability          : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode       : <span class="org-variable-name">string</span> = <span class="org-string">"interval"</span>
+real.domain         : <span class="org-variable-name">string</span> = <span class="org-string">"[0 keV, 3 MeV]"</span>
+real.default        : real as <span class="org-variable-name">energy</span> = 150 keV
+[<span class="org-variable-name">name</span>=<span class="org-string">"xcalo_low_energy_threshold.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name        : <span class="org-variable-name">string</span> = <span class="org-string">"X-wall low energy threshold"</span>
+description         : <span class="org-variable-name">string</span> = <span class="org-string">"Low energy threshold of x-wall calorimeter"</span>
+<span class="org-builtin">type</span>                : <span class="org-variable-name">string</span> = <span class="org-string">"real"</span>
+real.unit_label     : <span class="org-variable-name">string</span> = <span class="org-string">"energy"</span>
+real.preferred_unit : <span class="org-variable-name">string</span> = <span class="org-string">"keV"</span>
+mutability          : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode       : <span class="org-variable-name">string</span> = <span class="org-string">"interval"</span>
+real.domain         : <span class="org-variable-name">string</span> = <span class="org-string">"[0 keV, 3 MeV]"</span>
+real.default        : real as <span class="org-variable-name">energy</span> = 50 keV
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">[<span class="org-variable-name">name</span>=<span class="org-string">"gveto_high_energy_threshold.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name        : <span class="org-variable-name">string</span> = <span class="org-string">"Gamma veto high energy threshold"</span>
+description         : <span class="org-variable-name">string</span> = <span class="org-string">"High energy threshold of gamma veto calorimeter"</span>
+<span class="org-builtin">type</span>                : <span class="org-variable-name">string</span> = <span class="org-string">"real"</span>
+real.unit_label     : <span class="org-variable-name">string</span> = <span class="org-string">"energy"</span>
+real.preferred_unit : <span class="org-variable-name">string</span> = <span class="org-string">"keV"</span>
+mutability          : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode       : <span class="org-variable-name">string</span> = <span class="org-string">"interval"</span>
+real.domain         : <span class="org-variable-name">string</span> = <span class="org-string">"[0 keV, 3 MeV]"</span>
+real.default        : real as <span class="org-variable-name">energy</span> = 150 keV
+[<span class="org-variable-name">name</span>=<span class="org-string">"gveto_low_energy_threshold.PM"</span> <span class="org-variable-name">type</span>=<span class="org-string">"parameter"</span>]
+display_name        : <span class="org-variable-name">string</span> = <span class="org-string">"Gamma veto low energy threshold"</span>
+description         : <span class="org-variable-name">string</span> = <span class="org-string">"Low energy threshold of gamma veto calorimeter"</span>
+<span class="org-builtin">type</span>                : <span class="org-variable-name">string</span> = <span class="org-string">"real"</span>
+real.unit_label     : <span class="org-variable-name">string</span> = <span class="org-string">"energy"</span>
+real.preferred_unit : <span class="org-variable-name">string</span> = <span class="org-string">"keV"</span>
+mutability          : <span class="org-variable-name">string</span> = <span class="org-string">"variable"</span>
+variable.mode       : <span class="org-variable-name">string</span> = <span class="org-string">"interval"</span>
+real.domain         : <span class="org-variable-name">string</span> = <span class="org-string">"[0 keV, 3 MeV]"</span>
+real.default        : real as <span class="org-variable-name">energy</span> = 50 keV
+</pre>
+</div>
+</div></li></ul>
+</div>
+
 <div id="outline-container-orgheadline24" class="outline-4">
 <h4 id="orgheadline24"><span class="section-number-4">4.3.3</span> Magnetic field</h4>
 <div class="outline-text-4" id="text-4-3-3">
@@ -690,14 +766,26 @@ terse_description : <span class="org-variable-name">string</span> = <span class=
 parameters.calo_energy_resolution.model : <span class="org-variable-name">string</span> = <span class="org-string">"calo_energy_resolution.PM"</span>
 parameters.xcalo_energy_resolution.model : <span class="org-variable-name">string</span> = <span class="org-string">"xcalo_energy_resolution.PM"</span>
 parameters.gveto_energy_resolution.model : <span class="org-variable-name">string</span> = <span class="org-string">"gveto_energy_resolution.PM"</span>
+parameters.calo_high_energy_threshold.model : <span class="org-variable-name">string</span> = <span class="org-string">"calo_high_energy_threshold.PM"</span>
+parameters.calo_low_energy_threshold.model : <span class="org-variable-name">string</span> = <span class="org-string">"calo_low_energy_threshold.PM"</span>
+parameters.xcalo_high_energy_threshold.model : <span class="org-variable-name">string</span> = <span class="org-string">"xcalo_high_energy_threshold.PM"</span>
+parameters.xcalo_low_energy_threshold.model : <span class="org-variable-name">string</span> = <span class="org-string">"xcalo_low_energy_threshold.PM"</span>
+parameters.gveto_high_energy_threshold.model : <span class="org-variable-name">string</span> = <span class="org-string">"gveto_high_energy_threshold.PM"</span>
+parameters.gveto_low_energy_threshold.model : <span class="org-variable-name">string</span> = <span class="org-string">"gveto_low_energy_threshold.PM"</span>
 parameters.bz_magnitude.model : <span class="org-variable-name">string</span> = <span class="org-string">"bz_magnitude.PM"</span>
 parameters.bb_source_material.model : <span class="org-variable-name">string</span> = <span class="org-string">"bb_source_material.PM"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of variant parameters</span>
-parameters : <span class="org-variable-name">string</span>[5] = <span class="org-sh-escaped-newline">\</span>
+parameters : <span class="org-variable-name">string</span>[11] = <span class="org-sh-escaped-newline">\</span>
 <span class="org-string">"calo_energy_resolution"</span>  <span class="org-sh-escaped-newline">\</span>
 <span class="org-string">"xcalo_energy_resolution"</span>  <span class="org-sh-escaped-newline">\</span>
 <span class="org-string">"gveto_energy_resolution"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"calo_high_energy_threshold"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"calo_low_energy_threshold"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"xcalo_high_energy_threshold"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"xcalo_low_energy_threshold"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"gveto_high_energy_threshold"</span>  <span class="org-sh-escaped-newline">\</span>
+<span class="org-string">"gveto_low_energy_threshold"</span>  <span class="org-sh-escaped-newline">\</span>
 <span class="org-string">"bz_magnitude"</span>  <span class="org-sh-escaped-newline">\</span>
 <span class="org-string">"bb_source_material"</span>
 </pre>
@@ -708,7 +796,7 @@ parameters : <span class="org-variable-name">string</span>[5] = <span class="org
 </div>
 </div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/4fbeabb960d5b90cf713afe7aff87ad11181bff2">4fbeabb</a> - 2015-09-22
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/a31847f17af5483c3e262731b882fb28f4a8eb91">a31847f</a> - 2015-09-22
 </div>
 </body>
 </html>
