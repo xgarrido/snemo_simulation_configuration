@@ -12,7 +12,7 @@ GIT_BRANCH = $(shell git branch | grep \* | cut -d' ' -f2)
 
 CCAGE_DIRECTORY	    = /sps/nemo/scratch/garrido/workdir/supernemo/simulations/snemo_simulation_configuration
 LAL_DIRECTORY	    = /exp/nemo/garrido/workdir/supernemo/simulations/snemo_simulation_configuration
-XTREMWEB_DIRECTORY  = /tmp/vmuser/snemo_simulation_configuration
+XTREMWEB_DIRECTORY  = /home/vmuser/snemo_simulation_configuration
 
 FILES        = $(notdir $(shell ls *.org 2> /dev/null | sed -e 's/snvariant_manager.org//g'))
 ORG_FILES    = $(FILES) snvariant_manager.org
