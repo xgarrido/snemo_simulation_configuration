@@ -23,10 +23,10 @@ are defined in Section [[Vertex configuration]].
 #+BEGIN_SRC shell
   #@description Names of the files configuring the list of registered vertex generators
   vg_list : string[4] as path =                       \
-    "@SNEMO_SIMULATION_CONFIGURATION@/scin_vg.lis"    \
-    "@SNEMO_SIMULATION_CONFIGURATION@/tracker_vg.lis" \
-    "@SNEMO_SIMULATION_CONFIGURATION@/source_vg.lis"  \
-    "@SNEMO_SIMULATION_CONFIGURATION@/hall_vg.lis"
+    "@configuration:scin_vg.lis"    \
+    "@configuration:tracker_vg.lis" \
+    "@configuration:source_vg.lis"  \
+    "@configuration:hall_vg.lis"
 #+END_SRC
 
 * Vertex configuration

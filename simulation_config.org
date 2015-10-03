@@ -69,25 +69,25 @@ service files.
 #+BEGIN_SRC shell
   #@description The configuration file of the embedded service manager
   service_manager.configuration : string[1] as path = \
-      "@SNEMO_SIMULATION_CONFIGURATION@/service_manager.conf"
+      "@configuration:service_manager.conf"
 #+END_SRC
 
 *** Configuration files for modules
 #+BEGIN_SRC shell
   #@description The configuration files for modules
-  modules.configuration_files : string[12] as path =                     \
-      "@SNEMO_SIMULATION_CONFIGURATION@/io_modules.conf"                 \
-      "@SNEMO_SIMULATION_CONFIGURATION@/utl_modules.conf"                \
-      "@SNEMO_SIMULATION_CONFIGURATION@/simulation_modules.conf"         \
-      "@SNEMO_SIMULATION_CONFIGURATION@/event_header_modules.conf"       \
-      "@SNEMO_SIMULATION_CONFIGURATION@/calibration_modules.conf"        \
-      "@SNEMO_SIMULATION_CONFIGURATION@/tracker_clustering_modules.conf" \
-      "@SNEMO_SIMULATION_CONFIGURATION@/tracker_fitting_modules.conf"    \
-      "@SNEMO_SIMULATION_CONFIGURATION@/particle_tracking_modules.conf"  \
-      "@SNEMO_SIMULATION_CONFIGURATION@/gamma_tracking_modules.conf"     \
-      "@SNEMO_SIMULATION_CONFIGURATION@/pid_modules.conf"                \
-      "@SNEMO_SIMULATION_CONFIGURATION@/chain_modules.conf"              \
-      "@SNEMO_SIMULATION_CONFIGURATION@/topology_modules.conf"
+  modules.configuration_files : string[12] as path =   \
+      "@configuration:io_modules.conf"                 \
+      "@configuration:utl_modules.conf"                \
+      "@configuration:simulation_modules.conf"         \
+      "@configuration:event_header_modules.conf"       \
+      "@configuration:calibration_modules.conf"        \
+      "@configuration:tracker_clustering_modules.conf" \
+      "@configuration:tracker_fitting_modules.conf"    \
+      "@configuration:particle_tracking_modules.conf"  \
+      "@configuration:gamma_tracking_modules.conf"     \
+      "@configuration:pid_modules.conf"                \
+      "@configuration:chain_modules.conf"              \
+      "@configuration:topology_modules.conf"
 #+END_SRC
 
 ** Service manager
@@ -111,7 +111,7 @@ service files.
 #+BEGIN_SRC shell
   #@description The list of files that describe services
   services.configuration_files : string[1] as path = \
-      "@SNEMO_SIMULATION_CONFIGURATION@/services.conf"
+      "@configuration:services.conf"
 #+END_SRC
 
 ** DLL loader
@@ -523,7 +523,7 @@ The full =geant4= configuration can be found in the [[file:./sng4_manager.org][s
 #+BEGIN_SRC shell
   #@description The simulation manager configuration file
   manager.configuration_filename : string as path = \
-      "@SNEMO_SIMULATION_CONFIGURATION@/sng4_manager.conf"
+      "@configuration:sng4_manager.conf"
 #+END_SRC
 
 ** Event header module
@@ -579,7 +579,7 @@ properties are used and serialized.
 #+BEGIN_SRC shell
   #@description The external properties files to be exported in event_header properties
   add_header.external_properties_path : string as path = \
-      "@SNEMO_SIMULATION_CONFIGURATION@/snsimulation_header.conf"
+      "@configuration:snsimulation_header.conf"
 
   #@description The external properties prefix to export only properties starting with this prefix
   add_header.external_properties_prefix : string = "analysis"
@@ -678,7 +678,7 @@ simulation setup if needed.
 
   #@description The external properties files to be exported in event_header properties
   add_header.external_properties_path : string as path = \
-      "@SNEMO_SIMULATION_CONFIGURATION@/snsimulation_header.conf"
+      "@configuration:snsimulation_header.conf"
 
   #@description The external properties prefix to export only properties starting with this prefix
   add_header.external_properties_prefix : string = "analysis"
@@ -1792,9 +1792,9 @@ modules it contains.
 *** Full chain (from simulation \to calibration \to reconstruction)
 #+CAPTION: *Full chain processing.*
 #+TBLNAME: full_chain
-|-----------------------------|
-| simulation_chain            |
-|-----------------------------|
+|------------------|
+| simulation_chain |
+|------------------|
 
 #+BEGIN_SRC shell :noweb yes
   <<chain_module("full_chain", 1, full_chain)>>
@@ -1930,8 +1930,7 @@ reconstruction ... but all of them will use the same geometry.
 
   #@description Embedded SuperNEMO geometry manager main configuration file
   manager.configuration_file : string as path = \
-      "@SNEMO_SIMULATION_CONFIGURATION@/sngeometry_manager.conf"
-  # "@falaise:config/snemo/demonstrator/geometry/3.0/manager.conf"
+      "@configuration:sngeometry_manager.conf"
 
   #@description Embedded SuperNEMO geometry manager must build its mapping lookup table
   manager.build_mapping : boolean = true
@@ -1952,8 +1951,7 @@ apply selection cuts on arbitrary data models.
   logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description The main configuration file for the embedded cut manager
-  cut_manager.config : string as path = \
-      "@SNEMO_SIMULATION_CONFIGURATION@/cut_manager.conf"
+  cut_manager.config : string as path =  "@configuration:cut_manager.conf"
 #+END_SRC
 
 *** Manager configuration
@@ -1972,15 +1970,15 @@ apply selection cuts on arbitrary data models.
   factory.no_preload : boolean = false
 
   #@description A list of files that contains definition of cuts
-  cuts.configuration_files : string[8] as path =                         \
-    "@SNEMO_SIMULATION_CONFIGURATION@/event_header_cuts.conf"            \
-    "@SNEMO_SIMULATION_CONFIGURATION@/simulated_data_cuts.conf"          \
-    "@SNEMO_SIMULATION_CONFIGURATION@/calibrated_data_cuts.conf"         \
-    "@SNEMO_SIMULATION_CONFIGURATION@/tracker_clustering_data_cuts.conf" \
-    "@SNEMO_SIMULATION_CONFIGURATION@/tracker_trajectory_data_cuts.conf" \
-    "@SNEMO_SIMULATION_CONFIGURATION@/particle_track_data_cuts.conf"     \
-    "@SNEMO_SIMULATION_CONFIGURATION@/pid_cuts.conf"                     \
-    "@SNEMO_SIMULATION_CONFIGURATION@/topology_cuts.conf"
+  cuts.configuration_files : string[8] as path =       \
+    "@configuration:event_header_cuts.conf"            \
+    "@configuration:simulated_data_cuts.conf"          \
+    "@configuration:calibrated_data_cuts.conf"         \
+    "@configuration:tracker_clustering_data_cuts.conf" \
+    "@configuration:tracker_trajectory_data_cuts.conf" \
+    "@configuration:particle_track_data_cuts.conf"     \
+    "@configuration:pid_cuts.conf"                     \
+    "@configuration:topology_cuts.conf"
 #+END_SRC
 
 *** Skeleton codes                                               :noexport:
@@ -2071,7 +2069,7 @@ This skeleton code allows to check the availability of a data bank.
   mode.list_of_event_ids : boolean = true
 
   #@description Filename with event id
-  list_of_event_ids.file : string as path = "./test.lis"
+  list_of_event_ids.file : string as path = "@configuration:test.lis"
 #+END_SRC
 
 *** Simulated data selection
@@ -3098,6 +3096,7 @@ command
       --module simulation                                                                      \
       --dlls-config ./current/dlls.conf                                                        \
       --datatools::resource_path="falaise@<falaise install dir>/share/Falaise-1.0.0/resources" \
+      --datatools::resource_path="configuration@<this configuration directory>"                \
       --max-records 100
 #+END_SRC
 
@@ -3111,6 +3110,7 @@ will be to temporarly set the =LD_LIBRARY_PATH= variable and to point it to the
       --module simulation                                                                                 \
       --load-dll Bayeux_mctools_geant4 --load-dll Falaise                                                 \
       --datatools::resource_path="falaise@<falaise install dir>/share/Falaise-1.0.0/resources"            \
+      --datatools::resource_path="configuration@<this configuration directory>"                           \
       --max-records 100
 #+END_SRC
 
@@ -3125,6 +3125,7 @@ In the same way you can run the calibration chain by doing
       --module calibration                                                                     \
       --dlls-config ./current/dlls.conf                                                        \
       --datatools::resource_path="falaise@<falaise install dir>/share/Falaise-1.0.0/resources" \
+      --datatools::resource_path="configuration@<this configuration directory>"                \
       --input-file /tmp/$USER/io_output_simulated.brio
 #+END_SRC
 where file =/tmp/$USER/io_output_simulated.brio= is the one produced by the

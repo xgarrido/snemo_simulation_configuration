@@ -28,9 +28,9 @@ instance.
 
   #@description The list of configuration files for embedded registries
   registries.config : string[3] as path =                                 \
-    "@SNEMO_SIMULATION_CONFIGURATION@/snvariant_core_registry.conf"       \
-    "@SNEMO_SIMULATION_CONFIGURATION@/snvariant_simulation_registry.conf" \
-    "@SNEMO_SIMULATION_CONFIGURATION@/snvariant_detector_registry.conf"
+    "@configuration:snvariant_core_registry.conf"       \
+    "@configuration:snvariant_simulation_registry.conf" \
+    "@configuration:snvariant_detector_registry.conf"
 
   #@description The lock request
   lock : boolean = true
@@ -61,7 +61,7 @@ instance.
 
   #@description The list of files containing the definition of variant/parameter models
   configuration_items.files : string[1] as path =  \
-    "@SNEMO_SIMULATION_CONFIGURATION@/core_variants.def"
+    "@configuration:core_variants.def"
 #+END_SRC
 ** Simulation registry
 :PROPERTIES:
@@ -87,7 +87,7 @@ instance.
 
   #@description The list of files containing the definition of variant/parameter models
   configuration_items.files : string[1] as path =  \
-    "@SNEMO_SIMULATION_CONFIGURATION@/simulation_variants.def"
+    "@configuration:simulation_variants.def"
 #+END_SRC
 
 ** Detector registry
@@ -114,7 +114,7 @@ instance.
 
   #@description The list of files containing the definition of variant/parameter models
   configuration_items.files : string[1] as path =  \
-    "@SNEMO_SIMULATION_CONFIGURATION@/detector_variants.def"
+    "@configuration:detector_variants.def"
 #+END_SRC
 
 * Variant definitions
