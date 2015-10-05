@@ -501,7 +501,7 @@ Several common vertex generators are available such as :
 
 #+BEGIN_SRC shell
   #@description The vertex generator PRNG label
-  manager.vertex_generator_name : string  = @variant(simulation:vertex_generator|"source_strips_bulk")
+  manager.vertex_generator_name : string  = @variant(simulation:vertex_generator_name|"source_strips_bulk")
 #+END_SRC
 
 **** Event generator
@@ -516,7 +516,7 @@ Most used event generators are :
 
 #+BEGIN_SRC shell
   #@description The event generator PRNG label
-  manager.event_generator_name : string  = @variant(simulation:event_generator|"Se82.0nubb")
+  manager.event_generator_name : string  = @variant(simulation:event_generator_name|"Se82.0nubb")
 #+END_SRC
 **** G4 manager
 The full =geant4= configuration can be found in the [[file:./sng4_manager.org][sng4_manager]] file.
