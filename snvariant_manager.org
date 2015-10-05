@@ -252,9 +252,11 @@ instance.
 #+BEGIN_SRC shell :tangle no :results output :exports none
   cnt=0
   falaise_dir=$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources
-  files=$(cat current/sngenvertex_manager.conf | grep '".*/.*"' | awk -F \" '{print $2}')
+  files=$(cat current/sngenvertex_manager.conf | grep '".*/.*"\|".*"' | awk -F \" '{print $2}')
   for if in ${=files}; do
-      file=${if/@falaise:/${falaise_dir}\/}
+      file=$if
+      file=${file/@falaise:/${falaise_dir}\/}
+      file=${file/@configuration:/current\/}
       vgs=$(cat $file | grep 'genvtx::.*_vg' | awk -F \" '{print $2}')
       for ivg in ${=vgs}; do
           echo "string.enumerated_${cnt}.value : string = \"${ivg}\""
@@ -280,7 +282,7 @@ instance.
 #+BEGIN_SRC shell :tangle no :results output :exports none
   cnt=0
   falaise_dir=$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources
-  files=$(cat current/sngenbb_manager.conf | grep '".*/.*"' | awk -F \" '{print $2}')
+  files=$(cat current/sngenbb_manager.conf | grep '".*/.*"\|".*"' | awk -F \" '{print $2}')
   for if in ${=files}; do
       file=${if/@falaise:/${falaise_dir}\/}
       egs=$(cat $file | grep 'genbb::' | awk -F \" '{print $2}')
