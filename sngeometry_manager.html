@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>SNGeometry Manager Configuration</title>
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>SNGeometry Manager Configuration</title>
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Xavier Garrido" />
-<meta  name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="css/styles.css" />
                <link rel="stylesheet" href="css/org-pygments.css" />
                <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
@@ -124,13 +124,9 @@ for the JavaScript code in this tag.
 <h2 id="orgheadline1"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-The <code>sngeometry</code> library provides some geometry wrappers arround <code>geomtools</code>
-library and dedicated to SuperNEMO detector description.
-</p>
-
-<p>
-This file holds mainly the paths to geometry files most of them are placed in
-<code>$SNGEOMETRY_DATA_DIR</code> directory.
+This file provides the paths to geometry configuration and files for SuperNEMO
+detector. SuperNEMo geometry is mainly wrapped arround <code>geomtools</code> library and
+thus, use most of its primitives.
 </p>
 </div>
 </div>
@@ -294,9 +290,9 @@ plugins.force_initialization_at_load : <span class="org-variable-name">boolean</
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration files for geometry manager's plugins</span>
 plugins.configuration_files : string[3] as <span class="org-variable-name">path</span> =                 <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/materials_plugin.conf"</span>      <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/magnetic_field_plugin.conf"</span> <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/locator_plugin.conf"</span>
+    <span class="org-string">"@configuration:materials_plugin.conf"</span>      <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@configuration:magnetic_field_plugin.conf"</span> <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@configuration:locator_plugin.conf"</span>
 </pre>
 </div>
 </div>
@@ -395,7 +391,7 @@ materials.configuration_files : string[7] as <span class="org-variable-name">pat
     <span class="org-string">"@falaise:config/common/geometry/materials/1.0/elements.def"</span>          <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@falaise:config/common/geometry/materials/1.0/materials.def"</span>         <span class="org-sh-escaped-newline">\</span>
     <span class="org-string">"@falaise:config/common/geometry/materials/1.0/materials_aliases.def"</span> <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/materials_aliases.def"</span>
+    <span class="org-string">"@configuration:materials_aliases.def"</span>
 </pre>
 </div>
 </div>
@@ -474,7 +470,7 @@ manager.services.geometry : <span class="org-variable-name">string</span> = <spa
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description List of EM fields definitions files</span>
 manager.field_definitions_filenames : string[1] as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/magnetic_field_drivers.conf"</span>
+    <span class="org-string">"@configuration:magnetic_field_drivers.conf"</span>
 </pre>
 </div>
 
@@ -539,7 +535,7 @@ manager.geom_map.associations.module.field_name : <span class="org-variable-name
 logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Default implicit magnetic field unit</span>
-magnetic_field.unit        : <span class="org-variable-name">string</span>  = <span class="org-string">"gauss"</span>
+magnetic_field.unit : <span class="org-variable-name">string</span>  = <span class="org-string">"gauss"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Coordinates of the static magnetic field (Bx, By, Bz)</span>
 magnetic_field.coordinates : <span class="org-variable-name">real</span>[3] = 0.0 0.0 @variant(detector:bz_magnitude|25.0)
@@ -645,7 +641,7 @@ locators.module_number : <span class="org-variable-name">integer</span> = 0
 </div>
 </div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/a31847f17af5483c3e262731b882fb28f4a8eb91">a31847f</a> - 2015-09-22
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/9d510bae97dfa1ae6dedaa7db1f622627b04c740">9d510ba</a> - 2015-10-11
 </div>
 </body>
 </html>

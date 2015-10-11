@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>Variant Manager Configuration</title>
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Variant Manager Configuration</title>
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Xavier Garrido" />
-<meta  name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="css/styles.css" />
                <link rel="stylesheet" href="css/org-pygments.css" />
                <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
@@ -136,9 +136,9 @@ application  : <span class="org-variable-name">string</span> = <span class="org-
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of configuration files for embedded registries</span>
 registries.config : string[3] as <span class="org-variable-name">path</span> =                                 <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/snvariant_core_registry.conf"</span>       <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/snvariant_simulation_registry.conf"</span> <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/snvariant_detector_registry.conf"</span>
+  <span class="org-string">"@configuration:snvariant_core_registry.conf"</span>       <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@configuration:snvariant_simulation_registry.conf"</span> <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@configuration:snvariant_detector_registry.conf"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The lock request</span>
 lock : <span class="org-variable-name">boolean</span> = true
@@ -174,7 +174,7 @@ top_variant_name : <span class="org-variable-name">string</span> = <span class="
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of files containing the definition of variant/parameter models</span>
 configuration_items.files : string[1] as <span class="org-variable-name">path</span> =  <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/core_variants.def"</span>
+  <span class="org-string">"@configuration:core_variants.def"</span>
 </pre>
 </div>
 </div>
@@ -203,7 +203,7 @@ top_variant_name : <span class="org-variable-name">string</span> = <span class="
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of files containing the definition of variant/parameter models</span>
 configuration_items.files : string[1] as <span class="org-variable-name">path</span> =  <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/simulation_variants.def"</span>
+  <span class="org-string">"@configuration:simulation_variants.def"</span>
 </pre>
 </div>
 </div>
@@ -233,7 +233,7 @@ top_variant_name : <span class="org-variable-name">string</span> = <span class="
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of files containing the definition of variant/parameter models</span>
 configuration_items.files : string[1] as <span class="org-variable-name">path</span> =  <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/detector_variants.def"</span>
+  <span class="org-string">"@configuration:detector_variants.def"</span>
 </pre>
 </div>
 </div>
@@ -280,7 +280,6 @@ string.enumerated_4.value : <span class="org-variable-name">string</span> = <spa
 string.enumerated_5.value : <span class="org-variable-name">string</span> = <span class="org-string">"information"</span>
 string.enumerated_6.value : <span class="org-variable-name">string</span> = <span class="org-string">"debug"</span>
 string.enumerated_7.value : <span class="org-variable-name">string</span> = <span class="org-string">"trace"</span>
-string.default            : <span class="org-variable-name">string</span> = <span class="org-string">"fatal"</span>
 </pre>
 </div>
 </div>
@@ -506,23 +505,7 @@ string.enumerated_50.value : <span class="org-variable-name">string</span> = <sp
 string.enumerated_51.value : <span class="org-variable-name">string</span> = <span class="org-string">"gamma.1MeV"</span>
 string.enumerated_52.value : <span class="org-variable-name">string</span> = <span class="org-string">"gamma.2MeV"</span>
 string.enumerated_53.value : <span class="org-variable-name">string</span> = <span class="org-string">"gamma.2615keV"</span>
-string.enumerated_54.value : <span class="org-variable-name">string</span> = <span class="org-string">"Se82.2nubb-2MeV"</span>
-string.enumerated_55.value : <span class="org-variable-name">string</span> = <span class="org-string">"Zr96.2nubb"</span>
-string.enumerated_56.value : <span class="org-variable-name">string</span> = <span class="org-string">"Rn222"</span>
-string.enumerated_57.value : <span class="org-variable-name">string</span> = <span class="org-string">"Pb214.0nubb"</span>
-string.enumerated_58.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron_monokinetic"</span>
-string.enumerated_59.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron_0-3MeV_flat"</span>
-string.enumerated_60.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron_gaussian_energy"</span>
-string.enumerated_61.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron_monokinetic_with_cone"</span>
-string.enumerated_62.value : <span class="org-variable-name">string</span> = <span class="org-string">"gamma_monokinetic"</span>
-string.enumerated_63.value : <span class="org-variable-name">string</span> = <span class="org-string">"gamma_0-3MeV_flat"</span>
-string.enumerated_64.value : <span class="org-variable-name">string</span> = <span class="org-string">"multi_gamma_rays"</span>
-string.enumerated_65.value : <span class="org-variable-name">string</span> = <span class="org-string">"alpha_monokinetic"</span>
-string.enumerated_66.value : <span class="org-variable-name">string</span> = <span class="org-string">"multi_gamma_particles"</span>
-string.enumerated_67.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron_monokinetic1"</span>
-string.enumerated_68.value : <span class="org-variable-name">string</span> = <span class="org-string">"electron_monokinetic2"</span>
-string.enumerated_69.value : <span class="org-variable-name">string</span> = <span class="org-string">"multi_particles"</span>
-string.enumerated.size : <span class="org-variable-name">integer</span> = 70
+string.enumerated.size : <span class="org-variable-name">integer</span> = 54
 </pre>
 </div>
 </div>
@@ -796,7 +779,7 @@ parameters : <span class="org-variable-name">string</span>[11] = <span class="or
 </div>
 </div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/a31847f17af5483c3e262731b882fb28f4a8eb91">a31847f</a> - 2015-09-22
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/9d510bae97dfa1ae6dedaa7db1f622627b04c740">9d510ba</a> - 2015-10-11
 </div>
 </body>
 </html>

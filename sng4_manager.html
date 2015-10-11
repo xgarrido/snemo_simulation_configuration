@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>SNG4 Manager Configuration</title>
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>SNG4 Manager Configuration</title>
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Xavier Garrido" />
-<meta  name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="css/styles.css" />
                <link rel="stylesheet" href="css/org-pygments.css" />
                <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
@@ -186,7 +186,7 @@ cosmic muon generator. See <a href="sngenbb_manager.html">sngenbb manager</a> fi
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration file for the embedded '::genbb::manager'</span>
 manager.config : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/sngenbb_manager.conf"</span>
+    <span class="org-string">"@configuration:sngenbb_manager.conf"</span>
 </pre>
 </div>
 </div>
@@ -205,7 +205,7 @@ This part basically provides the location of vertex generator implemented by
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Main configuration file for the vertex generator manager</span>
 manager.config : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/sngenvertex_manager.conf"</span>
+    <span class="org-string">"@configuration:sngenvertex_manager.conf"</span>
 </pre>
 </div>
 </div>
@@ -242,7 +242,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 The Geometry Description Markup Language is an application-indepedent geometry
 description format based on XML<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. It is used as Geant4 toolkit bindings
 through <code>gemotools</code> converters.
- <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara"> <a href="http://gdml.web.cern.ch/GDML">http://gdml.web.cern.ch/GDML</a> </p><br/></div>
+ <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara"> <a href="http://gdml.web.cern.ch/GDML">http://gdml.web.cern.ch/GDML</a> </p></div><br/></div>
 </p>
 
 <div class="org-src-container">
@@ -274,7 +274,7 @@ hit_processor_factory.logging.priority : <span class="org-variable-name">string<
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration file for the step hit processor factory:</span>
 hit_processor_factory.config : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/step_hit_processor_manager.conf"</span>
+    <span class="org-string">"@configuration:step_hit_processor_manager.conf"</span>
 </pre>
 </div>
 </div>
@@ -470,14 +470,14 @@ physics_constructors.particles.id     : <span class="org-variable-name">string</
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration file of the physics constructors named 'particles'</span>
 physics_constructors.particles.config : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/snparticles.conf"</span>
+    <span class="org-string">"@configuration:snparticles.conf"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Class ID of the physics constructors named 'em'</span>
 physics_constructors.em.id            : <span class="org-variable-name">string</span> = <span class="org-string">"mctools::g4::em_physics_constructor"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Configuration file of the physics constructors named 'em'</span>
 physics_constructors.em.config        : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/snem_processes.conf"</span>
+    <span class="org-string">"@configuration:snem_processes.conf"</span>
 </pre>
 </div>
 </div>
@@ -853,7 +853,7 @@ logging.priority : <span class="org-variable-name">string</span> = <span class="
 </div>
 </div></div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/a31847f17af5483c3e262731b882fb28f4a8eb91">a31847f</a> - 2015-09-22
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/9d510bae97dfa1ae6dedaa7db1f622627b04c740">9d510ba</a> - 2015-10-11
 </div>
 </body>
 </html>

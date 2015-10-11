@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>SN@ilWare Simulation Configuration</title>
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>SN@ilWare Simulation Configuration</title>
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Xavier Garrido" />
-<meta  name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="css/styles.css" />
                <link rel="stylesheet" href="css/org-pygments.css" />
                <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
@@ -200,7 +200,7 @@ the basic idea is to give a "literate" way to navigate through the different
 sections, each of them representing a configuration file. Moreover, using <code>org</code>
 folding/unfolding capability, item can be hide and the user can focus on
 relevant parts.
- <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara"> At the time of writing this document, emacs version is 24.2. </p><br/></div>
+ <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara"> At the time of writing this document, emacs version is 24.2. </p></div><br/></div>
 </p>
 
 <p>
@@ -209,7 +209,7 @@ which will tangle each code block into the given file<sup><a id="fnr.2" class="f
 Makefile. The author recommends to use the Makefile since the tangling process
 is asynchronous and thus, does not freeze your emacs (<code>org-babel-tangle</code>
 "occupies" emacs during its execution).
- <div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara"> Emacs lisp function can be run using <code>ALT-x</code> command and typing the function name. </p><br/></div>
+ <div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara"> Emacs lisp function can be run using <code>ALT-x</code> command and typing the function name. </p></div><br/></div>
 </p>
 </div>
 </div>
@@ -261,7 +261,7 @@ factory.no_preload : <span class="org-variable-name">boolean</span> = false
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The configuration file of the embedded service manager</span>
 service_manager.configuration : string[1] as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/service_manager.conf"</span>
+    <span class="org-string">"@configuration:service_manager.conf"</span>
 </pre>
 </div>
 </div>
@@ -273,19 +273,19 @@ service_manager.configuration : string[1] as <span class="org-variable-name">pat
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The configuration files for modules</span>
-modules.configuration_files : string[12] as <span class="org-variable-name">path</span> =                     <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/io_modules.conf"</span>                 <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/utl_modules.conf"</span>                <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/simulation_modules.conf"</span>         <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/event_header_modules.conf"</span>       <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/calibration_modules.conf"</span>        <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/tracker_clustering_modules.conf"</span> <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/tracker_fitting_modules.conf"</span>    <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/particle_tracking_modules.conf"</span>  <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/gamma_tracking_modules.conf"</span>     <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/pid_modules.conf"</span>                <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/chain_modules.conf"</span>              <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/topology_modules.conf"</span>
+modules.configuration_files : string[12] as <span class="org-variable-name">path</span> =   <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@configuration:io_modules.conf"</span>                 <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@configuration:utl_modules.conf"</span>                <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@configuration:simulation_modules.conf"</span>         <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@configuration:event_header_modules.conf"</span>       <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@configuration:calibration_modules.conf"</span>        <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@configuration:tracker_clustering_modules.conf"</span> <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@configuration:tracker_fitting_modules.conf"</span>    <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@configuration:particle_tracking_modules.conf"</span>  <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@configuration:gamma_tracking_modules.conf"</span>     <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@configuration:pid_modules.conf"</span>                <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@configuration:chain_modules.conf"</span>              <span class="org-sh-escaped-newline">\</span>
+    <span class="org-string">"@configuration:topology_modules.conf"</span>
 </pre>
 </div>
 </div>
@@ -328,7 +328,7 @@ description : <span class="org-variable-name">string</span> = <span class="org-s
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The list of files that describe services</span>
 services.configuration_files : string[1] as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/services.conf"</span>
+    <span class="org-string">"@configuration:services.conf"</span>
 </pre>
 </div>
 </div>
@@ -1171,7 +1171,7 @@ Several common vertex generators are available such as :
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The vertex generator PRNG label</span>
-manager.vertex_generator_name : <span class="org-variable-name">string</span>  = @variant(simulation:vertex_generator|<span class="org-string">"source_strips_bulk"</span>)
+manager.vertex_generator_name : <span class="org-variable-name">string</span>  = @variant(simulation:vertex_generator_name|<span class="org-string">"source_strips_bulk"</span>)
 </pre>
 </div>
 </div></li>
@@ -1193,7 +1193,7 @@ Most used event generators are :
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The event generator PRNG label</span>
-manager.event_generator_name : <span class="org-variable-name">string</span>  = @variant(simulation:event_generator|<span class="org-string">"Se82.0nubb"</span>)
+manager.event_generator_name : <span class="org-variable-name">string</span>  = @variant(simulation:event_generator_name|<span class="org-string">"Se82.0nubb"</span>)
 </pre>
 </div>
 </div></li>
@@ -1205,7 +1205,7 @@ The full <code>geant4</code> configuration can be found in the <a href="./sng4_m
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The simulation manager configuration file</span>
 manager.configuration_filename : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/sng4_manager.conf"</span>
+    <span class="org-string">"@configuration:sng4_manager.conf"</span>
 </pre>
 </div>
 </div></li></ul>
@@ -1283,7 +1283,7 @@ properties are used and serialized.
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The external properties files to be exported in event_header properties</span>
 add_header.external_properties_path : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/snsimulation_header.conf"</span>
+    <span class="org-string">"@configuration:snsimulation_header.conf"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The external properties prefix to export only properties starting with this prefix</span>
 add_header.external_properties_prefix : <span class="org-variable-name">string</span> = <span class="org-string">"analysis"</span>
@@ -1300,7 +1300,7 @@ add_header.external_properties_prefix : <span class="org-variable-name">string</
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The version control status</span>
-analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git master branch - commit a31847f - 2015-09-22"</span>
+analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git master branch - commit 9d510ba - 2015-10-11"</span>
 </pre>
 </div>
 </div></li>
@@ -1367,7 +1367,7 @@ add_header.update : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The external properties files to be exported in event_header properties</span>
 add_header.external_properties_path : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/snsimulation_header.conf"</span>
+    <span class="org-string">"@configuration:snsimulation_header.conf"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The external properties prefix to export only properties starting with this prefix</span>
 add_header.external_properties_prefix : <span class="org-variable-name">string</span> = <span class="org-string">"analysis"</span>
@@ -1516,7 +1516,7 @@ sigma_r_r0 : real as <span class="org-variable-name">length</span> = 12.25 mm
 <div class="outline-text-4" id="text-3-5-3">
 <p>
 This module converts Monte-Carlo hits into calorimeter hits. Like the previous
-<a href="#orgheadline61">section</a>, it is a mock digitization/calibration of simulation hits. It basicaly
+<a href="#tracker_s2c">section</a>, it is a mock digitization/calibration of simulation hits. It basicaly
 aggregates several energy deposits, calculates the total energy deposited and
 the time of the first energy deposit and finally, it smears the energy and time
 by some experimental energy/time resolution. There is also a special treatments
@@ -2037,7 +2037,7 @@ For time delayed cluster like alpha particle track, a <i>a posteriori</i> drift 
 calibration has to be done to shift the time origin and then calculates the new
 cell radius. The <code>drift_time_calibration</code> can be anything if it respects some
 object interface rules defines in <code>trackfit::i_drift_time_calibration</code>
-class. Here we use the same model as in Section <a href="#orgheadline61">3.5.2</a>.
+class. Here we use the same model as in Section <a href="#tracker_s2c">3.5.2</a>.
 </p>
 <div class="org-src-container">
 
@@ -3644,8 +3644,7 @@ logging.priority : <span class="org-variable-name">string</span> = @variant(core
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Embedded SuperNEMO geometry manager main configuration file</span>
 manager.configuration_file : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/sngeometry_manager.conf"</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">"@falaise:config/snemo/demonstrator/geometry/3.0/manager.conf"</span>
+    <span class="org-string">"@configuration:sngeometry_manager.conf"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Embedded SuperNEMO geometry manager must build its mapping lookup table</span>
 manager.build_mapping : <span class="org-variable-name">boolean</span> = true
@@ -3673,8 +3672,7 @@ apply selection cuts on arbitrary data models.
 logging.priority : <span class="org-variable-name">string</span> = @variant(core:logging_priority|<span class="org-string">"warning"</span>)
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The main configuration file for the embedded cut manager</span>
-cut_manager.config : string as <span class="org-variable-name">path</span> = <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/cut_manager.conf"</span>
+cut_manager.config : string as <span class="org-variable-name">path</span> =  <span class="org-string">"@configuration:cut_manager.conf"</span>
 </pre>
 </div>
 </div>
@@ -3694,15 +3692,15 @@ print_report : <span class="org-variable-name">string</span> = <span class="org-
 factory.no_preload : <span class="org-variable-name">boolean</span> = false
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description A list of files that contains definition of cuts</span>
-cuts.configuration_files : string[8] as <span class="org-variable-name">path</span> =                         <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/event_header_cuts.conf"</span>            <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/simulated_data_cuts.conf"</span>          <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/calibrated_data_cuts.conf"</span>         <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/tracker_clustering_data_cuts.conf"</span> <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/tracker_trajectory_data_cuts.conf"</span> <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/particle_track_data_cuts.conf"</span>     <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/pid_cuts.conf"</span>                     <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">"@SNEMO_SIMULATION_CONFIGURATION@/topology_cuts.conf"</span>
+cuts.configuration_files : string[8] as <span class="org-variable-name">path</span> =       <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@configuration:event_header_cuts.conf"</span>            <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@configuration:simulated_data_cuts.conf"</span>          <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@configuration:calibrated_data_cuts.conf"</span>         <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@configuration:tracker_clustering_data_cuts.conf"</span> <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@configuration:tracker_trajectory_data_cuts.conf"</span> <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@configuration:particle_track_data_cuts.conf"</span>     <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@configuration:pid_cuts.conf"</span>                     <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">"@configuration:topology_cuts.conf"</span>
 </pre>
 </div>
 </div>
@@ -3744,7 +3742,7 @@ EH_label : <span class="org-variable-name">string</span> = <span class="org-stri
 mode.list_of_event_ids : <span class="org-variable-name">boolean</span> = true
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description Filename with event id</span>
-list_of_event_ids.file : string as <span class="org-variable-name">path</span> = <span class="org-string">"./test.lis"</span>
+list_of_event_ids.file : string as <span class="org-variable-name">path</span> = <span class="org-string">"@configuration:test.lis"</span>
 </pre>
 </div>
 </div></li></ul>
@@ -5602,6 +5600,7 @@ command
     --module simulation                                                                      <span class="org-sh-escaped-newline">\</span>
     --dlls-config ./current/dlls.conf                                                        <span class="org-sh-escaped-newline">\</span>
     --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@&lt;falaise install dir&gt;/share/Falaise-1.0.0/resources"</span> <span class="org-sh-escaped-newline">\</span>
+    --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"configuration@&lt;this configuration directory&gt;"</span>                <span class="org-sh-escaped-newline">\</span>
     --max-records 100
 </pre>
 </div>
@@ -5619,6 +5618,7 @@ bxdpp_processing                                                                
     --module simulation                                                                                 <span class="org-sh-escaped-newline">\</span>
     --load-dll Bayeux_mctools_geant4 --load-dll Falaise                                                 <span class="org-sh-escaped-newline">\</span>
     --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@&lt;falaise install dir&gt;/share/Falaise-1.0.0/resources"</span>            <span class="org-sh-escaped-newline">\</span>
+    --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"configuration@&lt;this configuration directory&gt;"</span>                           <span class="org-sh-escaped-newline">\</span>
     --max-records 100
 </pre>
 </div>
@@ -5639,6 +5639,7 @@ In the same way you can run the calibration chain by doing
     --module calibration                                                                     <span class="org-sh-escaped-newline">\</span>
     --dlls-config ./current/dlls.conf                                                        <span class="org-sh-escaped-newline">\</span>
     --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@&lt;falaise install dir&gt;/share/Falaise-1.0.0/resources"</span> <span class="org-sh-escaped-newline">\</span>
+    --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"configuration@&lt;this configuration directory&gt;"</span>                <span class="org-sh-escaped-newline">\</span>
     --input-file /tmp/$<span class="org-variable-name">USER</span>/io_output_simulated.brio
 </pre>
 </div>
@@ -5652,7 +5653,7 @@ All the different process steps can then be run using the dedicated module such
 as <a href="#orgheadline79">clustering</a> or <a href="#orgheadline94">fitting</a> Geiger cells. The most complete mode is the
 <code>full_chain</code> module where all process are done from simulation &rarr; calibration &rarr;
 track reconstruction<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>.
- <div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <p class="footpara"> For such processing you will need additional libraries see <a href="#orgheadline13">2.3</a>. </p><br/></div>
+ <div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara"> For such processing you will need additional libraries see <a href="#orgheadline13">2.3</a>. </p></div><br/></div>
 </p>
 </div>
 </div>
@@ -5667,7 +5668,7 @@ track reconstruction<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>.
 </div>
 </div></div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/a31847f17af5483c3e262731b882fb28f4a8eb91">a31847f</a> - 2015-09-22
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/9d510bae97dfa1ae6dedaa7db1f622627b04c740">9d510ba</a> - 2015-10-11
 </div>
 </body>
 </html>
