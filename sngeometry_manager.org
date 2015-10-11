@@ -275,7 +275,7 @@ module.
   logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description Default implicit magnetic field unit
-  magnetic_field.unit        : string  = "gauss"
+  magnetic_field.unit : string  = "gauss"
 
   #@description Coordinates of the static magnetic field (Bx, By, Bz)
   magnetic_field.coordinates : real[3] = 0.0 0.0 @variant(detector:bz_magnitude|25.0)
