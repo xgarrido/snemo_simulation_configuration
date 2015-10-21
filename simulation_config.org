@@ -1623,10 +1623,10 @@ with the number of gammas.
 **** Data banks and services labels
 #+BEGIN_SRC shell
   #@description The label of the 'Particle Track Data' bank
-  PTD_label : string  = "PTD"
+  PTD_label : string = "PTD"
 
   #@description The label of the 'Topology Data' bank
-  TD_label : string  = "TD"
+  TD_label : string = "TD"
 #+END_SRC
 
 **** Drivers
