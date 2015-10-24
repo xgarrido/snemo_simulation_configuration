@@ -251,7 +251,7 @@ instance.
 #+NAME: vg_list_variants
 #+BEGIN_SRC shell :tangle no :results output :exports none
   cnt=0
-  falaise_dir=$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources
+  falaise_dir=$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-2.0.0/resources
   files=$(cat current/sngenvertex_manager.conf | grep '".*/.*"\|".*"' | awk -F \" '{print $2}')
   for if in ${=files}; do
       file=$if
@@ -281,7 +281,7 @@ instance.
 #+NAME: eg_list_variants
 #+BEGIN_SRC shell :tangle no :results output :exports none
   cnt=0
-  falaise_dir=$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-1.0.0/resources
+  falaise_dir=$SNAILWARE_PRO_DIR/falaise/install/share/Falaise-2.0.0/resources
   files=$(cat current/sngenbb_manager.conf | grep '".*/.*"\|".*"' | awk -F \" '{print $2}')
   for if in ${=files}; do
       file=${if/@falaise:/${falaise_dir}\/}
