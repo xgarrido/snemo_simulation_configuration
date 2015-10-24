@@ -1300,7 +1300,7 @@ add_header.external_properties_prefix : <span class="org-variable-name">string</
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The version control status</span>
-analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git master branch - commit 9d510ba - 2015-10-11"</span>
+analysis.vc_status : <span class="org-variable-name">string</span> = <span class="org-string">"git master branch - commit 17f7cf0 - 2015-10-24"</span>
 </pre>
 </div>
 </div></li>
@@ -2609,10 +2609,10 @@ logging.priority : <span class="org-variable-name">string</span> = @variant(core
 <div class="org-src-container">
 
 <pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Particle Track Data' bank</span>
-PTD_label : <span class="org-variable-name">string</span>  = <span class="org-string">"PTD"</span>
+PTD_label : <span class="org-variable-name">string</span> = <span class="org-string">"PTD"</span>
 
 <span class="org-comment-delimiter">#</span><span class="org-comment">@description The label of the 'Topology Data' bank</span>
-TD_label : <span class="org-variable-name">string</span>  = <span class="org-string">"TD"</span>
+TD_label : <span class="org-variable-name">string</span> = <span class="org-string">"TD"</span>
 </pre>
 </div>
 </div></li>
@@ -3473,9 +3473,9 @@ else_module : <span class="org-variable-name">string</span> = <span class="org-s
 </div>
 </div></li>
 
-<li><a id="orgheadline166"></a>Full topology<br  /><div class="outline-text-5" id="text-orgheadline166">
+<li><a id="orgheadline166"></a>Full chain<br  /><div class="outline-text-5" id="text-orgheadline166">
 <table id="orgtable10" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void">
-<caption class="t-above"><span class="table-number">Table 10:</span> <b>Topology chain.</b></caption>
+<caption class="t-above"><span class="table-number">Table 10:</span> <b>Channel chain.</b></caption>
 
 <colgroup>
 <col  class="org-left" />
@@ -5599,7 +5599,7 @@ command
     --module-manager-config ./current/module_manager.conf                                    <span class="org-sh-escaped-newline">\</span>
     --module simulation                                                                      <span class="org-sh-escaped-newline">\</span>
     --dlls-config ./current/dlls.conf                                                        <span class="org-sh-escaped-newline">\</span>
-    --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@&lt;falaise install dir&gt;/share/Falaise-1.0.0/resources"</span> <span class="org-sh-escaped-newline">\</span>
+    --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@&lt;falaise install dir&gt;/share/Falaise-2.0.0/resources"</span> <span class="org-sh-escaped-newline">\</span>
     --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"configuration@&lt;this configuration directory&gt;"</span>                <span class="org-sh-escaped-newline">\</span>
     --max-records 100
 </pre>
@@ -5617,7 +5617,7 @@ bxdpp_processing                                                                
     --module-manager-config ./current/module_manager.conf                                               <span class="org-sh-escaped-newline">\</span>
     --module simulation                                                                                 <span class="org-sh-escaped-newline">\</span>
     --load-dll Bayeux_mctools_geant4 --load-dll Falaise                                                 <span class="org-sh-escaped-newline">\</span>
-    --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@&lt;falaise install dir&gt;/share/Falaise-1.0.0/resources"</span>            <span class="org-sh-escaped-newline">\</span>
+    --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@&lt;falaise install dir&gt;/share/Falaise-2.0.0/resources"</span>            <span class="org-sh-escaped-newline">\</span>
     --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"configuration@&lt;this configuration directory&gt;"</span>                           <span class="org-sh-escaped-newline">\</span>
     --max-records 100
 </pre>
@@ -5638,7 +5638,7 @@ In the same way you can run the calibration chain by doing
     --module-manager-config ./current/module_manager.conf                                    <span class="org-sh-escaped-newline">\</span>
     --module calibration                                                                     <span class="org-sh-escaped-newline">\</span>
     --dlls-config ./current/dlls.conf                                                        <span class="org-sh-escaped-newline">\</span>
-    --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@&lt;falaise install dir&gt;/share/Falaise-1.0.0/resources"</span> <span class="org-sh-escaped-newline">\</span>
+    --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"falaise@&lt;falaise install dir&gt;/share/Falaise-2.0.0/resources"</span> <span class="org-sh-escaped-newline">\</span>
     --datatools::<span class="org-variable-name">resource_path</span>=<span class="org-string">"configuration@&lt;this configuration directory&gt;"</span>                <span class="org-sh-escaped-newline">\</span>
     --input-file /tmp/$<span class="org-variable-name">USER</span>/io_output_simulated.brio
 </pre>
@@ -5668,7 +5668,7 @@ track reconstruction<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>.
 </div>
 </div></div>
 <div id="postamble" class="status">
-File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/9d510bae97dfa1ae6dedaa7db1f622627b04c740">9d510ba</a> - 2015-10-11
+File under <i class="fa fa-github-alt"></i> version control - commit <a href="https://github.com/xgarrido/snemo_simulation_configuration/commit/17f7cf010fcb6c91ac46c8c00adece2d7be03880">17f7cf0</a> - 2015-10-24
 </div>
 </body>
 </html>
