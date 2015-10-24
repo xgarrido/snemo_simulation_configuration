@@ -1848,8 +1848,8 @@ modules it contains.
   <<if_module("process_1e1a_channel_cut", cut="1e1a::channel_cut", then="io_output_1e1a_channel_selected", else="io_output_1e1a_channel_non_selected")>>
 #+END_SRC
 
-**** Full topology
-#+CAPTION: *Topology chain.*
+**** Full chain
+#+CAPTION: *Channel chain.*
 #+TBLNAME: channel_chain
 |--------------------------|
 | minimum_bias_chain       |
