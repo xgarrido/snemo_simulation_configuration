@@ -1617,7 +1617,7 @@ with the number of gammas.
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  logging.priority : string = @variant(core:logging_priority|"error")
+  logging.priority : string = @variant(core:logging_priority|"trace")
 #+END_SRC
 
 **** Data banks and services labels
@@ -1632,7 +1632,7 @@ with the number of gammas.
 **** Drivers
 #+BEGIN_SRC shell
   #@description List of drivers to be used (see description below)
-  drivers : string[3] = "TOFD" "DVD" "AMD"
+  drivers : string[4] = "TOFD" "VD" "AD" "ED"
 #+END_SRC
 
 **** Time-Of-Flight driver
@@ -1642,18 +1642,25 @@ with the number of gammas.
   TOFD.logging.priority : string = @variant(core:logging_priority|"error")
 #+END_SRC
 
-**** \Delta{}vertex driver
+**** Vertex driver
 ***** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  DVD.logging.priority : string = @variant(core:logging_priority|"error")
+  VD.logging.priority : string = @variant(core:logging_priority|"error")
 #+END_SRC
 
 **** \theta driver
 ***** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  AMD.logging.priority : string = @variant(core:logging_priority|"error")
+  AD.logging.priority : string = @variant(core:logging_priority|"error")
+#+END_SRC
+
+**** Energy driver
+***** Logging priority
+#+BEGIN_SRC shell
+  #@description Logging flag
+  ED.logging.priority : string = @variant(core:logging_priority|"error")
 #+END_SRC
 
 ** Chain modules
