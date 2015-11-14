@@ -1617,7 +1617,7 @@ with the number of gammas.
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  logging.priority : string = @variant(core:logging_priority|"trace")
+  logging.priority : string = @variant(core:logging_priority|"error")
 #+END_SRC
 
 **** Data banks and services labels
@@ -1968,7 +1968,7 @@ apply selection cuts on arbitrary data models.
 
 #+BEGIN_SRC shell
   #@description Logging priority
-  logging.priority : string = @variant(core:logging_priority|"warning")
+  logging.priority : string = @variant(core:logging_priority|"error")
 
   #@description Print a final report of cut efficiencies
   print_report : string = "table"
@@ -2882,79 +2882,113 @@ and maybe more in the future.
   echo 'mode.has_pattern_id : boolean = true'
 #+END_SRC
 
+***** Check pattern id label
+#+NAME: has_pattern_id_label
+#+HEADERS: :var topo="" :var logging="warning"
+#+BEGIN_SRC shell
+  echo '[name="'$topo'::has_pattern_id_label" type="snemo::cut::topology_data_cut"]'
+  echo
+  echo '#@description Cut description'
+  echo 'cut.description : string = "Select '$topo' pattern id label"'
+  echo
+  echo '#@description Logging priority'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
+  echo
+  echo '#@description Activate the check for pattern id label'
+  echo 'mode.pattern_id : boolean = true'
+  echo
+  echo '#@description Label of the topology pattern id'
+  echo 'pattern_id.label : string = "'$topo'"'
+#+END_SRC
+
 **** 2\beta selection
 
 Define 2\beta events channel
 - generic cuts :
   #+BEGIN_SRC shell :noweb yes
-    <<has_bank("2e::has_particle_track_data", bname="PTD")>>
-    <<has_particles("2e")>>
+    <<has_bank("2e::has_topology_data", bname="TD")>>
     <<has_pattern_id("2e")>>
+    <<has_pattern_id_label("2e")>>
   #+END_SRC
 
-- select 2 electrons event topology :
-  #+BEGIN_SRC shell
-  [name="2e::topology_pattern" type="snemo::cut::topology_data_cut"]
+- select events with a given set of topology measurement which are :
+  - select events with good internal probability :
+    #+BEGIN_SRC shell
+      [name="2e::good_internal_probability" type="snemo::cut::tof_measurement_cut"]
 
-  #@description Cut description
-  cut.description : string = "Select 2 electrons topology pattern"
+      #@description Cut description
+      cut.description : string = "Select events with good internal probability"
 
-  #@description Logging priority
-  logging.priority : string = @variant(core:logging_priority|"error")
+      #@description Logging priority'
+      logging.priority : string = @variant(core:logging_priority|"trace")
 
-  #@description Activate the check for pattern id label
-  mode.pattern_id : boolean = true
+      #@description Activate the check for internal probability
+      mode.has_internal_probability : boolean = true
 
-  #@description Label of the topology pattern id
-  pattern_id.label : string = "2e"
-#+END_SRC
+      #@description Activate the check for range value of internal probability
+      mode.range_internal_probability : boolean = true
 
-- select events with internal probability :
-  #+BEGIN_SRC shell
-    [name="2e::has_internal_probability" type="snemo::cut::channel_2e_cut"]
+      #@description Mode 'all' for the range probability
+      range_internal_probability.mode : string = "all"
 
-    #@description Cut description
-    cut.description : string = "Select events with internal probability"
+      #@description Minimal value for internal probability
+      range_internal_probability.min : real as fraction = 1 %
+    #+END_SRC
+  - select events with bad external probability :
+    #+BEGIN_SRC shell
+      [name="2e::bad_external_probability" type="snemo::cut::tof_measurement_cut"]
 
-    #@description Logging priority'
-    logging.priority : string = @variant(core:logging_priority|"error")
+      #@description Cut description
+      cut.description : string = "Select events with bad external probability"
 
-    #@description Activate the check for internal probability
-    mode.has_internal_probability : boolean = true
-  #+END_SRC
+      #@description Logging priority'
+      logging.priority : string = @variant(core:logging_priority|"trace")
 
-- select events with good internal probability :
-  #+BEGIN_SRC shell
-    [name="2e::range_internal_probability" type="snemo::cut::channel_2e_cut"]
+      #@description Activate the check for external probability
+      mode.has_external_probability : boolean = true
 
-    #@description Cut description
-    cut.description : string = "Select good internal probability"
+      #@description Activate the check for range value of external probability
+      mode.range_external_probability : boolean = true
 
-    #@description Logging priority'
-    logging.priority : string = @variant(core:logging_priority|"error")
+      #@description Mode 'all' for the range probability
+      range_external_probability.mode : string = "all"
 
-    #@description Activate the check for internal probability value
-    mode.range_internal_probability : boolean = true
+      #@description Maximal value for external probability
+      range_external_probability.max : real as fraction = 1e-5 %
+    #+END_SRC
 
-    #@description Minimal value for internal probability
-    range_internal_probability.min : real as fraction = 1 %
-  #+END_SRC
+    Merge all of them into a =channel_cut=
+    #+BEGIN_SRC shell
+      [name="2e::topology_measurement" type="snemo::cut::channel_cut"]
+
+      #@description Cut description
+      cut.description : string = "Select events with good topological measurement"
+
+      #@description Logging priority'
+      logging.priority : string = @variant(core:logging_priority|"trace")
+
+      #@description Cut list
+      cuts : string[2] = "int_prob" "ext_prob"
+
+      int_prob.cut_label         : string = "2e::good_internal_probability"
+      int_prob.measurement_label : string = "tof_e1_e2"
+      ext_prob.cut_label         : string = "2e::bad_external_probability"
+      ext_prob.measurement_label : string = "tof_e1_e2"
+    #+END_SRC
 
 The following cut combines all the previous ones to define what 2 electrons
 events are
 #+CAPTION: *Definition of 2 electrons channel.*
 #+TBLNAME: 2e_channel_cut
-|--------------------------------|
-| 2e::has_particle_track_data    |
-| 2e::has_particles              |
-| 2e::has_pattern_id             |
-| 2e::topology_pattern           |
-| 2e::has_internal_probability   |
-| 2e::range_internal_probability |
-|--------------------------------|
+|--------------------------|
+| 2e::has_topology_data    |
+| 2e::has_pattern_id       |
+| 2e::has_pattern_id_label |
+| 2e::topology_measurement |
+|--------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("2e::channel_cut", "and", 6, 2e_channel_cut)>>
+  <<multi("2e::channel_cut", "and", 4, 2e_channel_cut)>>
 #+END_SRC
 
 **** 1\beta selection
@@ -2963,39 +2997,21 @@ Define 1\beta events channel
 
 - generic cuts :
   #+BEGIN_SRC shell :noweb yes
-    <<has_bank("1e::has_particle_track_data", bname="PTD")>>
-    <<has_particles("1e")>>
+    <<has_bank("1e::has_topology_data", bname="TD")>>
     <<has_pattern_id("1e")>>
-  #+END_SRC
-
-- select 1 electron event topology :
-  #+BEGIN_SRC shell
-    [name="1e::topology_pattern" type="snemo::cut::topology_data_cut"]
-
-    #@description Cut description
-    cut.description : string = "Select 1 electron topology events"
-
-    #@description Logging priority
-    logging.priority : string = @variant(core:logging_priority|"error")
-
-    #@description Activate the check for pattern id label
-    mode.pattern_id : boolean = true
-
-    #@description Label of the topology pattern id
-    pattern_id.label : string = "1e"
+    <<has_pattern_id_label("1e")>>
   #+END_SRC
 
 #+CAPTION: *Definition of 1 electron channel.*
 #+TBLNAME: 1e_channel_cut
-|-----------------------------|
-| 1e::has_particle_track_data |
-| 1e::has_particles           |
-| 1e::has_pattern_id          |
-| 1e::topology_pattern        |
-|-----------------------------|
+|--------------------------|
+| 1e::has_topology_data    |
+| 1e::has_pattern_id       |
+| 1e::has_pattern_id_label |
+|--------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("1e::channel_cut", "and", 4, 1e_channel_cut)>>
+  <<multi("1e::channel_cut", "and", 3, 1e_channel_cut)>>
 #+END_SRC
 
 **** 1\beta1\gamma selection
@@ -3004,39 +3020,21 @@ Define 1\beta1\gamma events channel
 
 - generic cuts :
   #+BEGIN_SRC shell :noweb yes
-    <<has_bank("1e1g::has_particle_track_data", bname="PTD")>>
-    <<has_particles("1e1g")>>
+    <<has_bank("1e1g::has_topology_data", bname="TD")>>
     <<has_pattern_id("1e1g")>>
-  #+END_SRC
-
-- select 1 electron, 1 gamma event topology :
-  #+BEGIN_SRC shell
-    [name="1e1g::topology_pattern" type="snemo::cut::topology_data_cut"]
-
-    #@description Cut description
-    cut.description : string = "Select 1 electron/1 gamma topology events"
-
-    #@description Logging priority
-    logging.priority : string = @variant(core:logging_priority|"error")
-
-    #@description Activate the check for pattern id label
-    mode.pattern_id : boolean = true
-
-    #@description Label of the topology pattern id
-    pattern_id.label : string = "1e1g"
+    <<has_pattern_id_label("1e1g")>>
   #+END_SRC
 
 #+CAPTION: *Definition of 1\beta1\gamma channel.*
 #+TBLNAME: 1e1g_channel_cut
-|-------------------------------|
-| 1e1g::has_particle_track_data |
-| 1e1g::has_particles           |
-| 1e1g::has_pattern_id          |
-| 1e1g::topology_pattern        |
-|-------------------------------|
+|----------------------------|
+| 1e1g::has_topology_data    |
+| 1e1g::has_pattern_id       |
+| 1e1g::has_pattern_id_label |
+|----------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("1e1g::channel_cut", "and", 4, 1e1g_channel_cut)>>
+  <<multi("1e1g::channel_cut", "and", 3, 1e1g_channel_cut)>>
 #+END_SRC
 
 **** 1\beta1\alpha selection
@@ -3045,39 +3043,21 @@ Define 1\beta1\alpha events topology
 
 - generic cuts :
   #+BEGIN_SRC shell :noweb yes
-    <<has_bank("1e1a::has_particle_track_data", bname="PTD")>>
-    <<has_particles("1e1a")>>
+    <<has_bank("1e1a::has_topology_data", bname="TD")>>
     <<has_pattern_id("1e1a")>>
-  #+END_SRC
-
-- select 1 electron, 1 alpha delayed event topology :
-  #+BEGIN_SRC shell
-    [name="1e1a::topology_pattern" type="snemo::cut::topology_data_cut"]
-
-    #@description Cut description
-    cut.description : string = "Select 1 electron/1 alpha topology events"
-
-    #@description Logging priority
-    logging.priority : string = @variant(core:logging_priority|"error")
-
-    #@description Activate the check for pattern id label
-    mode.pattern_id : boolean = true
-
-    #@description Label of the topology pattern id
-    pattern_id.label : string = "1e1a"
+    <<has_pattern_id_label("1e1a")>>
   #+END_SRC
 
 #+CAPTION: *Definition of 1\beta1\alpha channel.*
 #+TBLNAME: 1e1a_channel_cut
-|-------------------------------|
-| 1e1a::has_particle_track_data |
-| 1e1a::has_particles           |
-| 1e1a::has_pattern_id          |
-| 1e1a::topology_pattern        |
-|-------------------------------|
+|----------------------------|
+| 1e1a::has_topology_data    |
+| 1e1a::has_pattern_id       |
+| 1e1a::has_pattern_id_label |
+|----------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("1e1a::channel_cut", "and", 4, 1e1a_channel_cut)>>
+  <<multi("1e1a::channel_cut", "and", 3, 1e1a_channel_cut)>>
 #+END_SRC
 
 * Running SN@ilWare processing chain
