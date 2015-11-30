@@ -1848,6 +1848,12 @@ modules it contains.
   <<output_module("io_output_1e1g_channel_non_selected")>>
   <<if_module("process_1e1g_channel_cut", cut="1e1g::channel_cut", then="io_output_1e1g_channel_selected", else="io_output_1e1g_channel_non_selected")>>
 #+END_SRC
+**** 1\beta/2\gamma selection
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_1e2g_channel_selected")>>
+  <<output_module("io_output_1e2g_channel_non_selected")>>
+  <<if_module("process_1e2g_channel_cut", cut="1e2g::channel_cut", then="io_output_1e2g_channel_selected", else="io_output_1e2g_channel_non_selected")>>
+#+END_SRC
 **** 1\beta/1\alpha selection
 #+BEGIN_SRC shell :noweb yes
   <<output_module("io_output_1e1a_channel_selected")>>
@@ -1863,11 +1869,12 @@ modules it contains.
 | process_2e_channel_cut   |
 | process_1e_channel_cut   |
 | process_1e1g_channel_cut |
+| process_1e2g_channel_cut |
 | process_1e1a_channel_cut |
 |--------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<chain_module("channel_chain", 5, channel_chain)>>
+  <<chain_module("channel_chain", 6, channel_chain)>>
 #+END_SRC
 ** Miscellaneous
 #+CAPTION: *Reformating data.*
@@ -2900,97 +2907,37 @@ and maybe more in the future.
   echo '#@description Label of the topology pattern id'
   echo 'pattern_id.label : string = "'$topo'"'
 #+END_SRC
-
-**** 2\beta selection
-
-Define 2\beta events channel
-- generic cuts :
-  #+BEGIN_SRC shell :noweb yes
-    <<has_bank("2e::has_topology_data", bname="TD")>>
-    <<has_pattern_id("2e")>>
-    <<has_pattern_id_label("2e")>>
+***** TOF cut
+#+NAME: tof_measurement_cut
+#+HEADERS: :var name="" :var type="internal" :var logging="warning"
+#+HEADERS: :var min="" :var max=""
+#+BEGIN_SRC shell
+  echo '[name="'$name'" type="snemo::cut::tof_measurement_cut"]'
+  echo
+  echo '#@description Cut description'
+  echo 'cut.description : string = "Select event with TOF criteria"'
+  echo
+  echo '#@description Logging priority'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
+  echo
+  echo '#@description Activate the check for '$type' probability'
+  echo 'mode.has_'$type'_probability : boolean = true'
+  echo
+  echo '#@description Activate the check for range value of '$type' probability'
+  echo 'mode.range_'$type'_probability : boolean = true'
+  echo
+  echo '#@description Mode 'all' for the range probability'
+  echo 'range_'$type'_probability.mode : string = "all"'
+  echo
+  if [ ! -z $min ]; then
+      echo '#@description Minimal value for '$type' probability'
+      echo 'range_'$type'_probability.min : real as fraction = '$min
+  fi
+  if [ ! -z $max ]; then
+      echo '#@description Maximal value for '$type' probability'
+      echo 'range_'$type'_probability.max : real as fraction = '$max
+  fi
   #+END_SRC
-
-- select events with a given set of topology measurement which are :
-  - select events with good internal probability :
-    #+BEGIN_SRC shell
-      [name="2e::good_internal_probability" type="snemo::cut::tof_measurement_cut"]
-
-      #@description Cut description
-      cut.description : string = "Select events with good internal probability"
-
-      #@description Logging priority'
-      logging.priority : string = @variant(core:logging_priority|"trace")
-
-      #@description Activate the check for internal probability
-      mode.has_internal_probability : boolean = true
-
-      #@description Activate the check for range value of internal probability
-      mode.range_internal_probability : boolean = true
-
-      #@description Mode 'all' for the range probability
-      range_internal_probability.mode : string = "all"
-
-      #@description Minimal value for internal probability
-      range_internal_probability.min : real as fraction = 1 %
-    #+END_SRC
-  - select events with bad external probability :
-    #+BEGIN_SRC shell
-      [name="2e::bad_external_probability" type="snemo::cut::tof_measurement_cut"]
-
-      #@description Cut description
-      cut.description : string = "Select events with bad external probability"
-
-      #@description Logging priority'
-      logging.priority : string = @variant(core:logging_priority|"trace")
-
-      #@description Activate the check for external probability
-      mode.has_external_probability : boolean = true
-
-      #@description Activate the check for range value of external probability
-      mode.range_external_probability : boolean = true
-
-      #@description Mode 'all' for the range probability
-      range_external_probability.mode : string = "all"
-
-      #@description Maximal value for external probability
-      range_external_probability.max : real as fraction = 1e-5 %
-    #+END_SRC
-
-    Merge all of them into a =channel_cut=
-    #+BEGIN_SRC shell
-      [name="2e::topology_measurement" type="snemo::cut::channel_cut"]
-
-      #@description Cut description
-      cut.description : string = "Select events with good topological measurement"
-
-      #@description Logging priority'
-      logging.priority : string = @variant(core:logging_priority|"trace")
-
-      #@description Cut list
-      cuts : string[2] = "int_prob" "ext_prob"
-
-      int_prob.cut_label         : string = "2e::good_internal_probability"
-      int_prob.measurement_label : string = "tof_e1_e2"
-      ext_prob.cut_label         : string = "2e::bad_external_probability"
-      ext_prob.measurement_label : string = "tof_e1_e2"
-    #+END_SRC
-
-The following cut combines all the previous ones to define what 2 electrons
-events are
-#+CAPTION: *Definition of 2 electrons channel.*
-#+TBLNAME: 2e_channel_cut
-|--------------------------|
-| 2e::has_topology_data    |
-| 2e::has_pattern_id       |
-| 2e::has_pattern_id_label |
-| 2e::topology_measurement |
-|--------------------------|
-
-#+BEGIN_SRC shell :noweb yes
-  <<multi("2e::channel_cut", "and", 4, 2e_channel_cut)>>
-#+END_SRC
-
 **** 1\beta selection
 
 Define 1\beta events channel
@@ -3037,6 +2984,29 @@ Define 1\beta1\gamma events channel
   <<multi("1e1g::channel_cut", "and", 3, 1e1g_channel_cut)>>
 #+END_SRC
 
+**** 1\beta2\gamma selection
+
+Define 1\beta2\gamma events channel
+
+- generic cuts :
+  #+BEGIN_SRC shell :noweb yes
+    <<has_bank("1e2g::has_topology_data", bname="TD")>>
+    <<has_pattern_id("1e2g")>>
+    <<has_pattern_id_label("1e2g")>>
+  #+END_SRC
+
+#+CAPTION: *Definition of 1\beta2\gamma channel.*
+#+TBLNAME: 1e2g_channel_cut
+|----------------------------|
+| 1e2g::has_topology_data    |
+| 1e2g::has_pattern_id       |
+| 1e2g::has_pattern_id_label |
+|----------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<multi("1e2g::channel_cut", "and", 3, 1e2g_channel_cut)>>
+#+END_SRC
+
 **** 1\beta1\alpha selection
 
 Define 1\beta1\alpha events topology
@@ -3058,6 +3028,60 @@ Define 1\beta1\alpha events topology
 
 #+BEGIN_SRC shell :noweb yes
   <<multi("1e1a::channel_cut", "and", 3, 1e1a_channel_cut)>>
+#+END_SRC
+
+**** 2\beta selection
+
+Define 2\beta events channel
+- generic cuts :
+  #+BEGIN_SRC shell :noweb yes
+    <<has_bank("2e::has_topology_data", bname="TD")>>
+    <<has_pattern_id("2e")>>
+    <<has_pattern_id_label("2e")>>
+  #+END_SRC
+
+- select events with a given set of topology measurement which are :
+  - select events with good internal probability :
+    #+BEGIN_SRC shell :noweb yes
+      <<tof_measurement_cut(name="2e::good_internal_probability", type="internal", min="1 %")>>
+    #+END_SRC
+  - select events with bad external probability :
+    #+BEGIN_SRC shell :noweb yes
+      <<tof_measurement_cut(name="2e::bad_external_probability", type="external", max="1e-5 %")>>
+    #+END_SRC
+
+    Merge all of them into a =channel_cut=
+    #+BEGIN_SRC shell
+      [name="2e::topology_measurement" type="snemo::cut::channel_cut"]
+
+      #@description Cut description
+      cut.description : string = "Select events with good topological measurement"
+
+      #@description Logging priority'
+      logging.priority : string = @variant(core:logging_priority|"error")
+
+      #@description Cut list
+      cuts : string[2] = "int_prob" "ext_prob"
+
+      int_prob.cut_label         : string = "2e::good_internal_probability"
+      int_prob.measurement_label : string = "tof_e1_e2"
+      ext_prob.cut_label         : string = "2e::bad_external_probability"
+      ext_prob.measurement_label : string = "tof_e1_e2"
+    #+END_SRC
+
+The following cut combines all the previous ones to define what 2 electrons
+events are
+#+CAPTION: *Definition of 2 electrons channel.*
+#+TBLNAME: 2e_channel_cut
+|--------------------------|
+| 2e::has_topology_data    |
+| 2e::has_pattern_id       |
+| 2e::has_pattern_id_label |
+| 2e::topology_measurement |
+|--------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<multi("2e::channel_cut", "and", 4, 2e_channel_cut)>>
 #+END_SRC
 
 * Running SN@ilWare processing chain
