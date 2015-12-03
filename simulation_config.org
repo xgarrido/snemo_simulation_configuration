@@ -640,16 +640,24 @@ The following code block retrieves the version number of a given component
   analysis.description : string = "Sensitivity studies for SuperNEMO demonstrator"
 #+END_SRC
 
-**** Set the total number of event simulated
+**** Store the total number of event simulated
 #+BEGIN_SRC shell
   #@description The total number of event simulated
   analysis.total_number_of_event : real = @variant(simulation:total_number_of_event|1)
 #+END_SRC
 
-**** Set the geometrical origin of the vertex
+**** Store the geometrical origin of the vertex
 #+BEGIN_SRC shell
-  #@description Origin of the vertices
-  analysis.vertex_origin : string = @variant(simulation:vertex_generator|"source_strips_bulk")
+  #@description Vertex generator name
+  analysis.vertex_generator_name : string = @variant(simulation:vertex_generator_name|"not available")
+#+END_SRC
+
+**** Store the event generator
+This can be done through the =use_genbb_label= property of
+=event_header_utils_module= but here we do it thanks to =variant= keyword
+#+BEGIN_SRC shell
+  #@description Event generator name
+  analysis.event_generator_name : string = @variant(simulation:event_generator_name|"not available")
 #+END_SRC
 
 **** Store the job id

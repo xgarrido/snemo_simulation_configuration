@@ -273,6 +273,7 @@ instance.
   type          : string = "string"
   mutability    : string = "variable"
   variable.mode : string = "enumeration"
+  string.default : string = "source_strips_bulk"
   <<vg_list_variants()>>
 #+END_SRC
 
@@ -301,6 +302,7 @@ instance.
   type          : string = "string"
   mutability    : string = "variable"
   variable.mode : string = "enumeration"
+  string.default : string = "Se82.0nubb"
   <<eg_list_variants()>>
 #+END_SRC
 
