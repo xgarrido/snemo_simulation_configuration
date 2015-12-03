@@ -1215,8 +1215,11 @@ or line models.
 
 **** General options
 #+BEGIN_SRC shell
+  #@description Tracker fitter logging priority
+  BTF.logging.priority : string = @variant(core:logging_priority|"error")
+
   #@description The maximum number of fits to be saved (0 means all will be kept)
-  maximum_number_of_fits : integer = 0
+  BTF.maximum_number_of_fits : integer = 0
 #+END_SRC
 
 **** Trackfit algorithm
@@ -1358,7 +1361,7 @@ track with calorimeter blocks.
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  logging.priority : string = @variant(core:logging_priority|"warning")
+  logging.priority : string = @variant(core:logging_priority|"error")
 #+END_SRC
 **** Data banks and services labels
 #+BEGIN_SRC shell
