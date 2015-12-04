@@ -168,6 +168,7 @@ list of needed libraries
 | Falaise_GammaTracking   | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_GammaTracking.so           |
 | Falaise_GammaClustering | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_GammaClustering.so         |
 | Falaise_PID             | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_ParticleIdentification.so  |
+| Falaise_ProcessReport   | $SNAILWARE_PRO_DIR/falaise/install/lib64/Falaise/modules/libFalaise_ProcessReport.so           |
 |-------------------------+------------------------------------------------------------------------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
@@ -434,6 +435,23 @@ Here we define some common and useful tasks such as removing data/MC hits.
   #@description Output stream
   output : string = "clog"
 #+END_SRC
+*** Process report module
+#+BEGIN_SRC shell
+  [name="process_report" type="snemo::reconstruction::process_report_module"]
+
+  #@description Logging priority
+  logging.priority : string = @variant(core:logging_priority|"warning")
+
+  #@description The geometry service label
+  Geo_label : string = "Geo"
+
+  #@description The cut service label
+  Cut_label : string  = "Cuts"
+
+  #@description Report format
+  print_report : string = "table"
+#+END_SRC
+
 ** Simulation module
 :PROPERTIES:
 :TANGLE: simulation_modules.conf
@@ -1882,10 +1900,11 @@ modules it contains.
 | process_1e1g_channel_cut |
 | process_1e2g_channel_cut |
 | process_1e1a_channel_cut |
+| process_report           |
 |--------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<chain_module("channel_chain", 6, channel_chain)>>
+  <<chain_module("channel_chain", 7, channel_chain)>>
 #+END_SRC
 ** Miscellaneous
 #+CAPTION: *Reformating data.*
@@ -1987,9 +2006,6 @@ apply selection cuts on arbitrary data models.
 #+BEGIN_SRC shell
   #@description Logging priority
   logging.priority : string = @variant(core:logging_priority|"error")
-
-  #@description Print a final report of cut efficiencies
-  print_report : string = "table"
 
   #@description Flag to skip the preloading of pre-registered cuts
   factory.no_preload : boolean = false
