@@ -2881,46 +2881,27 @@ and maybe more in the future.
 :RESULTS: output
 :END:
 
-***** Check particle tracks presence
-#+NAME: has_particles
+***** Check pattern presence
+#+NAME: has_pattern
 #+HEADERS: :var topo="" :var logging="warning"
 #+BEGIN_SRC shell
-  echo '[name="'$topo'::has_particles" type="snemo::cut::particle_track_data_cut"]'
+  echo '[name="'$topo'::has_pattern" type="snemo::cut::topology_data_cut"]'
   echo
   echo '#@description Cut description'
-  echo 'cut.description : string = "Select reconstructed particle for '$topo' topology"'
+  echo 'cut.description : string = "Ensure pattern presence for '$topo' topology"'
   echo
   echo '#@description Logging priority'
   echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
-  echo '#@description The label/name of the bank (mandatory)'
-  echo 'PTD_label : string = "PTD"'
-  echo
   echo '#@description The running mode of this cut instance'
-  echo 'mode.has_particles : boolean = true'
+  echo 'mode.has_pattern : boolean = true'
 #+END_SRC
 
-***** Check pattern id presence
+***** Check pattern id label
 #+NAME: has_pattern_id
 #+HEADERS: :var topo="" :var logging="warning"
 #+BEGIN_SRC shell
   echo '[name="'$topo'::has_pattern_id" type="snemo::cut::topology_data_cut"]'
-  echo
-  echo '#@description Cut description'
-  echo 'cut.description : string = "Ensure pattern id presence for '$topo' topology"'
-  echo
-  echo '#@description Logging priority'
-  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
-  echo
-  echo '#@description The running mode of this cut instance'
-  echo 'mode.has_pattern_id : boolean = true'
-#+END_SRC
-
-***** Check pattern id label
-#+NAME: has_pattern_id_label
-#+HEADERS: :var topo="" :var logging="warning"
-#+BEGIN_SRC shell
-  echo '[name="'$topo'::has_pattern_id_label" type="snemo::cut::topology_data_cut"]'
   echo
   echo '#@description Cut description'
   echo 'cut.description : string = "Select '$topo' pattern id label"'
@@ -2929,10 +2910,30 @@ and maybe more in the future.
   echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
   echo
   echo '#@description Activate the check for pattern id label'
-  echo 'mode.pattern_id : boolean = true'
+  echo 'mode.has_pattern_id : boolean = true'
   echo
   echo '#@description Label of the topology pattern id'
-  echo 'pattern_id.label : string = "'$topo'"'
+  echo 'has_pattern_id.label : string = "'$topo'"'
+#+END_SRC
+
+***** Check classification label
+#+NAME: has_classification
+#+HEADERS: :var topo="" :var logging="warning" :var regex=""
+#+BEGIN_SRC shell
+  [ -z $regex ] && regex=$topo
+  echo '[name="'$topo'::has_classification" type="snemo::cut::topology_data_cut"]'
+  echo
+  echo '#@description Cut description'
+  echo 'cut.description : string = "Select '$topo' pattern id label"'
+  echo
+  echo '#@description Logging priority'
+  echo 'logging.priority : string = @variant(core:logging_priority|"'$logging'")'
+  echo
+  echo '#@description Activate the check for classification label'
+  echo 'mode.classification : boolean = true'
+  echo
+  echo '#@description Label of the classification'
+  echo 'classification.label : string = "'$regex'"'
 #+END_SRC
 ***** TOF cut
 #+NAME: tof_measurement_cut
@@ -2972,17 +2973,17 @@ Define 1\beta events channel
 - generic cuts :
   #+BEGIN_SRC shell :noweb yes
     <<has_bank("1e::has_topology_data", bname="TD")>>
-    <<has_pattern_id("1e")>>
-    <<has_pattern_id_label("1e")>>
+    <<has_pattern("1e")>>
+    <<has_classification("1e")>>
   #+END_SRC
 
 #+CAPTION: *Definition of 1 electron channel.*
 #+TBLNAME: 1e_channel_cut
-|--------------------------|
-| 1e::has_topology_data    |
-| 1e::has_pattern_id       |
-| 1e::has_pattern_id_label |
-|--------------------------|
+|------------------------|
+| 1e::has_topology_data  |
+| 1e::has_pattern        |
+| 1e::has_classification |
+|------------------------|
 
 #+BEGIN_SRC shell :noweb yes
   <<multi("1e::channel_cut", "and", 3, 1e_channel_cut)>>
@@ -2995,17 +2996,17 @@ Define 1\beta1\gamma events channel
 - generic cuts :
   #+BEGIN_SRC shell :noweb yes
     <<has_bank("1e1g::has_topology_data", bname="TD")>>
-    <<has_pattern_id("1e1g")>>
-    <<has_pattern_id_label("1e1g")>>
+    <<has_pattern("1e1g")>>
+    <<has_classification(topo="1e1g", regex=".*1g.*")>>
   #+END_SRC
 
 #+CAPTION: *Definition of 1\beta1\gamma channel.*
 #+TBLNAME: 1e1g_channel_cut
-|----------------------------|
-| 1e1g::has_topology_data    |
-| 1e1g::has_pattern_id       |
-| 1e1g::has_pattern_id_label |
-|----------------------------|
+|--------------------------|
+| 1e1g::has_topology_data  |
+| 1e1g::has_pattern        |
+| 1e1g::has_classification |
+|--------------------------|
 
 #+BEGIN_SRC shell :noweb yes
   <<multi("1e1g::channel_cut", "and", 3, 1e1g_channel_cut)>>
@@ -3018,17 +3019,17 @@ Define 1\beta2\gamma events channel
 - generic cuts :
   #+BEGIN_SRC shell :noweb yes
     <<has_bank("1e2g::has_topology_data", bname="TD")>>
-    <<has_pattern_id("1e2g")>>
-    <<has_pattern_id_label("1e2g")>>
+    <<has_pattern("1e2g")>>
+    <<has_classification("1e2g")>>
   #+END_SRC
 
 #+CAPTION: *Definition of 1\beta2\gamma channel.*
 #+TBLNAME: 1e2g_channel_cut
-|----------------------------|
-| 1e2g::has_topology_data    |
-| 1e2g::has_pattern_id       |
-| 1e2g::has_pattern_id_label |
-|----------------------------|
+|--------------------------|
+| 1e2g::has_topology_data  |
+| 1e2g::has_pattern        |
+| 1e2g::has_classification |
+|--------------------------|
 
 #+BEGIN_SRC shell :noweb yes
   <<multi("1e2g::channel_cut", "and", 3, 1e2g_channel_cut)>>
@@ -3041,17 +3042,17 @@ Define 1\beta1\alpha events topology
 - generic cuts :
   #+BEGIN_SRC shell :noweb yes
     <<has_bank("1e1a::has_topology_data", bname="TD")>>
-    <<has_pattern_id("1e1a")>>
-    <<has_pattern_id_label("1e1a")>>
+    <<has_pattern("1e1a")>>
+    <<has_classification("1e1a")>>
   #+END_SRC
 
 #+CAPTION: *Definition of 1\beta1\alpha channel.*
 #+TBLNAME: 1e1a_channel_cut
-|----------------------------|
-| 1e1a::has_topology_data    |
-| 1e1a::has_pattern_id       |
-| 1e1a::has_pattern_id_label |
-|----------------------------|
+|--------------------------|
+| 1e1a::has_topology_data  |
+| 1e1a::has_pattern        |
+| 1e1a::has_classification |
+|--------------------------|
 
 #+BEGIN_SRC shell :noweb yes
   <<multi("1e1a::channel_cut", "and", 3, 1e1a_channel_cut)>>
@@ -3063,8 +3064,8 @@ Define 2\beta events channel
 - generic cuts :
   #+BEGIN_SRC shell :noweb yes
     <<has_bank("2e::has_topology_data", bname="TD")>>
-    <<has_pattern_id("2e")>>
-    <<has_pattern_id_label("2e")>>
+    <<has_pattern("2e")>>
+    <<has_classification("2e")>>
   #+END_SRC
 
 - select events with a given set of topology measurement which are :
@@ -3102,8 +3103,8 @@ events are
 #+TBLNAME: 2e_channel_cut
 |--------------------------|
 | 2e::has_topology_data    |
-| 2e::has_pattern_id       |
-| 2e::has_pattern_id_label |
+| 2e::has_pattern          |
+| 2e::has_classification   |
 | 2e::topology_measurement |
 |--------------------------|
 
