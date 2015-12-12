@@ -1867,6 +1867,20 @@ modules it contains.
   <<if_module("process_2e_channel_cut", cut="2e::channel_cut", then="io_output_2e_channel_selected", else="io_output_2e_channel_non_selected")>>
 #+END_SRC
 
+**** 2\beta1\gamma selection
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_2e1g_channel_selected")>>
+  <<output_module("io_output_2e1g_channel_non_selected")>>
+  <<if_module("process_2e1g_channel_cut", cut="2e1g::channel_cut", then="io_output_2e1g_channel_selected", else="io_output_2e1g_channel_non_selected")>>
+#+END_SRC
+
+**** 2\beta2\gamma selection
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_2e2g_channel_selected")>>
+  <<output_module("io_output_2e2g_channel_non_selected")>>
+  <<if_module("process_2e2g_channel_cut", cut="2e2g::channel_cut", then="io_output_2e2g_channel_selected", else="io_output_2e2g_channel_non_selected")>>
+#+END_SRC
+
 **** 1\beta selection
 #+BEGIN_SRC shell :noweb yes
   <<output_module("io_output_1e_channel_selected")>>
@@ -1899,6 +1913,8 @@ modules it contains.
 |--------------------------|
 | minimum_bias_chain       |
 | process_2e_channel_cut   |
+| process_2e1g_channel_cut |
+| process_2e2g_channel_cut |
 | process_1e_channel_cut   |
 | process_1e1g_channel_cut |
 | process_1e2g_channel_cut |
@@ -1907,7 +1923,7 @@ modules it contains.
 |--------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<chain_module("channel_chain", 7, channel_chain)>>
+  <<chain_module("channel_chain", 9, channel_chain)>>
 #+END_SRC
 ** Miscellaneous
 #+CAPTION: *Reformating data.*
@@ -3113,6 +3129,54 @@ events are
 
 #+BEGIN_SRC shell :noweb yes
   <<multi("2e::channel_cut", "and", 4, 2e_channel_cut)>>
+#+END_SRC
+
+**** 2\beta1\gamma selection
+
+Define 2\beta1\gamma events channel
+- generic cuts :
+  #+BEGIN_SRC shell :noweb yes
+    <<has_bank("2e1g::has_topology_data", bname="TD")>>
+    <<has_pattern("2e1g")>>
+    <<has_classification("2e1g")>>
+  #+END_SRC
+
+The following cut combines all the previous ones to define what 2 electrons/1
+gamma events are
+#+CAPTION: *Definition of 2e1\gamma channel.*
+#+TBLNAME: 2e1g_channel_cut
+|--------------------------|
+| 2e1g::has_topology_data  |
+| 2e1g::has_pattern        |
+| 2e1g::has_classification |
+|--------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<multi("2e1g::channel_cut", "and", 3, 2e1g_channel_cut)>>
+#+END_SRC
+
+**** 2\beta2\gamma selection
+
+Define 2\beta2\gamma events channel
+- generic cuts :
+  #+BEGIN_SRC shell :noweb yes
+    <<has_bank("2e2g::has_topology_data", bname="TD")>>
+    <<has_pattern("2e2g")>>
+    <<has_classification("2e2g")>>
+  #+END_SRC
+
+The following cut combines all the previous ones to define what 2 electrons/2
+gamma events are
+#+CAPTION: *Definition of 2e2\gamma channel.*
+#+TBLNAME: 2e2g_channel_cut
+|--------------------------|
+| 2e2g::has_topology_data  |
+| 2e2g::has_pattern        |
+| 2e2g::has_classification |
+|--------------------------|
+
+#+BEGIN_SRC shell :noweb yes
+  <<multi("2e2g::channel_cut", "and", 3, 2e2g_channel_cut)>>
 #+END_SRC
 
 * Running SN@ilWare processing chain
