@@ -448,11 +448,48 @@ Here we define some common and useful tasks such as removing data/MC hits.
   #@description The cut service label
   Cut_label : string  = "Cuts"
 
+  #@description Output stream
+  output : string = "clog"
+
   #@description List of report drivers
   drivers : string[1] = "CRD"
+#+END_SRC
 
+**** Cut report driver
+***** Logging priority
+#+BEGIN_SRC shell
+  #@description Logging priority
+  CRD.logging.priority : string = @variant(core:logging_priority|"warning")
+#+END_SRC
+
+***** Print report format
+#+BEGIN_SRC shell
   #@description Cut report format
-  CRD.print_report : string = "table"
+  CRD.print_report : string = "meter"
+#+END_SRC
+
+***** List of cuts to be shown
+#+BEGIN_SRC shell
+  #@description List of cut to show
+  CRD.cuts : string[18] =                  \
+           "2e::has_topology_data"         \
+           "2e::has_pattern"               \
+           "2e::has_classification"        \
+           "2e::good_internal_probability" \
+           "2e::bad_external_probability"  \
+           "2e::channel_cut"               \
+           "----------------------------"  \
+           "2e1g::channel_cut"             \
+           "----------------------------"  \
+           "2e2g::channel_cut"             \
+           "----------------------------"  \
+           "1e::channel_cut"               \
+           "----------------------------"  \
+           "1e1g::channel_cut"             \
+           "----------------------------"  \
+           "1e2g::channel_cut"             \
+           "----------------------------"  \
+           "1e1a::channel_cut"
 #+END_SRC
 
 ** Simulation module
@@ -2881,11 +2918,11 @@ An alpha is a =particle_track= having
 :END:
 
 The following selections define some basic "standard" channel cuts such as :
-- 2 electrons,
 - 1 electron,
 - 1 electron, $n$ gammas,
-- 2 electron, $n$ gammas,
+- 2 internal electrons,
 - 1 electron, 1 alpha particle
+- 2 electron, $n$ gammas,
 and maybe more in the future.
 
 **** Insert preamble
