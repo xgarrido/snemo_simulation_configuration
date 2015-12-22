@@ -3131,7 +3131,7 @@ Define 2\beta events channel
     #+END_SRC
   - select events with bad external probability :
     #+BEGIN_SRC shell :noweb yes
-      <<tof_measurement_cut(name="2e::bad_external_probability", type="external", max="1e-5 %")>>
+      <<tof_measurement_cut(name="2e::bad_external_probability", type="external", max="1 %")>>
     #+END_SRC
 
     Merge all of them into a =channel_cut=
