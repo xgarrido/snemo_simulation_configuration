@@ -973,7 +973,7 @@ different particles.
   TCD_label : string  = "TCD"
 
   #@description Tracker Clusterizer logging priority
-  TC.logging.priority : string = @variant(core:logging_priority|"warning")
+  BTC.logging.priority : string = @variant(core:logging_priority|"warning")
 
   #@description Activation of the clustering of prompt hits
   TPC.processing_prompt_hits : boolean = true
@@ -1021,6 +1021,12 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
 
   #@description The label of the 'Tracker Clustering Data' bank
   TCD_label : string  = "TCD"
+
+  #@description Tracker Clusterizer logging priority
+  BTC.logging.priority : string = @variant(core:logging_priority|"warning")
+
+  # #@description Drift cell selection rules
+  # BTC.cell_id_mask_rules : string = "category='drift_cell_core' module={*} side={*} layer={0;3} row={*}"
 
   #@description Activation of the clustering of prompt hits
   TPC.processing_prompt_hits : boolean = true
@@ -1514,14 +1520,23 @@ implemented but the particle tracking module will stay unchanged.
 #+BEGIN_SRC shell
   #@description Gamma algorithm logging priority
   BGB.logging.priority : string = @variant(core:logging_priority|"error")
-
+#+END_SRC
+**** Allow the extrapolation to the source foil
+#+BEGIN_SRC sh
   #@description Enable the extrapolation to the source foil
   BGB.add_foil_vertex_extrapolation : boolean = true
 
   #@description Minimal internal probability for foil vertex extrapolation
   BGB.add_foil_vertex_minimal_probability : real as fraction = 1 %
 #+END_SRC
+**** Selection of calorimeter hits
+#+BEGIN_SRC sh
+  #@description Enable selection of calorimeter hits
+  BGB.select_calorimeter_hits : boolean = true
 
+  #@description Calorimeter tags
+  BGB.select_calorimeter_hits.tags : string[2] = "__isolated" "__neighbour"
+#+END_SRC
 **** Driver
 #+BEGIN_SRC shell
   #@description List of drivers to be used (see description below)
