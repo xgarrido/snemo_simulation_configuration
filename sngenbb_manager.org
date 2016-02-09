@@ -178,7 +178,7 @@ distribution or following a tabulated energy spectrum.
   emission_direction : string = "cone"
 
   #@description The emission cone axis (values: "+x", "-x", "+y", "-y", "+z", "-z", "30.0 45.0 degree")
-  cone.axis : string = "-z"
+  cone.axis : string = "-x"
 
   #@description The default implicit angle unit
   angle_unit : string = "degree"
@@ -187,7 +187,7 @@ distribution or following a tabulated energy spectrum.
   cone.min_angle : real as angle = 0 degree
 
   #@description The maximum emission angle (cone)
-  cone.max_angle : real as angle = 10 degree
+  cone.max_angle : real as angle = 20 degree
 
   #@description The kinetic energy of the generated particle
   energy : real as energy = 3000 keV
@@ -231,6 +231,37 @@ distribution or following a tabulated energy spectrum.
 
   #@description Maximal value of the particle energy
   max_energy : real as energy = 3. MeV
+#+END_SRC
+
+*** Single gamma with conic emission
+#+BEGIN_SRC shell
+  [name="gamma_monokinetic_with_cone" type="genbb::single_particle_generator"]
+
+  #@config Parameters for the 'single_particle' mode (class genbb::single_particle_generator):
+
+  #@description Generated particle ("electron", "positron", "gamma", "alpha"):
+  particle_name : string = "gamma"
+
+  #@description Mode ("energy_range", "gaussian_energy", "monokinetic", "spectrum"):
+  mode : string = "monokinetic"
+
+  #@description Direction of the emitted particle
+  emission_direction : string = "cone"
+
+  #@description The emission cone axis (values: "+x", "-x", "+y", "-y", "+z", "-z", "30.0 45.0 degree")
+  cone.axis : string = "-x"
+
+  #@description The default implicit angle unit
+  angle_unit : string = "degree"
+
+  #@description The minimum emission angle (cone)
+  cone.min_angle : real as angle = 0 degree
+
+  #@description The maximum emission angle (cone)
+  cone.max_angle : real as angle = 10 degree
+
+  #@description The kinetic energy of the generated particle
+  energy : real as energy = 3000 keV
 #+END_SRC
 
 *** Multi-\gamma-rays
@@ -375,13 +406,13 @@ Combination of several =genbb= generators can be done using
   mode : string = "time"
 
   #@description The list of particle generators that compose the combo
-  generators.labels : string[3] = \
+  generators.labels : string[2] = \
                     "electron1"   \
-                    "electron2"   \
-                    "gamma1"
+                    "gamma1"      \
+                    "electron2"
 
   #@description The name of the generator associated the "electron1" contribution
-  generators.electron1.name : string = "electron_monokinetic1"
+  generators.electron1.name : string = "electron_monokinetic_with_cone"
 
   #@description The time mode associated to the "electron1" contribution
   generators.electron1.time_mode : string = "fixed"
@@ -399,7 +430,7 @@ Combination of several =genbb= generators can be done using
   generators.electron2.fixed_time : real as time = 0 ns
 
   #@description The name of the generator associated the "gamma1" contribution
-  generators.gamma1.name : string = "gamma_monokinetic"
+  generators.gamma1.name : string = "gamma_monokinetic_with_cone"
 
   #@description The time mode associated to the "electron2" contribution
   generators.gamma1.time_mode : string = "fixed"
