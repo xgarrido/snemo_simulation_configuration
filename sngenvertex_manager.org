@@ -22,11 +22,12 @@ The following code defines the location of several vertices files. All of them
 are defined in Section [[Vertex configuration]].
 #+BEGIN_SRC shell
   #@description Names of the files configuring the list of registered vertex generators
-  vg_list : string[4] as path =                       \
+  vg_list : string[5] as path =     \
     "@configuration:scin_vg.lis"    \
     "@configuration:tracker_vg.lis" \
     "@configuration:source_vg.lis"  \
-    "@configuration:hall_vg.lis"
+    "@configuration:hall_vg.lis"    \
+    "@configuration:calibration_vg.lis"
 #+END_SRC
 
 * Vertex configuration
@@ -698,3 +699,29 @@ Insert preamble
     #@description Generation mode ("surface" or "bulk")
     mode   : string = "bulk"
   #+END_SRC
+** Calibration source vertices
+:PROPERTIES:
+:TANGLE: calibration_vg.lis
+:END:
+
+Insert preamble
+#+BEGIN_SRC shell
+  #@description A list of source calibration vertex generators
+  #@key_label   "name"
+  #@meta_label  "type"
+#+END_SRC
+
+#+BEGIN_SRC shell
+  [name="calibration_source_bulk" type="genvtx::cylinder_model_vg"]
+
+  #@config Vertex generation from the bulk of the calibration sources
+
+  #@description Logging priority
+  logging.priority : string = @variant(core:logging_priority|"warning")
+
+  #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
+  origin : string = "category='calibration_spot' module={*} path={*} position={*}"
+
+  #@description Generation mode ("surface" or "bulk")
+  mode   : string = "bulk"
+#+END_SRC
