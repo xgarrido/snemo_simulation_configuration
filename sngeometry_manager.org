@@ -89,6 +89,9 @@ volume.
   #@description Build the embedded mapping dictionnary
   build_mapping : boolean = false
 
+  #@description Logging priority
+  mapping.logging.priority : string = @variant(core:logging_priority|"warning")
+
   #@description Max depth of the mapping: no items to be mapped
   mapping.max_depth : integer = 0
 
