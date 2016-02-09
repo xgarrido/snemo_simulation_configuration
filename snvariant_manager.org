@@ -286,6 +286,7 @@ instance.
   files=$(cat current/sngenbb_manager.conf | grep '".*/.*"\|".*"' | awk -F \" '{print $2}')
   for if in ${=files}; do
       file=${if/@falaise:/${falaise_dir}\/}
+      file=${file/@configuration:/current\/}
       egs=$(cat $file | grep 'genbb::' | awk -F \" '{print $2}')
       for ieg in ${=egs}; do
           echo "string.enumerated_${cnt}.value : string = \"${ieg}\""
