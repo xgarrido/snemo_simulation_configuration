@@ -462,6 +462,15 @@ Here we define some common and useful tasks such as removing data/MC hits.
   CRD.logging.priority : string = @variant(core:logging_priority|"warning")
 #+END_SRC
 
+***** Title/indent
+#+BEGIN_SRC shell
+  # #@description Title of the report
+  # CRD.title : string = "* Cut report"
+
+  #@description Indent of the report
+  CRD.indent : string = "[notice]: "
+#+END_SRC
+
 ***** Print report format
 #+BEGIN_SRC shell
   #@description Cut report format
