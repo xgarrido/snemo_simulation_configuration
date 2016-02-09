@@ -3068,7 +3068,8 @@ Define 1\beta1\gamma events channel
   #+BEGIN_SRC shell :noweb yes
     <<has_bank("1e1g::has_topology_data", bname="TD")>>
     <<has_pattern("1e1g")>>
-    <<has_classification(topo="1e1g", regex=".*1g.*")>>
+    <<has_classification("1e1g")>>
+    # <<has_classification(topo="1e1g", regex=".*1g.*")>>
   #+END_SRC
 
 #+CAPTION: *Definition of 1\beta1\gamma channel.*
@@ -3230,6 +3231,10 @@ gamma events are
 #+BEGIN_SRC shell :noweb yes
   <<multi("2e2g::channel_cut", "and", 3, 2e2g_channel_cut)>>
 #+END_SRC
+
+**** Selection with regular expression
+One can use regular expression to select a given classification by writing
+~has_classification(topo="1g_with_others", regex=".*1g.*")~
 
 * Running SN@ilWare processing chain
 
