@@ -206,7 +206,7 @@ This skeleton code allows to define output module given the name of the
 module. It also defines the output directory where to store each output steps.
 
 #+NAME: output_module
-#+HEADERS: :var mname="" :var logging="warning" :var ofilename=""
+#+HEADERS: :var mname="" :var logging="error" :var ofilename=""
 #+BEGIN_SRC shell
     echo '[name="'$mname'" type="dpp::output_module"]'
     echo
