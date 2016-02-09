@@ -3258,8 +3258,8 @@ command
       --module-manager-config ./current/module_manager.conf                                    \
       --module simulation                                                                      \
       --dlls-config ./current/dlls.conf                                                        \
-      --datatools::resource_path="falaise@<falaise install dir>/share/Falaise-2.0.0/resources" \
-      --datatools::resource_path="configuration@<this configuration directory>"                \
+      --datatools::resource-path="falaise@<falaise install dir>/share/Falaise-2.0.0/resources" \
+      --datatools::resource-path="configuration@<this configuration directory>"                \
       --max-records 100
 #+END_SRC
 
@@ -3272,8 +3272,8 @@ will be to temporarly set the =LD_LIBRARY_PATH= variable and to point it to the
       --module-manager-config ./current/module_manager.conf                                               \
       --module simulation                                                                                 \
       --load-dll Bayeux_mctools_geant4 --load-dll Falaise                                                 \
-      --datatools::resource_path="falaise@<falaise install dir>/share/Falaise-2.0.0/resources"            \
-      --datatools::resource_path="configuration@<this configuration directory>"                           \
+      --datatools::resource-path="falaise@<falaise install dir>/share/Falaise-2.0.0/resources"            \
+      --datatools::resource-path="configuration@<this configuration directory>"                           \
       --max-records 100
 #+END_SRC
 
@@ -3287,8 +3287,8 @@ In the same way you can run the calibration chain by doing
       --module-manager-config ./current/module_manager.conf                                    \
       --module calibration                                                                     \
       --dlls-config ./current/dlls.conf                                                        \
-      --datatools::resource_path="falaise@<falaise install dir>/share/Falaise-2.0.0/resources" \
-      --datatools::resource_path="configuration@<this configuration directory>"                \
+      --datatools::resource-path="falaise@<falaise install dir>/share/Falaise-2.0.0/resources" \
+      --datatools::resource-path="configuration@<this configuration directory>"                \
       --input-file /tmp/$USER/io_output_simulated.brio
 #+END_SRC
 where file =/tmp/$USER/io_output_simulated.brio= is the one produced by the
