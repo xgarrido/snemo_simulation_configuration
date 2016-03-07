@@ -113,9 +113,9 @@ volume.
   plugins.force_initialization_at_load : boolean = false
 
   #@description Configuration files for geometry manager's plugins
-  plugins.configuration_files : string[3] as path =                 \
-      "@configuration:materials_plugin.conf"      \
-      "@configuration:magnetic_field_plugin.conf" \
+  plugins.configuration_files : string[3] as path = \
+      "@configuration:materials_plugin.conf"        \
+      "@configuration:magnetic_field_plugin.conf"   \
       "@configuration:locator_plugin.conf"
 #+END_SRC
 
