@@ -3159,6 +3159,32 @@ Define 2\beta events channel
     <<has_classification("2e")>>
   #+END_SRC
 
+- select events with only 2 calibrated calorimeter hits
+  #+BEGIN_SRC shell
+    [name="2e::two_calibrated_calorimeters" type="snemo::cut::calibrated_data_cut"]
+
+    #@description Cut description
+    cut.description : string = "Select a given number of calibrated calorimeter hits"
+
+    #@description Logging priority
+    logging.priority : string = @variant(core:logging_priority|"warning")
+
+    #@description The label/name of the 'calibrated data' bank (mandatory)
+    CD_label : string = "CD"
+
+    #@description Activate the check for multiplicity of calibrated hits
+    mode.range_hit_category : boolean = true
+
+    #@description Name of the hit category to be checked
+    range_hit_category.category : string = "calorimeter"
+
+    #@description Minimal number of calibrated hits in the choosen category
+    range_hit_category.min : integer = 2
+
+    #@description Maximal number of calibrated hits in the choosen category
+    range_hit_category.max : integer = 2
+  #+END_SRC
+
 - select events with a given set of topology measurement which are :
   - select events with good internal probability :
     #+BEGIN_SRC shell :noweb yes
