@@ -41,6 +41,11 @@ The geometry factory holds all the files needed for the geometry construction.
 #+END_SRC
 
 *** Geometry files
+#+BEGIN_SRC shell :tangle no
+  #@description A file that lists all files describing the geometry models
+  factory.geom_list : string = "@falaise:config/snemo/demonstrator/geometry/4.0/models/geom_models.lis"
+#+END_SRC
+
 #+BEGIN_SRC shell
   #@description List of files describing the geometry models
   factory.geom_files : string[22] as path =                                                                     \
@@ -170,10 +175,11 @@ example, in [[Material aliases]] section.
 *** Files
 #+BEGIN_SRC shell
   #@description List of files describing the materials
-  materials.configuration_files : string[7] as path =                       \
+  materials.configuration_files : string[8] as path =                       \
       "@materials:data/std_isotopes.def"                                    \
       "@materials:data/std_elements.def"                                    \
       "@materials:data/std_materials.def"                                   \
+      "@materials:data/std_material_aliases.def"                            \
       "@falaise:config/common/geometry/materials/1.0/elements.def"          \
       "@falaise:config/common/geometry/materials/1.0/materials.def"         \
       "@falaise:config/common/geometry/materials/1.0/materials_aliases.def" \
