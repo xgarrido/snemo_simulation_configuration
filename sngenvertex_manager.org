@@ -189,6 +189,76 @@ Insert preamble
     polycone.all_frustrum : boolean = true
   #+END_SRC
 
+- Generate vertex in the bulk volume of the scintillator of the main
+  calorimeter's scintillator blocks:
+
+  #+BEGIN_SRC shell
+    [name="calo_scin_bulk" type="genvtx::box_model_vg"]
+
+      #@config Vertex generation from 'tracking_gas' material
+
+      #@description Logging priority
+      logging.priority  : string = @variant(core:logging_priority|"warning")
+
+      #@description Geometry version requirement (not working with version lower than 3.0)
+      geometry.setup_requirement : string = "snemo::demonstrator(>=3)"
+
+      #@description Geometry origin of vertex in term of geometry category and addresses (geom ID)
+      origin : string = "category='calorimeter_optical_module' module={*} side={*} column={*} row={*}"
+
+      #@description Use bounding box method to shoot vertex in complicated form
+      use_bounding_box : boolean = true
+
+      #@description Generation mode ("surface" or "bulk")
+      mode   : string = "bulk"
+  #+END_SRC
+
+  Here starts the validation configuration. We first add a support to vertex
+  validation
+  #+BEGIN_SRC shell
+    #@description Vertex validation support
+    vertex_validation_support : boolean = true
+  #+END_SRC
+  we define the logging level
+  #+BEGIN_SRC shell
+    #@description Maximum number of tries for the rejection method
+    validation.logging.priority : string = @variant(core:logging_priority|"warning")
+  #+END_SRC
+  and we activate it
+  #+BEGIN_SRC shell
+    #@description Vertex validation activation
+    validation.activation : boolean = true
+  #+END_SRC
+
+  We also defines the maximum number of tries for the rejection process; above this
+  number the vertex generator throws an error.
+  #+BEGIN_SRC shell
+    #@description Maximum number of tries for the rejection method
+    validation.maximum_number_of_tries : integer = 1000
+  #+END_SRC
+
+  We finally define the validation id which refers to the =cut= identifiant with
+  which the validator is registered. Here we want to only keep vertex within the
+  =tracking_gas= material so we use a =in_materials_vertex_validator=
+  #+BEGIN_SRC shell
+    #@description Vertex validation id
+    validation.validator_id : string = "genvtx::in_materials_vertex_validator"
+  #+END_SRC
+  and we define the set of materials to be used
+  #+BEGIN_SRC shell
+    #@description List of materials to be used
+    validation.validator_params.materials.ref : string[1] = "ENVINET_PS_scintillator"
+  #+END_SRC
+
+  We can also set the logging priority and the maximum depth to look inside
+  #+BEGIN_SRC shell
+    # #@description Logging level for validator
+    # validation.validator_params.max_depth : integer = 100
+
+    #@description Logging level for validator
+    validation.validator_params.logging.priority : string = @variant(core:logging_priority|"warning")
+  #+END_SRC
+
 ** Tracker vertices
 :PROPERTIES:
 :TANGLE: tracker_vg.lis
