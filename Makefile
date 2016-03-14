@@ -42,13 +42,13 @@ push: lyon lal xtremweb
 lyon: org
 	@echo "NOTICE: Pushing current configuration to Lyon"
 	@mkdir -p /tmp/ssc.d/ && rm -rf /tmp/ssc.d/* && cp -r $(GIT_BRANCH)/*.{conf,def,lis} /tmp/ssc.d/. && sed -i -e 's#'`pwd`/$(GIT_BRANCH)'#$(CCAGE_DIRECTORY)/$(GIT_BRANCH)#g' /tmp/ssc.d/*
-	@ssh garrido@ccage.in2p3.fr "mkdir -p $(CCAGE_DIRECTORY)/$(GIT_BRANCH); cd $(CCAGE_DIRECTORY); if [ -L current ]; then rm current; fi; ln -sf $(GIT_BRANCH) current"
+	@ssh garrido@ccage.in2p3.fr "mkdir -p $(CCAGE_DIRECTORY)/$(GIT_BRANCH); cd $(CCAGE_DIRECTORY); rm -rf $(GIT_BRANCH) && mkdir $(GIT_BRANCH); if [ -L current ]; then rm current; fi; ln -sf $(GIT_BRANCH) current"
 	@scp /tmp/ssc.d/*.{conf,def,lis} garrido@ccage.in2p3.fr:$(CCAGE_DIRECTORY)/$(GIT_BRANCH)/.
 
 lal: org
 	@echo "NOTICE: Pushing current configuration to LAL"
 	@mkdir -p /tmp/ssc.d/ && rm -rf /tmp/ssc.d/* && cp -r $(GIT_BRANCH)/*.{conf,def,lis} /tmp/ssc.d/. && sed -i -e 's#'`pwd`/$(GIT_BRANCH)'#$(LAL_DIRECTORY)/$(GIT_BRANCH)#g' /tmp/ssc.d/*
-	@ssh garrido@lx3.lal.in2p3.fr "mkdir -p $(LAL_DIRECTORY)/$(GIT_BRANCH); cd $(LAL_DIRECTORY); test -L current && rm current; ln -sf $(GIT_BRANCH) current"
+	@ssh garrido@lx3.lal.in2p3.fr "mkdir -p $(LAL_DIRECTORY)/$(GIT_BRANCH); cd $(LAL_DIRECTORY); rm -rf $(GIT_BRANCH) && mkdir $(GIT_BRANCH); test -L current && rm current; ln -sf $(GIT_BRANCH) current"
 	@scp /tmp/ssc.d/*.{conf,def,lis} garrido@lx3.lal.in2p3.fr:$(LAL_DIRECTORY)/$(GIT_BRANCH)/.
 
 xtremweb: org
