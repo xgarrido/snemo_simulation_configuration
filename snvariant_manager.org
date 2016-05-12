@@ -322,6 +322,86 @@ instance.
   <<eg_list_variants()>>
 #+END_SRC
 
+*** Single particle generators
+**** Particle names
+#+BEGIN_SRC shell
+  [name="spg_name.PM" type="parameter"]
+  display_name  : string = "Single particle generator name"
+  description   : string = "The name of the particle"
+  type          : string = "string"
+  mutability    : string = "variable"
+  variable.mode : string = "enumeration"
+  string.default : string = "electron"
+  string.enumerated_0.value : string = "electron"
+  string.enumerated_1.value : string = "positron"
+  string.enumerated_2.value : string = "gamma"
+  string.enumerated_3.value : string = "alpha"
+  string.enumerated_4.value : string = "neutron"
+  string.enumerated_5.value : string = "mu-"
+  string.enumerated_6.value : string = "mu+"
+  string.enumerated_7.value : string = "muon-"
+  string.enumerated.size : integer = 8
+#+END_SRC
+
+**** Monokinetic energy
+#+BEGIN_SRC shell
+  [name="spg_monokinetic_energy.PM" type="parameter"]
+  display_name        : string = "Single particle generator - monokinetic energy value"
+  description         : string = "The energy value for monokinetic generator"
+  type                : string = "real"
+  real.unit_label     : string = "energy"
+  real.preferred_unit : string = "keV"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 keV, 1 TeV]"
+  real.default        : real as energy = 1000 keV
+#+END_SRC
+**** Flat energy distribution
+#+BEGIN_SRC shell
+  [name="spg_flat_energy_min.PM" type="parameter"]
+  display_name        : string = "Single particle generator - minimal energy value"
+  description         : string = "The minimal energy value for flat energy distribution generator"
+  type                : string = "real"
+  real.unit_label     : string = "energy"
+  real.preferred_unit : string = "keV"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 keV, 1 TeV]"
+  real.default        : real as energy = 0 keV
+  [name="spg_flat_energy_max.PM" type="parameter"]
+  display_name        : string = "Single particle generator - maximal energy value"
+  description         : string = "The maximal energy value for flat energy distribution generator"
+  type                : string = "real"
+  real.unit_label     : string = "energy"
+  real.preferred_unit : string = "keV"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 keV, 1 TeV]"
+  real.default        : real as energy = 3000 keV
+#+END_SRC
+**** Gaussian energy distribution
+#+BEGIN_SRC shell
+  [name="spg_gaussian_energy_mean.PM" type="parameter"]
+  display_name        : string = "Single particle generator - mean energy value"
+  description         : string = "The mean energy value for gaussian energy distribution generator"
+  type                : string = "real"
+  real.unit_label     : string = "energy"
+  real.preferred_unit : string = "keV"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 keV, 1 TeV]"
+  real.default        : real as energy = 1000 keV
+  [name="spg_gaussian_energy_sigma.PM" type="parameter"]
+  display_name        : string = "Single particle generator - sigma energy value"
+  description         : string = "The sigma energy value for gaussian energy distribution generator"
+  type                : string = "real"
+  real.unit_label     : string = "energy"
+  real.preferred_unit : string = "keV"
+  mutability          : string = "variable"
+  variable.mode       : string = "interval"
+  real.domain         : string = "[0 keV, 1 TeV]"
+  real.default        : real as energy = 100 keV
+#+END_SRC
 *** Top variant
 
 #+BEGIN_SRC shell :noweb yes
