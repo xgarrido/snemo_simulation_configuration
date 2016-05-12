@@ -26,11 +26,26 @@ instance.
   #@description The application name
   application  : string = "SN@ilWare"
 
-  #@description The list of configuration files for embedded registries
-  registries.config : string[3] as path =                                 \
-    "@configuration:snvariant_core_registry.conf"       \
-    "@configuration:snvariant_simulation_registry.conf" \
-    "@configuration:snvariant_detector_registry.conf"
+  #@description The list of embedded registries
+  registries : string[3] = "core" "simulation" "detector"
+
+  #@description The rank of registry "core"
+  registries.core.rank : integer = 0
+
+  #@description The configuration file of registry "core"
+  registries.core.config : string as path = "@configuration:snvariant_core_registry.conf"
+
+  #@description The rank of registry "simulation"
+  registries.simulation.rank : integer = 1
+
+  #@description The configuration file of registry "simulation"
+  registries.simulation.config : string as path = "@configuration:snvariant_simulation_registry.conf"
+
+  #@description The rank of registry "detector"
+  registries.detector.rank : integer = 2
+
+  #@description The configuration file of registry "detector"
+  registries.detector.config : string as path = "@configuration:snvariant_detector_registry.conf"
 
   #@description The lock request
   lock : boolean = true
