@@ -288,7 +288,7 @@ instance.
   type          : string = "string"
   mutability    : string = "variable"
   variable.mode : string = "enumeration"
-  string.default : string = "source_strips_bulk"
+  string.default : string = "source_pads_bulk"
   <<vg_list_variants()>>
 #+END_SRC
 
@@ -540,7 +540,7 @@ instance.
 *** Magnetic field
 **** Magnitude of z-component magnetic field
 #+BEGIN_SRC shell
-  [name="bz_magnitude.PM" type="parameter"]
+  [name="Bz_magnitude.PM" type="parameter"]
   display_name        : string = "Bz field magnitude"
   description         : string = "Magnitude of z-component of magnetic field"
   type                : string = "real"
@@ -551,6 +551,20 @@ instance.
   real.domain         : string = "[0 G, 100 G]"
   real.default        : real as magnetic_flux_density = 25 G
 #+END_SRC
+**** Magnetic field type
+#+BEGIN_SRC shell
+  [name="magnetic_field_type.PM" type="parameter"]
+  display_name  : string = "Magnetic field type"
+  description   : string = "The magnetic field type"
+  type          : string = "string"
+  mutability    : string = "variable"
+  variable.mode : string = "enumeration"
+  string.default : string = "Bz_uniform"
+  string.enumerated.size : integer = 3
+  string.enumerated_0.value : string = "Bz_uniform"
+  string.enumerated_1.value : string = "Bz_polynomial"
+  string.enumerated_2.value : string = "B_mapped"
+#+END_SRC
 
 *** Source material
 #+BEGIN_SRC shell
@@ -560,10 +574,11 @@ instance.
   type          : string = "string"
   mutability    : string = "variable"
   variable.mode : string = "enumeration"
+  string.default : string = "snemo::se82::nemo3"
   string.enumerated.size : integer = 4
-  string.enumerated_0.value : string = "snemo::se82_source_material"
-  string.enumerated_1.value : string = "snemo::ca48_source_material"
-  string.enumerated_2.value : string = "snemo::nd150_source_material"
+  string.enumerated_0.value : string = "snemo::se82::nemo3"
+  string.enumerated_1.value : string = "snemo::ca48::nemo3"
+  string.enumerated_2.value : string = "snemo::nd150::nemo3"
   string.enumerated_3.value : string = "snemo::copper"
 #+END_SRC
 

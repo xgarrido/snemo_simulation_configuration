@@ -20,7 +20,40 @@ This file holds some vertex generators related to SuperNEMO detector geometry.
 ** Vertices list of files
 The following code defines the location of several vertices files. All of them
 are defined in Section [[Vertex configuration]].
+
 #+BEGIN_SRC shell
+  #@variant_if geometry:layout/if_basic|true
+
+  #@description Names of the files configuring the list of registered vertex generators
+  vg_list : string[4] as path =                                                            \
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/scin_vg.lis"    \
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/tracker_vg.lis" \
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/source_vg.lis"  \
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/source_calibration_vg.lis"
+
+  #@description The name of the default vertex generator to be used
+  #@variant_only !geometry:layout/if_basic/source_calibration/is_active|true
+  generator : string = "source_pads_bulk"
+
+  #@variant_only geometry:layout/if_basic/source_calibration/is_active|false
+  generator : string = "source_calibration_all_spots"
+
+  #@variant_endif
+
+  #@variant_if geometry:layout/if_half_commissioning|false
+  #@description Names of the files configuring the list of registered vertex generators
+  vg_list : string[3] as path =                                                            \
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/scin_vg.lis"    \
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/tracker_vg.lis" \
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/commissioning_vg.lis"
+
+  #@description The name of the default vertex generator to be used
+  generator : string = "all_commissioning_spots"
+
+  #@variant_endif
+#+END_SRC
+
+#+BEGIN_SRC shell :tangle no
   #@description Names of the files configuring the list of registered vertex generators
   vg_list : string[5] as path =     \
     "@configuration:scin_vg.lis"    \
@@ -561,7 +594,7 @@ We can also set the logging priority and the maximum depth to look inside
 :TANGLE: source_vg.lis
 :END:
 
-Since there are two types of source strips namely "internal" and "external" with
+Since there are two types of source pads namely "internal" and "external" with
 different size and then different isotope mass, we first define independent
 vertices for each of this model and then use a =genvtx::combined_vg= model to
 combine with appropriate weights. These vertices are only available with
@@ -574,12 +607,12 @@ Insert preamble
   #@meta_label  "type"
 #+END_SRC
 
-*** Internal source strips
+*** Internal source pads
 - Generate vertex from the bulk volume of the source foil:
   #+BEGIN_SRC shell
-    [name="source_strips_internal_bulk" type="genvtx::box_model_vg"]
+    [name="source_pads_internal_bulk" type="genvtx::box_model_vg"]
 
-    #@config Vertex generation from the bulk volume of the inner source strips
+    #@config Vertex generation from the bulk volume of the inner source pads
 
     #@description Logging priority
     logging.priority  : string = @variant(core:logging_priority|"warning")
@@ -596,9 +629,9 @@ Insert preamble
 
 - Generate vertex from the surface of the source foil:
   #+BEGIN_SRC shell
-    [name="source_strips_internal_surface" type="genvtx::box_model_vg"]
+    [name="source_pads_internal_surface" type="genvtx::box_model_vg"]
 
-    #@config Vertex generation from the surface of the inner source strips
+    #@config Vertex generation from the surface of the inner source pads
 
     #@description Logging priority
     logging.priority  : string = @variant(core:logging_priority|"warning")
@@ -619,13 +652,13 @@ Insert preamble
     mode.surface.front : boolean = true
   #+END_SRC
 
-*** External source strips
+*** External source pads
 
 - Generate vertex from the bulk volume of the source foil:
   #+BEGIN_SRC shell
-    [name="source_strips_external_bulk" type="genvtx::box_model_vg"]
+    [name="source_pads_external_bulk" type="genvtx::box_model_vg"]
 
-    #@config Vertex generation from the bulk volume of the outer source strips
+    #@config Vertex generation from the bulk volume of the outer source pads
 
     #@description Logging priority
     logging.priority  : string = @variant(core:logging_priority|"warning")
@@ -642,9 +675,9 @@ Insert preamble
 
 - Generate vertex from the surface of the source foil:
   #+BEGIN_SRC shell
-    [name="source_strips_external_surface" type="genvtx::box_model_vg"]
+    [name="source_pads_external_surface" type="genvtx::box_model_vg"]
 
-    #@config Vertex generation from the surface of the outer source strips
+    #@config Vertex generation from the surface of the outer source pads
 
     #@description Logging priority
     logging.priority  : string = @variant(core:logging_priority|"warning")
@@ -669,9 +702,9 @@ Insert preamble
 
 - Generate vertex from both the bulk volume of all the source foils:
   #+BEGIN_SRC shell
-    [name="source_strips_bulk" type="genvtx::combined_vg"]
+    [name="source_pads_bulk" type="genvtx::combined_vg"]
 
-    #@config Vertex generation from the bulk volume of the source strips
+    #@config Vertex generation from the bulk volume of the source pads
 
     #@description Logging priority
     logging.priority  : string = @variant(core:logging_priority|"warning")
@@ -680,18 +713,18 @@ Insert preamble
     geometry.setup_requirement : string = "snemo::demonstrator(>=3)"
 
     #@description Vertex generator names
-    generators : string[2]  = "source_strips_external_bulk" "source_strips_internal_bulk"
+    generators : string[2]  = "source_pads_external_bulk" "source_pads_internal_bulk"
 
     #@description Absolute weight of different generators
-    generators.source_strips_external_bulk.absolute_weight : real = 0.054
-    generators.source_strips_internal_bulk.absolute_weight : real = 1.0
+    generators.source_pads_external_bulk.absolute_weight : real = 0.054
+    generators.source_pads_internal_bulk.absolute_weight : real = 1.0
   #+END_SRC
 
 - Generate vertex from the surface of all the source foils:
   #+BEGIN_SRC shell
-    [name="source_strips_surface" type="genvtx::combined_vg"]
+    [name="source_pads_surface" type="genvtx::combined_vg"]
 
-    #@config Vertex generation from the surface of the source strips
+    #@config Vertex generation from the surface of the source pads
 
     #@description Logging priority
     logging.priority  : string = @variant(core:logging_priority|"warning")
@@ -701,12 +734,12 @@ Insert preamble
 
     #@description Vertex generator names
     generators : string[2] = \
-      "source_strips_internal_surface" \
-      "source_strips_external_surface"
+      "source_pads_internal_surface" \
+      "source_pads_external_surface"
 
     #@description Absolute weight of different generators
-    generators.source_strips_external_surface.absolute_weight : real  = 0.054
-    generators.source_strips_internal_surface.absolute_weight : real  = 1.0
+    generators.source_pads_external_surface.absolute_weight : real  = 0.054
+    generators.source_pads_internal_surface.absolute_weight : real  = 1.0
   #+END_SRC
 ** External vertices
 :PROPERTIES:

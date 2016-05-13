@@ -22,7 +22,7 @@ thus, use most of its primitives.
   setup_description : string = "SuperNEMO demonstrator module"
 
   #@description Setup version
-  setup_version : string = "3.0"
+  setup_version : string = "4.0"
 #+END_SRC
 
 ** Logging priority
@@ -41,12 +41,22 @@ The geometry factory holds all the files needed for the geometry construction.
 #+END_SRC
 
 *** Geometry files
-#+BEGIN_SRC shell :tangle no
-  #@description A file that lists all files describing the geometry models
-  factory.geom_list : string = "@falaise:config/snemo/demonstrator/geometry/4.0/models/geom_models.lis"
+#+BEGIN_SRC shell
+  #@variant_only geometry:layout/if_basic|true
+  factory.geom_lists : string[4] as path =                                                 \
+      "@falaise:config/snemo/demonstrator/geometry/4.0/models/source_geom_models.lis"      \
+      "@falaise:config/snemo/demonstrator/geometry/4.0/models/tracker_geom_models.lis"     \
+      "@falaise:config/snemo/demonstrator/geometry/4.0/models/calorimeter_geom_models.lis" \
+      "@falaise:config/snemo/demonstrator/geometry/4.0/models/basic_setup_geom_models.lis"
+
+  #@variant_only geometry:layout/if_half_commissioning|false
+  factory.geom_lists : string[3] as path =                                                 \
+      "@falaise:config/snemo/demonstrator/geometry/4.0/models/tracker_geom_models.lis"     \
+      "@falaise:config/snemo/demonstrator/geometry/4.0/models/calorimeter_geom_models.lis" \
+      "@falaise:config/snemo/demonstrator/geometry/4.0/models/half_commissioning_setup_geom_models.lis"
 #+END_SRC
 
-#+BEGIN_SRC shell
+#+BEGIN_SRC shell :tangle no
   #@description List of files describing the geometry models
   factory.geom_files : string[22] as path =                                                                     \
       "@falaise:config/snemo/demonstrator/geometry/3.0/models/source_module/source_calibration.geom"            \
@@ -84,9 +94,28 @@ The geometry factory holds all the files needed for the geometry construction.
 Categories are used to assign a unique id number (integer) to a geometrical
 volume.
 #+BEGIN_SRC shell
+  #@variant_only geometry:layout/if_basic|true
+  id_mgr.categories_lists : string[5] as path =                                             \
+       "@falaise:config/snemo/demonstrator/geometry/4.0/mapping/setup_categories.lis"       \
+       "@falaise:config/snemo/demonstrator/geometry/4.0/mapping/calorimeter_categories.lis" \
+       "@falaise:config/snemo/demonstrator/geometry/4.0/mapping/tracker_categories.lis"     \
+       "@falaise:config/snemo/demonstrator/geometry/4.0/mapping/misc_categories.lis"        \
+       "@falaise:config/snemo/demonstrator/geometry/4.0/mapping/source_categories.lis"
+
+  #@variant_only geometry:layout/if_half_commissioning|false
+  id_mgr.categories_lists : string[5] as path =                                             \
+       "@falaise:config/snemo/demonstrator/geometry/4.0/mapping/setup_categories.lis"       \
+       "@falaise:config/snemo/demonstrator/geometry/4.0/mapping/calorimeter_categories.lis" \
+       "@falaise:config/snemo/demonstrator/geometry/4.0/mapping/tracker_categories.lis"     \
+       "@falaise:config/snemo/demonstrator/geometry/4.0/mapping/misc_categories.lis"        \
+       "@falaise:config/snemo/demonstrator/geometry/4.0/mapping/half_commissioning_categories.lis"
+#+END_SRC
+
+#+BEGIN_SRC shell :tangle no
   #@description Source file of the geometry categories used by the ID manager
   id_mgr.categories_list : string as path = \
       "@falaise:config/snemo/demonstrator/geometry/3.0/categories.lis"
+      # "@falaise:config/snemo/demonstrator/geometry/4.0/mapping/categories.lis"
 #+END_SRC
 
 ** Mapping configuration
@@ -175,14 +204,16 @@ example, in [[Material aliases]] section.
 *** Files
 #+BEGIN_SRC shell
   #@description List of files describing the materials
-  materials.configuration_files : string[8] as path =                       \
-      "@materials:data/std_isotopes.def"                                    \
-      "@materials:data/std_elements.def"                                    \
-      "@materials:data/std_materials.def"                                   \
-      "@materials:data/std_material_aliases.def"                            \
-      "@falaise:config/common/geometry/materials/1.0/elements.def"          \
-      "@falaise:config/common/geometry/materials/1.0/materials.def"         \
-      "@falaise:config/common/geometry/materials/1.0/materials_aliases.def" \
+  materials.configuration_files : string[10] as path =                                         \
+      "@materials:data/basic/1.0/isotopes.def"                                                 \
+      "@materials:data/basic/1.0/elements.def"                                                 \
+      "@materials:data/basic/1.0/materials.def"                                                \
+      "@materials:data/basic/1.0/material_aliases.def"                                         \
+      "@falaise:config/common/geometry/materials/2.0/elements.def"                             \
+      "@falaise:config/common/geometry/materials/2.0/materials.def"                            \
+      "@falaise:config/common/geometry/materials/2.0/material_aliases.def"                     \
+      "@falaise:config/snemo/demonstrator/geometry/4.0/plugins/materials/materials.def"        \
+      "@falaise:config/snemo/demonstrator/geometry/4.0/plugins/materials/material_aliases.def" \
       "@configuration:materials_aliases.def"
 #+END_SRC
 
@@ -202,7 +233,7 @@ example, we locally change the source material without changing anything else.
   [name="bb_source_material" type="alias"]
 
   #@description The alias for the source
-  material : string = @variant(detector:bb_source_material|"snemo::se82_source_material")
+  material : string = @variant(detector:bb_source_material)
 #+END_SRC
 
 * Magnetic field for SuperNEMO detector
@@ -258,7 +289,7 @@ module.
   manager.geom_map.associations.module.volume : string = "module_basic.model.log"
 
   #@description The EM field associated for the label 'module'
-  manager.geom_map.associations.module.field_name : string = "B_module"
+  manager.geom_map.associations.module.field_name : string = @variant(detector:magnetic_field_type|"Bz_uniform")
   #manager.geom_map.associations.module.field_name : string = "Bz_polynomial"
 #+END_SRC
 
@@ -276,24 +307,25 @@ module.
 
 *** Constant magnetic field
 #+BEGIN_SRC shell
-  [name="B_module" type="emfield::uniform_magnetic_field"]
+    [name="Bz_uniform" type="emfield::uniform_magnetic_field"]
 
-  #@config Configuration parameters for the magnetic field of SuperNEMO
+    #@config Configuration parameters for the magnetic field of SuperNEMO
 
-  #@description Logging flag
-  logging.priority : string = @variant(core:logging_priority|"warning")
+    #@description Logging flag
+    logging.priority : string = @variant(core:logging_priority|"warning")
 
-  #@description Default implicit magnetic field unit
-  magnetic_field.unit : string  = "gauss"
+    #@description Default implicit magnetic field unit
+    magnetic_field.unit : string  = "gauss"
 
-  #@description Coordinates of the static magnetic field (Bx, By, Bz)
-  magnetic_field.coordinates : real[3] = 0.0 0.0 @variant(detector:bz_magnitude|25.0)
+    #@description Magnetic field magnitude (|Bz|)
+    magnetic_field.magnitude : real = @variant(detector:Bz_magnitude|25.0 gauss)
+
+    #@description Magnetic field direction
+    magnetic_field.axis : string = "+z"
 #+END_SRC
 
 *** Polynomial magnetic field
-:PROPERTIES:
-:TANGLE: no
-:END:
+
 To take into account effects from the calorimeter magnetic shielding as shown in
 [[http://nile.hep.utexas.edu/cgi-bin/DocDB/ut-nemo/private/ShowDocument?docid=3552][DocDB 3552]], we made a variable magnetic field inside tracker
 
@@ -303,7 +335,7 @@ To take into account effects from the calorimeter magnetic shielding as shown in
   #@config Configuration parameters for a variable magnetic field
 
   #@description Logging flag
-  logging.priority : string = @variant(core:logging_priority|"warning")
+  logging.priority : string = @variant(core:logging_priority|"error")
 
   #@description Default implicit magnetic field unit
   magnetic_field.unit : string = "gauss"
@@ -317,7 +349,16 @@ To take into account effects from the calorimeter magnetic shielding as shown in
   #@description Bz field space limits
   magnetic_field.Bz.x.limits : real[2] as length = -500 +500 mm
 #+END_SRC
+*** Mapped magnetic field
+#+BEGIN_SRC shell
+  [name="B_mapped" type="snemo::geometry::mapped_magnetic_field"]
 
+  #@config Configuration parameters for the mapped magnetic field generated by a coil
+
+  mapping_mode : string = "import_csv_map_0"
+
+  map_file : string as path = "@falaise:config/snemo/demonstrator/geometry/4.0/plugins/magnetic_field/data/csv_map_0/MapSmoothPlusDetail.csv"
+#+END_SRC
 * Locators for SuperNEMO detector
 ** Locator driver
 :PROPERTIES:

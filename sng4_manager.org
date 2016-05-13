@@ -119,8 +119,17 @@ SuperNEMO physics.
 
 *** Sensitive detectors
 This category defines sensitive detectors where special treatments of Geant4 steps
-must be applied. This can be in direct relation with step hit processors defined above.
+must be applied. This can be in direct relation with step hit processors defined
+above.
 #+BEGIN_SRC shell
+#@description List of definition files for official sensitive detectors :
+sensitive.definitions : string[4] as path =                                                      \
+  "@falaise:config/snemo/demonstrator/simulation/geant4_control/2.0/sensitive/calorimeter.conf"  \
+  "@falaise:config/snemo/demonstrator/simulation/geant4_control/2.0/sensitive/gveto.conf"        \
+  "@falaise:config/snemo/demonstrator/simulation/geant4_control/2.0/sensitive/xcalorimeter.conf" \
+  "@falaise:config/snemo/demonstrator/simulation/geant4_control/2.0/sensitive/tracker.conf"
+#+END_SRC
+#+BEGIN_SRC shell :tangle no
   #@description Parameters for the generation of 'sensitive hits' through 'sensitive detectors' :
   sensitive.detectors : string[4] = "calorimeter_SD" "xcalorimeter_SD" "gveto_SD" "tracker_SD"
 
@@ -160,27 +169,31 @@ must be applied. This can be in direct relation with step hit processors defined
 *** Geant4 step hit limits
 The following code defines geometry models where Geant4 steps are size limited.
 #+BEGIN_SRC shell
-  #@description List of geometry models with max steps:
-  limits.list_of_volumes : string[7] =         \
-      "source_external_strip.model.log"        \
-      "source_internal_strip.model.log"        \
-      "calorimeter_scin_block_front.model.log" \
-      "calorimeter_scin_block_back.model.log"  \
-      "xwall_scin_block.model.log"             \
-      "gveto_scin_block.model.log"             \
-      "drift_cell_core.model.log"
+  #@description List of geometry logical volumes with max steps
+  limits.list_of_volumes : string[8] =            \
+    "source_external_pad.basic.model.log"         \
+    "source_internal_pad.basic.model.log"         \
+    "calorimeter_scin_block_front.model.log"      \
+    "calorimeter_scin_block_5inch_back.model.log" \
+    "calorimeter_scin_block_8inch_back.model.log" \
+    "xwall_scin_block.model.log"                  \
+    "gveto_scin_block.model.log"                  \
+    "drift_cell_core.model.log"
 
   #@description Max step length inside source strip:
-  limits.max_step.source_external_strip.model.log : real as length = 10 um
+  limits.max_step.source_external_pad.basic.model.log : real as length = 10 um
 
   #@description Max step length inside source strip:
-  limits.max_step.source_internal_strip.model.log : real as length = 10 um
+  limits.max_step.source_internal_pad.basic.model.log : real as length = 10 um
 
   #@description Max step length inside front calorimeter scin block:
   limits.max_step.calorimeter_scin_block_front.model.log : real as length = 500 um
 
-  #@description Max step length inside back calorimeter scin block:
-  limits.max_step.calorimeter_scin_block_back.model.log  : real as length = 500 um
+  #@description Max step length inside back calorimeter 5'' scin block:
+  limits.max_step.calorimeter_scin_block_5inch_back.model.log : real as length = 500 um
+
+  #@description Max step length inside back calorimeter 8'' scin block:
+  limits.max_step.calorimeter_scin_block_8inch_back.model.log : real as length = 500 um
 
   #@description Max step length inside X-calorimeter scin block:
   limits.max_step.xwall_scin_block.model.log : real as length = 500 um
@@ -202,31 +215,32 @@ Definition of Geant4 regions.
   regions : string[3] = "calorimeter" "tracker" "source"
 
   #@description List of attached volumes/models for 'calorimeter' region
-  regions.calorimeter.volumes : string[4] =    \
-      "calorimeter_scin_block_front.model.log" \
-      "calorimeter_scin_block_back.model.log"  \
-      "gveto_scin_block.model.log"             \
+  regions.calorimeter.volumes : string[5] =         \
+      "calorimeter_scin_block_front.model.log"      \
+      "calorimeter_scin_block_5inch_back.model.log" \
+      "calorimeter_scin_block_8inch_back.model.log" \
+      "gveto_scin_block.model.log"                  \
       "xwall_scin_block.model.log"
 
   #@description List of attached volumes/models for 'tracker' region
   regions.tracker.volumes : string[1] = "drift_cell_core.model.log"
 
   #@description List of attached volumes/models for 'source' region
-  regions.source.volumes : string[2] =  \
-      "source_external_strip.model.log" \
-      "source_internal_strip.model.log"
+  regions.source.volumes : string[2] = \
+      "source_external_pad.basic.model.log"  \
+      "source_internal_pad.basic.model.log"
 #+END_SRC
 
 *** Magnetic field
 #+BEGIN_SRC shell
   #@description Flag to use magnetic field
-  using_electromagnetic_field : boolean = true
+  using_magnetic_field : boolean = true
 
   #@description Name of the magnetic field geometry plugin
-  electromagnetic_field.plugin_name : string = "fields_driver"
+  magnetic_field.plugin_name : string = "fields_driver"
 
   #@description SetDeltaChord miss distance (mm):
-  electromagnetic_field.miss_distance : real as length = 0.5 mm
+  magnetic_field.miss_distance : real as length = 0.5 mm
 
   #@description Logging priority threshold of the embedded Geant4 magnetic fields
   magnetic_field.logging.priority : string = "warning"
@@ -285,7 +299,7 @@ Quite experimental try to set particles used within SuperNEMO "framework".
   #use_optical_photons         : boolean = false
 
   #@description The activation flag for muon leptons (default: 0)
-  #use_muon_leptons         : boolean = false
+  use_muon_leptons         : boolean = true
 
   #@description The activation flag for tau leptons (default: 0)
   #use_tau_leptons          : boolean = false
@@ -381,19 +395,19 @@ Quite experimental try to set particles used within SuperNEMO "framework".
 ***** Muons
 #+BEGIN_SRC shell
   #@description The activation flag for muon ionisation
-  em.muon.ionisation           : boolean = false
+  em.muon.ionisation           : boolean = true
 
   #@description The activation flag for muon multiple scatterring process
-  em.muon.multiple_scatterring : boolean = false
+  em.muon.multiple_scatterring : boolean = true
 
   #@description The activation flag for muon pair production
-  em.muon.pair_production      : boolean = false
+  em.muon.pair_production      : boolean = true
 
   #@description The activation flag for muon bremsstrahlung process
-  em.muon.bremsstrahlung       : boolean = false
+  em.muon.bremsstrahlung       : boolean = true
 
   #@description The activation flag for muon step limiter process
-  em.muon.step_limiter         : boolean = false
+  em.muon.step_limiter         : boolean = true
 #+END_SRC
 ***** Ions
 #+BEGIN_SRC shell
