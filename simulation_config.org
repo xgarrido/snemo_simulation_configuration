@@ -75,7 +75,7 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC shell
   #@description The configuration files for modules
-  modules.configuration_files : string[12] as path =   \
+  modules.configuration_files : string[13] as path =   \
       "@configuration:io_modules.conf"                 \
       "@configuration:utl_modules.conf"                \
       "@configuration:simulation_modules.conf"         \
@@ -87,7 +87,8 @@ service files.
       "@configuration:gamma_tracking_modules.conf"     \
       "@configuration:pid_modules.conf"                \
       "@configuration:chain_modules.conf"              \
-      "@configuration:topology_modules.conf"
+      "@configuration:topology_modules.conf"           \
+      "@configuration:misc_modules.conf"
 #+END_SRC
 
 ** Service manager
@@ -1034,8 +1035,9 @@ somewhat complete overview of CAT main features can be seen in DocDb [[http://ni
   #@description Tracker Clusterizer logging priority
   BTC.logging.priority : string = @variant(core:logging_priority|"warning")
 
-  # #@description Drift cell selection rules
-  # BTC.cell_id_mask_rules : string = "category='drift_cell_core' module={*} side={*} layer={0;3} row={*}"
+  #@description Drift cell selection rules
+  #BTC.cell_id_mask_rules : string = "category='drift_cell_core' module={*} side={*} layer=[6;8] row={*}"
+  BTC.cell_id_mask_rules : string = "category='drift_cell_core' module={*} side={*} layer={*} row={*}"
 
   #@description Activation of the clustering of prompt hits
   TPC.processing_prompt_hits : boolean = true
@@ -1538,6 +1540,14 @@ implemented but the particle tracking module will stay unchanged.
   #@description Minimal internal probability for foil vertex extrapolation
   BGB.add_foil_vertex_extrapolation.minimal_probability : real as fraction = 1 %
 #+END_SRC
+**** Search for gamma from e+/e- annihilation
+#+BEGIN_SRC shell
+  #@description Enable the search for gamma from annihilation
+  BGB.add_gamma_from_annihilation : boolean = true
+
+  #@description Minimal internal probability for gamma from annihilation
+  BGB.add_gamma_from_annihilation.minimal_probability : real as fraction = 1 %
+#+END_SRC
 **** Selection of calorimeter hits
 #+BEGIN_SRC shell
   #@description Enable selection of calorimeter hits
@@ -1913,22 +1923,23 @@ modules it contains.
 *** Minimum bias chain (from simulation \to calibration \to reconstruction)
 #+CAPTION: *Full chain processing without selection.*
 #+TBLNAME: minimum_bias_chain
-|---------------------------|
-| simulation                |
-| add_header                |
-| tracker_s2c               |
-| calorimeter_s2c           |
-| cat_tracker_clustering    |
-| trackfit_tracker_fitting  |
-| charged_particle_tracking |
-| gamma_clustering          |
-| particle_identification   |
-| topology_identification   |
-| io_output_analysed        |
-|---------------------------|
+|------------------------------|
+| simulation                   |
+| add_header                   |
+| tracker_s2c                  |
+| calorimeter_s2c              |
+| cat_tracker_clustering       |
+| trackfit_tracker_fitting     |
+| io_output_tracker_trajectory |
+| charged_particle_tracking    |
+| gamma_clustering             |
+| particle_identification      |
+| topology_identification      |
+| io_output_analysed           |
+|------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<chain_module("minimum_bias_chain", 11, minimum_bias_chain)>>
+  <<chain_module("minimum_bias_chain", 12, minimum_bias_chain)>>
 #+END_SRC
 *** Channel chain
 **** 2\beta selection
@@ -1997,6 +2008,15 @@ modules it contains.
   <<chain_module("channel_chain", 9, channel_chain)>>
 #+END_SRC
 ** Miscellaneous
+:PROPERTIES:
+:TANGLE: misc_modules.conf
+:END:
+*** Insert preamble
+#+BEGIN_SRC shell :noweb yes
+  <<module_preamble>>
+#+END_SRC
+
+*** Reformat data
 #+CAPTION: *Reformating data.*
 #+TBLNAME: reformat_data
 |--------------------------------|
@@ -2011,6 +2031,13 @@ modules it contains.
 
 #+BEGIN_SRC shell :noweb yes
   <<chain_module("reformat_data", 7, reformat_data)>>
+#+END_SRC
+
+*** Select low energy event
+#+BEGIN_SRC shell :noweb yes
+  <<output_module("io_output_low_energy_selected")>>
+  <<output_module("io_output_low_energy_non_selected")>>
+  <<if_module("select_low_energy_event", cut="electron_with_low_energy", then="io_output_low_energy_selected", else="io_output_low_energy_non_selected")>>
 #+END_SRC
 
 * Services
@@ -2839,7 +2866,21 @@ An electron is a =particle_track= having
 - a negative electric charge
   #+BEGIN_SRC shell :noweb yes
     <<has_charge(cname="electron::negative_charge", type="negative")>>
+    <<has_charge(cname="electron::positive_charge", type="positive")>>
+    <<has_charge(cname="electron::undefined_charge", type="undefined")>>
   #+END_SRC
+
+  #+CAPTION: *Selections used to define an electron electric charge.*
+  #+TBLNAME: electron_charge
+  |----------------------------|
+  | electron::negative_charge  |
+  | electron::positive_charge  |
+  | electron::undefined_charge |
+  |----------------------------|
+  #+BEGIN_SRC shell :noweb yes
+    <<multi("electron::electric_charge", "or", 1, electron_charge)>>
+  #+END_SRC
+
 - a vertex on the source foil
   #+BEGIN_SRC shell :noweb yes
     <<has_vertex(cname="electron::foil_vertex", type="foil")>>
@@ -2852,13 +2893,13 @@ An electron is a =particle_track= having
 #+CAPTION: *Selections used to define an electron track.*
 #+TBLNAME: electron_definition
 |-----------------------------------|
-| electron::negative_charge         |
+| electron::electric_charge         |
 | electron::calorimeter_association |
 | electron::foil_vertex             |
 |-----------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<multi("electron_definition", "and", 3, electron_definition)>>
+  <<multi("electron_definition", "and", 2, electron_definition)>>
 #+END_SRC
 
 /Addendum/
@@ -3281,6 +3322,27 @@ gamma events are
 One can use regular expression to select a given classification by writing
 ~has_classification(topo="1g_with_others", regex=".*1g.*")~
 
+**** Misc. cut
+
+#+BEGIN_SRC shell
+  [name="1e::maximal_energy_cut" type="snemo::cut::energy_measurement_cut"]
+  mode.range_energy : boolean = true
+  range_energy.max : real as energy = 400 keV
+
+  [name="electron_with_low_energy" type="snemo::cut::channel_cut"]
+
+  #@description Cut description
+  cut.description : string = "Select events with low energy electron"
+
+  #@description Logging priority'
+  logging.priority : string = @variant(core:logging_priority|"error")
+
+  #@description Cut list
+  cuts : string[1] = "low_energy"
+
+  low_energy.cut_label         : string = "1e::maximal_energy_cut"
+  low_energy.measurement_label : string = "energy_e1"
+#+END_SRC
 * Running SN@ilWare processing chain
 
 Since this configuration will run through the executable =bxdpp_processing= from
