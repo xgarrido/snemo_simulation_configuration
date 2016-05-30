@@ -75,7 +75,7 @@ service files.
 *** Configuration files for modules
 #+BEGIN_SRC shell
   #@description The configuration files for modules
-  modules.configuration_files : string[13] as path =   \
+  modules.configuration_files : string[12] as path =   \
       "@configuration:io_modules.conf"                 \
       "@configuration:utl_modules.conf"                \
       "@configuration:simulation_modules.conf"         \
@@ -85,9 +85,8 @@ service files.
       "@configuration:tracker_fitting_modules.conf"    \
       "@configuration:particle_tracking_modules.conf"  \
       "@configuration:gamma_tracking_modules.conf"     \
-      "@configuration:pid_modules.conf"                \
-      "@configuration:chain_modules.conf"              \
       "@configuration:topology_modules.conf"           \
+      "@configuration:chain_modules.conf"              \
       "@configuration:misc_modules.conf"
 #+END_SRC
 
@@ -1645,25 +1644,24 @@ with the number of gammas.
   #@description Maximum size of a gamma tracked
   GT.maximal_gamma_size : integer = 0
 #+END_SRC
-** Particle identification module
+** Topology module
 :PROPERTIES:
-:TANGLE: pid_modules.conf
+:TANGLE: topology_modules.conf
 :END:
+
 *** Insert preamble
 #+BEGIN_SRC shell :noweb yes
   <<module_preamble>>
 #+END_SRC
 
 *** Module declaration
-
 #+BEGIN_SRC shell
-  [name="particle_identification" type="snemo::reconstruction::particle_identification_module"]
+  [name="topology_identification" type="snemo::reconstruction::topology_module"]
 #+END_SRC
-
 **** Logging priority
 #+BEGIN_SRC shell
   #@description Logging flag
-  logging.priority : string = @variant(core:logging_priority|"warning")
+  logging.priority : string = @variant(core:logging_priority|"error")
 #+END_SRC
 
 **** Data banks and services labels
@@ -1672,14 +1670,12 @@ with the number of gammas.
   Cut_label : string  = "Cuts"
 
   #@description The label of the 'Particle Track Data' bank
-  PTD_label : string  = "PTD"
+  PTD_label : string = "PTD"
+
+  #@description The label of the 'Topology Data' bank
+  TD_label : string = "TD"
 #+END_SRC
 
-**** Driver
-#+BEGIN_SRC shell
-  #@description List of drivers to be used (see description below)
-  drivers : string[1] = "PID"
-#+END_SRC
 **** PID driver
 ***** Logging priority
 #+BEGIN_SRC shell
@@ -1713,36 +1709,7 @@ with the number of gammas.
   PID.alpha_definition.label : string = "alpha"
 #+END_SRC
 
-** Topology module
-:PROPERTIES:
-:TANGLE: topology_modules.conf
-:END:
-
-*** Insert preamble
-#+BEGIN_SRC shell :noweb yes
-  <<module_preamble>>
-#+END_SRC
-
-*** Module declaration
-#+BEGIN_SRC shell
-  [name="topology_identification" type="snemo::reconstruction::topology_module"]
-#+END_SRC
-**** Logging priority
-#+BEGIN_SRC shell
-  #@description Logging flag
-  logging.priority : string = @variant(core:logging_priority|"error")
-#+END_SRC
-
-**** Data banks and services labels
-#+BEGIN_SRC shell
-  #@description The label of the 'Particle Track Data' bank
-  PTD_label : string = "PTD"
-
-  #@description The label of the 'Topology Data' bank
-  TD_label : string = "TD"
-#+END_SRC
-
-**** Drivers
+**** Measurement drivers
 #+BEGIN_SRC shell
   #@description List of drivers to be used (see description below)
   drivers : string[4] = "TOFD" "VD" "AD" "ED"
@@ -1933,13 +1900,12 @@ modules it contains.
 | io_output_tracker_trajectory |
 | charged_particle_tracking    |
 | gamma_clustering             |
-| particle_identification      |
 | topology_identification      |
 | io_output_analysed           |
 |------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<chain_module("minimum_bias_chain", 12, minimum_bias_chain)>>
+  <<chain_module("minimum_bias_chain", 11, minimum_bias_chain)>>
 #+END_SRC
 *** Channel chain
 **** 2\beta selection
