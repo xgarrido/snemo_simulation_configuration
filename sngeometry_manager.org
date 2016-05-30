@@ -347,7 +347,7 @@ To take into account effects from the calorimeter magnetic shielding as shown in
   magnetic_field.Bz.x.polynomial_parameters : real[3] = 25.0 0.0 -8e-5
 
   #@description Bz field space limits
-  magnetic_field.Bz.x.limits : real[2] as length = -500 +500 mm
+  magnetic_field.Bz.x.limits : real[2] in mm = -500 +500
 #+END_SRC
 *** Mapped magnetic field
 #+BEGIN_SRC shell

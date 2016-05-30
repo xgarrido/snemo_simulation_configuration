@@ -212,7 +212,7 @@ Definition of Geant4 regions.
   using_regions : boolean = true
 
   #@description List of regions
-  regions : string[3] = "calorimeter" "tracker" "source"
+  regions.names : string[3] = "calorimeter" "tracker" "source"
 
   #@description List of attached volumes/models for 'calorimeter' region
   regions.calorimeter.volumes : string[5] =         \
@@ -234,19 +234,19 @@ Definition of Geant4 regions.
 *** Magnetic field
 #+BEGIN_SRC shell
   #@description Flag to use magnetic field
-  using_magnetic_field : boolean = true
+  using_electromagnetic_field : boolean = true
 
   #@description Name of the magnetic field geometry plugin
-  magnetic_field.plugin_name : string = "fields_driver"
+  electromagnetic_field.plugin_name : string = "fields_driver"
 
   #@description SetDeltaChord miss distance (mm):
-  magnetic_field.miss_distance : real as length = 0.5 mm
+  electromagnetic_field.miss_distance : real as length = 0.5 mm
 
   #@description Logging priority threshold of the embedded Geant4 magnetic fields
-  magnetic_field.logging.priority : string = "warning"
+  electromagnetic_field.logging.priority : string = "warning"
 
   #@description Name of the associated fields
-  magnetic_field.associations : string[1] = "module"
+  electromagnetic_field.associations : string[1] = "module"
 #+END_SRC
 
 ** Physics list
@@ -347,8 +347,6 @@ Quite experimental try to set particles used within SuperNEMO "framework".
 
 ***** General settings
 #+BEGIN_SRC shell
-  #@config Configuration parameters for the electro-magnetic Geant4 physics constructor
-
   #@description Electro-magntox interaction model (value in: "standard", "low_energy", "penelope")
   em.model : string = "standard"
 #+END_SRC
