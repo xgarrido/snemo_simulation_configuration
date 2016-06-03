@@ -1478,6 +1478,9 @@ implemented but the particle tracking module will stay unchanged.
 
   #@description Charge sign convention
   CCD.charge_from_source : boolean = true
+
+  #@description Magnetic field orientation
+  CCD.magnetic_field_direction : string = "+z"
 #+END_SRC
 
 ***** Calorimeter Association Driver
