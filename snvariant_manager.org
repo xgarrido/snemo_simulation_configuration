@@ -101,8 +101,9 @@ instance.
   top_variant_name : string = "simulation.VM"
 
   #@description The list of files containing the definition of variant/parameter models
-  configuration_items.files : string[1] as path =  \
-    "@configuration:simulation_variants.def"
+  configuration_items.files : string[2] as path =     \
+     "@datatools:variants/models/basic/1.0/utils.def" \
+     "@configuration:simulation_variants.def"
 #+END_SRC
 
 ** Detector registry
@@ -228,28 +229,17 @@ instance.
 
 *** Seed manager
 #+BEGIN_SRC shell
-  [name="random_seed.PM" type="parameter"]
-  display_name  : string = "Value for random seeds"
-  type          : string = "integer"
-  mutability    : string = "fixed"
-  integer.fixed : integer = 0
-
-  [name="if_random_seed.VM" type="variant"]
-  display_name               : string = "Random seeds"
-  parameters                 : string[1] = "null_seed"
-  parameters.null_seed.model : string = "random_seed.PM"
-#+END_SRC
-
-#+BEGIN_SRC shell
   [name="random_seed_flag.PM" type="parameter"]
-  display_name                  : string = "Seed flag"
-  description                   : string = "A flag to make random seeds"
-  type                          : string = "boolean"
-  mutability                    : string = "variable"
-  boolean.default               : boolean = 0
-  variants                      : string[1] = "if_random_seed"
-  variants.if_random_seed.model : string = "if_random_seed.VM"
-  boolean.variant.true          : string = "if_random_seed"
+  display_name               : string = "Seed flag"
+  description                : string = "A flag to make random seeds"
+  type                       : string = "boolean"
+  mutability                 : string = "variable"
+  boolean.default            : boolean = false
+  variants                   : string[2] = "is_active" "is_inactive"
+  variants.is_active.model   : string = "datatools::basic::is_on.VM"
+  variants.is_inactive.model : string = "datatools::basic::is_off.VM"
+  boolean.true.variant       : string = "is_active"
+  boolean.false.variant      : string = "is_inactive"
 #+END_SRC
 
 *** Total number of simulated events
@@ -260,6 +250,7 @@ instance.
   type          : string = "real"
   mutability    : string = "variable"
   variable.mode : string = "free"
+  real.default  : real = 1
 #+END_SRC
 
 *** Vertex generators
