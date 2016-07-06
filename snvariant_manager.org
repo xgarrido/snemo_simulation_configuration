@@ -178,6 +178,7 @@ instance.
   mutability                : string = "variable"
   variable.mode             : string = "enumeration"
   string.enumerated.size    : integer = 8
+  string.default            : string = "fatal"
   string.enumerated_0.value : string = "fatal"
   string.enumerated_1.value : string = "critical"
   string.enumerated_2.value : string = "error"
