@@ -1386,45 +1386,45 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
 ****** Guess parameters
 #+BEGIN_SRC shell
   #@description Activate logging messages for helix guess driver
-  trackfit.helix.guess.logging.priority  : string = @variant(core:logging_priority|"error")
+  helix.guess.logging.priority  : string = @variant(core:logging_priority|"error")
 
   #@description Use max radius (cell size) to construct initial guess point (1) or use the effective drift Geiger distance of the hit (0)
-  trackfit.helix.guess.use_max_radius    : boolean = false
+  helix.guess.use_max_radius    : boolean = false
 
   #@description Apply a factor (>0) to the max radius (devel mode)
-  trackfit.helix.guess.max_radius_factor : real = 1.0
+  helix.guess.max_radius_factor : real = 1.0
 
   #@description Use guess trust (1) or keep all of the guess fits (0) and select later
-  trackfit.helix.guess.use_guess_trust   : boolean = false
+  helix.guess.use_guess_trust   : boolean = false
 
   #@description Mode for trusting a fit guess ("counter", "barycenter")
-  trackfit.helix.guess.guess_trust_mode  : string = "counter"
+  helix.guess.guess_trust_mode  : string = "counter"
 
   #@description Fit the delayed geiger cluster (by default, false since this mode is devoted to line fit)
-  trackfit.helix.guess.fit_delayed_clusters : boolean = false
+  helix.guess.fit_delayed_clusters : boolean = false
 #+END_SRC
 ****** Fit parameters
 #+BEGIN_SRC shell
   #@description 'Helix' fit only guess ("BBB", "BBT", "BTB", "BTT", "TBB", "TBT", "TTB", "TTT")
-  #trackfit.helix.only_guess : string[1] = "TTT"
+  #helix.only_guess : string[1] = "TBB"
 
   #@description Store only the N solutions with best helix fit
-  #trackfit.helix.store_number_of_solutions : integer = 2
+  #helix.store_number_of_solutions : integer = 2
 
   #@description Print the status of the fit stepper at each step (devel only)
-  trackfit.helix.fit.step_print_status : boolean = false
+  helix.fit.step_print_status : boolean = false
 
   #@description Plot the 2D view of the fitted data at each step (devel only)
-  trackfit.helix.fit.step_draw         : boolean = false
+  helix.fit.step_draw         : boolean = false
 
   #@description Track fit recomputes the drift distance from drift time (needs a calibration driver)
-  trackfit.helix.fit.using_drift_time  : boolean = false
+  helix.fit.using_drift_time  : boolean = false
 
   #@description Allow a fitted track to begin not tangential to the first hit
-  trackfit.helix.fit.using_first       : boolean = false
+  helix.fit.using_first       : boolean = false
 
   #@description Allow a fitted track to end not tangential to the last hit
-  trackfit.helix.fit.using_last        : boolean = false
+  helix.fit.using_last        : boolean = false
 #+END_SRC
 
 ** Charged particle tracking module
@@ -1910,7 +1910,6 @@ modules it contains.
 #+CAPTION: *Full chain processing without selection.*
 #+TBLNAME: minimum_bias_chain
 |------------------------------|
-| simulation                   |
 | add_header                   |
 | tracker_s2c                  |
 | calorimeter_s2c              |
@@ -1924,7 +1923,7 @@ modules it contains.
 |------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<chain_module("minimum_bias_chain", 11, minimum_bias_chain)>>
+  <<chain_module("minimum_bias_chain", 10, minimum_bias_chain)>>
 #+END_SRC
 *** Channel chain
 **** 2\beta selection
@@ -1978,6 +1977,7 @@ modules it contains.
 #+CAPTION: *Channel chain.*
 #+TBLNAME: channel_chain
 |--------------------------|
+| simulation               |
 | minimum_bias_chain       |
 | process_2e_channel_cut   |
 | process_2e1g_channel_cut |
@@ -1990,7 +1990,7 @@ modules it contains.
 |--------------------------|
 
 #+BEGIN_SRC shell :noweb yes
-  <<chain_module("channel_chain", 9, channel_chain)>>
+  <<chain_module("channel_chain", 10, channel_chain)>>
 #+END_SRC
 ** Miscellaneous
 :PROPERTIES:
