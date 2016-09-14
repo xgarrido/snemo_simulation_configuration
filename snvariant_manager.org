@@ -199,7 +199,7 @@ instance.
   path           : boolean = 1
   mutability     : string = "variable"
   variable.mode  : string = "free"
-  string.default : string = "/tmp/${USER}/snemo.d/"
+  string.default : string = "/tmp/${USER}/snemo.d"
 #+END_SRC
 
 *** Top variant
