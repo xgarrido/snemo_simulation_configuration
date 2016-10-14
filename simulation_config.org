@@ -550,7 +550,7 @@ output (see [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-Carlo
   manager.shpf_seed             : integer = 6
   #@variant_endif
 
-  #@variant_if simulation:random_seed_flag/is_inactive|true
+  #@variant_if simulation:random_seed_flag/is_active|false
   #@description The simulation manager PRNG seed
   manager.seed                  : integer = 0
   #@description The vertex generator PRNG seed
