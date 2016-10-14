@@ -218,7 +218,7 @@ module. It also defines the output directory where to store each output steps.
     echo
     echo '#@description Path to output data file'
     if [ -z ${ofilename} ]; then
-        echo 'files.single.path : string as path = @variant(core:output_path|"/tmp/${USER}/snemo.d")'
+        echo 'files.single.path : string as path = @variant(core:output_path|"/tmp/${USER}/snemo.d/")'
         echo
         echo '#@description Filename to output data file'
         echo 'files.single.filename : string = "'$mname'.brio"'
