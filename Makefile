@@ -31,7 +31,7 @@ $(GIT_BRANCH)/.%.tangle: %.org
 	@echo "NOTICE: Tangling $< file"
 	@$(BATCH) --visit "$<" --funcall org-babel-tangle > /dev/null 2>&1
 	@mkdir -p $(GIT_BRANCH)
-	@touch $@
+	@if [[ $@ != *snvariant* ]]; then touch $@; fi
 
 tarball: org
 	@echo "NOTICE: Making tarball configuration"
