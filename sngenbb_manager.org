@@ -13,7 +13,7 @@ More details concerning the use of =genbb= can be found in [[https://nemo.lpc-ca
 
 * Manager configuration
 :PROPERTIES:
-:TANGLE: sngenbb_manager.conf
+:HEADER-ARGS: :tangle sngenbb_manager.conf
 :END:
 
 Here, general options such as verbosity, debug flags are passed to =genbb=
@@ -35,7 +35,7 @@ manager.
 
 * Genbb wrappers
 :PROPERTIES:
-:TANGLE: sngenbb_wrappers.conf
+:HEADER-ARGS: :tangle sngenbb_wrappers.conf
 :END:
 
 This section holds the configuration of several =genbb= wrappers.

@@ -18,7 +18,7 @@ them visible given a list of sensitive categories.
 
 * Processors
 :PROPERTIES:
-:TANGLE: step_hit_processor_manager.conf
+:HEADER-ARGS: :tangle step_hit_processor_manager.conf
 :END:
 
 #+BEGIN_SRC shell

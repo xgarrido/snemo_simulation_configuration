@@ -22,7 +22,7 @@ can be found in [[https://nemo.lpc-caen.in2p3.fr/wiki/SNSW_SNailWare_FAQ#Monte-C
 
 * Manager configuration
 :PROPERTIES:
-:TANGLE: sng4_manager.conf
+:HEADER-ARGS: :tangle sng4_manager.conf
 :END:
 
 This section describe almost entirely the whole set of options to setup =sng4=
@@ -286,7 +286,7 @@ phycical processes for SuperNEMO.
 
 **** Particle physics constructor
 :PROPERTIES:
-:TANGLE: snparticles.conf
+:HEADER-ARGS: :tangle snparticles.conf
 :END:
 Quite experimental try to set particles used within SuperNEMO "framework".
 #+BEGIN_SRC shell
@@ -337,7 +337,7 @@ Quite experimental try to set particles used within SuperNEMO "framework".
 
 **** EM physics process
 :PROPERTIES:
-:TANGLE: snem_processes.conf
+:HEADER-ARGS: :tangle snem_processes.conf
 :END:
 ***** Logging priority
 #+BEGIN_SRC shell

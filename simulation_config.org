@@ -48,7 +48,7 @@ by F. Mauger.
 
 ** Module manager
 :PROPERTIES:
-:TANGLE: module_manager.conf
+:HEADER-ARGS: :tangle module_manager.conf
 :END:
 This file is the main and central piece of code for loading all modules/services
 needed by =dpp_processing= binary. It provides links to module files and
@@ -92,7 +92,7 @@ service files.
 
 ** Service manager
 :PROPERTIES:
-:TANGLE: service_manager.conf
+:HEADER-ARGS: :tangle service_manager.conf
 :END:
 *** Logging priority
 #+BEGIN_SRC shell
@@ -117,8 +117,7 @@ service files.
 ** DLL loader
 *** Code generator                                               :noexport:
 :PROPERTIES:
-:TANGLE:   no
-:RESULTS:  output
+:HEADER-ARGS: :tangle no :results output
 :END:
 This skeleton code ease the declaration of dll loader since it
 receives a table list and builds the corresponding =dlls.conf= file.
@@ -147,7 +146,7 @@ receives a table list and builds the corresponding =dlls.conf= file.
 #+END_SRC
 *** Libraries
 :PROPERTIES:
-:TANGLE: dlls.conf
+:HEADER-ARGS: :tangle dlls.conf
 :END:
 This part set the different libraries to be loaded at runtime. This is needed
 since event data models or algorithms may be defined in other libraries than the
@@ -192,8 +191,7 @@ pipeline processing.
 
 ** Skeleton codes                                                 :noexport:
 :PROPERTIES:
-:TANGLE: no
-:RESULTS: output
+:HEADER-ARGS: :tangle no :results output
 :END:
 This section provides some options to create and declare general modules such as
 I/O modules (see Section [[I/O modules]]) or/and removing data bank. Since these
@@ -311,7 +309,7 @@ expand the =module_preamble= code.
 
 ** I/O modules
 :PROPERTIES:
-:TANGLE: io_modules.conf
+:HEADER-ARGS: :tangle io_modules.conf
 :END:
 
 This section defines some I/O output modules to store data record. By default,
@@ -392,7 +390,7 @@ all I/O files are saved in =/tmp/${USER}/snemo.d= directory.
 
 ** Utility modules
 :PROPERTIES:
-:TANGLE: utl_modules.conf
+:HEADER-ARGS: :tangle utl_modules.conf
 :END:
 
 Here we define some common and useful tasks such as removing data/MC hits.
@@ -503,7 +501,7 @@ Here we define some common and useful tasks such as removing data/MC hits.
 
 ** Simulation module
 :PROPERTIES:
-:TANGLE: simulation_modules.conf
+:HEADER-ARGS: :tangle simulation_modules.conf
 :END:
 *** Insert preamble
 #+BEGIN_SRC shell :noweb yes
@@ -605,7 +603,7 @@ The full =geant4= configuration can be found in the [[file:./sng4_manager.org][s
 
 ** Event header module
 :PROPERTIES:
-:TANGLE: event_header_modules.conf
+:HEADER-ARGS: :tangle event_header_modules.conf
 :END:
 
 After Geant4 simulation, no event header is added and available in the event
@@ -664,12 +662,11 @@ properties are used and serialized.
 
 *** Analysis informations
 :PROPERTIES:
-:TANGLE: snsimulation_header.conf
+:HEADER-ARGS: :tangle snsimulation_header.conf
 :END:
 **** Getting branch status                                      :noexport:
 :PROPERTIES:
-:TANGLE: no
-:RESULTS: output
+:HEADER-ARGS: :tangle no :results output
 :END:
 The following code block allows to "tag" the current version /i.e./ getting the
 =git= branch name, commit chunk
@@ -685,8 +682,7 @@ The following code block allows to "tag" the current version /i.e./ getting the
 
 **** Getting component version                                  :noexport:
 :PROPERTIES:
-:TANGLE: no
-:RESULTS: output
+:HEADER-ARGS: :tangle no :results output
 :END:
 The following code block retrieves the version number of a given component
 #+NAME: code-version
@@ -771,7 +767,7 @@ simulation setup if needed.
 
 ** Calibration modules
 :PROPERTIES:
-:TANGLE: calibration_modules.conf
+:HEADER-ARGS: :tangle calibration_modules.conf
 :END:
 *** Insert preamble
 #+BEGIN_SRC shell :noweb yes
@@ -957,7 +953,7 @@ We do not use these parameters
 
 ** Tracker clustering modules
 :PROPERTIES:
-:TANGLE: tracker_clustering_modules.conf
+:HEADER-ARGS: :tangle tracker_clustering_modules.conf
 :END:
 *** Insert preamble
 #+BEGIN_SRC shell :noweb yes
@@ -1260,7 +1256,7 @@ by K. Bhardwaj.
 
 ** Tracker fitting module
 :PROPERTIES:
-:TANGLE: tracker_fitting_modules.conf
+:HEADER-ARGS: :tangle tracker_fitting_modules.conf
 :END:
 *** Insert preamble
 #+BEGIN_SRC shell :noweb yes
@@ -1423,7 +1419,7 @@ class. Here we use the same model as in Section [[Tracker simulation to calibrat
 
 ** Charged particle tracking module
 :PROPERTIES:
-:TANGLE: particle_tracking_modules.conf
+:HEADER-ARGS: :tangle particle_tracking_modules.conf
 :END:
 *** Insert preamble
 #+BEGIN_SRC shell :noweb yes
@@ -1511,7 +1507,7 @@ implemented but the particle tracking module will stay unchanged.
 #+END_SRC
 ** \gamma tracking module
 :PROPERTIES:
-:TANGLE: gamma_tracking_modules.conf
+:HEADER-ARGS: :tangle gamma_tracking_modules.conf
 :END:
 *** Insert preamble
 #+BEGIN_SRC shell :noweb yes
@@ -1659,7 +1655,7 @@ with the number of gammas.
 #+END_SRC
 ** Topology module
 :PROPERTIES:
-:TANGLE: topology_modules.conf
+:HEADER-ARGS: :tangle topology_modules.conf
 :END:
 
 *** Insert preamble
@@ -1758,7 +1754,7 @@ with the number of gammas.
 
 ** Chain modules
 :PROPERTIES:
-:TANGLE: chain_modules.conf
+:HEADER-ARGS: :tangle chain_modules.conf
 :END:
 This section holds most of the chain module to set "to music" the different
 modules and tasks. It also contains the different paths given the selection
@@ -1988,7 +1984,7 @@ modules it contains.
 #+END_SRC
 ** Miscellaneous
 :PROPERTIES:
-:TANGLE: misc_modules.conf
+:HEADER-ARGS: :tangle misc_modules.conf
 :END:
 *** Insert preamble
 #+BEGIN_SRC shell :noweb yes
@@ -2021,7 +2017,7 @@ modules it contains.
 
 * Services
 :PROPERTIES:
-:TANGLE: services.conf
+:HEADER-ARGS: :tangle services.conf
 :END:
 A service generally hosts a specific resource that can be shared by many other
 software components, including other services or data processing modules (see
@@ -2096,7 +2092,7 @@ apply selection cuts on arbitrary data models.
 
 *** Manager configuration
 :PROPERTIES:
-:TANGLE: cut_manager.conf
+:HEADER-ARGS: :tangle cut_manager.conf
 :END:
 
 #+BEGIN_SRC shell
@@ -2120,8 +2116,7 @@ apply selection cuts on arbitrary data models.
 
 *** Skeleton codes                                               :noexport:
 :PROPERTIES:
-:TANGLE: no
-:RESULTS: output
+:HEADER-ARGS: :tangle no :results output
 :END:
 This section provides some options to create and declare general cuts such as
 checking bank availability. Since these tasks are quite generic and depends to
@@ -2177,7 +2172,7 @@ This skeleton code allows to check the availability of a data bank.
 
 *** Event header cut
 :PROPERTIES:
-:TANGLE: event_header_cuts.conf
+:HEADER-ARGS: :tangle event_header_cuts.conf
 :END:
 
 #+BEGIN_SRC shell :noweb yes
@@ -2211,7 +2206,7 @@ This skeleton code allows to check the availability of a data bank.
 
 *** Simulated data selection
 :PROPERTIES:
-:TANGLE: simulated_data_cuts.conf
+:HEADER-ARGS: :tangle simulated_data_cuts.conf
 :END:
 
 #+BEGIN_SRC shell :noweb yes
@@ -2237,7 +2232,7 @@ This cuts puts together all the previous declared cuts.
 
 *** Calibrated data selection
 :PROPERTIES:
-:TANGLE: calibrated_data_cuts.conf
+:HEADER-ARGS: :tangle calibrated_data_cuts.conf
 :END:
 
 #+BEGIN_SRC shell :noweb yes
@@ -2401,7 +2396,7 @@ This cuts puts together all the previous declared cuts.
 
 *** Tracker clustering data selection
 :PROPERTIES:
-:TANGLE: tracker_clustering_data_cuts.conf
+:HEADER-ARGS: :tangle tracker_clustering_data_cuts.conf
 :END:
 
 #+BEGIN_SRC shell :noweb yes
@@ -2557,7 +2552,7 @@ unclustered hits.
 
 *** Tracker trajectory data selection
 :PROPERTIES:
-:TANGLE: tracker_trajectory_data_cuts.conf
+:HEADER-ARGS: :tangle tracker_trajectory_data_cuts.conf
 :END:
 
 #+BEGIN_SRC shell :noweb yes
@@ -2621,7 +2616,7 @@ unclustered hits.
 
 *** Particle track selection
 :PROPERTIES:
-:TANGLE: particle_track_data_cuts.conf
+:HEADER-ARGS: :tangle particle_track_data_cuts.conf
 :END:
 
 #+BEGIN_SRC shell :noweb yes
@@ -2712,7 +2707,7 @@ Remove event with non associated calorimeters hits.
 #+END_SRC
 *** PID selection
 :PROPERTIES:
-:TANGLE: pid_cuts.conf
+:HEADER-ARGS: :tangle pid_cuts.conf
 :END:
 The following cut defines what may be called a "particle" /i.e./ an electron, an
 alpha in the context of SuperNEMO. Since these cuts apply on every
@@ -2725,8 +2720,7 @@ alpha in the context of SuperNEMO. Since these cuts apply on every
 **** Generic definition
 ***** Skeleton codes                                           :noexport:
 :PROPERTIES:
-:TANGLE: no
-:RESULTS: output
+:HEADER-ARGS: :tangle no :results output
 :END:
 
 ****** Check electric charge
@@ -2968,7 +2962,7 @@ An alpha is a =particle_track= having
 
 *** Channel selection
 :PROPERTIES:
-:TANGLE: topology_cuts.conf
+:HEADER-ARGS: :tangle topology_cuts.conf
 :END:
 
 The following selections define some basic "standard" channel cuts such as :
@@ -2987,8 +2981,7 @@ and maybe more in the future.
 
 **** Skeleton codes                                             :noexport:
 :PROPERTIES:
-:TANGLE: no
-:RESULTS: output
+:HEADER-ARGS: :tangle no :results output
 :END:
 
 ***** Check pattern presence

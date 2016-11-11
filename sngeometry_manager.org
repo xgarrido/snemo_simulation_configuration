@@ -10,7 +10,7 @@ thus, use most of its primitives.
 
 * Manager configuration
 :PROPERTIES:
-:TANGLE: sngeometry_manager.conf
+:HEADER-ARGS: :tangle sngeometry_manager.conf
 :END:
 
 ** Setup label, description and version
@@ -156,7 +156,7 @@ volume.
 * Material for SuperNEMO detector
 ** Material driver
 :PROPERTIES:
-:TANGLE:    materials_plugin.conf
+:HEADER-ARGS: :tangle    materials_plugin.conf
 :END:
 
 We use the definitions of isotopes, elements and materials from the installed
@@ -219,7 +219,7 @@ example, in [[Material aliases]] section.
 
 ** Material aliases
 :PROPERTIES:
-:TANGLE: materials_aliases.def
+:HEADER-ARGS: :tangle materials_aliases.def
 :END:
 
 This piece of code allows user to define or redefine materials aliases. Here for
@@ -239,7 +239,7 @@ example, we locally change the source material without changing anything else.
 * Magnetic field for SuperNEMO detector
 ** Magnetic field plugin
 :PROPERTIES:
-:TANGLE: magnetic_field_plugin.conf
+:HEADER-ARGS: :tangle magnetic_field_plugin.conf
 :END:
 *** Plugin declaration
 #+BEGIN_SRC shell
@@ -295,7 +295,7 @@ module.
 
 ** Magnetic field drivers
 :PROPERTIES:
-:TANGLE: magnetic_field_drivers.conf
+:HEADER-ARGS: :tangle magnetic_field_drivers.conf
 :END:
 *** Driver preamble
 #+BEGIN_SRC shell
@@ -365,7 +365,7 @@ To take into account effects from the calorimeter magnetic shielding as shown in
 * Locators for SuperNEMO detector
 ** Locator driver
 :PROPERTIES:
-:TANGLE: locator_plugin.conf
+:HEADER-ARGS: :tangle locator_plugin.conf
 :END:
 
 *** Plugin declaration

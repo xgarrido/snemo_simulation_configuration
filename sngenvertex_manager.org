@@ -8,7 +8,7 @@ This file holds some vertex generators related to SuperNEMO detector geometry.
 
 * Manager configuration
 :PROPERTIES:
-:TANGLE: sngenvertex_manager.conf
+:HEADER-ARGS: :tangle sngenvertex_manager.conf
 :END:
 
 ** Logging priority
@@ -75,7 +75,7 @@ This section defines several vertices configuration :
 
 ** Scintillator vertices
 :PROPERTIES:
-:TANGLE: scin_vg.lis
+:HEADER-ARGS: :tangle scin_vg.lis
 :END:
 
 Insert preamble
@@ -295,7 +295,7 @@ Insert preamble
 
 ** Tracker vertices
 :PROPERTIES:
-:TANGLE: tracker_vg.lis
+:HEADER-ARGS: :tangle tracker_vg.lis
 :END:
 
 Insert preamble
@@ -592,7 +592,7 @@ We can also set the logging priority and the maximum depth to look inside
 
 ** Source vertices
 :PROPERTIES:
-:TANGLE: source_vg.lis
+:HEADER-ARGS: :tangle source_vg.lis
 :END:
 
 Since there are two types of source pads namely "internal" and "external" with
@@ -744,7 +744,7 @@ Insert preamble
   #+END_SRC
 ** External vertices
 :PROPERTIES:
-:TANGLE: hall_vg.lis
+:HEADER-ARGS: :tangle hall_vg.lis
 :END:
 
 Insert preamble
@@ -805,7 +805,7 @@ Insert preamble
   #+END_SRC
 ** Calibration source vertices
 :PROPERTIES:
-:TANGLE: calibration_vg.lis
+:HEADER-ARGS: :tangle calibration_vg.lis
 :END:
 
 Insert preamble

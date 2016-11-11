@@ -15,7 +15,7 @@ instance.
 
 * Manager configuration
 :PROPERTIES:
-:TANGLE: snvariant_manager.conf
+:HEADER-ARGS: :tangle snvariant_manager.conf
 :END:
 
 #+BEGIN_SRC shell
@@ -61,7 +61,7 @@ instance.
 * Registries
 ** Core registry
 :PROPERTIES:
-:TANGLE: snvariant_core_registry.conf
+:HEADER-ARGS: :tangle snvariant_core_registry.conf
 :END:
 #+BEGIN_SRC shell
   #@config The configuration for the core variant registry
@@ -87,7 +87,7 @@ instance.
 #+END_SRC
 ** Simulation registry
 :PROPERTIES:
-:TANGLE: snvariant_simulation_registry.conf
+:HEADER-ARGS: :tangle snvariant_simulation_registry.conf
 :END:
 #+BEGIN_SRC shell
   #@config The configuration for the simulation variant registry
@@ -115,7 +115,7 @@ instance.
 
 ** Detector registry
 :PROPERTIES:
-:TANGLE: snvariant_detector_registry.conf
+:HEADER-ARGS: :tangle snvariant_detector_registry.conf
 :END:
 #+BEGIN_SRC shell
   #@config The configuration for the simulation variant registry
@@ -170,7 +170,7 @@ instance.
 
 ** Core variants
 :PROPERTIES:
-:TANGLE: core_variants.def
+:HEADER-ARGS: :tangle core_variants.def
 :END:
 *** Insert preamble
 #+BEGIN_SRC shell :noweb yes
@@ -227,7 +227,7 @@ instance.
 
 ** Simulation variants
 :PROPERTIES:
-:TANGLE: simulation_variants.def
+:HEADER-ARGS: :tangle simulation_variants.def
 :END:
 *** Insert preamble
 #+BEGIN_SRC shell :noweb yes
@@ -418,7 +418,7 @@ instance.
 #+END_SRC
 ** Detector variants
 :PROPERTIES:
-:TANGLE: detector_variants.def
+:HEADER-ARGS: :tangle detector_variants.def
 :END:
 *** Insert preamble
 #+BEGIN_SRC shell :noweb yes
