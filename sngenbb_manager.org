@@ -67,6 +67,7 @@ This section holds the configuration of several =genbb= wrappers.
 #+END_SRC
 
 ** \nbsp^{222}Rn in the tracking chamber
+
 Here, we use the same definition as =Bi214_Po214= that can be find in
 =@falaise:config/common/simulation/primary_events/1.0/background.def=. We just
 change the =genbb= label to distinguish the\nbsp^{214}Bi events generated in the
@@ -78,6 +79,17 @@ source foil to the ones generated in the tracking chamber.
   decay_type      : string  = "background"
   decay_isotope   : string  = "Bi214+Po214"
 #+END_SRC
+** \nbsp^{214}Pb
+#+BEGIN_SRC shell
+  [name="Pb214" type="genbb::wdecay0"]
+  #@config Pb-214 decay [background]
+  decay_type      : string  = "background"
+  decay_isotope   : string  = "Pb214"
+
+  #@description Assign unique generation id
+  assign_generation_ids : boolean = true
+#+END_SRC
+
 ** Radioelement wrappers
 This part basically provides additionnal event generator wrappers for
 SuperNEMO.
