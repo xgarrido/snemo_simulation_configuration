@@ -155,20 +155,21 @@ list of needed libraries
 
 #+CAPTION: *Libraries to be used by modules.*
 #+TBLNAME: dll_libraries
-|-------------------------+-------------------------------------------------------------------------------------|
-| Bayeux_mctools_geant4   | @snware:bayeux/install/lib64/libBayeux_mctools_geant4.so                            |
-| Falaise                 | @snware:falaise/install/lib64/libFalaise.so                                         |
-| Falaise_MTC             | @snware:falaise/install/lib64/Falaise/modules/libFalaise_MockTrackerClusterizer.so  |
-| Falaise_CAT             | @snware:falaise/install/lib64/Falaise/modules/libFalaise_CAT.so                     |
-| TrackFit                | @snware:falaise/install/lib64/Falaise/modules/libTrackFit.so                        |
-| Falaise_TrackFit        | @snware:falaise/install/lib64/Falaise/modules/libFalaise_TrackFit.so                |
-| Falaise_CPT             | @snware:falaise/install/lib64/Falaise/modules/libFalaise_ChargedParticleTracking.so |
-| GammaTracking           | @snware:falaise/install/lib64/Falaise/modules/libGammaTracking.so                   |
-| Falaise_GammaTracking   | @snware:falaise/install/lib64/Falaise/modules/libFalaise_GammaTracking.so           |
-| Falaise_GammaClustering | @snware:falaise/install/lib64/Falaise/modules/libFalaise_GammaClustering.so         |
-| Falaise_PID             | @snware:falaise/install/lib64/Falaise/modules/libFalaise_ParticleIdentification.so  |
-| Falaise_ProcessReport   | @snware:falaise/install/lib64/Falaise/modules/libFalaise_ProcessReport.so           |
-|-------------------------+-------------------------------------------------------------------------------------|
+|-------------------------+---------------------------------------------------------------|
+| Bayeux_mctools_geant4   | @bxdll:libBayeux_mctools_geant4.so                           |
+| Falaise                 | @fldll:libFalaise.so                                         |
+| Falaise_MTC             | @fldll:Falaise/modules/libFalaise_MockTrackerClusterizer.so  |
+| Falaise_CAT             | @fldll:Falaise/modules/libFalaise_CAT.so                     |
+| TrackFit                | @fldll:Falaise/modules/libTrackFit.so                        |
+| Falaise_TrackFit        | @fldll:Falaise/modules/libFalaise_TrackFit.so                |
+| Falaise_CPT             | @fldll:Falaise/modules/libFalaise_ChargedParticleTracking.so |
+| GammaTracking           | @fldll:Falaise/modules/libGammaTracking.so                   |
+| Falaise_GammaTracking   | @fldll:Falaise/modules/libFalaise_GammaTracking.so           |
+| Falaise_GammaClustering | @fldll:Falaise/modules/libFalaise_GammaClustering.so         |
+| Falaise_PID             | @fldll:Falaise/modules/libFalaise_ParticleIdentification.so  |
+| Falaise_ProcessReport   | @fldll:Falaise/modules/libFalaise_ProcessReport.so           |
+# | Falaise_TopologyExporter | @fldll:Falaise/modules/libFalaise_TopologyExporter.so        |
+|--------------------------+-------------------------------------------------------------------------------------|
 
 #+BEGIN_SRC shell :noweb yes
   <<dll_loader(dll_libraries[*,0], dll_libraries[*,1])>>
@@ -2015,6 +2016,27 @@ modules it contains.
   <<if_module("select_low_energy_event", cut="electron_with_low_energy", then="io_output_low_energy_selected", else="io_output_low_energy_non_selected")>>
 #+END_SRC
 
+*** Topology exporter
+#+BEGIN_SRC shell
+  [name="topology_exporter" type="snemo::processing::topology_exporter_module"]
+#+END_SRC
+**** Logging priority
+#+BEGIN_SRC shell
+  #@description Logging flag
+  logging.priority : string = @variant(core:logging_priority|"error")
+#+END_SRC
+
+**** Data banks and services labels
+#+BEGIN_SRC shell
+  #@description The label of the 'Topology Data' bank
+  TD_label : string = "TD"
+#+END_SRC
+
+**** Exporter
+#+BEGIN_SRC shell
+  #@description The exporter name
+  exporter : string = "CSV"
+#+END_SRC
 * Services
 :PROPERTIES:
 :HEADER-ARGS: :tangle services.conf
