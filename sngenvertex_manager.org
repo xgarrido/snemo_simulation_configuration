@@ -25,12 +25,12 @@ are defined in Section [[Vertex configuration]].
   #@variant_if geometry:layout/if_basic|true
 
   #@description Names of the files configuring the list of registered vertex generators
-  vg_list : string[5] as path =                                                            \
-    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/scin_vg.lis"    \
-    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/tracker_vg.lis" \
-    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/shield_vg.lis"  \
-    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/source_vg.lis"  \
-    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/source_calibration_vg.lis"
+  vg_list : string[5] as path =                                                              \
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.1/generators/om_vg.def"        \
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.1/generators/tracker_vg.def"   \
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.1/generators/shielding_vg.def" \
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.1/generators/source_vg.def"    \
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.1/generators/source_calibration_vg.def"
 
   #@description The name of the default vertex generator to be used
   #@variant_only !geometry:layout/if_basic/source_calibration/is_active|true
@@ -44,9 +44,9 @@ are defined in Section [[Vertex configuration]].
   #@variant_if geometry:layout/if_half_commissioning|false
   #@description Names of the files configuring the list of registered vertex generators
   vg_list : string[3] as path =                                                            \
-    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/scin_vg.lis"    \
-    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/tracker_vg.lis" \
-    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.0/generators/commissioning_vg.lis"
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.1/generators/om_vg.def"      \
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.1/generators/tracker_vg.def" \
+    "@falaise:config/snemo/demonstrator/simulation/vertexes/4.1/generators/commissioning_vg.def"
 
   #@description The name of the default vertex generator to be used
   generator : string = "all_commissioning_spots"

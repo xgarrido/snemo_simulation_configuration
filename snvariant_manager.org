@@ -28,7 +28,7 @@ instance.
   application  : string = "SN@ilWare"
 
   #@description The list of embedded registries
-  registries : string[4] = "core" "simulation" "detector" "geometry"
+  registries : string[5] = "core" "simulation" "detector" "geometry" "vertexes"
 
   #@description The rank of registry "core"
   registries.core.rank : integer = 0
@@ -53,6 +53,12 @@ instance.
 
   #@description The configuration file of registry "detector"
   registries.geometry.config : string as path = "@falaise:config/snemo/demonstrator/geometry/4.0/variants/registries/geometry.conf"
+
+  #@description The rank of registry "vertexes"
+  registries.vertexes.rank : integer = 3
+
+  #@description The configuration file of registry "detector"
+  registries.vertexes.config : string as path = "@falaise:config/snemo/demonstrator/simulation/vertexes/4.1/variants/registries/vertexes.conf"
 
   #@description The lock request
   lock : boolean = true
