@@ -271,7 +271,7 @@ instance.
 #+NAME: vg_list_variants
 #+BEGIN_SRC shell :tangle no :results output :exports none
   cnt=0
-  falaise_dir=$(flquery --resourcedir | tr -d '\n')
+  falaise_dir=$(flquery --resourcedir | tr -d '\n' | sed 's/\(.*Falaise-.*\)-\(.*\)-\(.*\)\/\(.*\)/\1\/\4/')
   files=$(cat current/sngenvertex_manager.conf | grep '"@.*/.*"\|"@.*"' | awk -F \" '{print $2}' | awk '!seen[$0]++')
   for if in ${=files}; do
       file=$if
@@ -302,7 +302,7 @@ instance.
 #+NAME: eg_list_variants
 #+BEGIN_SRC shell :tangle no :results output :exports none
   cnt=0
-  falaise_dir=$(flquery --resourcedir | tr -d '\n')
+  falaise_dir=$(flquery --resourcedir | tr -d '\n' | sed 's/\(.*Falaise-.*\)-\(.*\)-\(.*\)\/\(.*\)/\1\/\4/')
   files=$(cat current/sngenbb_manager.conf | grep '".*/.*"\|".*"' | awk -F \" '{print $2}' | awk '!seen[$0]++')
   for if in ${=files}; do
       file=${if/@falaise:/${falaise_dir}\/}
